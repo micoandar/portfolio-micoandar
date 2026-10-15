@@ -54,44 +54,44 @@ export default function Hero() {
             {profile.summary[lang]}
           </p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center">
+          {/* Tombol — satu baris sejajar, wrap otomatis di mobile */}
+          <div className="mt-7 flex flex-wrap items-center gap-3 sm:mt-8">
             <a
               href="#proyek"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-600 to-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-brand-500/25 transition hover:-translate-y-0.5 hover:shadow-brand-500/35 sm:justify-start"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-600 to-violet-600 px-5 py-3 text-sm font-semibold text-white shadow-xl shadow-brand-500/25 transition hover:-translate-y-0.5 hover:shadow-brand-500/35"
             >
               {t.viewProjects}
-              <ArrowRight size={16} className="transition group-hover:translate-x-1" />
+              <ArrowRight size={15} className="transition group-hover:translate-x-1" />
             </a>
 
             <a
               href={profile.cvPath}
               download
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-6 py-3.5 text-sm font-semibold text-brand-700 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-100 sm:justify-start"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-5 py-3 text-sm font-semibold text-brand-700 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-100"
             >
-              <Download size={16} />
+              <Download size={15} />
               {t.downloadCv}
             </a>
 
-            <div className="flex gap-3 sm:contents">
-              <a
-                href={profile.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 sm:flex-none"
-              >
-                <Github size={16} />
-                GitHub
-              </a>
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 sm:flex-none"
-              >
-                <Linkedin size={16} />
-                LinkedIn
-              </a>
-            </div>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300"
+            >
+              <Github size={15} />
+              GitHub
+            </a>
+
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300"
+            >
+              <Linkedin size={15} />
+              LinkedIn
+            </a>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500 sm:mt-8 sm:gap-x-6 sm:text-sm">
@@ -142,7 +142,9 @@ export default function Hero() {
                 <p className="mt-4 text-base font-bold text-slate-900 sm:mt-5 sm:text-lg">
                   {profile.name}
                 </p>
-                <p className="mt-0.5 text-xs text-slate-500 sm:text-sm">{profile.role[lang]}</p>
+                <p className="mt-0.5 text-xs text-slate-500 sm:text-sm">
+                  {profile.role[lang]}
+                </p>
               </div>
 
               <div className="my-5 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent sm:my-6" />

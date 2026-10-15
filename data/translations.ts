@@ -61,6 +61,7 @@ export const translations = {
     },
     backToTop: "Kembali ke atas",
   },
+
   en: {
     nav: {
       about: "About",

@@ -101,9 +101,11 @@ export default function Education() {
               </div>
               <ul className="space-y-4">
                 {certifications.map((c) => (
-                  <li key={c.title} className="flex items-start justify-between gap-4">
+                  <li key={c.title.id} className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-semibold text-slate-800">{c.title}</p>
+                      <p className="text-sm font-semibold text-slate-800">
+                        {c.title[lang]}
+                      </p>
                       <p className="text-xs text-slate-400">{c.issuer}</p>
                     </div>
                     <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500">
@@ -123,9 +125,11 @@ export default function Education() {
               </div>
               <ul className="space-y-3.5">
                 {trainings.map((item) => (
-                  <li key={item.title} className="flex items-start justify-between gap-4">
+                  <li key={item.title.id} className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-semibold text-slate-800">{item.title}</p>
+                      <p className="text-sm font-semibold text-slate-800">
+                        {item.title[lang]}
+                      </p>
                       <p className="text-xs text-slate-400">{item.issuer}</p>
                     </div>
                     <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500">

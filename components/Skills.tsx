@@ -33,6 +33,13 @@ const levelStyle: Record<SkillLevel, string> = {
   Dasar: "bg-amber-50 text-amber-700 border-amber-100",
 };
 
+// Terjemahan label level
+const levelLabel: Record<SkillLevel, { id: string; en: string }> = {
+  Mahir: { id: "Mahir", en: "Advanced" },
+  Menengah: { id: "Menengah", en: "Intermediate" },
+  Dasar: { id: "Dasar", en: "Beginner" },
+};
+
 export default function Skills() {
   const { lang } = useLanguage();
   const t = translations[lang].skills;
@@ -43,7 +50,7 @@ export default function Skills() {
         {skillGroups.map((group, i) => {
           const Icon = iconMap[group.icon as keyof typeof iconMap];
           return (
-            <Reveal key={group.title} delay={i * 60} className="h-full">
+            <Reveal key={group.title.id} delay={i * 60} className="h-full">
               <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:shadow-lg hover:shadow-slate-900/5 sm:p-6">
                 <div className="flex items-center gap-3">
                   <div
@@ -53,7 +60,7 @@ export default function Skills() {
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-900 sm:text-base">
-                      {group.title}
+                      {group.title[lang]}
                     </h3>
                     <p className="text-[11px] text-slate-400 sm:text-xs">
                       {group.items.length} {t.count}
@@ -71,11 +78,11 @@ export default function Skills() {
                         <span
                           className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${levelStyle[skill.level]}`}
                         >
-                          {skill.level}
+                          {levelLabel[skill.level][lang]}
                         </span>
                       </div>
                       <p className="mt-1 text-xs leading-relaxed text-slate-500">
-                        {skill.description}
+                        {skill.description[lang]}
                       </p>
                     </li>
                   ))}

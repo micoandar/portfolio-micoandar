@@ -1,5 +1,8 @@
+"use client";
+
 import { CheckCircle2 } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const categoryStyle: Record<Project["category"], string> = {
   Web: "bg-sky-50 text-sky-700 border-sky-100",
@@ -20,9 +23,10 @@ export default function ProjectCard({
   project: Project;
   index: number;
 }) {
+  const { lang } = useLanguage();
+
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-900/5">
-      {/* Header */}
       <div
         className={`relative h-32 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-5 sm:h-40 sm:p-6`}
       >
@@ -47,9 +51,10 @@ export default function ProjectCard({
         </div>
       </div>
 
-      {/* Body */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <p className="text-xs font-medium text-slate-500 sm:text-sm">{project.subtitle}</p>
+        <p className="text-xs font-medium text-slate-500 sm:text-sm">
+          {project.subtitle[lang]}
+        </p>
 
         <ul className="mt-4 space-y-2.5 sm:mt-5">
           {project.highlights.map((point, i) => (
@@ -64,7 +69,7 @@ export default function ProjectCard({
                 className="mt-0.5 shrink-0 text-brand-500 sm:h-4 sm:w-4"
                 aria-hidden="true"
               />
-              <span>{point}</span>
+              <span>{point[lang]}</span>
             </li>
           ))}
         </ul>

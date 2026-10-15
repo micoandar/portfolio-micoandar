@@ -2,21 +2,25 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Languages } from "lucide-react";
 import { profile } from "@/data/profile";
+import { translations } from "@/data/translations";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
-
-const links = [
-  { href: "#tentang", label: "Tentang" },
-  { href: "#proyek", label: "Proyek" },
-  { href: "#keahlian", label: "Keahlian" },
-  { href: "#pendidikan", label: "Pendidikan" },
-  { href: "#kontak", label: "Kontak" },
-];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { lang, toggle } = useLanguage();
+  const t = translations[lang].nav;
+
+  const links = [
+    { href: "#tentang", label: t.about },
+    { href: "#proyek", label: t.projects },
+    { href: "#keahlian", label: t.skills },
+    { href: "#pendidikan", label: t.education },
+    { href: "#kontak", label: t.contact },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -42,10 +46,7 @@ export default function Navbar() {
       )}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8 sm:py-4">
-        <Link
-          href="#beranda"
-          className="group flex items-center gap-2.5 text-sm font-bold text-slate-900"
-        >
+        <Link href="#beranda" className="group flex items-center gap-2.5 text-sm font-bold text-slate-900">
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-xs font-black text-white shadow-lg shadow-brand-500/25 transition group-hover:scale-105">
             {profile.initials}
           </span>
@@ -68,16 +69,27 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
+          {/* Language switcher */}
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label="Toggle language"
+            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-bold uppercase tracking-wide text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+          >
+            <Languages size={14} />
+            {lang === "id" ? "ID" : "EN"}
+          </button>
+
           <a
             href={`mailto:${profile.email}`}
             className="hidden rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 md:inline-block"
           >
-            Hubungi Saya
+            {t.cta}
           </a>
+
           <button
             type="button"
-            aria-label={open ? "Tutup menu" : "Buka menu"}
-            aria-expanded={open}
+            aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
             className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 md:hidden"
           >
@@ -111,7 +123,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-1 block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white"
             >
-              Hubungi Saya
+              {t.cta}
             </a>
           </li>
         </ul>

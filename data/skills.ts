@@ -125,12 +125,3 @@ export const trainings = [
   { title: "Perancangan Pengembangan Aplikasi", year: "2024", issuer: "Universitas Gunadarma" },
   { title: "Instalasi Wireless LAN", year: "2024", issuer: "Universitas Gunadarma" },
 ];
-
-export const seminars = [
-  {
-    title: "Simposium Nasional",
-    year: "2025",
-    issuer: "Universitas Gunadarma",
-    topic: "Synergy of University and Industry Collaboration: Software and Hardware for Artificial Intelligence",
-  },
-];

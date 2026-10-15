@@ -1,7 +1,7 @@
-import { Award, BookOpen, GraduationCap, Presentation } from "lucide-react";
+import { Award, BookOpen, GraduationCap } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
-import { certifications, seminars, trainings } from "@/data/skills";
+import { certifications, trainings } from "@/data/skills";
 
 const education = [
   {
@@ -34,7 +34,7 @@ export default function Education() {
       id="pendidikan"
       eyebrow="Pendidikan & Sertifikasi"
       title="Latar Belakang Akademik"
-      description="Perjalanan pendidikan, sertifikasi profesi, pelatihan, dan seminar yang saya ikuti."
+      description="Perjalanan pendidikan, sertifikasi profesi, dan pelatihan yang saya ikuti."
       className="bg-white"
     >
       <div className="grid gap-8 lg:grid-cols-2">
@@ -42,7 +42,7 @@ export default function Education() {
         <div className="space-y-5">
           {education.map((item, i) => (
             <Reveal key={item.school} delay={i * 100}>
-              <div className="relative rounded-3xl border border-slate-200 bg-slate-50/60 p-7">
+              <div className="relative rounded-3xl border border-slate-200 bg-slate-50/60 p-6 sm:p-7">
                 <div className="flex items-start gap-4">
                   <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/25">
                     <GraduationCap size={20} />
@@ -74,10 +74,10 @@ export default function Education() {
           ))}
         </div>
 
-        {/* Certifications / Trainings / Seminars */}
+        {/* Certifications & Trainings */}
         <div className="space-y-6">
           <Reveal delay={120}>
-            <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
               <div className="mb-5 flex items-center gap-2.5">
                 <Award size={18} className="text-amber-500" />
                 <h3 className="font-bold text-slate-900">Sertifikasi</h3>
@@ -99,7 +99,7 @@ export default function Education() {
           </Reveal>
 
           <Reveal delay={200}>
-            <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
               <div className="mb-5 flex items-center gap-2.5">
                 <BookOpen size={18} className="text-sky-500" />
                 <h3 className="font-bold text-slate-900">Pelatihan</h3>
@@ -117,31 +117,6 @@ export default function Education() {
                   </li>
                 ))}
               </ul>
-            </div>
-          </Reveal>
-
-          <Reveal delay={280}>
-            <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
-              <div className="mb-5 flex items-center gap-2.5">
-                <Presentation size={18} className="text-violet-500" />
-                <h3 className="font-bold text-slate-900">Seminar</h3>
-              </div>
-              {seminars.map((s) => (
-                <div key={s.title}>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">{s.title}</p>
-                      <p className="text-xs text-slate-400">{s.issuer}</p>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500">
-                      {s.year}
-                    </span>
-                  </div>
-                  <p className="mt-3 rounded-xl bg-slate-50 px-4 py-3 text-xs italic leading-relaxed text-slate-500">
-                    “{s.topic}”
-                  </p>
-                </div>
-              ))}
             </div>
           </Reveal>
         </div>

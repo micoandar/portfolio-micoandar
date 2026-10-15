@@ -9,12 +9,20 @@ import {
   Server,
   Shield,
   Smartphone,
+  Globe,
+  Eye,
+  ScanEye,
+  Lock,
+  Key,
+  UserCheck,
+  ShieldCheck,
 } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
-import { skillGroups, type SkillLevel } from "@/data/skills";
+import { skillGroups } from "@/data/skills";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 
 const iconMap = {
   braces: Braces,
@@ -27,18 +35,43 @@ const iconMap = {
   cloud: Cloud,
 } as const;
 
-const levelStyle: Record<SkillLevel, string> = {
-  Mahir: "bg-emerald-50 text-emerald-700 border-emerald-100",
-  Menengah: "bg-sky-50 text-sky-700 border-sky-100",
-  Dasar: "bg-amber-50 text-amber-700 border-amber-100",
+// Fallback icon map untuk skill yang tidak punya logo
+const fallbackIconMap: Record<string, React.ElementType> = {
+  SQL: Database,
+  "AJAX / Fetch API": Globe,
+  "REST API": Globe,
+  Recharts: LayoutTemplate,
+  "Computer Vision": Eye,
+  "YOLO (v8/v11/26)": ScanEye,
+  Authentication: Key,
+  RBAC: UserCheck,
+  "CSRF Protection": ShieldCheck,
+  "Password Hashing": Lock,
+  "Cloud Deployment": Cloud,
 };
 
-// Terjemahan label level
-const levelLabel: Record<SkillLevel, { id: string; en: string }> = {
-  Mahir: { id: "Mahir", en: "Advanced" },
-  Menengah: { id: "Menengah", en: "Intermediate" },
-  Dasar: { id: "Dasar", en: "Beginner" },
-};
+function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
+  const [error, setError] = useState(false);
+
+  // Jika ada logo dan belum error, tampilkan gambar
+  if (skill.logo && !error) {
+    return (
+      <img
+        src={skill.logo}
+        alt={skill.name}
+        width={20}
+        height={20}
+        loading="lazy"
+        className="h-5 w-5 shrink-0 object-contain"
+        onError={() => setError(true)}
+      />
+    );
+  }
+
+  // Fallback ke Lucide icon
+  const Fallback = fallbackIconMap[skill.name] || Braces;
+  return <Fallback size={16} className="h-5 w-5 shrink-0 text-slate-500" />;
+}
 
 export default function Skills() {
   const { lang } = useLanguage();
@@ -70,20 +103,16 @@ export default function Skills() {
 
                 <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4">
                   {group.items.map((skill) => (
-                    <li key={skill.name}>
-                      <div className="flex items-start justify-between gap-3">
+                    <li key={skill.name} className="flex items-start gap-3">
+                      <SkillIcon skill={skill} />
+                      <div>
                         <p className="text-sm font-semibold leading-tight text-slate-800">
                           {skill.name}
                         </p>
-                        <span
-                          className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${levelStyle[skill.level]}`}
-                        >
-                          {levelLabel[skill.level][lang]}
-                        </span>
+                        <p className="mt-0.5 text-xs leading-relaxed text-slate-500">
+                          {skill.description[lang]}
+                        </p>
                       </div>
-                      <p className="mt-1 text-xs leading-relaxed text-slate-500">
-                        {skill.description[lang]}
-                      </p>
                     </li>
                   ))}
                 </ul>

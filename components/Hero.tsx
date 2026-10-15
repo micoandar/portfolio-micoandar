@@ -54,11 +54,11 @@ export default function Hero() {
             {profile.summary[lang]}
           </p>
 
-          {/* Tombol — semua sejajar dalam satu baris */}
-          <div className="mt-7 flex flex-wrap items-center gap-2 sm:mt-8 sm:gap-2.5">
+          {/* Tombol: 2 kolom di mobile (rapi & touch target besar), 1 baris sejajar di desktop */}
+          <div className="mt-7 grid grid-cols-2 gap-2.5 sm:mt-8 sm:flex sm:flex-wrap sm:items-center sm:gap-2.5">
             <a
               href="#proyek"
-              className="group inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-brand-600 to-violet-600 px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-brand-500/25 transition hover:-translate-y-0.5 hover:shadow-brand-500/35 sm:text-[13px]"
+              className="group inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-brand-600 to-violet-600 px-4 py-3 text-xs font-semibold text-white shadow-lg shadow-brand-500/25 transition hover:-translate-y-0.5 hover:shadow-brand-500/35 sm:py-2.5 sm:text-[13px]"
             >
               {t.viewProjects}
               <ArrowRight size={14} className="transition group-hover:translate-x-0.5" />
@@ -67,7 +67,7 @@ export default function Hero() {
             <a
               href={profile.cvPath}
               download
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-4 py-2.5 text-xs font-semibold text-brand-700 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-100 sm:text-[13px]"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-4 py-3 text-xs font-semibold text-brand-700 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-100 sm:py-2.5 sm:text-[13px]"
             >
               <Download size={14} />
               {t.downloadCv}
@@ -77,7 +77,7 @@ export default function Hero() {
               href={profile.github}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 sm:text-[13px]"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 sm:py-2.5 sm:text-[13px]"
             >
               <Github size={14} />
               GitHub
@@ -87,7 +87,7 @@ export default function Hero() {
               href={profile.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 sm:text-[13px]"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 sm:py-2.5 sm:text-[13px]"
             >
               <Linkedin size={14} />
               LinkedIn
@@ -155,7 +155,7 @@ export default function Hero() {
                     key={stat.label.id}
                     className="rounded-2xl bg-slate-50 px-1.5 py-3 text-center sm:px-2 sm:py-3.5"
                   >
-                    <p className="text-lg font-black text-slate-900 sm:text-xl">
+                    <p className="text-base font-black text-slate-900 sm:text-lg lg:text-xl">
                       {stat.value}
                       <span className="text-[10px] font-semibold text-slate-400 sm:text-xs">
                         {stat.suffix}

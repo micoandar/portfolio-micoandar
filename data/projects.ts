@@ -5,6 +5,7 @@ export type Project = {
   title: string;
   subtitle: LText;
   category: "Web" | "AI" | "Mobile";
+  image: string;
   gradient: string;
   tech: string[];
   highlights: LText[];
@@ -19,6 +20,7 @@ export const projects: Project[] = [
       en: "End-to-end web with rule-based chatbot & admin dashboard",
     },
     category: "Web",
+    image: "/images/projects/restoran-kita.jpg",
     gradient: "from-amber-400 to-orange-500",
     tech: ["PHP Native", "MySQL", "Bootstrap 5", "JavaScript", "AJAX/Fetch API", "Chart.js", "Flatpickr"],
     highlights: [
@@ -48,6 +50,7 @@ export const projects: Project[] = [
       en: "Real-time worker PPE compliance monitoring",
     },
     category: "AI",
+    image: "/images/projects/ai-workplace-safety.jpg",
     gradient: "from-emerald-400 to-teal-600",
     tech: ["React 19", "Vite", "Axios", "Recharts", "FastAPI", "Pydantic", "YOLO11", "PyTorch", "OpenCV", "MySQL", "SQLAlchemy", "Docker", "Vercel", "Railway"],
     highlights: [
@@ -81,6 +84,7 @@ export const projects: Project[] = [
       en: "Local AI-based CCTV monitoring with WebSocket",
     },
     category: "AI",
+    image: "/images/projects/ai-cctv-person-detection.jpg",
     gradient: "from-sky-400 to-indigo-600",
     tech: ["React.js", "Vite", "Tailwind CSS", "Recharts", "FastAPI", "YOLO26n", "PyTorch", "OpenCV", "WebSocket", "SQLAlchemy", "MySQL"],
     highlights: [
@@ -110,6 +114,7 @@ export const projects: Project[] = [
       en: "Android app with on-device object detection",
     },
     category: "Mobile",
+    image: "/images/projects/deteksi-bahan-makanan.jpg",
     gradient: "from-lime-400 to-green-600",
     tech: ["Kotlin", "Android", "YOLOv8n (TFLite)", "Firebase Firestore", "Gemini API"],
     highlights: [
@@ -139,6 +144,7 @@ export const projects: Project[] = [
       en: "Multi-role academic information system",
     },
     category: "Web",
+    image: "/images/projects/nilai-siswa-smk.jpg",
     gradient: "from-fuchsia-400 to-purple-600",
     tech: ["PHP Native", "MySQL", "HTML5", "CSS3", "JavaScript"],
     highlights: [

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image"; // <-- Tambahkan import ini
 import { CheckCircle2 } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -27,30 +28,42 @@ export default function ProjectCard({
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-900/5">
-      <div
-        className={`relative h-32 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-5 sm:h-40 sm:p-6`}
-      >
-        <div className="absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:16px_16px]" />
-        <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-white/20 blur-3xl transition duration-500 group-hover:bg-white/30" />
+      
+      {/* Header: Gambar Proyek */}
+      <div className="relative h-44 shrink-0 overflow-hidden sm:h-56">
+        {/* Gambar utama */}
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition duration-700 group-hover:scale-105"
+          priority={index < 2} // Load cepat untuk 2 proyek pertama
+        />
 
-        <div className="relative flex h-full flex-col justify-between">
+        {/* Overlay gradient hitam agar teks putih terbaca */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+
+        {/* Konten di atas gambar */}
+        <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6 z-10">
           <div className="flex items-start justify-between gap-3">
-            <span className="font-mono text-[10px] font-bold tracking-widest text-white/70 sm:text-xs">
+            <span className="rounded bg-black/50 px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-white/90 backdrop-blur-md sm:text-xs">
               {String(index + 1).padStart(2, "0")} /
             </span>
-            <span className="rounded-full border border-white/30 bg-white/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white backdrop-blur sm:px-3 sm:text-[11px]">
+            <span className="rounded-full border border-white/20 bg-black/50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white backdrop-blur-md sm:px-3 sm:text-[11px]">
               {categoryLabel[project.category]}
             </span>
           </div>
 
           <div>
-            <h3 className="line-clamp-3 max-w-[95%] text-base font-bold leading-snug text-white drop-shadow-sm sm:line-clamp-2 sm:max-w-[90%] sm:text-lg">
+            <h3 className="line-clamp-3 max-w-[95%] text-base font-bold leading-snug text-white drop-shadow-md sm:line-clamp-2 sm:max-w-[90%] sm:text-xl">
               {project.title}
             </h3>
           </div>
         </div>
       </div>
 
+      {/* Body: Deskripsi & Tech */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <p className="text-xs font-medium text-slate-500 sm:text-sm">
           {project.subtitle[lang]}
@@ -74,7 +87,7 @@ export default function ProjectCard({
           ))}
         </ul>
 
-        <div className="mt-5 flex flex-wrap gap-1.5 border-t border-slate-100 pt-4 sm:mt-6 sm:pt-5">
+        <div className="mt-auto flex flex-wrap gap-1.5 border-t border-slate-100 pt-4 sm:mt-6 sm:pt-5">
           {project.tech.map((tech) => (
             <span
               key={tech}

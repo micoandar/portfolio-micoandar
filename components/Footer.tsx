@@ -11,7 +11,6 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-slate-200 bg-white">
-      // Ubah menjadi (tambahkan pb-24 untuk mobile):
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 pb-24 pt-10 sm:flex-row sm:px-8 sm:pb-10 sm:pt-10">
         <div className="text-center sm:text-left">
           <p className="text-sm font-bold text-slate-900">

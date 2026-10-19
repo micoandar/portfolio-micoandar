@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, ElementType } from "react"; // <-- Tambahkan ElementType
 import {
   Brain,
   Braces,
@@ -22,7 +23,6 @@ import Reveal from "@/components/Reveal";
 import { skillGroups } from "@/data/skills";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useState } from "react";
 
 const iconMap = {
   braces: Braces,
@@ -35,7 +35,8 @@ const iconMap = {
   cloud: Cloud,
 } as const;
 
-const fallbackIconMap: Record<string, React.ElementType> = {
+// Ubah React.ElementType menjadi ElementType
+const fallbackIconMap: Record<string, ElementType> = {
   SQL: Database,
   "AJAX / Fetch API": Globe,
   "REST API": Globe,

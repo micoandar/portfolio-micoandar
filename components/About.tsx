@@ -13,13 +13,12 @@ export default function About() {
 
   return (
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
-      {/* items-start membuat kedua kotak sejajar dari atas, tidak dipaksa sama tinggi */}
-      <div className="grid items-start gap-6 lg:grid-cols-[1.2fr_1fr]">
+      {/* Grid diubah dari 1.2fr menjadi 1.4fr agar kotak putih lebih lebar */}
+      <div className="grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
         
         {/* KOTAK KIRI (Putih) */}
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            {/* Hiasan Tanda Kutip Transparan di Belakang */}
             <Quote className="absolute -right-4 -top-4 h-32 w-32 text-slate-100/70" />
             
             <div className="relative z-10">
@@ -30,12 +29,12 @@ export default function About() {
                 {t.closing}
               </p>
 
-              {/* Soft Skills menempel rapi di bawah teks */}
-              <div className="mt-6 flex flex-wrap gap-2">
+              {/* Jarak (gap) dan padding tag sedikit dirapatkan agar muat 1 baris */}
+              <div className="mt-6 flex flex-wrap gap-1.5 sm:gap-2">
                 {profile.softSkills[lang].map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-full border border-brand-100 bg-brand-50 px-4 py-1.5 text-xs font-semibold text-brand-700"
+                    className="rounded-full border border-brand-100 bg-brand-50 px-3 py-1.5 text-[11px] font-semibold text-brand-700 sm:px-4 sm:text-xs"
                   >
                     {skill}
                   </span>

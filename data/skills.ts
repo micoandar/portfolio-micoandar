@@ -3,7 +3,7 @@ import type { LText } from "./profile";
 export type SkillItem = {
   name: string;
   description: LText;
-  logo?: string; // URL Simple Icons, jika tidak ada pakai ikon Lucide fallback
+  logo?: string;
 };
 
 export type SkillGroup = {
@@ -25,7 +25,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "TypeScript", description: { id: "JavaScript dengan tipe data — lebih aman saat coding.", en: "JavaScript with types — safer while coding." }, logo: "https://cdn.simpleicons.org/typescript" },
       { name: "Kotlin", description: { id: "Bahasa resmi untuk Android modern.", en: "Official language for modern Android." }, logo: "https://cdn.simpleicons.org/kotlin" },
       { name: "Java", description: { id: "Dasar OOP, dipakai di kuliah dan pengembangan Android.", en: "OOP fundamentals, used in courses and Android development." }, logo: "https://cdn.simpleicons.org/openjdk" },
-      { name: "SQL", description: { id: "Query database relasional untuk ambil & olah data.", en: "Relational database queries to fetch and process data." } }, // fallback Lucide Database
+      { name: "SQL", description: { id: "Query database relasional untuk ambil & olah data.", en: "Relational database queries to fetch and process data." } },
     ],
   },
   {
@@ -38,8 +38,8 @@ export const skillGroups: SkillGroup[] = [
       { name: "Bootstrap 5", description: { id: "Framework CSS praktis untuk layout responsif.", en: "Practical CSS framework for responsive layouts." }, logo: "https://cdn.simpleicons.org/bootstrap" },
       { name: "Tailwind CSS", description: { id: "Utility-first CSS, styling cepat tanpa file CSS terpisah.", en: "Utility-first CSS, quick styling without separate CSS files." }, logo: "https://cdn.simpleicons.org/tailwindcss" },
       { name: "Chart.js", description: { id: "Library grafik untuk dashboard dan analitik.", en: "Charting library for dashboards and analytics." }, logo: "https://cdn.simpleicons.org/chartdotjs" },
-      { name: "Recharts", description: { id: "Grafik React untuk visualisasi data statistik.", en: "React charts for statistical data visualization." } }, // fallback
-      { name: "AJAX / Fetch API", description: { id: "Ambil data dari server tanpa reload halaman.", en: "Fetch data from server without page reload." } }, // fallback
+      { name: "Recharts", description: { id: "Grafik React untuk visualisasi data statistik.", en: "React charts for statistical data visualization." } },
+      { name: "AJAX / Fetch API", description: { id: "Ambil data dari server tanpa reload halaman.", en: "Fetch data from server without page reload." } },
     ],
   },
   {
@@ -47,10 +47,12 @@ export const skillGroups: SkillGroup[] = [
     icon: "server",
     accent: "from-emerald-500 to-teal-500",
     items: [
+      { name: "Node.js", description: { id: "Runtime JavaScript untuk backend yang cepat dan scalable.", en: "JavaScript runtime for fast and scalable backends." }, logo: "https://cdn.simpleicons.org/nodedotjs" },
+      { name: "Express.js", description: { id: "Framework minimalis Node.js untuk membuat REST API.", en: "Minimalist Node.js framework for building REST APIs." }, logo: "https://cdn.simpleicons.org/express" },
       { name: "FastAPI", description: { id: "Framework Python modern untuk REST API cepat.", en: "Modern Python framework for fast REST APIs." }, logo: "https://cdn.simpleicons.org/fastapi" },
       { name: "Laravel", description: { id: "Framework PHP dengan struktur MVC lengkap.", en: "PHP framework with a complete MVC structure." }, logo: "https://cdn.simpleicons.org/laravel" },
       { name: "SQLAlchemy", description: { id: "ORM Python untuk akses database yang rapi.", en: "Python ORM for clean database access." }, logo: "https://cdn.simpleicons.org/sqlalchemy" },
-      { name: "REST API", description: { id: "Standar komunikasi antar aplikasi via HTTP.", en: "Standard communication between applications via HTTP." } }, // fallback
+      { name: "REST API", description: { id: "Standar komunikasi antar aplikasi via HTTP.", en: "Standard communication between applications via HTTP." } },
     ],
   },
   {
@@ -58,8 +60,8 @@ export const skillGroups: SkillGroup[] = [
     icon: "brain",
     accent: "from-violet-500 to-purple-500",
     items: [
-      { name: "Computer Vision", description: { id: "Bidang AI untuk memahami gambar & video.", en: "AI field for understanding images & videos." } }, // fallback
-      { name: "YOLO (v8/v11/26)", description: { id: "Model deteksi objek real-time yang cepat.", en: "Fast real-time object detection models." } }, // fallback
+      { name: "Computer Vision", description: { id: "Bidang AI untuk memahami gambar & video.", en: "AI field for understanding images & videos." } },
+      { name: "YOLO (v8/v11/26)", description: { id: "Model deteksi objek real-time yang cepat.", en: "Fast real-time object detection models." } },
       { name: "PyTorch", description: { id: "Framework deep learning untuk training model.", en: "Deep learning framework for training models." }, logo: "https://cdn.simpleicons.org/pytorch" },
       { name: "OpenCV", description: { id: "Library pengolahan gambar & video.", en: "Image & video processing library." }, logo: "https://cdn.simpleicons.org/opencv" },
       { name: "TensorFlow Lite", description: { id: "Versi ringan TF untuk mobile / embedded.", en: "Lightweight TF for mobile / embedded devices." }, logo: "https://cdn.simpleicons.org/tensorflow" },
@@ -92,10 +94,10 @@ export const skillGroups: SkillGroup[] = [
     icon: "shield",
     accent: "from-slate-600 to-slate-800",
     items: [
-      { name: "Authentication", description: { id: "Sistem login & verifikasi identitas pengguna.", en: "Login system & user identity verification." } }, // fallback
-      { name: "RBAC", description: { id: "Role-Based Access Control — hak akses per peran.", en: "Role-Based Access Control — permissions per role." } }, // fallback
-      { name: "CSRF Protection", description: { id: "Proteksi dari serangan form palsu.", en: "Protection against forged form attacks." } }, // fallback
-      { name: "Password Hashing", description: { id: "Enkripsi password sebelum disimpan ke database.", en: "Encrypt passwords before storing them in the database." } }, // fallback
+      { name: "Authentication", description: { id: "Sistem login & verifikasi identitas pengguna.", en: "Login system & user identity verification." } },
+      { name: "RBAC", description: { id: "Role-Based Access Control — hak akses per peran.", en: "Role-Based Access Control — permissions per role." } },
+      { name: "CSRF Protection", description: { id: "Proteksi dari serangan form palsu.", en: "Protection against forged form attacks." } },
+      { name: "Password Hashing", description: { id: "Enkripsi password sebelum disimpan ke database.", en: "Encrypt passwords before storing them in the database." } },
     ],
   },
   {
@@ -107,7 +109,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Git / GitHub", description: { id: "Version control & kolaborasi kode tim.", en: "Version control & team code collaboration." }, logo: "https://cdn.simpleicons.org/github" },
       { name: "Railway", description: { id: "Platform deploy backend + database cloud.", en: "Backend + cloud database deployment platform." }, logo: "https://cdn.simpleicons.org/railway" },
       { name: "Vercel", description: { id: "Platform deploy frontend Next.js super cepat.", en: "Super-fast Next.js frontend deployment platform." }, logo: "https://cdn.simpleicons.org/vercel" },
-      { name: "Cloud Deployment", description: { id: "Deploy aplikasi ke server cloud secara publik.", en: "Deploy applications publicly to cloud servers." } }, // fallback
+      { name: "Cloud Deployment", description: { id: "Deploy aplikasi ke server cloud secara publik.", en: "Deploy applications publicly to cloud servers." } },
     ],
   },
 ];

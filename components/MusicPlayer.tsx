@@ -13,8 +13,8 @@ export default function MusicPlayer() {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        // Set volume ke 30% agar tidak terlalu keras
-        audioRef.current.volume = 0.3; 
+        // VOLUME DINAIKKAN MENJADI 60% (0.6)
+        audioRef.current.volume = 0.6; 
         audioRef.current.play();
       }
       setIsPlaying(!isPlaying);

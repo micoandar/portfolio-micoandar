@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
+import { Sparkles, Quote } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { profile } from "@/data/profile";
@@ -13,18 +13,25 @@ export default function About() {
 
   return (
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
-      <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+        
+        {/* KOTAK KIRI (Putih) */}
         <Reveal>
-          <div className="h-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
-              {t.desc}
-            </p>
+          <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            {/* Hiasan Tanda Kutip Transparan di Belakang */}
+            <Quote className="absolute -right-4 -top-4 h-32 w-32 text-slate-100/70" />
+            
+            <div className="relative z-10 space-y-5">
+              <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
+                {t.desc}
+              </p>
+              <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
+                {t.closing}
+              </p>
+            </div>
 
-            <p className="mt-5 text-sm leading-relaxed text-slate-600 sm:text-base">
-              {t.closing}
-            </p>
-
-            <div className="mt-7 flex flex-wrap gap-2">
+            {/* Soft Skills ditaruh di paling bawah */}
+            <div className="relative z-10 mt-8 flex flex-wrap gap-2">
               {profile.softSkills[lang].map((skill) => (
                 <span
                   key={skill}
@@ -37,6 +44,7 @@ export default function About() {
           </div>
         </Reveal>
 
+        {/* KOTAK KANAN (Hitam) */}
         <Reveal delay={120}>
           <div className="h-full rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white shadow-xl shadow-slate-900/20 sm:p-8">
             <Sparkles className="text-brand-300" size={22} />
@@ -55,6 +63,7 @@ export default function About() {
             </ul>
           </div>
         </Reveal>
+
       </div>
     </Section>
   );

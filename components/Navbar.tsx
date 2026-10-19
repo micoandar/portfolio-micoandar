@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X, Languages } from "lucide-react";
+import { Menu, X, Languages, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -11,7 +12,10 @@ import { cn } from "@/lib/utils";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { lang, toggle } = useLanguage();
+  const [mounted, setMounted] = useState(false);
+  
+  const { lang, toggle: toggleLang } = useLanguage();
+  const { theme, setTheme } = useTheme();
   const t = translations[lang].nav;
 
   const links = [
@@ -22,6 +26,8 @@ export default function Navbar() {
     { href: "#kontak", label: t.contact },
   ];
 
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
@@ -31,9 +37,7 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [open]);
 
   return (
@@ -41,17 +45,17 @@ export default function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-b border-slate-200/70 bg-white/80 backdrop-blur-xl"
+          ? "border-b border-slate-200/70 bg-white/80 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/80"
           : "border-b border-transparent bg-transparent"
       )}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8 sm:py-4">
-        <Link href="#beranda" className="group flex items-center gap-2.5 text-sm font-bold text-slate-900">
+        <Link href="#beranda" className="group flex items-center gap-2.5 text-sm font-bold text-slate-900 dark:text-white">
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-xs font-black text-white shadow-lg shadow-brand-500/25 transition group-hover:scale-105">
             {profile.initials}
           </span>
           <span className="hidden sm:block">
-            Micoandar<span className="text-brand-600">.</span>
+            Micoandar<span className="text-brand-600 dark:text-brand-400">.</span>
           </span>
         </Link>
 
@@ -60,7 +64,7 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
               >
                 {link.label}
               </a>
@@ -69,12 +73,24 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          {/* Language switcher */}
+          {/* Toggle Theme */}
+          {mounted && (
+            <button
+              type="button"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label="Toggle Theme"
+              className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+          )}
+
+          {/* Toggle Language */}
           <button
             type="button"
-            onClick={toggle}
+            onClick={toggleLang}
             aria-label="Toggle language"
-            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-bold uppercase tracking-wide text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 text-xs font-bold uppercase tracking-wide text-slate-700 transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             <Languages size={14} />
             {lang === "id" ? "ID" : "EN"}
@@ -82,7 +98,7 @@ export default function Navbar() {
 
           <a
             href={`mailto:${profile.email}`}
-            className="hidden rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 md:inline-block"
+            className="hidden rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 md:inline-block"
           >
             {t.cta}
           </a>
@@ -91,7 +107,7 @@ export default function Navbar() {
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 md:hidden"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 md:hidden"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -101,7 +117,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       <div
         className={cn(
-          "overflow-hidden border-t border-slate-200/70 bg-white/95 backdrop-blur-xl transition-all duration-300 md:hidden",
+          "overflow-hidden border-t border-slate-200/70 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-slate-800 dark:bg-slate-950/95 md:hidden",
           open ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0"
         )}
       >
@@ -111,7 +127,7 @@ export default function Navbar() {
               <a
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 {link.label}
               </a>
@@ -121,7 +137,7 @@ export default function Navbar() {
             <a
               href={`mailto:${profile.email}`}
               onClick={() => setOpen(false)}
-              className="mt-1 block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white"
+              className="mt-1 block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
             >
               {t.cta}
             </a>

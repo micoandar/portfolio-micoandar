@@ -13,28 +13,26 @@ export default function About() {
 
   return (
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
-      {/* Grid diubah dari 1.2fr menjadi 1.4fr agar kotak putih lebih lebar */}
       <div className="grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
         
         {/* KOTAK KIRI (Putih) */}
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <Quote className="absolute -right-4 -top-4 h-32 w-32 text-slate-100/70" />
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+            <Quote className="absolute -right-4 -top-4 h-32 w-32 text-slate-100/70 dark:text-slate-800/30" />
             
             <div className="relative z-10">
-              <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
                 {t.desc}
               </p>
-              <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+              <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
                 {t.closing}
               </p>
 
-              {/* Jarak (gap) dan padding tag sedikit dirapatkan agar muat 1 baris */}
               <div className="mt-6 flex flex-wrap gap-1.5 sm:gap-2">
                 {profile.softSkills[lang].map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-full border border-brand-100 bg-brand-50 px-3 py-1.5 text-[11px] font-semibold text-brand-700 sm:px-4 sm:text-xs"
+                    className="rounded-full border border-brand-100 bg-brand-50 px-3 py-1.5 text-[11px] font-semibold text-brand-700 dark:border-brand-900/50 dark:bg-brand-900/30 dark:text-brand-300 sm:px-4 sm:text-xs"
                   >
                     {skill}
                   </span>
@@ -46,7 +44,7 @@ export default function About() {
 
         {/* KOTAK KANAN (Hitam) */}
         <Reveal delay={120}>
-          <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white shadow-xl shadow-slate-900/20 sm:p-8">
+          <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white shadow-xl shadow-slate-900/20 dark:border dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 sm:p-8">
             <Sparkles className="text-brand-300" size={22} />
             <h3 className="mt-5 text-lg font-bold">{t.interestingTitle}</h3>
             
@@ -56,7 +54,7 @@ export default function About() {
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
                   <div className="flex flex-col gap-1">
                     <span className="font-bold text-white">{item.title}</span>
-                    <span className="text-slate-300">{item.desc}</span>
+                    <span className="text-slate-400">{item.desc}</span>
                   </div>
                 </li>
               ))}

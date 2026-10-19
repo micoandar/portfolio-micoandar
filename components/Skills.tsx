@@ -35,7 +35,6 @@ const iconMap = {
   cloud: Cloud,
 } as const;
 
-// Fallback icon map untuk skill yang tidak punya logo
 const fallbackIconMap: Record<string, React.ElementType> = {
   SQL: Database,
   "AJAX / Fetch API": Globe,
@@ -53,7 +52,6 @@ const fallbackIconMap: Record<string, React.ElementType> = {
 function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
   const [error, setError] = useState(false);
 
-  // Jika ada logo dan belum error, tampilkan gambar
   if (skill.logo && !error) {
     return (
       <img
@@ -62,15 +60,14 @@ function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
         width={20}
         height={20}
         loading="lazy"
-        className="h-5 w-5 shrink-0 object-contain"
+        className="h-5 w-5 shrink-0 object-contain dark:brightness-110"
         onError={() => setError(true)}
       />
     );
   }
 
-  // Fallback ke Lucide icon
   const Fallback = fallbackIconMap[skill.name] || Braces;
-  return <Fallback size={16} className="h-5 w-5 shrink-0 text-slate-500" />;
+  return <Fallback size={16} className="h-5 w-5 shrink-0 text-slate-500 dark:text-slate-400" />;
 }
 
 export default function Skills() {
@@ -84,7 +81,7 @@ export default function Skills() {
           const Icon = iconMap[group.icon as keyof typeof iconMap];
           return (
             <Reveal key={group.title.id} delay={i * 60} className="h-full">
-              <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:shadow-lg hover:shadow-slate-900/5 sm:p-6">
+              <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:shadow-lg hover:shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
                 <div className="flex items-center gap-3">
                   <div
                     className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-md sm:h-11 sm:w-11`}
@@ -92,24 +89,24 @@ export default function Skills() {
                     <Icon size={18} />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900 sm:text-base">
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white sm:text-base">
                       {group.title[lang]}
                     </h3>
-                    <p className="text-[11px] text-slate-400 sm:text-xs">
+                    <p className="text-[11px] text-slate-400 dark:text-slate-500 sm:text-xs">
                       {group.items.length} {t.count}
                     </p>
                   </div>
                 </div>
 
-                <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4">
+                <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
                   {group.items.map((skill) => (
                     <li key={skill.name} className="flex items-start gap-3">
                       <SkillIcon skill={skill} />
                       <div>
-                        <p className="text-sm font-semibold leading-tight text-slate-800">
+                        <p className="text-sm font-semibold leading-tight text-slate-800 dark:text-slate-200">
                           {skill.name}
                         </p>
-                        <p className="mt-0.5 text-xs leading-relaxed text-slate-500">
+                        <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
                           {skill.description[lang]}
                         </p>
                       </div>

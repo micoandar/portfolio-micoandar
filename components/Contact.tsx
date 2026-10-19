@@ -31,7 +31,7 @@ export default function Contact() {
       value: profile.githubHandle,
       href: profile.github,
       icon: Github,
-      accent: "from-slate-700 to-slate-900",
+      accent: "from-slate-700 to-slate-900 dark:from-slate-600 dark:to-slate-800",
     },
     {
       label: "LinkedIn",
@@ -46,7 +46,7 @@ export default function Contact() {
     <Section id="kontak" eyebrow={t.eyebrow} title={t.title} description={t.desc}>
       <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
         <Reveal>
-          <div className="flex h-full flex-col justify-between rounded-3xl bg-gradient-to-br from-brand-600 via-violet-600 to-indigo-700 p-6 text-white shadow-xl shadow-brand-500/20 sm:p-8">
+          <div className="flex h-full flex-col justify-between rounded-3xl bg-gradient-to-br from-brand-600 via-violet-600 to-indigo-700 p-6 text-white shadow-xl shadow-brand-500/20 sm:p-8 dark:from-brand-800 dark:via-violet-900 dark:to-indigo-950">
             <div>
               <h3 className="text-xl font-bold leading-snug sm:text-2xl">{t.cardTitle}</h3>
               <p className="mt-4 text-sm leading-relaxed text-white/80">{t.cardDesc}</p>
@@ -83,7 +83,7 @@ export default function Contact() {
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
-                className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5"
+                className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700"
               >
                 <div
                   className={`grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br ${c.accent} text-white shadow-md`}
@@ -91,10 +91,10 @@ export default function Contact() {
                   <c.icon size={18} />
                 </div>
                 <div className="mt-6">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
                     {c.label}
                   </p>
-                  <p className="mt-1 break-all text-sm font-semibold text-slate-800 transition group-hover:text-brand-700">
+                  <p className="mt-1 break-all text-sm font-semibold text-slate-800 transition group-hover:text-brand-700 dark:text-slate-200 dark:group-hover:text-brand-400">
                     {c.value}
                   </p>
                 </div>

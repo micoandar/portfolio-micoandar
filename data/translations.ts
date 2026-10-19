@@ -20,11 +20,26 @@ export const translations = {
       desc: "Saya menikmati proses mengembangkan aplikasi secara menyeluruh, mulai dari merancang struktur database dan REST API, membangun antarmuka responsif, hingga mengintegrasikan fitur dan memastikan aplikasi berjalan dengan baik.",
       interestingTitle: "Yang saya kerjakan",
       services: [
-        "Perancangan database & REST API yang rapi dan modular",
-        "Antarmuka responsif dengan fokus pada pengalaman pengguna",
-        "Autentikasi, RBAC, dan praktik keamanan aplikasi",
-        "Model computer vision: YOLO, PyTorch, TensorFlow Lite",
-        "Deployment ke cloud (Vercel, Railway, Docker)",
+        { 
+          title: "Backend Development", 
+          desc: "Merancang database relasional dan REST API dengan struktur yang modular dan mudah dikembangkan." 
+        },
+        { 
+          title: "Frontend Development", 
+          desc: "Membangun antarmuka web yang responsif dengan fokus pada pengalaman pengguna (UX)." 
+        },
+        { 
+          title: "Authentication & Security", 
+          desc: "Mengimplementasikan autentikasi, kontrol akses berbasis peran (RBAC), dan validasi input." 
+        },
+        { 
+          title: "AI & Computer Vision", 
+          desc: "Mengembangkan solusi deteksi objek menggunakan YOLO serta memanfaatkan PyTorch dan TensorFlow Lite sesuai kebutuhan proyek." 
+        },
+        { 
+          title: "Deployment & Containerization", 
+          desc: "Melakukan deployment aplikasi menggunakan Vercel dan Railway, serta menggunakan Docker untuk kebutuhan containerization." 
+        },
       ],
       closing: "Saya memiliki minat pada Full-Stack Development dan pengembangan sistem cerdas berbasis AI. Saya senang mempelajari teknologi baru, memecahkan masalah teknis, dan mengembangkan solusi yang fungsional serta mudah digunakan.",
     },
@@ -82,11 +97,26 @@ export const translations = {
       desc: "I enjoy the comprehensive process of developing applications, from designing database structures and REST APIs, building responsive interfaces, to integrating features and ensuring the application runs smoothly.",
       interestingTitle: "What I do",
       services: [
-        "Designing clean and modular databases & REST APIs",
-        "Responsive interfaces with a focus on user experience",
-        "Authentication, RBAC, and application security practices",
-        "Computer vision models: YOLO, PyTorch, TensorFlow Lite",
-        "Cloud deployment (Vercel, Railway, Docker)",
+        { 
+          title: "Backend Development", 
+          desc: "Designing relational databases and REST APIs with a modular and scalable structure." 
+        },
+        { 
+          title: "Frontend Development", 
+          desc: "Building responsive web interfaces with a focus on user experience (UX)." 
+        },
+        { 
+          title: "Authentication & Security", 
+          desc: "Implementing authentication, role-based access control (RBAC), and input validation." 
+        },
+        { 
+          title: "AI & Computer Vision", 
+          desc: "Developing object detection solutions using YOLO and utilizing PyTorch and TensorFlow Lite as needed." 
+        },
+        { 
+          title: "Deployment & Containerization", 
+          desc: "Deploying applications using Vercel and Railway, and utilizing Docker for containerization." 
+        },
       ],
       closing: "I have a strong interest in Full-Stack Development and AI-based intelligent systems. I enjoy learning new technologies, solving technical problems, and developing solutions that are both functional and easy to use.",
     },

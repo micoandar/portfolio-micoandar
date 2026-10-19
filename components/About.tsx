@@ -41,11 +41,15 @@ export default function About() {
           <div className="h-full rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white shadow-xl shadow-slate-900/20 sm:p-8">
             <Sparkles className="text-brand-300" size={22} />
             <h3 className="mt-5 text-lg font-bold">{t.interestingTitle}</h3>
+            
             <ul className="mt-5 space-y-4 text-sm leading-relaxed text-slate-300">
               {t.services.map((item) => (
-                <li key={item} className="flex gap-3">
+                <li key={item.title} className="flex gap-3">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
-                  {item}
+                  <div>
+                    <span className="font-semibold text-white">{item.title}: </span>
+                    <span className="text-slate-300">{item.desc}</span>
+                  </div>
                 </li>
               ))}
             </ul>

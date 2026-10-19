@@ -17,7 +17,7 @@ export default function Projects() {
       eyebrow={t.eyebrow}
       title={t.title}
       description={t.desc}
-      className="bg-white"
+      className="bg-white dark:bg-slate-950" // <-- Tambahan dark:bg-slate-950 di sini
     >
       <div className="grid gap-6 md:grid-cols-2">
         {projects.map((project, i) => (

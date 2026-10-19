@@ -25,15 +25,15 @@ export default function Section({
         <Reveal>
           <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
             {eyebrow && (
-              <span className="mb-3 inline-block rounded-full bg-brand-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-brand-700 sm:px-4 sm:text-xs">
+              <span className="mb-3 inline-block rounded-full bg-brand-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-brand-700 dark:bg-brand-900/30 dark:text-brand-300 sm:px-4 sm:text-xs">
                 {eyebrow}
               </span>
             )}
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl lg:text-4xl">
               {title}
             </h2>
             {description && (
-              <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:mt-4 sm:text-base">
+              <p className="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:mt-4 sm:text-base">
                 {description}
               </p>
             )}

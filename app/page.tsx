@@ -7,6 +7,7 @@ import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import MusicPlayer from "@/components/MusicPlayer"; // <-- Tambahkan ini
 
 export default function Home() {
   return (
@@ -19,7 +20,10 @@ export default function Home() {
       <Education />
       <Contact />
       <Footer />
+      
+      {/* Tombol Mengapung */}
       <BackToTop />
+      <MusicPlayer /> {/* <-- Letakkan di sini */}
     </main>
   );
 }

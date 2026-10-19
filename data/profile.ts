@@ -22,10 +22,13 @@ export const profile = {
   githubHandle: "github.com/micoandar",
   linkedin: "https://www.linkedin.com/in/micoandar-justinus-marbun",
   linkedinHandle: "Micoandar Justinus Marbun",
+  
+  // TEKS SUMMARY YANG BARU
   summary: {
-    id: "Fresh Graduate 2026 S1 Informatika Universitas Gunadarma dengan pengalaman proyek hampir 2 tahun dalam pengembangan web full-stack, sistem AI/computer vision, dan aplikasi Android. Terbiasa merancang dan membangun aplikasi end-to-end — mulai dari perancangan database dan REST API, antarmuka responsif, autentikasi dan kontrol akses berbasis peran, hingga deployment.",
-    en: "2026 Fresh Graduate in Informatics from Gunadarma University with nearly 2 years of project experience in full-stack web development, AI/computer vision systems, and Android applications. Experienced in designing and building end-to-end applications — from database design and REST APIs, responsive interfaces, authentication and role-based access control, to deployment.",
+    id: "Fresh Graduate S1 Informatika Universitas Gunadarma (2026) dengan pengalaman proyek hampir 2 tahun dalam pengembangan aplikasi web full-stack, sistem AI/computer vision, dan aplikasi Android. Berfokus pada pengembangan aplikasi end-to-end, mulai dari perancangan hingga deployment.",
+    en: "Informatics Graduate from Gunadarma University (2026) with nearly 2 years of project experience in full-stack web application development, AI/computer vision systems, and Android applications. Focused on end-to-end application development, from design to deployment.",
   } as LText,
+
   softSkills: {
     id: ["Komunikatif", "Adaptif", "Kreatif", "Problem Solving", "Fast Learner"],
     en: ["Communicative", "Adaptive", "Creative", "Problem Solving", "Fast Learner"],

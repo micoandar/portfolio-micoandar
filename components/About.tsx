@@ -12,12 +12,12 @@ export default function About() {
   const t = translations[lang].about;
 
   return (
-    <Section id="tentang" eyebrow={t.eyebrow} title={t.title} description={t.desc}>
+    <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <Reveal>
           <div className="h-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
-              {profile.summary[lang]}
+              {t.desc}
             </p>
 
             <p className="mt-5 text-sm leading-relaxed text-slate-600 sm:text-base">

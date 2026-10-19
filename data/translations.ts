@@ -16,8 +16,8 @@ export const translations = {
     },
     about: {
       eyebrow: "Tentang Saya",
-      title: "Membangun produk dari ide sampai deploy",
-      desc: "Saya menikmati proses merancang sistem secara utuh — mulai dari struktur data, API, tampilan, sampai aplikasi berjalan di production.",
+      title: "Membangun Produk dari Ide hingga Deployment",
+      desc: "Saya menikmati proses mengembangkan aplikasi secara menyeluruh, mulai dari merancang struktur database dan REST API, membangun antarmuka responsif, hingga mengintegrasikan fitur dan memastikan aplikasi berjalan dengan baik.",
       interestingTitle: "Yang saya kerjakan",
       services: [
         "Perancangan database & REST API yang rapi dan modular",
@@ -26,8 +26,7 @@ export const translations = {
         "Model computer vision: YOLO, PyTorch, TensorFlow Lite",
         "Deployment ke cloud (Vercel, Railway, Docker)",
       ],
-      closing:
-        "Saya tertarik pada bidang Full Stack Development serta pengembangan sistem cerdas berbasis AI, dan siap berkontribusi secara maksimal bagi perusahaan.",
+      closing: "Saya memiliki minat pada Full-Stack Development dan pengembangan sistem cerdas berbasis AI. Saya senang mempelajari teknologi baru, memecahkan masalah teknis, dan mengembangkan solusi yang fungsional serta mudah digunakan.",
     },
     projects: {
       eyebrow: "Portofolio",
@@ -79,8 +78,8 @@ export const translations = {
     },
     about: {
       eyebrow: "About Me",
-      title: "Building products from idea to deploy",
-      desc: "I enjoy designing systems end-to-end — from data structures, APIs, and interfaces, to applications running in production.",
+      title: "Building Products from Idea to Deployment",
+      desc: "I enjoy the comprehensive process of developing applications, from designing database structures and REST APIs, building responsive interfaces, to integrating features and ensuring the application runs smoothly.",
       interestingTitle: "What I do",
       services: [
         "Designing clean and modular databases & REST APIs",
@@ -89,8 +88,7 @@ export const translations = {
         "Computer vision models: YOLO, PyTorch, TensorFlow Lite",
         "Cloud deployment (Vercel, Railway, Docker)",
       ],
-      closing:
-        "I'm passionate about Full Stack Development and building AI-powered intelligent systems, and I'm ready to contribute fully to your team.",
+      closing: "I have a strong interest in Full-Stack Development and AI-based intelligent systems. I enjoy learning new technologies, solving technical problems, and developing solutions that are both functional and easy to use.",
     },
     projects: {
       eyebrow: "Portfolio",

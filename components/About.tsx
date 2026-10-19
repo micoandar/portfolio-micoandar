@@ -46,8 +46,8 @@ export default function About() {
               {t.services.map((item) => (
                 <li key={item.title} className="flex gap-3">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
-                  <div>
-                    <span className="font-semibold text-white">{item.title}: </span>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-bold text-white">{item.title}</span>
                     <span className="text-slate-300">{item.desc}</span>
                   </div>
                 </li>

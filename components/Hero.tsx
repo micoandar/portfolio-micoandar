@@ -56,7 +56,7 @@ export default function Hero() {
             {profile.summary[lang]}
           </p>
 
-          {/* Tombol: 2 kolom di mobile, 1 baris sejajar di desktop */}
+          {/* Tombol */}
           <div className="mt-7 grid grid-cols-2 gap-2.5 sm:mt-8 sm:flex sm:flex-wrap sm:items-center sm:gap-2.5">
             <a
               href="#proyek"
@@ -111,13 +111,21 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Kolom Kanan: Card Premium */}
+        {/* Kolom Kanan: Card Premium dengan Animasi Frame */}
         <div className="animate-fade-in [animation-delay:200ms]">
-          <div className="relative mx-auto max-w-sm">
-            {/* Glow di belakang card */}
-            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand-400/20 via-violet-400/20 to-sky-400/20 blur-2xl" />
+          {/* Group wrapper: Akan trigger animasi saat disentuh (mobile) atau hover (desktop) */}
+          <div className="group relative mx-auto max-w-sm transition-all duration-500 hover:-translate-y-1.5 active:scale-[0.98]">
             
-            <div className="relative rounded-[2rem] border border-white/60 bg-white/70 p-7 shadow-2xl shadow-brand-500/10 backdrop-blur-2xl sm:p-8">
+            {/* Glow di belakang card */}
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand-400/20 via-violet-400/20 to-sky-400/20 opacity-70 blur-2xl transition duration-500 group-hover:opacity-100 group-active:opacity-100" />
+            
+            {/* Animasi Frame (Rotating Gradient) - Muncul saat disentuh/hover */}
+            <div className="absolute -inset-[2px] overflow-hidden rounded-[2.1rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100">
+              <div className="absolute -inset-[200%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_270deg,#8b5cf6_360deg)]" />
+            </div>
+
+            {/* Card Utama */}
+            <div className="relative rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-brand-500/10 backdrop-blur-2xl sm:p-8">
               
               {/* Foto Profil & Info */}
               <div className="flex flex-col items-center text-center">
@@ -161,8 +169,8 @@ export default function Hero() {
               {/* Garis Pemisah */}
               <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-              {/* Statistik (Digabung jadi 1 kotak mewah) */}
-              <div className="flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/50 py-3 shadow-sm">
+              {/* Statistik */}
+              <div className="flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/60 py-3 shadow-sm">
                 {profile.stats.map((stat) => (
                   <div key={stat.label.id} className="flex w-full flex-col items-center px-2">
                     <p className="text-lg font-black text-slate-900 sm:text-xl">

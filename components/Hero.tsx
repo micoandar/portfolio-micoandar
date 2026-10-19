@@ -25,12 +25,14 @@ export default function Hero() {
       id="beranda"
       className="relative isolate flex min-h-screen items-center overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20"
     >
+      {/* Background Ornaments */}
       <div className="absolute inset-0 -z-10 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
       <div className="absolute -left-24 top-10 -z-10 h-72 w-72 animate-float rounded-full bg-brand-300/40 blur-3xl" />
       <div className="absolute -right-16 bottom-0 -z-10 h-80 w-80 animate-float rounded-full bg-violet-300/40 blur-3xl [animation-delay:2s]" />
       <div className="absolute left-1/2 top-1/3 -z-10 h-64 w-64 animate-float rounded-full bg-sky-200/50 blur-3xl [animation-delay:4s]" />
 
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 sm:gap-14 sm:px-8 lg:grid-cols-[1.25fr_0.75fr]">
+        {/* Kolom Kiri: Teks & Tombol */}
         <div className="animate-fade-in">
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 text-[11px] font-semibold text-emerald-700 sm:px-4 sm:text-xs">
             <span className="relative flex h-2 w-2">
@@ -54,7 +56,7 @@ export default function Hero() {
             {profile.summary[lang]}
           </p>
 
-          {/* Tombol: 2 kolom di mobile (rapi & touch target besar), 1 baris sejajar di desktop */}
+          {/* Tombol: 2 kolom di mobile, 1 baris sejajar di desktop */}
           <div className="mt-7 grid grid-cols-2 gap-2.5 sm:mt-8 sm:flex sm:flex-wrap sm:items-center sm:gap-2.5">
             <a
               href="#proyek"
@@ -109,15 +111,22 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Card */}
+        {/* Kolom Kanan: Card Premium */}
         <div className="animate-fade-in [animation-delay:200ms]">
           <div className="relative mx-auto max-w-sm">
-            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand-400/30 via-violet-400/20 to-sky-400/30 blur-2xl" />
-            <div className="relative rounded-[1.75rem] border border-white/70 bg-white/80 p-6 shadow-2xl shadow-slate-900/5 backdrop-blur-xl sm:p-7">
+            {/* Glow di belakang card */}
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand-400/20 via-violet-400/20 to-sky-400/20 blur-2xl" />
+            
+            <div className="relative rounded-[2rem] border border-white/60 bg-white/70 p-7 shadow-2xl shadow-brand-500/10 backdrop-blur-2xl sm:p-8">
+              
+              {/* Foto Profil & Info */}
               <div className="flex flex-col items-center text-center">
                 <div className="relative">
-                  <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-70 blur-md" />
-                  <div className="relative h-28 w-28 overflow-hidden rounded-full bg-gradient-to-br from-brand-500 to-violet-600 shadow-xl shadow-brand-500/30 ring-4 ring-white sm:h-32 sm:w-32">
+                  {/* Ring gradient luar */}
+                  <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-80 blur-sm" />
+                  
+                  {/* Foto */}
+                  <div className="relative h-28 w-28 overflow-hidden rounded-full bg-slate-100 ring-4 ring-white sm:h-32 sm:w-32">
                     {!imgError ? (
                       <Image
                         src="/images/foto-profil.jpg"
@@ -129,55 +138,58 @@ export default function Hero() {
                         onError={() => setImgError(true)}
                       />
                     ) : (
-                      <div className="grid h-full w-full place-items-center text-3xl font-black text-white">
+                      <div className="grid h-full w-full place-items-center text-3xl font-black text-slate-300">
                         {profile.initials}
                       </div>
                     )}
                   </div>
-                  <span className="absolute bottom-1.5 right-1.5 grid h-6 w-6 place-items-center rounded-full bg-white shadow-md sm:bottom-2 sm:right-2">
-                    <span className="h-3.5 w-3.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                  
+                  {/* Badge Online */}
+                  <span className="absolute bottom-1 right-1 grid h-7 w-7 place-items-center rounded-full bg-white shadow-lg sm:bottom-2 sm:right-2">
+                    <span className="h-4 w-4 rounded-full bg-emerald-500 ring-2 ring-white" />
                   </span>
                 </div>
 
-                <p className="mt-4 text-base font-bold text-slate-900 sm:mt-5 sm:text-lg">
+                <h3 className="mt-5 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
                   {profile.name}
-                </p>
-                <p className="mt-0.5 text-xs text-slate-500 sm:text-sm">
+                </h3>
+                <p className="mt-1 text-sm font-medium text-brand-600">
                   {profile.role[lang]}
                 </p>
               </div>
 
-              <div className="my-5 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent sm:my-6" />
+              {/* Garis Pemisah */}
+              <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-              <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              {/* Statistik (Digabung jadi 1 kotak mewah) */}
+              <div className="flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/50 py-3 shadow-sm">
                 {profile.stats.map((stat) => (
-                  <div
-                    key={stat.label.id}
-                    className="rounded-2xl bg-slate-50 px-1.5 py-3 text-center sm:px-2 sm:py-3.5"
-                  >
-                    <p className="text-base font-black text-slate-900 sm:text-lg lg:text-xl">
+                  <div key={stat.label.id} className="flex w-full flex-col items-center px-2">
+                    <p className="text-lg font-black text-slate-900 sm:text-xl">
                       {stat.value}
-                      <span className="text-[10px] font-semibold text-slate-400 sm:text-xs">
+                      <span className="ml-0.5 text-xs font-semibold text-slate-400">
                         {stat.suffix}
                       </span>
                     </p>
-                    <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-400 sm:text-[11px]">
+                    <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                       {stat.label[lang]}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-5 flex flex-wrap justify-center gap-1.5 sm:mt-6 sm:gap-2">
+              {/* Tag Keahlian */}
+              <div className="mt-7 flex flex-wrap justify-center gap-2">
                 {["Full Stack", "AI / CV", "Android"].map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-brand-50 px-3 py-1.5 text-[11px] font-semibold text-brand-700 sm:text-xs"
+                    className="rounded-full border border-brand-100 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-700 shadow-sm transition hover:border-brand-300 hover:bg-brand-50"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
+
             </div>
           </div>
         </div>

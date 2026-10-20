@@ -52,6 +52,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "FastAPI", description: { id: "Framework Python modern untuk REST API cepat.", en: "Modern Python framework for fast REST APIs." }, logo: "https://cdn.simpleicons.org/fastapi" },
       { name: "Laravel", description: { id: "Framework PHP dengan struktur MVC lengkap.", en: "PHP framework with a complete MVC structure." }, logo: "https://cdn.simpleicons.org/laravel" },
       { name: "SQLAlchemy", description: { id: "ORM Python untuk akses database yang rapi.", en: "Python ORM for clean database access." }, logo: "https://cdn.simpleicons.org/sqlalchemy" },
+      { name: "Postman", description: { id: "Pengujian dan dokumentasi REST API.", en: "REST API testing and documentation." }, logo: "https://cdn.simpleicons.org/postman" },
       { name: "REST API", description: { id: "Standar komunikasi antar aplikasi via HTTP.", en: "Standard communication between applications via HTTP." } },
     ],
   },

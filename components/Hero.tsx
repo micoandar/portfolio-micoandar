@@ -32,9 +32,12 @@ export default function Hero() {
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
+  // Menghitung posisi ujung tali Y (karena ada jarak mt-[40px] ke lubang kartu)
+  const stringY2 = useTransform(smoothY, (val) => val + 40);
+
   const dragStart = useRef({ x: 0, y: 0 });
   
-  // Batas jarak tarikan maksimal (leash constraint)
+  // Batas jarak tarikan maksimal
   const MAX_STRETCH = 250;
 
   // Kartu tidak ikut miring penuh (ada efek gravitasi), maksimal miring 12 derajat
@@ -182,14 +185,12 @@ export default function Hero() {
           >
             
             {/* TALI LANYARD (MENGGUNAKAN SVG) */}
-            {/* SVG ini membuat garis selalu menyambung dari klip atas ke klip kartu */}
             <svg className="absolute top-0 left-1/2 z-0 h-[500px] w-0 overflow-visible pointer-events-none">
               <motion.line
                 x1={0}
                 y1={0}
-                // Garis ini akan otomatis bergerak menuju koordinat x dan y kartu
                 x2={smoothX}
-                y2={smoothY + 40} // 40 adalah jarak mt-[40px] dari atas ke lubang kartu
+                y2={stringY2} // Menggunakan nilai Y yang sudah dihitung aman
                 stroke="url(#stringGradient)"
                 strokeWidth="6"
                 strokeLinecap="round"
@@ -215,7 +216,7 @@ export default function Hero() {
               style={{
                 x: smoothX,
                 y: smoothY,
-                rotate: cardRotate, // Kartu miring teredam
+                rotate: cardRotate,
                 touchAction: "none",
               }}
               animate={{ scale: isDragging ? 1.02 : 1 }}

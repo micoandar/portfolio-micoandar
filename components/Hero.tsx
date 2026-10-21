@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
@@ -25,22 +25,18 @@ export default function Hero() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Membuat tali sedikit elastis (lag) dibanding kartu
-  const springX = useSpring(x, { stiffness: 150, damping: 15 });
-  const springY = useSpring(y, { stiffness: 150, damping: 15 });
-
   // Jarak awal dari ujung atas tali ke lubang kartu adalah 40px
   const initialLength = 40;
 
-  // Menghitung panjang tali yang melar menggunakan Phytagoras
-  const stringHeight = useTransform([springX, springY], ([latestX, latestY]) => {
+  // Menghitung panjang tali secara presisi menggunakan rumus Phytagoras
+  const stringHeight = useTransform([x, y], ([latestX, latestY]) => {
     const dx = latestX as number;
     const dy = (latestY as number) + initialLength;
     return Math.sqrt(dx * dx + dy * dy);
   });
 
-  // Menghitung sudut kemiringan tali
-  const stringRotate = useTransform([springX, springY], ([latestX, latestY]) => {
+  // Menghitung sudut kemiringan tali secara presisi
+  const stringRotate = useTransform([x, y], ([latestX, latestY]) => {
     const dx = latestX as number;
     const dy = (latestY as number) + initialLength;
     return Math.atan2(dx, dy) * (180 / Math.PI);
@@ -156,7 +152,8 @@ export default function Hero() {
                 rotate: stringRotate,
                 transformOrigin: "top center",
               }}
-              className="absolute top-0 z-0 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
+              // left-1/2 dan -ml-1 memastikan tali tepat berada di tengah
+              className="absolute top-0 left-1/2 z-0 -ml-1 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
             >
               {/* Klip Logam di Ujung Tali */}
               <div className="absolute -bottom-3 left-1/2 h-4 w-4 -translate-x-1/2 rounded-sm border-2 border-slate-400 bg-slate-200 dark:border-slate-500 dark:bg-slate-400" />
@@ -168,8 +165,8 @@ export default function Hero() {
               dragSnapToOrigin={true}
               dragElastic={0.8}
               dragConstraints={{ top: -20, bottom: 200, left: -150, right: 150 }}
-              dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
-              // Rotasi kartu mengikuti sudut tali, origin diubah ke atas agar ayunannya natural
+              dragTransition={{ bounceStiffness: 300, bounceDamping: 15 }}
+              // Rotasi dan posisi kartu disinkronkan dengan tali
               style={{ x, y, rotate: stringRotate, transformOrigin: "top center" }}
               whileDrag={{ scale: 1.02 }}
               className="relative z-10 mt-[40px] w-full max-w-sm cursor-grab active:cursor-grabbing"

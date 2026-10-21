@@ -21,38 +21,31 @@ export default function Hero() {
     return () => clearInterval(id);
   }, [roles.length]);
 
-  // --- LOGIKA FISIKA LANYARD (CUSTOM DRAG) ---
+  // --- LOGIKA FISIKA LANYARD (REALISTIS) ---
   const [isDragging, setIsDragging] = useState(false);
   
-  // Posisi mentah (mengikuti kursor)
+  // Posisi kartu (X dan Y)
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Posisi halus (pegas) agar kartu terasa berat dan elegan saat ditarik
-  const springConfig = { stiffness: 200, damping: 20, mass: 1 };
+  // Spring untuk pergerakan yang berat dan mulus
+  const springConfig = { stiffness: 150, damping: 18, mass: 1 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
   const dragStart = useRef({ x: 0, y: 0 });
-  const initialLength = 40;
 
-  // Menghitung panjang tali dengan rumus Phytagoras
-  const stringHeight = useTransform([smoothX, smoothY], ([latestX, latestY]) => {
-    const dx = latestX as number;
-    const dy = (latestY as number) + initialLength;
-    return Math.sqrt(dx * dx + dy * dy);
-  });
+  // Batas maksimal tarikan tali (radius dalam pixel)
+  const MAX_STRETCH = 220; 
 
-  // Menghitung sudut kemiringan tali
-  const stringRotate = useTransform([smoothX, smoothY], ([latestX, latestY]) => {
-    const dx = latestX as number;
-    const dy = (latestY as number) + initialLength;
-    return Math.atan2(dx, dy) * (180 / Math.PI);
-  });
+  // Menghitung rotasi kartu (kartu tidak ikut miring penuh, ada efek gravitasi)
+  const cardRotate = useTransform(smoothX, [-MAX_STRETCH, MAX_STRETCH], [-15, 15]);
+
+  // Menghitung rotasi untuk bayangan/glow di belakang kartu
+  const glowRotate = useTransform(smoothX, [-MAX_STRETCH, MAX_STRETCH], [-30, 30]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
-    // Simpan titik awal saat mouse/jari menyentuh
     dragStart.current = {
       x: e.clientX - x.get(),
       y: e.clientY - y.get(),
@@ -62,18 +55,34 @@ export default function Hero() {
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging) return;
-    // Update posisi kartu mengikuti pergerakan mouse/jari
-    x.set(e.clientX - dragStart.current.x);
-    y.set(e.clientY - dragStart.current.y);
+
+    let newX = e.clientX - dragStart.current.x;
+    let newY = e.clientY - dragStart.current.y;
+
+    // Menghitung jarak tarikan dari titik tengah atas (0,0)
+    const distance = Math.sqrt(newX * newX + newY * newY);
+
+    // Membatasi tarikan agar talinya tidak putus (maksimal MAX_STRETCH)
+    if (distance > MAX_STRETCH) {
+      const angle = Math.atan2(newY, newX);
+      newX = Math.cos(angle) * MAX_STRETCH;
+      newY = Math.sin(angle) * MAX_STRETCH;
+    }
+
+    // Kartu tidak bisa ditarik ke atas melewati tali gantungan
+    if (newY < 0) newY = 0;
+
+    x.set(newX);
+    y.set(newY);
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(false);
     e.currentTarget.releasePointerCapture(e.pointerId);
     
-    // Animasi memantul kembali ke tengah (sangat elegan dan smooth)
-    animate(x, 0, { type: "spring", stiffness: 120, damping: 12, mass: 1.2 });
-    animate(y, 0, { type: "spring", stiffness: 120, damping: 12, mass: 1.2 });
+    // Pantulan kembali ke tengah yang sangat elegan
+    animate(x, 0, { type: "spring", stiffness: 100, damping: 15, mass: 1.2 });
+    animate(y, 0, { type: "spring", stiffness: 100, damping: 15, mass: 1.2 });
   };
 
   return (
@@ -171,28 +180,38 @@ export default function Hero() {
         {/* Kolom Kanan: Lanyard Card */}
         <div className="relative flex justify-center pt-10 sm:pt-0">
           
-          {/* WRAPPER ANIMASI GOYANG (PENDULUM) */}
           <motion.div
-            animate={{ rotate: [-1.5, 1.5, -1.5] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ rotate: [-1, 1, -1] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             style={{ transformOrigin: "top center" }}
-            className="relative flex w-full flex-col items-center"
+            className="relative flex w-full max-w-sm flex-col items-center"
           >
             
-            {/* TALI LANYARD DINAMIS */}
-            <motion.div
-              style={{
-                height: stringHeight,
-                rotate: stringRotate,
-                transformOrigin: "top center",
-              }}
-              className="absolute top-0 left-1/2 z-0 -ml-1 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
-            >
-              {/* Klip Logam di Ujung Tali */}
-              <div className="absolute -bottom-3 left-1/2 h-4 w-4 -translate-x-1/2 rounded-sm border-2 border-slate-400 bg-slate-200 dark:border-slate-500 dark:bg-slate-400" />
-            </motion.div>
+            {/* TALI LANYARD (MENGGUNAKAN SVG AGAR MENYAMBUNG SEMPURNA) */}
+            <svg className="absolute top-0 left-0 h-[400px] w-full overflow-visible pointer-events-none z-0">
+              <motion.line
+                x1="50%"
+                y1="0"
+                // SVG line ini akan otomatis terhubung ke lubang klip kartu
+                x2={smoothX}
+                y2={smoothY}
+                stroke="url(#stringGradient)"
+                strokeWidth="6"
+                strokeLinecap="round"
+                className="drop-shadow-md"
+              />
+              <defs>
+                <linearGradient id="stringGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#1e293b" />
+                  <stop offset="100%" stopColor="#4f46e5" />
+                </linearGradient>
+              </defs>
+            </svg>
 
-            {/* KARTU PROFIL YANG BISA DITARIK */}
+            {/* Klip Logam Atas (Tempat Tali Menggantung) */}
+            <div className="absolute top-0 left-1/2 -ml-[10px] z-10 h-5 w-5 rounded-sm border-2 border-slate-400 bg-slate-200 shadow-sm dark:border-slate-500 dark:bg-slate-400" />
+
+            {/* KARTU PROFIL */}
             <motion.div
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
@@ -201,23 +220,28 @@ export default function Hero() {
               style={{
                 x: smoothX,
                 y: smoothY,
-                rotate: stringRotate,
-                transformOrigin: "top center",
-                touchAction: "none", // Mencegah layar HP ikut ter-scroll saat kartu ditarik
+                rotate: cardRotate, // Menggunakan rotasi teredam
+                touchAction: "none", 
               }}
-              animate={{ scale: isDragging ? 1.03 : 1 }}
+              animate={{ scale: isDragging ? 1.02 : 1 }}
               transition={{ duration: 0.2 }}
-              className="relative z-10 mt-[40px] w-full max-w-sm cursor-grab active:cursor-grabbing select-none"
+              className="relative z-10 mt-[40px] w-full cursor-grab active:cursor-grabbing select-none"
             >
-              {/* Lubang Klip di Kartu */}
-              <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />
+              
+              {/* Glow di belakang kartu */}
+              <motion.div 
+                style={{ rotate: glowRotate }}
+                className="absolute -inset-2 rounded-[2.5rem] bg-gradient-to-br from-brand-500/30 to-violet-500/30 blur-xl dark:from-brand-500/20 dark:to-violet-500/20" 
+              />
 
-              <div className="rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-brand-500/20 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
+              <div className="relative rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-slate-900/10 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
+                
+                {/* Lubang Klip di Kartu */}
+                <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />
+
                 {/* Foto Profil & Info */}
                 <div className="flex flex-col items-center text-center">
                   <div className="relative mt-2">
-                    <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-80 blur-sm" />
-                    
                     <div className="relative h-28 w-28 overflow-hidden rounded-full bg-slate-100 ring-4 ring-white dark:bg-slate-800 dark:ring-slate-900 sm:h-32 sm:w-32">
                       {!imgError ? (
                         <Image

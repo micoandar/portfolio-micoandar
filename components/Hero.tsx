@@ -25,16 +25,26 @@ export default function Hero() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springConfig = { stiffness: 300, damping: 20 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
+  // Membuat tali sedikit elastis (lag) dibanding kartu
+  const springX = useSpring(x, { stiffness: 150, damping: 15 });
+  const springY = useSpring(y, { stiffness: 150, damping: 15 });
 
-  const rotate = useTransform([springX, springY], ([latestX, latestY]) => {
-    return (latestX as number) * 0.1 + (latestY as number) * 0.05;
+  // Jarak awal dari ujung atas tali ke lubang kartu adalah 40px
+  const initialLength = 40;
+
+  // Menghitung panjang tali yang melar menggunakan Phytagoras
+  const stringHeight = useTransform([springX, springY], ([latestX, latestY]) => {
+    const dx = latestX as number;
+    const dy = (latestY as number) + initialLength;
+    return Math.sqrt(dx * dx + dy * dy);
   });
 
-  const stringHeight = useTransform(springY, [0, 300], [40, 200]);
-  const stringRotate = useTransform(springX, [-200, 200], [-30, 30]);
+  // Menghitung sudut kemiringan tali
+  const stringRotate = useTransform([springX, springY], ([latestX, latestY]) => {
+    const dx = latestX as number;
+    const dy = (latestY as number) + initialLength;
+    return Math.atan2(dx, dy) * (180 / Math.PI);
+  });
 
   return (
     <section
@@ -136,10 +146,10 @@ export default function Hero() {
             animate={{ rotate: [-1.5, 1.5, -1.5] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             style={{ transformOrigin: "top center" }}
-            className="relative flex w-full justify-center"
+            className="relative flex w-full flex-col items-center"
           >
             
-            {/* TALI LANYARD */}
+            {/* TALI LANYARD DINAMIS */}
             <motion.div
               style={{
                 height: stringHeight,
@@ -148,18 +158,21 @@ export default function Hero() {
               }}
               className="absolute top-0 z-0 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
             >
-              {/* Klip Logam */}
+              {/* Klip Logam di Ujung Tali */}
               <div className="absolute -bottom-3 left-1/2 h-4 w-4 -translate-x-1/2 rounded-sm border-2 border-slate-400 bg-slate-200 dark:border-slate-500 dark:bg-slate-400" />
             </motion.div>
 
             {/* KARTU PROFIL YANG BISA DITARIK */}
             <motion.div
               drag
-              dragConstraints={{ top: 0, bottom: 150, left: -100, right: 100 }}
-              dragElastic={0.8}
               dragSnapToOrigin={true}
-              style={{ x: springX, y: springY, rotate }}
-              className="relative z-10 mt-10 w-full max-w-sm cursor-grab active:cursor-grabbing"
+              dragElastic={0.8}
+              dragConstraints={{ top: -20, bottom: 200, left: -150, right: 150 }}
+              dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
+              // Rotasi kartu mengikuti sudut tali, origin diubah ke atas agar ayunannya natural
+              style={{ x, y, rotate: stringRotate, transformOrigin: "top center" }}
+              whileDrag={{ scale: 1.02 }}
+              className="relative z-10 mt-[40px] w-full max-w-sm cursor-grab active:cursor-grabbing"
             >
               {/* Lubang Klip di Kartu */}
               <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />

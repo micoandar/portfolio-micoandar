@@ -25,17 +25,14 @@ export default function Hero() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Membuat efek pegas (spring) agar gerakannya halus dan elastis
   const springConfig = { stiffness: 300, damping: 20 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
-  // Menghitung rotasi kartu berdasarkan tarikan X dan Y
   const rotate = useTransform([springX, springY], ([latestX, latestY]) => {
     return (latestX as number) * 0.1 + (latestY as number) * 0.05;
   });
 
-  // Menghitung panjang tali (semakin ditarik ke bawah, tali semakin panjang)
   const stringHeight = useTransform(springY, [0, 300], [40, 200]);
   const stringRotate = useTransform(springX, [-200, 200], [-30, 30]);
 
@@ -134,100 +131,109 @@ export default function Hero() {
         {/* Kolom Kanan: Lanyard Card */}
         <div className="relative flex justify-center pt-10 sm:pt-0">
           
-          {/* TALI LANYARD */}
+          {/* WRAPPER ANIMASI GOYANG (PENDULUM) */}
           <motion.div
-            style={{
-              height: stringHeight,
-              rotate: stringRotate,
-              transformOrigin: "top center",
-            }}
-            className="absolute top-0 z-0 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
+            animate={{ rotate: [-1.5, 1.5, -1.5] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transformOrigin: "top center" }}
+            className="relative flex w-full justify-center"
           >
-            {/* Klip Logam */}
-            <div className="absolute -bottom-3 left-1/2 h-4 w-4 -translate-x-1/2 rounded-sm border-2 border-slate-400 bg-slate-200 dark:border-slate-500 dark:bg-slate-400" />
-          </motion.div>
+            
+            {/* TALI LANYARD */}
+            <motion.div
+              style={{
+                height: stringHeight,
+                rotate: stringRotate,
+                transformOrigin: "top center",
+              }}
+              className="absolute top-0 z-0 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
+            >
+              {/* Klip Logam */}
+              <div className="absolute -bottom-3 left-1/2 h-4 w-4 -translate-x-1/2 rounded-sm border-2 border-slate-400 bg-slate-200 dark:border-slate-500 dark:bg-slate-400" />
+            </motion.div>
 
-          {/* KARTU PROFIL YANG BISA DITARIK */}
-          <motion.div
-            drag
-            dragConstraints={{ top: 0, bottom: 150, left: -100, right: 100 }}
-            dragElastic={0.8}
-            dragSnapToOrigin={true}
-            style={{ x: springX, y: springY, rotate }}
-            className="relative z-10 mt-10 w-full max-w-sm cursor-grab active:cursor-grabbing"
-          >
-            {/* Lubang Klip di Kartu */}
-            <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />
+            {/* KARTU PROFIL YANG BISA DITARIK */}
+            <motion.div
+              drag
+              dragConstraints={{ top: 0, bottom: 150, left: -100, right: 100 }}
+              dragElastic={0.8}
+              dragSnapToOrigin={true}
+              style={{ x: springX, y: springY, rotate }}
+              className="relative z-10 mt-10 w-full max-w-sm cursor-grab active:cursor-grabbing"
+            >
+              {/* Lubang Klip di Kartu */}
+              <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />
 
-            <div className="rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-brand-500/20 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
-              {/* Foto Profil & Info */}
-              <div className="flex flex-col items-center text-center">
-                <div className="relative mt-2">
-                  <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-80 blur-sm" />
-                  
-                  <div className="relative h-28 w-28 overflow-hidden rounded-full bg-slate-100 ring-4 ring-white dark:bg-slate-800 dark:ring-slate-900 sm:h-32 sm:w-32">
-                    {!imgError ? (
-                      <Image
-                        src="/images/foto-profil.jpg"
-                        alt={profile.name}
-                        fill
-                        sizes="(max-width: 640px) 112px, 128px"
-                        className="pointer-events-none object-cover"
-                        priority
-                        onError={() => setImgError(true)}
-                      />
-                    ) : (
-                      <div className="grid h-full w-full place-items-center text-3xl font-black text-slate-300 dark:text-slate-600">
-                        {profile.initials}
-                      </div>
-                    )}
+              <div className="rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-brand-500/20 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
+                {/* Foto Profil & Info */}
+                <div className="flex flex-col items-center text-center">
+                  <div className="relative mt-2">
+                    <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-80 blur-sm" />
+                    
+                    <div className="relative h-28 w-28 overflow-hidden rounded-full bg-slate-100 ring-4 ring-white dark:bg-slate-800 dark:ring-slate-900 sm:h-32 sm:w-32">
+                      {!imgError ? (
+                        <Image
+                          src="/images/foto-profil.jpg"
+                          alt={profile.name}
+                          fill
+                          sizes="(max-width: 640px) 112px, 128px"
+                          className="pointer-events-none object-cover"
+                          priority
+                          onError={() => setImgError(true)}
+                        />
+                      ) : (
+                        <div className="grid h-full w-full place-items-center text-3xl font-black text-slate-300 dark:text-slate-600">
+                          {profile.initials}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <span className="absolute bottom-1 right-1 grid h-7 w-7 place-items-center rounded-full bg-white shadow-lg dark:bg-slate-800 sm:bottom-2 sm:right-2">
+                      <span className="h-4 w-4 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-800" />
+                    </span>
                   </div>
-                  
-                  <span className="absolute bottom-1 right-1 grid h-7 w-7 place-items-center rounded-full bg-white shadow-lg dark:bg-slate-800 sm:bottom-2 sm:right-2">
-                    <span className="h-4 w-4 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-800" />
-                  </span>
+
+                  <h3 className="mt-5 text-xl font-black tracking-tight text-slate-900 dark:text-white sm:text-2xl">
+                    {profile.name}
+                  </h3>
+                  <p className="mt-1 text-sm font-medium text-brand-600 dark:text-brand-400">
+                    {profile.role[lang]}
+                  </p>
                 </div>
 
-                <h3 className="mt-5 text-xl font-black tracking-tight text-slate-900 dark:text-white sm:text-2xl">
-                  {profile.name}
-                </h3>
-                <p className="mt-1 text-sm font-medium text-brand-600 dark:text-brand-400">
-                  {profile.role[lang]}
-                </p>
+                <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />
+
+                {/* Statistik */}
+                <div className="flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/60 py-3 shadow-sm dark:divide-slate-700/60 dark:border-slate-800 dark:bg-slate-800/50">
+                  {profile.stats.map((stat) => (
+                    <div key={stat.label.id} className="flex w-full flex-col items-center px-2">
+                      <p className="text-lg font-black text-slate-900 dark:text-white sm:text-xl">
+                        {stat.value}
+                        <span className="ml-0.5 text-xs font-semibold text-slate-400 dark:text-slate-500">
+                          {stat.suffix}
+                        </span>
+                      </p>
+                      <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                        {stat.label[lang]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tag Keahlian */}
+                <div className="mt-7 flex flex-wrap justify-center gap-2">
+                  {["Full Stack", "AI / CV", "Android"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-brand-100 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-700 shadow-sm transition hover:border-brand-300 hover:bg-brand-50 dark:border-brand-800/50 dark:bg-slate-800 dark:text-brand-300 dark:hover:border-brand-700 dark:hover:bg-slate-700"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-
-              <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />
-
-              {/* Statistik */}
-              <div className="flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/60 py-3 shadow-sm dark:divide-slate-700/60 dark:border-slate-800 dark:bg-slate-800/50">
-                {profile.stats.map((stat) => (
-                  <div key={stat.label.id} className="flex w-full flex-col items-center px-2">
-                    <p className="text-lg font-black text-slate-900 dark:text-white sm:text-xl">
-                      {stat.value}
-                      <span className="ml-0.5 text-xs font-semibold text-slate-400 dark:text-slate-500">
-                        {stat.suffix}
-                      </span>
-                    </p>
-                    <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                      {stat.label[lang]}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Tag Keahlian */}
-              <div className="mt-7 flex flex-wrap justify-center gap-2">
-                {["Full Stack", "AI / CV", "Android"].map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-brand-100 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-700 shadow-sm transition hover:border-brand-300 hover:bg-brand-50 dark:border-brand-800/50 dark:bg-slate-800 dark:text-brand-300 dark:hover:border-brand-700 dark:hover:bg-slate-700"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-            </div>
+            </motion.div>
+            
           </motion.div>
         </div>
         

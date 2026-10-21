@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
@@ -20,6 +21,24 @@ export default function Hero() {
     return () => clearInterval(id);
   }, [roles.length]);
 
+  // --- LOGIKA FISIKA LANYARD ---
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Membuat efek pegas (spring) agar gerakannya halus dan elastis
+  const springConfig = { stiffness: 300, damping: 20 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  // Menghitung rotasi kartu berdasarkan tarikan X dan Y
+  const rotate = useTransform([springX, springY], ([latestX, latestY]) => {
+    return (latestX as number) * 0.1 + (latestY as number) * 0.05;
+  });
+
+  // Menghitung panjang tali (semakin ditarik ke bawah, tali semakin panjang)
+  const stringHeight = useTransform(springY, [0, 300], [40, 200]);
+  const stringRotate = useTransform(springX, [-200, 200], [-30, 30]);
+
   return (
     <section
       id="beranda"
@@ -32,6 +51,7 @@ export default function Hero() {
       <div className="absolute left-1/2 top-1/3 -z-10 h-64 w-64 animate-float rounded-full bg-sky-200/50 blur-3xl dark:bg-sky-900/20 [animation-delay:4s]" />
 
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 sm:gap-14 sm:px-8 lg:grid-cols-[1.25fr_0.75fr]">
+        
         {/* Kolom Kiri: Teks & Tombol */}
         <div className="animate-fade-in">
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-800/50 dark:bg-emerald-900/30 dark:text-emerald-400 sm:px-4 sm:text-xs">
@@ -111,20 +131,38 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Kolom Kanan: Card Premium */}
-        <div className="animate-fade-in [animation-delay:200ms]">
-          <div className="group relative mx-auto max-w-sm transition-all duration-500 hover:-translate-y-1.5 active:scale-[0.98]">
-            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand-400/20 via-violet-400/20 to-sky-400/20 opacity-70 blur-2xl transition duration-500 group-hover:opacity-100 group-active:opacity-100 dark:from-brand-600/20 dark:via-violet-600/20 dark:to-sky-600/20" />
-            
-            <div className="absolute -inset-[2px] overflow-hidden rounded-[2.1rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100">
-              <div className="absolute -inset-[200%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_270deg,#8b5cf6_360deg)]" />
-            </div>
+        {/* Kolom Kanan: Lanyard Card */}
+        <div className="relative flex justify-center pt-10 sm:pt-0">
+          
+          {/* TALI LANYARD */}
+          <motion.div
+            style={{
+              height: stringHeight,
+              rotate: stringRotate,
+              transformOrigin: "top center",
+            }}
+            className="absolute top-0 z-0 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
+          >
+            {/* Klip Logam */}
+            <div className="absolute -bottom-3 left-1/2 h-4 w-4 -translate-x-1/2 rounded-sm border-2 border-slate-400 bg-slate-200 dark:border-slate-500 dark:bg-slate-400" />
+          </motion.div>
 
-            <div className="relative rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-brand-500/10 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
-              
+          {/* KARTU PROFIL YANG BISA DITARIK */}
+          <motion.div
+            drag
+            dragConstraints={{ top: 0, bottom: 150, left: -100, right: 100 }}
+            dragElastic={0.8}
+            dragSnapToOrigin={true}
+            style={{ x: springX, y: springY, rotate }}
+            className="relative z-10 mt-10 w-full max-w-sm cursor-grab active:cursor-grabbing"
+          >
+            {/* Lubang Klip di Kartu */}
+            <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />
+
+            <div className="rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-brand-500/20 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
               {/* Foto Profil & Info */}
               <div className="flex flex-col items-center text-center">
-                <div className="relative">
+                <div className="relative mt-2">
                   <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-80 blur-sm" />
                   
                   <div className="relative h-28 w-28 overflow-hidden rounded-full bg-slate-100 ring-4 ring-white dark:bg-slate-800 dark:ring-slate-900 sm:h-32 sm:w-32">
@@ -134,7 +172,7 @@ export default function Hero() {
                         alt={profile.name}
                         fill
                         sizes="(max-width: 640px) 112px, 128px"
-                        className="object-cover"
+                        className="pointer-events-none object-cover"
                         priority
                         onError={() => setImgError(true)}
                       />
@@ -190,8 +228,9 @@ export default function Hero() {
               </div>
 
             </div>
-          </div>
+          </motion.div>
         </div>
+        
       </div>
     </section>
   );

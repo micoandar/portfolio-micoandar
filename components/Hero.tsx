@@ -21,29 +21,22 @@ export default function Hero() {
     return () => clearInterval(id);
   }, [roles.length]);
 
-  // --- LOGIKA FISIKA LANYARD (SVG & CUSTOM DRAG) ---
+  // --- LOGIKA FISIKA LANYARD ---
   const [isDragging, setIsDragging] = useState(false);
   
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Spring untuk pergerakan yang berat dan elegan
   const springConfig = { stiffness: 200, damping: 20, mass: 1 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
-  // Menghitung posisi X dan Y ujung tali
-  // +250 adalah titik tengah SVG (karena lebarnya 500px)
-  // +80 adalah jarak mt-[80px] dari atas ke lubang kartu
+  // Menggunakan 250 sebagai titik tengah (karena lebar SVG 500px)
   const stringX2 = useTransform(smoothX, (val) => val + 250);
   const stringY2 = useTransform(smoothY, (val) => val + 80);
 
   const dragStart = useRef({ x: 0, y: 0 });
-  
-  // Batas jarak tarikan maksimal
   const MAX_STRETCH = 250;
-
-  // Kartu tidak ikut miring penuh (ada efek gravitasi), maksimal miring 12 derajat
   const cardRotate = useTransform(smoothX, [-MAX_STRETCH, MAX_STRETCH], [-12, 12]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -61,7 +54,6 @@ export default function Hero() {
     let newX = e.clientX - dragStart.current.x;
     let newY = e.clientY - dragStart.current.y;
 
-    // Batasi tarikan agar tidak melebihi MAX_STRETCH
     const distance = Math.sqrt(newX * newX + newY * newY);
     if (distance > MAX_STRETCH) {
       const angle = Math.atan2(newY, newX);
@@ -69,7 +61,6 @@ export default function Hero() {
       newY = Math.sin(angle) * MAX_STRETCH;
     }
 
-    // Kartu tidak bisa ditarik ke atas melewati tali gantungan
     if (newY < 0) newY = 0;
 
     x.set(newX);
@@ -80,7 +71,6 @@ export default function Hero() {
     setIsDragging(false);
     e.currentTarget.releasePointerCapture(e.pointerId);
     
-    // Pantulan kembali ke tengah yang sangat mulus
     animate(x, 0, { type: "spring", stiffness: 120, damping: 15, mass: 1.2 });
     animate(y, 0, { type: "spring", stiffness: 120, damping: 15, mass: 1.2 });
   };
@@ -88,7 +78,8 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative isolate flex min-h-screen items-center overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20"
+      // PERBAIKAN: Ubah overflow-hidden menjadi overflow-x-hidden
+      className="relative isolate flex min-h-screen items-center overflow-x-hidden pt-24 pb-16 sm:pt-28 sm:pb-20"
     >
       {/* Background Ornaments */}
       <div className="absolute inset-0 -z-10 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
@@ -188,11 +179,10 @@ export default function Hero() {
           >
             
             {/* TALI LANYARD (MENGGUNAKAN SVG) */}
-            {/* w-[500px] dan -ml-[250px] memastikan SVG tidak memiliki lebar 0 */}
             <svg className="absolute top-0 left-1/2 -ml-[250px] z-0 h-[500px] w-[500px] overflow-visible pointer-events-none">
               <motion.line
-                x1={250} // Titik tengah X
-                y1={10}  // Mulai dari bawah klip logam atas
+                x1={250}
+                y1={10}
                 x2={stringX2}
                 y2={stringY2}
                 stroke="url(#stringGradient)"
@@ -201,7 +191,6 @@ export default function Hero() {
                 className="drop-shadow-md"
               />
               <defs>
-                {/* gradientUnits="userSpaceOnUse" mencegah gradient hilang saat garis vertikal */}
                 <linearGradient id="stringGradient" x1="0" y1="0" x2="0" y2="500" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stopColor="#1e293b" />
                   <stop offset="100%" stopColor="#4f46e5" />
@@ -222,11 +211,10 @@ export default function Hero() {
                 x: smoothX,
                 y: smoothY,
                 rotate: cardRotate,
-                touchAction: "none",
+                touchAction: "none", // Sangat penting untuk mobile (mencegah scroll tidak sengaja)
               }}
               animate={{ scale: isDragging ? 1.02 : 1 }}
               transition={{ duration: 0.2 }}
-              // mt diubah menjadi 80px agar tali lebih panjang
               className="relative z-10 mt-[80px] w-full cursor-grab active:cursor-grabbing select-none"
             >
               {/* Lubang Klip di Kartu */}

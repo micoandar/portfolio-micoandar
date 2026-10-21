@@ -32,8 +32,11 @@ export default function Hero() {
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
-  // Menghitung posisi ujung tali Y (karena ada jarak mt-[40px] ke lubang kartu)
-  const stringY2 = useTransform(smoothY, (val) => val + 40);
+  // Menghitung posisi X dan Y ujung tali
+  // +250 adalah titik tengah SVG (karena lebarnya 500px)
+  // +80 adalah jarak mt-[80px] dari atas ke lubang kartu
+  const stringX2 = useTransform(smoothX, (val) => val + 250);
+  const stringY2 = useTransform(smoothY, (val) => val + 80);
 
   const dragStart = useRef({ x: 0, y: 0 });
   
@@ -185,19 +188,21 @@ export default function Hero() {
           >
             
             {/* TALI LANYARD (MENGGUNAKAN SVG) */}
-            <svg className="absolute top-0 left-1/2 z-0 h-[500px] w-0 overflow-visible pointer-events-none">
+            {/* w-[500px] dan -ml-[250px] memastikan SVG tidak memiliki lebar 0 */}
+            <svg className="absolute top-0 left-1/2 -ml-[250px] z-0 h-[500px] w-[500px] overflow-visible pointer-events-none">
               <motion.line
-                x1={0}
-                y1={0}
-                x2={smoothX}
-                y2={stringY2} // Menggunakan nilai Y yang sudah dihitung aman
+                x1={250} // Titik tengah X
+                y1={10}  // Mulai dari bawah klip logam atas
+                x2={stringX2}
+                y2={stringY2}
                 stroke="url(#stringGradient)"
                 strokeWidth="6"
                 strokeLinecap="round"
                 className="drop-shadow-md"
               />
               <defs>
-                <linearGradient id="stringGradient" x1="0" y1="0" x2="0" y2="1">
+                {/* gradientUnits="userSpaceOnUse" mencegah gradient hilang saat garis vertikal */}
+                <linearGradient id="stringGradient" x1="0" y1="0" x2="0" y2="500" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stopColor="#1e293b" />
                   <stop offset="100%" stopColor="#4f46e5" />
                 </linearGradient>
@@ -221,7 +226,8 @@ export default function Hero() {
               }}
               animate={{ scale: isDragging ? 1.02 : 1 }}
               transition={{ duration: 0.2 }}
-              className="relative z-10 mt-[40px] w-full cursor-grab active:cursor-grabbing select-none"
+              // mt diubah menjadi 80px agar tali lebih panjang
+              className="relative z-10 mt-[80px] w-full cursor-grab active:cursor-grabbing select-none"
             >
               {/* Lubang Klip di Kartu */}
               <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />

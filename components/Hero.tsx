@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring, animate } from "framer-motion";
 import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
@@ -21,26 +21,60 @@ export default function Hero() {
     return () => clearInterval(id);
   }, [roles.length]);
 
-  // --- LOGIKA FISIKA LANYARD ---
+  // --- LOGIKA FISIKA LANYARD (CUSTOM DRAG) ---
+  const [isDragging, setIsDragging] = useState(false);
+  
+  // Posisi mentah (mengikuti kursor)
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Jarak awal dari ujung atas tali ke lubang kartu adalah 40px
+  // Posisi halus (pegas) agar kartu terasa berat dan elegan saat ditarik
+  const springConfig = { stiffness: 200, damping: 20, mass: 1 };
+  const smoothX = useSpring(x, springConfig);
+  const smoothY = useSpring(y, springConfig);
+
+  const dragStart = useRef({ x: 0, y: 0 });
   const initialLength = 40;
 
-  // Menghitung panjang tali secara presisi menggunakan rumus Phytagoras
-  const stringHeight = useTransform([x, y], ([latestX, latestY]) => {
+  // Menghitung panjang tali dengan rumus Phytagoras
+  const stringHeight = useTransform([smoothX, smoothY], ([latestX, latestY]) => {
     const dx = latestX as number;
     const dy = (latestY as number) + initialLength;
     return Math.sqrt(dx * dx + dy * dy);
   });
 
-  // Menghitung sudut kemiringan tali secara presisi
-  const stringRotate = useTransform([x, y], ([latestX, latestY]) => {
+  // Menghitung sudut kemiringan tali
+  const stringRotate = useTransform([smoothX, smoothY], ([latestX, latestY]) => {
     const dx = latestX as number;
     const dy = (latestY as number) + initialLength;
     return Math.atan2(dx, dy) * (180 / Math.PI);
   });
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    // Simpan titik awal saat mouse/jari menyentuh
+    dragStart.current = {
+      x: e.clientX - x.get(),
+      y: e.clientY - y.get(),
+    };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    // Update posisi kartu mengikuti pergerakan mouse/jari
+    x.set(e.clientX - dragStart.current.x);
+    y.set(e.clientY - dragStart.current.y);
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    e.currentTarget.releasePointerCapture(e.pointerId);
+    
+    // Animasi memantul kembali ke tengah (sangat elegan dan smooth)
+    animate(x, 0, { type: "spring", stiffness: 120, damping: 12, mass: 1.2 });
+    animate(y, 0, { type: "spring", stiffness: 120, damping: 12, mass: 1.2 });
+  };
 
   return (
     <section
@@ -152,7 +186,6 @@ export default function Hero() {
                 rotate: stringRotate,
                 transformOrigin: "top center",
               }}
-              // left-1/2 dan -ml-1 memastikan tali tepat berada di tengah
               className="absolute top-0 left-1/2 z-0 -ml-1 w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500"
             >
               {/* Klip Logam di Ujung Tali */}
@@ -161,15 +194,20 @@ export default function Hero() {
 
             {/* KARTU PROFIL YANG BISA DITARIK */}
             <motion.div
-              drag
-              dragSnapToOrigin={true}
-              dragElastic={0.8}
-              dragConstraints={{ top: -20, bottom: 200, left: -150, right: 150 }}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 15 }}
-              // Rotasi dan posisi kartu disinkronkan dengan tali
-              style={{ x, y, rotate: stringRotate, transformOrigin: "top center" }}
-              whileDrag={{ scale: 1.02 }}
-              className="relative z-10 mt-[40px] w-full max-w-sm cursor-grab active:cursor-grabbing"
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              style={{
+                x: smoothX,
+                y: smoothY,
+                rotate: stringRotate,
+                transformOrigin: "top center",
+                touchAction: "none", // Mencegah layar HP ikut ter-scroll saat kartu ditarik
+              }}
+              animate={{ scale: isDragging ? 1.03 : 1 }}
+              transition={{ duration: 0.2 }}
+              className="relative z-10 mt-[40px] w-full max-w-sm cursor-grab active:cursor-grabbing select-none"
             >
               {/* Lubang Klip di Kartu */}
               <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />

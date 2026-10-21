@@ -113,65 +113,35 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Kolom Kanan: Lanyard Card Premium */}
+        {/* Kolom Kanan: Lanyard Card (Hanya Goyang Angin, Tanpa Drag) */}
         <div className="relative flex justify-center pt-10 sm:pt-0">
           
-          {/* WRAPPER ANIMASI GOYANG & MENGAMBANG */}
+          {/* WRAPPER ANIMASI GOYANG (PENDULUM) */}
           <motion.div
-            animate={{ 
-              rotate: [-1.5, 1.5, -1.5],
-              y: [0, -4, 0]
-            }}
-            transition={{ 
-              rotate: { duration: 5, repeat: Infinity, ease: "easeInOut" },
-              y: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-            }}
+            animate={{ rotate: [-2, 2, -2] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             style={{ transformOrigin: "top center" }}
             className="relative flex w-full max-w-sm flex-col items-center"
           >
             
-            {/* 1. TALI LANYARD (Bertekstur & Lebih Lebar) */}
-            <div className="absolute top-0 z-0 h-[90px] w-8 overflow-hidden rounded-b-sm border-x border-slate-900/20 bg-gradient-to-b from-slate-800 via-indigo-900 to-brand-600 shadow-xl dark:from-slate-700 dark:via-indigo-950 dark:to-brand-600">
-              {/* Motif Serat Kain */}
-              <div className="absolute inset-0 opacity-20 [background-image:repeating-linear-gradient(45deg,transparent,transparent_2px,#fff_2px,#fff_4px)]" />
-              
-              {/* Teks Vertikal di Tali */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span 
-                  className="text-[9px] font-bold tracking-widest text-white/40"
-                  style={{ writingMode: "vertical-rl" }}
-                >
-                  MICOANDAR
-                </span>
-              </div>
-
-              {/* Klip Logam Ujung Bawah Tali */}
-              <div className="absolute -bottom-1 left-1/2 flex h-6 w-5 -translate-x-1/2 flex-col items-center rounded-sm border border-slate-400 bg-gradient-to-b from-slate-100 to-slate-400 shadow-sm">
-                <div className="mt-1 h-1 w-3 rounded-full bg-slate-600/50" />
-              </div>
+            {/* TALI LANYARD STATIS */}
+            <div className="absolute top-0 z-0 h-[80px] w-2 rounded-b-md bg-gradient-to-b from-slate-800 to-brand-600 shadow-lg dark:from-slate-700 dark:to-brand-500">
+              {/* Klip Logam di Ujung Tali */}
+              <div className="absolute -bottom-3 left-1/2 h-4 w-4 -translate-x-1/2 rounded-sm border-2 border-slate-400 bg-slate-200 dark:border-slate-500 dark:bg-slate-400" />
             </div>
 
-            {/* 2. KLIP LOGAM ATAS (Penjepit) */}
-            <div className="absolute top-0 left-1/2 z-10 -ml-3 h-7 w-6 -translate-y-1/2 rounded-sm border border-slate-500 bg-gradient-to-b from-slate-200 via-white to-slate-400 shadow-md">
-              <div className="absolute bottom-1 left-1/2 h-2 w-3 -translate-x-1/2 rounded-sm bg-slate-800/20" />
-            </div>
+            {/* Klip Logam Atas */}
+            <div className="absolute top-0 left-1/2 z-10 -ml-2.5 h-5 w-5 rounded-sm border-2 border-slate-400 bg-slate-200 shadow-sm dark:border-slate-500 dark:bg-slate-400" />
 
-            {/* 3. KARTU PROFIL */}
-            <div className="relative z-10 mt-[90px] w-full select-none">
+            {/* KARTU PROFIL */}
+            <div className="relative z-10 mt-[80px] w-full select-none">
               
-              {/* Lubang Klip (Eyelet Logam di Kartu) */}
-              <div className="absolute -top-4 left-1/2 z-20 flex h-8 w-14 -translate-x-1/2 items-center justify-center rounded-full border-[3px] border-slate-300 bg-slate-900 shadow-[inset_0_4px_8px_rgba(0,0,0,0.8)] dark:border-slate-600 dark:bg-slate-950">
-                {/* Efek Kilau Logam */}
-                <div className="h-1.5 w-8 rounded-full bg-white/20" />
-              </div>
+              {/* Lubang Klip di Kartu */}
+              <div className="absolute -top-3 left-1/2 z-20 h-6 w-12 -translate-x-1/2 rounded-full border-4 border-white bg-slate-900 shadow-inner dark:border-slate-800 dark:bg-slate-950" />
 
-              {/* Body Kartu */}
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
-                {/* Efek Pantulan Cahaya di Kartu */}
-                <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50" />
-
+              <div className="rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-2xl shadow-brand-500/20 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
                 {/* Foto Profil & Info */}
-                <div className="relative flex flex-col items-center text-center">
+                <div className="flex flex-col items-center text-center">
                   <div className="relative mt-2">
                     <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-80 blur-sm" />
                     
@@ -209,7 +179,7 @@ export default function Hero() {
                 <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />
 
                 {/* Statistik */}
-                <div className="relative flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/60 py-3 shadow-sm dark:divide-slate-700/60 dark:border-slate-800 dark:bg-slate-800/50">
+                <div className="flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/60 py-3 shadow-sm dark:divide-slate-700/60 dark:border-slate-800 dark:bg-slate-800/50">
                   {profile.stats.map((stat) => (
                     <div key={stat.label.id} className="flex w-full flex-col items-center px-2">
                       <p className="text-lg font-black text-slate-900 dark:text-white sm:text-xl">
@@ -226,7 +196,7 @@ export default function Hero() {
                 </div>
 
                 {/* Tag Keahlian */}
-                <div className="relative mt-7 flex flex-wrap justify-center gap-2">
+                <div className="mt-7 flex flex-wrap justify-center gap-2">
                   {["Full Stack", "AI / CV", "Android"].map((tag) => (
                     <span
                       key={tag}

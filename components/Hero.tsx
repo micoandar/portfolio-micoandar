@@ -113,7 +113,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Kolom Kanan: Lanyard Card dengan Animasi Angin */}
+        {/* Kolom Kanan: Lanyard Card (Hanya Goyang Angin, Tanpa Drag) */}
         <div className="relative flex justify-center pt-10 sm:pt-0">
           
           {/* WRAPPER ANIMASI GOYANG (PENDULUM) */}

@@ -208,9 +208,18 @@ export default function Hero() {
                   <h3 className="mt-5 text-xl font-black tracking-tight text-slate-900 dark:text-white sm:text-2xl">
                     {profile.name}
                   </h3>
-                  <p className="mt-1 text-sm font-medium text-brand-600 dark:text-brand-400">
-                    {profile.role[lang]}
-                  </p>
+                  
+                  {/* BAGIAN YANG DIUBAH: Menampilkan dua role */}
+                  <div className="mt-2 flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
+                    <span className="text-sm font-bold text-brand-600 dark:text-brand-400">
+                      {profile.roles[lang][0]}
+                    </span>
+                    <span className="hidden text-slate-300 sm:inline dark:text-slate-600">•</span>
+                    <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                      {profile.roles[lang][1]}
+                    </span>
+                  </div>
+
                 </div>
 
                 <div className="my-6 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />

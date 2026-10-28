@@ -23,7 +23,7 @@ export const translations = {
       services: [
         { 
           title: "Full-Stack Development", 
-          desc: "Membangun aplikasi web menggunakan PHP, JavaScript, HTML, CSS, dan Node.js, termasuk pengembangan backend, REST API, serta integrasi database MySQL dan MariaDB." 
+          desc: "Membangun aplikasi web menggunakan PHP, JavaScript, HTML, CSS, dan Node.js, termasuk pengembangan backend, REST API, serta integrasi database MySQL." 
         },
         { 
           title: "Frontend Development", 

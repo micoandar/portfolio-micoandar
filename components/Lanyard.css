@@ -4,7 +4,8 @@ import React, { useEffect, useRef, CSSProperties } from 'react';
 import * as THREE from 'three';
 import './Lanyard.css';
 
-interface LanyardProps {
+// --- TYPESCRIPT INTERFACES ---
+export interface LanyardProps {
   frontImage?: string;
   backImage?: string;
   imageFit?: 'cover' | 'contain';
@@ -29,11 +30,11 @@ interface LanyardProps {
   style?: CSSProperties;
 }
 
-const CARD_SIZES = {
+const CARD_SIZES: Record<string, [number, number]> = {
   portrait: [1.6, 2.25],
   landscape: [2.25, 1.6]
 };
-const ANCHORS = { left: 0.27, center: 0.5, right: 0.73 };
+const ANCHORS: Record<string, number> = { left: 0.27, center: 0.5, right: 0.73 };
 const THICKNESS = 0.018;
 const BEVEL = 0.007;
 const JOINTS = 4;
@@ -239,7 +240,7 @@ const loadImage = (cache: Map<string, Promise<HTMLImageElement | null>>, url?: s
 };
 
 const cardLayout = (orientation: string, cornerRadius: number) => {
-  const [width, height] = (CARD_SIZES as any)[orientation] || CARD_SIZES.portrait;
+  const [width, height] = CARD_SIZES[orientation] || CARD_SIZES.portrait;
   const radius = mix(0.03, Math.min(width, height) * 0.2, clamp(cornerRadius, 0, 1));
   const slot = { width: 0.34, height: 0.07, y: height / 2 - 0.13 };
   const ringY = height / 2 - 0.055;
@@ -725,7 +726,7 @@ const stepSimulation = (sim: any, dt: number, physics: any, time: number) => {
   sim.calm = energy < 2e-4 ? sim.calm + dt : 0;
 };
 
-const Lanyard = ({
+const Lanyard: React.FC<LanyardProps> = ({
   frontImage,
   backImage,
   imageFit = 'cover',
@@ -748,7 +749,7 @@ const Lanyard = ({
   intro = true,
   className = '',
   style
-}: LanyardProps) => {
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<any>(null);
   const applyRef = useRef<(() => void) | null>(null);

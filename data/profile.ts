@@ -6,9 +6,10 @@ export const profile = {
   shortName: "Micoandar",
   initials: "MJ",
   role: { id: "Full Stack Developer", en: "Full Stack Developer" } as LText,
+  // Hapus Backend Engineer
   roles: {
-    id: ["Full Stack Developer", "Software Engineer", "Backend Engineer"],
-    en: ["Full Stack Developer", "Software Engineer", "Backend Engineer"],
+    id: ["Full Stack Developer", "Software Engineer"],
+    en: ["Full Stack Developer", "Software Engineer"],
   },
   location: {
     id: "Bekasi, Jawa Barat, Indonesia",
@@ -18,7 +19,6 @@ export const profile = {
   phone: "+62 813-8715-3680",
   whatsapp: "https://wa.me/6281387153680",
   
-  // Dua versi CV
   cvFullStack: "/cv/Micoandar_FullStack_CV.pdf",
   cvSoftware: "/cv/Micoandar_SoftwareEngineer_CV.pdf",
   
@@ -28,13 +28,14 @@ export const profile = {
   linkedinHandle: "Micoandar Justinus Marbun",
   
   summary: {
-    id: "Fresh Graduate S1 Informatika Universitas Gunadarma (2026) dengan pengalaman hampir 2 tahun dalam rekayasa perangkat lunak. Berfokus pada pengembangan aplikasi web full-stack end-to-end, mulai dari perancangan arsitektur database, pembangunan REST API yang aman, antarmuka responsif, hingga deployment ke cloud.",
+    id: "Fresh Graduate S1 Informatika Universitas Gunadarma (2026) dengan pengalaman proyek hampir 2 tahun dalam rekayasa perangkat lunak. Berfokus pada pengembangan aplikasi web full-stack end-to-end, mulai dari perancangan arsitektur database, pembangunan REST API yang aman, antarmuka responsif, hingga deployment ke cloud.",
     en: "Informatics Graduate from Gunadarma University (2026) with nearly 2 years of experience in software engineering. Focused on end-to-end full-stack web application development, from database architecture design, secure REST API development, responsive interfaces, to cloud deployment.",
   } as LText,
 
+  // Update Soft Skills sesuai permintaan
   softSkills: {
-    id: ["Problem Solving", "Clean Code", "System Design", "Adaptif", "Fast Learner"],
-    en: ["Problem Solving", "Clean Code", "System Design", "Adaptive", "Fast Learner"],
+    id: ["Problem Solving", "Adaptif", "Fast Learner", "Komunikatif", "Teamwork", "System Design"],
+    en: ["Problem Solving", "Adaptive", "Fast Learner", "Communicative", "Teamwork", "System Design"],
   },
   stats: [
     { label: { id: "IPK", en: "GPA" } as LText, value: "3.76", suffix: "/4.00" },

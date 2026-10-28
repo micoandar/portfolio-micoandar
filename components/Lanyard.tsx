@@ -10,7 +10,8 @@ export default function Lanyard() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springConfig = { stiffness: 150, damping: 20, mass: 1 };
+  // KONFIGURASI KARET: Stiffness & Damping diturunkan agar lebih elastis
+  const springConfig = { stiffness: 80, damping: 12, mass: 1 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
@@ -25,10 +26,11 @@ export default function Lanyard() {
     return Math.atan2(lx as number, ly as number) * (180 / Math.PI);
   });
 
-  const cardRotate = useTransform(smoothX, [-200, 200], [-15, 15]);
+  // Rotasi kartu lebih dinamis saat ditarik
+  const cardRotate = useTransform(smoothX, [-200, 200], [-20, 20]);
 
   const dragStart = useRef({ x: 0, y: 0 });
-  const MAX_STRETCH = 200;
+  const MAX_STRETCH = 250; // Tarikan bisa lebih panjang
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -62,8 +64,9 @@ export default function Lanyard() {
     setIsDragging(false);
     e.currentTarget.releasePointerCapture(e.pointerId);
     
-    animate(x, 0, { type: "spring", stiffness: 120, damping: 15, mass: 1.2 });
-    animate(y, 0, { type: "spring", stiffness: 120, damping: 15, mass: 1.2 });
+    // Pantulan dilepas juga dibuat lebih elastis
+    animate(x, 0, { type: "spring", stiffness: 80, damping: 12, mass: 1 });
+    animate(y, 0, { type: "spring", stiffness: 80, damping: 12, mass: 1 });
   };
 
   return (
@@ -117,7 +120,6 @@ export default function Lanyard() {
           </div>
 
           {/* GAMBAR ID CARD */}
-          {/* Path diubah menjadi /id-card.png */}
           <div className="relative w-full aspect-[832/1285] bg-slate-800 flex items-center justify-center">
             <Image
               src="/id-card.png"

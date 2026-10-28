@@ -2,11 +2,10 @@
 
 import { useEffect, useState, useRef } from "react";
 import { ArrowRight, Download, Github, Linkedin, Mail, MapPin, ChevronDown } from "lucide-react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
-import Lanyard from "@/components/Lanyard";
+import Lanyard from "@/components/Lanyard"; // <-- Import komponen baru
 
 export default function Hero() {
   const { lang } = useLanguage();
@@ -32,36 +31,12 @@ export default function Hero() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // --- LOGIKA 3D TILT ---
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const tiltConfig = { stiffness: 100, damping: 30 };
-  const smoothMouseX = useSpring(mouseX, tiltConfig);
-  const smoothMouseY = useSpring(mouseY, tiltConfig);
-
-  const rotateX = useTransform(smoothMouseY, [-300, 300], [10, -10]);
-  const rotateY = useTransform(smoothMouseX, [-300, 300], [-10, 10]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set(e.clientX - centerX);
-    mouseY.set(e.clientY - centerY);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
   return (
     <section
       id="beranda"
       className="relative isolate flex min-h-screen items-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white"
     >
-      {/* Background Pattern & Glow (Tema Terang) */}
+      {/* Background Pattern & Glow */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
         <div className="absolute -left-24 top-10 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-brand-300/30 blur-[100px] dark:bg-brand-900/20" />
@@ -70,7 +45,7 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         
-        {/* Kolom Kiri */}
+        {/* Kolom Kiri: Teks (Tidak Diubah) */}
         <div className="animate-fade-in z-10">
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
@@ -163,24 +138,12 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Kolom Kanan: Lanyard 3D Container */}
-        <div 
-          className="relative flex justify-center pt-10 sm:pt-0 perspective-[1000px]"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <motion.div
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            className="w-full flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, -10, 0], rotate: [-1, 1, -1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-full flex justify-center"
-            >
-              <Lanyard />
-            </motion.div>
-          </motion.div>
+        {/* 
+          Kolom Kanan: HANYA MEMANGGIL <Lanyard /> 
+          Semua animasi mouse/parallax lama yang membungkus area ini dihilangkan.
+        */}
+        <div className="relative flex justify-center pt-10 sm:pt-0">
+          <Lanyard />
         </div>
       </div>
     </section>

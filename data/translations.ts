@@ -42,8 +42,8 @@ export const translations = {
           desc: "Melakukan deployment aplikasi web menggunakan Vercel dan Railway, serta menggunakan Docker untuk konsistensi environment." 
         },
       ],
-      // PENJELASAN WATERFALL DITAMBAHKAN DI SINI
-      closing: "Saya memiliki minat pada Full-Stack Development dan pengembangan sistem berbasis AI. Melalui proyek akademik dan mandiri, saya terbiasa menggunakan PHP, JavaScript, Python, dan Kotlin. Dalam siklus pengembangan perangkat lunak (SDLC), saya terbiasa menerapkan metodologi Waterfall yang menekankan pendekatan sekuensial dan terstruktur — mulai dari analisis kebutuhan, desain sistem, implementasi, pengujian, hingga pemeliharaan secara bertahap. Saya senang memecahkan masalah teknis dan menulis kode yang terstruktur serta mudah dipelihara.",
+      // Kalimat terakhir dihapus
+      closing: "Saya memiliki minat pada Full-Stack Development dan pengembangan sistem berbasis AI. Melalui proyek akademik dan mandiri, saya terbiasa menggunakan PHP, JavaScript, Python, dan Kotlin. Dalam siklus pengembangan perangkat lunak (SDLC), saya terbiasa menerapkan metodologi Waterfall yang menekankan pendekatan sekuensial dan terstruktur — mulai dari analisis kebutuhan, desain sistem, implementasi, pengujian, hingga pemeliharaan secara bertahap.",
     },
     projects: {
       eyebrow: "Portofolio",
@@ -121,8 +121,8 @@ export const translations = {
           desc: "Deploying web applications using Vercel and Railway, and utilizing Docker for environment consistency." 
         },
       ],
-      // WATERFALL EXPLANATION ADDED HERE
-      closing: "I have a strong interest in Full-Stack Development and AI-based systems. Through academic and independent projects, I am accustomed to using PHP, JavaScript, Python, and Kotlin. In the Software Development Life Cycle (SDLC), I am accustomed to applying the Waterfall methodology which emphasizes a sequential and structured approach — from requirements analysis, system design, implementation, testing, to maintenance in stages. I enjoy solving technical problems and writing well-structured, maintainable code.",
+      // Kalimat terakhir dihapus
+      closing: "I have a strong interest in Full-Stack Development and AI-based systems. Through academic and independent projects, I am accustomed to using PHP, JavaScript, Python, and Kotlin. In the Software Development Life Cycle (SDLC), I am accustomed to applying the Waterfall methodology which emphasizes a sequential and structured approach — from requirements analysis, system design, implementation, testing, to maintenance in stages.",
     },
     projects: {
       eyebrow: "Portfolio",

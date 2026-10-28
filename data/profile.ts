@@ -6,7 +6,6 @@ export const profile = {
   shortName: "Micoandar",
   initials: "MJ",
   role: { id: "Full Stack Developer", en: "Full Stack Developer" } as LText,
-  // Ubah array roles
   roles: {
     id: ["Full Stack Developer", "Software Engineer", "Backend Engineer"],
     en: ["Full Stack Developer", "Software Engineer", "Backend Engineer"],
@@ -18,13 +17,16 @@ export const profile = {
   email: "micoandar@gmail.com",
   phone: "+62 813-8715-3680",
   whatsapp: "https://wa.me/6281387153680",
-  cvPath: "/cv/Micoandar_Justinus_Marbun_CV.pdf",
+  
+  // Dua versi CV
+  cvFullStack: "/cv/Micoandar_FullStack_CV.pdf",
+  cvSoftware: "/cv/Micoandar_SoftwareEngineer_CV.pdf",
+  
   github: "https://github.com/micoandar",
   githubHandle: "github.com/micoandar",
   linkedin: "https://www.linkedin.com/in/micoandar-justinus-marbun",
   linkedinHandle: "Micoandar Justinus Marbun",
   
-  // Ubah summary
   summary: {
     id: "Fresh Graduate S1 Informatika Universitas Gunadarma (2026) dengan pengalaman hampir 2 tahun dalam rekayasa perangkat lunak. Berfokus pada pengembangan aplikasi web full-stack end-to-end, mulai dari perancangan arsitektur database, pembangunan REST API yang aman, antarmuka responsif, hingga deployment ke cloud.",
     en: "Informatics Graduate from Gunadarma University (2026) with nearly 2 years of experience in software engineering. Focused on end-to-end full-stack web application development, from database architecture design, secure REST API development, responsive interfaces, to cloud deployment.",

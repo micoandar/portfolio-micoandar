@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Mail, MapPin, ChevronDown } from "lucide-react";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -13,6 +13,10 @@ export default function Hero() {
   const t = translations[lang].hero;
   const [roleIndex, setRoleIndex] = useState(0);
   const [imgError, setImgError] = useState(false);
+  
+  // State untuk Dropdown CV
+  const [isCvOpen, setIsCvOpen] = useState(false);
+  const cvRef = useRef<HTMLDivElement>(null);
 
   const roles = profile.roles[lang];
 
@@ -20,6 +24,17 @@ export default function Hero() {
     const id = setInterval(() => setRoleIndex((i) => (i + 1) % roles.length), 2600);
     return () => clearInterval(id);
   }, [roles.length]);
+
+  // Menutup dropdown jika klik di luar area
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (cvRef.current && !cvRef.current.contains(event.target as Node)) {
+        setIsCvOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <section
@@ -68,14 +83,42 @@ export default function Hero() {
               <ArrowRight size={16} className="transition group-hover:translate-x-1" />
             </a>
 
-            <a
-              href={profile.cvPath}
-              download
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700"
-            >
-              <Download size={16} />
-              {t.downloadCv}
-            </a>
+            {/* Dropdown CV */}
+            <div className="relative" ref={cvRef}>
+              <button
+                type="button"
+                onClick={() => setIsCvOpen(!isCvOpen)}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700"
+              >
+                <Download size={16} />
+                {t.downloadCv}
+                <ChevronDown size={14} className={`transition-transform duration-200 ${isCvOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {/* Menu Dropdown */}
+              {isCvOpen && (
+                <div className="absolute left-0 top-full mt-2 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-800 dark:bg-slate-900 z-50 animate-in fade-in slide-in-from-top-2">
+                  <a
+                    href={profile.cvFullStack}
+                    download
+                    onClick={() => setIsCvOpen(false)}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                  >
+                    <Download size={14} className="text-slate-400" />
+                    {t.cvFullStack}
+                  </a>
+                  <a
+                    href={profile.cvSoftware}
+                    download
+                    onClick={() => setIsCvOpen(false)}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                  >
+                    <Download size={14} className="text-slate-400" />
+                    {t.cvSoftware}
+                  </a>
+                </div>
+              )}
+            </div>
 
             <div className="flex items-center gap-3 ml-2">
               <a href={profile.github} target="_blank" rel="noreferrer" className="text-slate-400 transition hover:text-slate-900 dark:hover:text-white">

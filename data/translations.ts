@@ -13,6 +13,8 @@ export const translations = {
       greeting: "Hai, saya",
       viewProjects: "Lihat Proyek",
       downloadCv: "Download CV",
+      cvFullStack: "Full Stack Developer",
+      cvSoftware: "Software Engineer",
     },
     about: {
       eyebrow: "Tentang Saya",
@@ -90,6 +92,8 @@ export const translations = {
       greeting: "Hi, I'm",
       viewProjects: "View Projects",
       downloadCv: "Download CV",
+      cvFullStack: "Full Stack Developer",
+      cvSoftware: "Software Engineer",
     },
     about: {
       eyebrow: "About Me",

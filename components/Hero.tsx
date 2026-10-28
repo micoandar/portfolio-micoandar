@@ -43,15 +43,13 @@ export default function Hero() {
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
-      {/* 
-        LANYARD FULL SCREEN (Bebas ditarik tanpa batas)
-      */}
+      {/* LANYARD FULL SCREEN */}
       <div className="absolute inset-0 z-0">
         <Lanyard 
           frontImage="/images/id-card.png"
-          imageFit="cover" // <-- Diubah ke cover agar gambar penuh
-          cornerRadius={0.4} // <-- Sudut lebih membulat
-          size={0.45} // <-- Ukuran diperkecil
+          imageFit="cover"
+          cornerRadius={0.4}
+          size={0.45}
           strapLength={0.6}
           strapColor="#111111"
           interactive={true}
@@ -62,8 +60,8 @@ export default function Hero() {
       {/* KONTEN TEKS */}
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] pointer-events-none">
         
-        {/* Kolom Kiri: Teks & Tombol (pointer-events-auto agar bisa diklik) */}
-        <div className="animate-fade-in pt-32 pb-16 pointer-events-auto">
+        {/* Kolom Kiri: Teks & Tombol - Jarak atas dikurangi agar naik */}
+        <div className="animate-fade-in pt-24 pb-12 lg:pt-20 pointer-events-auto">
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -72,24 +70,26 @@ export default function Hero() {
             {t.status}
           </span>
 
-          <h1 className="mt-8 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
+          {/* Margin Top dikurangi */}
+          <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />
             <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
               Micoandar.
             </span>
           </h1>
 
-          <div className="mt-6 flex h-8 items-center text-lg font-semibold text-slate-700 dark:text-slate-300 sm:text-2xl">
+          <div className="mt-4 flex h-8 items-center text-lg font-semibold text-slate-700 dark:text-slate-300 sm:text-2xl">
             <span key={roleIndex} className="animate-fade-in">
               {roles[roleIndex]}
             </span>
           </div>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
             {profile.summary[lang]}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-3">
+          {/* Margin Top dikurangi */}
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href="#proyek"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-slate-900/30 dark:bg-white dark:text-slate-900 dark:hover:shadow-white/20"
@@ -143,7 +143,8 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-500 dark:text-slate-400">
+          {/* Margin Top dikurangi */}
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-500 dark:text-slate-400">
             <span className="inline-flex items-center gap-2">
               <MapPin size={16} className="text-brand-500" />
               {profile.location[lang]}

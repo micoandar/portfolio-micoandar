@@ -1,27 +1,23 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform, animate } from "framer-motion";
 
 export default function Lanyard() {
   const [isDragging, setIsDragging] = useState(false);
   
-  // Posisi drag
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Fisika pegas (Spring)
   const springConfig = { stiffness: 150, damping: 20, mass: 1 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
-  // Konfigurasi Tali
-  const initialGap = 100; // Jarak dari ujung atas tali ke lubang ID card
+  const initialGap = 100;
   const strapX = smoothX;
   const strapY = useTransform(smoothY, (val) => val + initialGap);
   
-  // Kalkulasi Panjang dan Sudut Tali (Trigonometri)
   const strapLength = useTransform([strapX, strapY], ([lx, ly]) => {
     return Math.sqrt((lx as number) ** 2 + (ly as number) ** 2);
   });
@@ -29,7 +25,6 @@ export default function Lanyard() {
     return Math.atan2(lx as number, ly as number) * (180 / Math.PI);
   });
 
-  // Rotasi kartu (mengikuti tarikan, dengan batas)
   const cardRotate = useTransform(smoothX, [-200, 200], [-15, 15]);
 
   const dragStart = useRef({ x: 0, y: 0 });
@@ -50,7 +45,6 @@ export default function Lanyard() {
     let newX = e.clientX - dragStart.current.x;
     let newY = e.clientY - dragStart.current.y;
 
-    // Batas maksimal tarikan (elastis)
     const distance = Math.sqrt(newX ** 2 + newY ** 2);
     if (distance > MAX_STRETCH) {
       const angle = Math.atan2(newY, newX);
@@ -58,7 +52,6 @@ export default function Lanyard() {
       newY = Math.sin(angle) * MAX_STRETCH;
     }
 
-    // Tidak bisa ditarik ke atas melewati titik gantungan
     if (newY < 0) newY = 0;
 
     x.set(newX);
@@ -69,13 +62,12 @@ export default function Lanyard() {
     setIsDragging(false);
     e.currentTarget.releasePointerCapture(e.pointerId);
     
-    // Pantulan kembali ke tengah (Spring)
     animate(x, 0, { type: "spring", stiffness: 120, damping: 15, mass: 1.2 });
     animate(y, 0, { type: "spring", stiffness: 120, damping: 15, mass: 1.2 });
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-start h-full pt-4">
+    <div className="relative flex flex-col items-center justify-start pt-4 w-full">
       
       {/* TALI LANYARD */}
       <motion.div
@@ -86,11 +78,9 @@ export default function Lanyard() {
         }}
         className="absolute top-0 w-8 z-0 rounded-b-sm bg-gradient-to-b from-[#111] via-[#222] to-[#333] shadow-[2px_0_10px_rgba(0,0,0,0.5)] border-x border-white/5"
       >
-        {/* Tekstur Kain */}
         <div className="absolute inset-0 opacity-30 [background-image:repeating-linear-gradient(45deg,transparent,transparent_2px,#fff_2px,#fff_4px)]" />
         <div className="absolute inset-0 opacity-20 [background-image:repeating-linear-gradient(-45deg,transparent,transparent_3px,#000_3px,#000_5px)]" />
         
-        {/* Teks di Tali */}
         <div className="absolute inset-0 flex items-center justify-center pt-4">
           <span className="text-[10px] font-bold tracking-[0.3em] text-white/40" style={{ writingMode: "vertical-rl" }}>
             SOFTWARE ENGINEER
@@ -119,20 +109,18 @@ export default function Lanyard() {
         </div>
 
         {/* BINGKAI ID CARD */}
-        <div className="relative w-full overflow-hidden rounded-[1.5rem] border-[6px] border-[#1a1a1a] bg-[#222] shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+        <div className="relative w-full overflow-hidden rounded-[1.5rem] border-[6px] border-[#1a1a1a] bg-[#2a2a2a] shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
           
           {/* Lubang Klip (Eyelet) */}
           <div className="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-4 bg-[#0a0a0a] rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)] border border-gray-600 z-20 flex justify-center items-center">
             <div className="w-8 h-1 bg-gray-500/50 rounded-full" />
           </div>
 
-          {/* 
-            GAMBAR ASLI KAMU
-            Menggunakan object-contain dan rasio asli 832/1285
-          */}
-          <div className="relative w-full aspect-[832/1285] bg-black/50">
+          {/* GAMBAR ID CARD */}
+          {/* Path diubah menjadi /id-card.png */}
+          <div className="relative w-full aspect-[832/1285] bg-slate-800 flex items-center justify-center">
             <Image
-              src="/images/id-card.png"
+              src="/id-card.png"
               alt="Micoandar ID Card"
               fill
               className="object-contain pointer-events-none p-1 rounded-xl"

@@ -32,11 +32,10 @@ export default function Hero() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // --- LOGIKA 3D TILT (MENGIKUTI MOUSE) ---
+  // --- LOGIKA 3D TILT ---
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Spring untuk tilt agar halus
   const tiltConfig = { stiffness: 100, damping: 30 };
   const smoothMouseX = useSpring(mouseX, tiltConfig);
   const smoothMouseY = useSpring(mouseY, tiltConfig);
@@ -62,12 +61,9 @@ export default function Hero() {
       id="beranda"
       className="relative isolate flex min-h-screen items-center overflow-hidden bg-[#050914] text-white"
     >
-      {/* Background Bintang & Glow Biru */}
+      {/* Background Bintang & Glow Biru (TIDAK DIUBAH) */}
       <div className="absolute inset-0 -z-10">
-        {/* Glow bawah */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[50%] w-full max-w-4xl bg-blue-600/20 blur-[120px] rounded-t-full" />
-        
-        {/* Bintang-bintang kecil */}
         <div className="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent bg-[size:20px_20px] bg-repeat" />
         <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_center,white_1px,transparent_0)] [background-size:100px_100px]" />
         <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_center,white_1px,transparent_0)] [background-size:150px_150px] [background-position:50px_50px]" />
@@ -75,7 +71,7 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         
-        {/* Kolom Kiri: Teks & Tombol */}
+        {/* Kolom Kiri */}
         <div className="animate-fade-in z-10">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold text-slate-300 shadow-sm backdrop-blur-md">
             <span className="relative flex h-2 w-2">
@@ -102,7 +98,6 @@ export default function Hero() {
             {profile.summary[lang]}
           </p>
 
-          {/* Tombol */}
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#proyek"
@@ -112,7 +107,6 @@ export default function Hero() {
               <ArrowRight size={16} className="transition group-hover:translate-x-1" />
             </a>
 
-            {/* Dropdown CV */}
             <div className="relative" ref={cvRef}>
               <button
                 type="button"
@@ -180,7 +174,6 @@ export default function Hero() {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             className="w-full flex justify-center"
           >
-            {/* Animasi Melayang (Hanya aktif jika tidak di-drag) */}
             <motion.div
               animate={{ y: [0, -10, 0], rotate: [-1, 1, -1] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}

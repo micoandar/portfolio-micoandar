@@ -45,22 +45,21 @@ export default function Hero() {
 
       {/* 
         LANYARD FULL SCREEN (Bebas ditarik tanpa batas)
-        Diletakkan di z-0 agar berada di belakang teks, dan menutupi seluruh layar.
       */}
       <div className="absolute inset-0 z-0">
         <Lanyard 
           frontImage="/images/id-card.png"
-          imageFit="contain"
-          cardColor="#000000" // Membuat bingkai kartu menjadi hitam
-          size={0.55} // Ukuran proporsional
+          imageFit="cover" // <-- Diubah ke cover agar gambar penuh
+          cornerRadius={0.4} // <-- Sudut lebih membulat
+          size={0.45} // <-- Ukuran diperkecil
           strapLength={0.6}
-          strapColor="#111111" // Tali hitam
+          strapColor="#111111"
           interactive={true}
-          anchor="right" // Posisi awal di sebelah kanan
+          anchor="right"
         />
       </div>
 
-      {/* KONTEN TEKS (Di atas Lanyard) */}
+      {/* KONTEN TEKS */}
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] pointer-events-none">
         
         {/* Kolom Kiri: Teks & Tombol (pointer-events-auto agar bisa diklik) */}

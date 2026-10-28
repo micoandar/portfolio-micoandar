@@ -56,9 +56,9 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <Lanyard 
           frontImage="/images/id-card.png"
+          backImage="/images/backlanyard.jpg" // <-- TAMBAHKAN BARIS INI
           imageFit="cover" 
           cornerRadius={0.4}
-          // Ukuran mengecil di HP (0.35) dan membesar di Desktop (0.55)
           size={isMobile ? 0.35 : 0.55} 
           strapLength={0.6}
           strapColor="#111111"

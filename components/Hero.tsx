@@ -47,7 +47,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <Lanyard 
           frontImage="/images/id-card.png"
-          imageFit="cover"
+          imageFit="cover" 
           cornerRadius={0.4}
           size={0.45}
           strapLength={0.6}
@@ -60,7 +60,7 @@ export default function Hero() {
       {/* KONTEN TEKS */}
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] pointer-events-none">
         
-        {/* Kolom Kiri: Teks & Tombol - Jarak atas dikurangi agar naik */}
+        {/* Kolom Kiri: Teks & Tombol */}
         <div className="animate-fade-in pt-24 pb-12 lg:pt-20 pointer-events-auto">
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
@@ -70,7 +70,6 @@ export default function Hero() {
             {t.status}
           </span>
 
-          {/* Margin Top dikurangi */}
           <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />
             <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
@@ -88,7 +87,6 @@ export default function Hero() {
             {profile.summary[lang]}
           </p>
 
-          {/* Margin Top dikurangi */}
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href="#proyek"
@@ -143,7 +141,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Margin Top dikurangi */}
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-500 dark:text-slate-400">
             <span className="inline-flex items-center gap-2">
               <MapPin size={16} className="text-brand-500" />

@@ -29,10 +29,12 @@ export interface LanyardProps {
   style?: CSSProperties;
 }
 
+// 1. UBAH RASIO KARTU AGAR SAMA PERSIS DENGAN GAMBAR (832 : 1285)
 const CARD_SIZES: Record<string, [number, number]> = {
-  portrait: [1.6, 2.25],
-  landscape: [2.25, 1.6]
+  portrait: [1.6, 2.47], 
+  landscape: [2.47, 1.6]
 };
+
 const ANCHORS: Record<string, number> = { left: 0.27, center: 0.5, right: 0.73 };
 const THICKNESS = 0.018;
 const BEVEL = 0.007;
@@ -447,12 +449,26 @@ const drawFitted = (ctx: CanvasRenderingContext2D, image: HTMLImageElement, widt
   ctx.drawImage(image, (width - w) / 2, (height - h) / 2, w, h);
 };
 
+// 2. TAMBAHKAN KOTAK (BINGKAI) REALISTIS PADA GAMBAR
 const paintFace = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, color: number[], fit: string) => {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   ctx.fillStyle = toCss(color);
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  if (image) drawFitted(ctx, image, canvas.width, canvas.height, fit);
+  
+  if (image) {
+    drawFitted(ctx, image, canvas.width, canvas.height, fit);
+    
+    // Bingkai Luar (Hitam/Abu gelap seperti plastik)
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.lineWidth = 24;
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    
+    // Bingkai Dalam (Kilau Plastik)
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.lineWidth = 6;
+    ctx.strokeRect(12, 12, canvas.width - 24, canvas.height - 24);
+  }
 };
 
 const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, color: number[]) => {
@@ -474,12 +490,12 @@ const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, c
     return along / across;
   }
 
-  // --- TEKS "Micoandar JM" & LOGO PADA TALI (FONT LEBIH BESAR) ---
+  // --- TEKS "Micoandar JM" & LOGO PADA TALI ---
   ctx.save();
   ctx.translate(across / 2, along / 2);
   ctx.rotate(Math.PI / 2); 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
-  ctx.font = 'bold 28px "Inter", "Helvetica Neue", Arial, sans-serif'; // Font 28px
+  ctx.font = 'bold 28px "Inter", "Helvetica Neue", Arial, sans-serif'; 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
@@ -744,8 +760,8 @@ const stepSimulation = (sim: any, dt: number, physics: any, time: number) => {
 const Lanyard: React.FC<LanyardProps> = ({
   frontImage,
   backImage,
-  imageFit = 'contain', // Default contain agar tidak terpotong
-  cardColor = '#000000', // Default hitam
+  imageFit = 'cover',
+  cardColor = '#000000',
   orientation = 'portrait',
   finish = 'glossy',
   cornerRadius = 0.3,
@@ -753,7 +769,7 @@ const Lanyard: React.FC<LanyardProps> = ({
   anchor = 'center',
   strapLength = 0.5,
   strapImage,
-  strapColor = '#111111', // Tali hitam
+  strapColor = '#111111',
   strapWidth = 0.65,
   metal = 'silver',
   gravity = 1,
@@ -771,7 +787,7 @@ const Lanyard: React.FC<LanyardProps> = ({
 
   settingsRef.current = {
     frontImage,
-    backImage: backImage || frontImage, // Fallback ke depan jika belakang kosong
+    backImage: backImage || frontImage,
     imageFit: imageFit === 'contain' ? 'contain' : 'cover',
     cardColor,
     orientation: orientation === 'landscape' ? 'landscape' : 'portrait',

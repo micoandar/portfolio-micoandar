@@ -1,138 +1,148 @@
 "use client";
 
-import { useState, useRef } from "react";
-import Image from "next/image";
-import { motion, useMotionValue, useSpring, useTransform, animate } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-export default function Lanyard() {
-  const [isDragging, setIsDragging] = useState(false);
-  
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+// Konfigurasi utama
+const lanyardConfig = {
+  width: "clamp(180px, 30vw, 420px)", // Responsive width
+  rotation: 0,
+  x: 0,
+  y: 0,
+  mouseStrength: 1,
+  swingStrength: 1,
+  animationDuration: 1.2,
+};
 
-  // KONFIGURASI KARET: Stiffness & Damping diturunkan agar lebih elastis
-  const springConfig = { stiffness: 80, damping: 12, mass: 1 };
-  const smoothX = useSpring(x, springConfig);
-  const smoothY = useSpring(y, springConfig);
+interface LanyardProps {
+  align?: "left" | "center" | "right";
+  children?: React.ReactNode; // Area kosong jika kamu ingin menaruh ID Card buatanmu sendiri di bawah
+}
 
-  const initialGap = 100;
-  const strapX = smoothX;
-  const strapY = useTransform(smoothY, (val) => val + initialGap);
-  
-  const strapLength = useTransform([strapX, strapY], ([lx, ly]) => {
-    return Math.sqrt((lx as number) ** 2 + (ly as number) ** 2);
-  });
-  const strapAngle = useTransform([strapX, strapY], ([lx, ly]) => {
-    return Math.atan2(lx as number, ly as number) * (180 / Math.PI);
-  });
+export default function Lanyard({ align = "center", children }: LanyardProps) {
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  // Rotasi kartu lebih dinamis saat ditarik
-  const cardRotate = useTransform(smoothX, [-200, 200], [-20, 20]);
+  // Deteksi device untuk mouse interaction (hanya desktop)
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: fine)");
+    setIsDesktop(mediaQuery.matches);
+  }, []);
 
-  const dragStart = useRef({ x: 0, y: 0 });
-  const MAX_STRETCH = 250; // Tarikan bisa lebih panjang
+  // Logika Mouse Parallax
+  const mouseX = useMotionValue(0);
+  const springConfig = { stiffness: 100, damping: 20 };
+  const smoothMouseX = useSpring(mouseX, springConfig);
 
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    dragStart.current = {
-      x: e.clientX - x.get(),
-      y: e.clientY - y.get(),
-    };
-    e.currentTarget.setPointerCapture(e.pointerId);
+  // Batasan tilt (maksimal 3 derajat) dan geser (maksimal 15px)
+  const rotate = useTransform(
+    smoothMouseX,
+    [-500, 500],
+    [-3 * lanyardConfig.mouseStrength, 3 * lanyardConfig.mouseStrength]
+  );
+  const translateX = useTransform(
+    smoothMouseX,
+    [-500, 500],
+    [-15 * lanyardConfig.mouseStrength, 15 * lanyardConfig.mouseStrength]
+  );
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDesktop) return;
+    // Mengukur posisi mouse dari tengah layar
+    const { clientX } = e;
+    const { innerWidth } = window;
+    const offset = clientX - innerWidth / 2;
+    mouseX.set(offset);
   };
 
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-
-    let newX = e.clientX - dragStart.current.x;
-    let newY = e.clientY - dragStart.current.y;
-
-    const distance = Math.sqrt(newX ** 2 + newY ** 2);
-    if (distance > MAX_STRETCH) {
-      const angle = Math.atan2(newY, newX);
-      newX = Math.cos(angle) * MAX_STRETCH;
-      newY = Math.sin(angle) * MAX_STRETCH;
-    }
-
-    if (newY < 0) newY = 0;
-
-    x.set(newX);
-    y.set(newY);
+  const handleMouseLeave = () => {
+    // Kembali ke tengah
+    mouseX.set(0);
   };
 
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(false);
-    e.currentTarget.releasePointerCapture(e.pointerId);
-    
-    // Pantulan dilepas juga dibuat lebih elastis
-    animate(x, 0, { type: "spring", stiffness: 80, damping: 12, mass: 1 });
-    animate(y, 0, { type: "spring", stiffness: 80, damping: 12, mass: 1 });
-  };
+  // Penentuan posisi alignment
+  const alignClass = {
+    left: "justify-start",
+    center: "justify-center",
+    right: "justify-end",
+  }[align];
 
   return (
-    <div className="relative flex flex-col items-center justify-start pt-4 w-full">
-      
-      {/* TALI LANYARD */}
+    <div
+      className={`relative flex w-full overflow-x-hidden ${alignClass}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        paddingTop: "2rem", // Jarak aman dari atas
+        zIndex: 10,
+        ...({ "--swing-strength": lanyardConfig.swingStrength } as React.CSSProperties),
+      }}
+    >
+      {/* 
+        Wrapper Animasi Masuk (Entrance) 
+        Masuk dari atas dengan sedikit overshoot (spring)
+      */}
       <motion.div
+        initial={{ y: "-20%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 50,
+          damping: 15,
+          duration: lanyardConfig.animationDuration,
+        }}
         style={{
-          height: strapLength,
-          rotate: strapAngle,
+          width: lanyardConfig.width,
+          x: lanyardConfig.x,
+          y: lanyardConfig.y,
+          rotate: lanyardConfig.rotation,
           transformOrigin: "top center",
         }}
-        className="absolute top-0 w-8 z-0 rounded-b-sm bg-gradient-to-b from-[#111] via-[#222] to-[#333] shadow-[2px_0_10px_rgba(0,0,0,0.5)] border-x border-white/5"
+        className="relative flex flex-col items-center will-change-transform"
       >
-        <div className="absolute inset-0 opacity-30 [background-image:repeating-linear-gradient(45deg,transparent,transparent_2px,#fff_2px,#fff_4px)]" />
-        <div className="absolute inset-0 opacity-20 [background-image:repeating-linear-gradient(-45deg,transparent,transparent_3px,#000_3px,#000_5px)]" />
-        
-        <div className="absolute inset-0 flex items-center justify-center pt-4">
-          <span className="text-[10px] font-bold tracking-[0.3em] text-white/40" style={{ writingMode: "vertical-rl" }}>
-            SOFTWARE ENGINEER
-          </span>
-        </div>
-      </motion.div>
-
-      {/* KARTU ID (BISA DI-DRAG) */}
-      <motion.div
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
-        style={{
-          x: smoothX,
-          y: smoothY,
-          rotate: cardRotate,
-          touchAction: "none",
-        }}
-        className="relative z-10 mt-[100px] w-full max-w-[320px] cursor-grab active:cursor-grabbing group"
-      >
-        {/* PENGAIT LOGAM (ATAS) */}
-        <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
-          <div className="h-4 w-8 rounded-t-sm bg-gradient-to-r from-gray-400 via-gray-200 to-gray-500 border border-gray-500 shadow-md" />
-          <div className="h-3 w-6 bg-gradient-to-b from-gray-300 to-gray-500 rounded-b-md shadow-inner" />
-        </div>
-
-        {/* BINGKAI ID CARD */}
-        <div className="relative w-full overflow-hidden rounded-[1.5rem] border-[6px] border-[#1a1a1a] bg-[#2a2a2a] shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
-          
-          {/* Lubang Klip (Eyelet) */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-4 bg-[#0a0a0a] rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)] border border-gray-600 z-20 flex justify-center items-center">
-            <div className="w-8 h-1 bg-gray-500/50 rounded-full" />
-          </div>
-
-          {/* GAMBAR ID CARD */}
-          <div className="relative w-full aspect-[832/1285] bg-slate-800 flex items-center justify-center">
-            <Image
-              src="/id-card.png"
-              alt="Micoandar ID Card"
-              fill
-              className="object-contain pointer-events-none p-1 rounded-xl"
-              priority
+        {/* 
+          Wrapper Idle Swing 
+          Goyangan sangat halus (±1.5 derajat) seperti tertiup angin
+        */}
+        <motion.div
+          animate={{
+            rotate: [-1.5 * lanyardConfig.swingStrength, 1.5 * lanyardConfig.swingStrength, -1.5 * lanyardConfig.swingStrength],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 5,
+            ease: "easeInOut",
+          }}
+          style={{ transformOrigin: "top center" }}
+          className="w-full will-change-transform"
+        >
+          {/* 
+            Wrapper Mouse Parallax 
+            Merespons pergerakan kursor mouse (Desktop only)
+          */}
+          <motion.div
+            style={{
+              rotate,
+              x: translateX,
+              transformOrigin: "top center",
+            }}
+            className="w-full will-change-transform flex flex-col items-center"
+          >
+            {/* Gambar Lanyard Asli */}
+            <img
+              src="/lanyard.png"
+              alt="Decorative lanyard"
+              aria-hidden="true"
+              className="w-full h-auto object-contain pointer-events-none"
             />
-          </div>
 
-          {/* Efek Highlight Kaca */}
-          <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-tr from-white/0 via-white/5 to-white/20" />
-        </div>
+            {/* Area kosong untuk ID Card (jika lanyard.png hanya berisi tali) */}
+            {children && (
+              <div className="absolute bottom-0 w-full flex justify-center translate-y-[90%]">
+                {children}
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
       </motion.div>
     </div>
   );

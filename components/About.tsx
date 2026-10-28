@@ -31,10 +31,16 @@ export default function About() {
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
         
-        {/* BARIS 1: Bio (Full Width) */}
+        {/* BARIS 1: Bio (Full Width dengan Gradasi) */}
         <Reveal className="md:col-span-12">
-          <div className="flex h-full flex-col justify-center rounded-3xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900/50 sm:p-10">
-            <div>
+          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-slate-50 to-brand-50/60 p-7 shadow-sm dark:border-slate-800 dark:from-slate-900 dark:via-slate-900/80 dark:to-brand-950/30 sm:p-10">
+            
+            {/* Efek Pendaran Cahaya (Glow) di Latar Belakang */}
+            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-400/10 blur-[80px] dark:bg-brand-500/5" />
+            <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-sky-400/10 blur-[80px] dark:bg-sky-500/5" />
+
+            {/* Konten Teks */}
+            <div className="relative z-10">
               <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300 sm:text-xl">
                 {t.desc}
               </p>
@@ -64,7 +70,7 @@ export default function About() {
           </Reveal>
         ))}
 
-        {/* Kotak Soft Skills (Desain disamakan dengan Service) */}
+        {/* Kotak Soft Skills */}
         <Reveal delay={400} className="md:col-span-4">
           <div className="group h-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-slate-700">
             <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-brand-100 group-hover:text-brand-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-brand-900/50 dark:group-hover:text-brand-400">

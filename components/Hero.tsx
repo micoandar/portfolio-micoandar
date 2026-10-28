@@ -43,20 +43,24 @@ export default function Hero() {
   return (
     <section
       id="beranda"
+      // flex-col untuk mobile agar menumpuk, lg:block untuk desktop agar Lanyard bisa absolute di kanan
       className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white lg:block"
     >
-      {/* Background Pattern & Glow */}
+      {/* Background Pattern & Glow (TIDAK DIUBAH) */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
         <div className="absolute -left-24 top-10 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-brand-300/30 blur-[100px] dark:bg-brand-900/20" />
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
-      {/* Grid Layout: Menumpuk di HP, 2 Kolom di Laptop */}
-      <div className="mx-auto flex w-full max-w-7xl flex-col items-center lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      {/* KONTEN TEKS (TIDAK DIUBAH) */}
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 px-5 sm:px-8 lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14 pointer-events-none">
         
-        {/* ================= KOLOM KIRI: TEKS ================= */}
-        <div className="animate-fade-in relative z-10 w-full px-5 pt-28 pb-10 sm:px-8 lg:py-0">
+        {/* Kolom Kiri: Teks & Tombol */}
+        <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">
+          
+          {/* Gradient Overlay dihapus karena teks dan lanyard sudah tidak bertabrakan di HP */}
+
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -148,28 +152,31 @@ export default function Hero() {
           </div>
         </div>
         
-        {/* ================= KOLOM KANAN: LANYARD ================= */}
-        {/* 
-          Di HP: Berada di bawah teks dengan tinggi 500px.
-          Di Laptop: Diletakkan absolute di sebelah kanan.
-        */}
-        <div className="relative w-full h-[500px] sm:h-[600px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-[50%] xl:w-[45%] z-0 pointer-events-none lg:pointer-events-auto mt-4 lg:mt-0">
-          <div className="w-full h-full pointer-events-auto">
-            <Lanyard 
-              frontImage="/images/id-card.png"
-              backImage="/images/backlanyard.jpg"
-              imageFit="cover" 
-              cornerRadius={0.4}
-              size={isMobile ? 0.45 : 0.55} 
-              strapLength={isMobile ? 0.5 : 0.6}
-              strapColor="#111111"
-              interactive={true}
-              anchor={isMobile ? "center" : "right"}
-            />
-          </div>
-        </div>
-
+        {/* Kolom Kanan Kosong (Pembagi Grid) */}
+        <div className="hidden lg:block pointer-events-none"></div>
       </div>
+
+      {/* 
+        LANYARD CONTAINER 
+        - Di Mobile: relative, berada di bawah teks (h-[500px]).
+        - Di Desktop: absolute inset-0, PERSIS seperti kode aslimu (di background).
+      */}
+      <div className="relative mt-8 h-[500px] w-full sm:h-[600px] lg:absolute lg:inset-0 lg:mt-0 lg:h-full lg:w-full z-0 pointer-events-none">
+        <div className="w-full h-full pointer-events-auto">
+          <Lanyard 
+            frontImage="/images/id-card.png"
+            backImage="/images/backlanyard.jpg"
+            imageFit="cover" 
+            cornerRadius={0.4}
+            size={isMobile ? 0.45 : 0.55} 
+            strapLength={isMobile ? 0.5 : 0.6}
+            strapColor="#111111"
+            interactive={true}
+            anchor={isMobile ? "center" : "right"}
+          />
+        </div>
+      </div>
+
     </section>
   );
 }

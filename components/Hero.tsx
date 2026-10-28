@@ -58,12 +58,13 @@ export default function Hero() {
             {t.status}
           </span>
 
-          <h1 className="mt-8 text-5xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
+          {/* Ukuran teks disesuaikan agar aman di HP kecil */}
+          <h1 className="mt-8 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />
             <span className="text-gradient-brand">Micoandar.</span>
           </h1>
 
-          <div className="mt-6 flex h-8 items-center text-xl font-semibold text-slate-700 dark:text-slate-300 sm:text-2xl">
+          <div className="mt-6 flex h-8 items-center text-lg font-semibold text-slate-700 dark:text-slate-300 sm:text-2xl">
             <span key={roleIndex} className="animate-fade-in">
               {roles[roleIndex]}
             </span>

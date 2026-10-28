@@ -20,7 +20,6 @@ export const translations = {
       eyebrow: "Tentang Saya",
       title: "Membangun Solusi Perangkat Lunak yang Fungsional",
       desc: "Saya menikmati proses mengembangkan aplikasi dari awal hingga siap digunakan, mulai dari merancang database, membangun REST API, mengembangkan antarmuka yang responsif, hingga mengintegrasikan berbagai fitur dan melakukan deployment.",
-      interestingTitle: "Fokus Keahlian",
       services: [
         { 
           title: "Full-Stack Development", 
@@ -53,7 +52,7 @@ export const translations = {
     skills: {
       eyebrow: "Keahlian",
       title: "Teknologi & Tools",
-      desc: "Stack yang saya gunakan sehari-hari.", // Menghapus "(lengkap dengan tingkat penguasaan)"
+      desc: "Stack yang saya gunakan sehari-hari.",
       count: "teknologi",
     },
     education: {
@@ -99,7 +98,6 @@ export const translations = {
       eyebrow: "About Me",
       title: "Building Functional Software Solutions",
       desc: "I enjoy the process of developing applications from scratch until ready to use, from designing databases, building REST APIs, developing responsive interfaces, to integrating various features and deployment.",
-      interestingTitle: "Engineering Focus",
       services: [
         { 
           title: "Full-Stack Development", 
@@ -132,7 +130,7 @@ export const translations = {
     skills: {
       eyebrow: "Skills",
       title: "Technologies & Tools",
-      desc: "The stack I use daily.", // Menghapus "(with proficiency levels)"
+      desc: "The stack I use daily.",
       count: "technologies",
     },
     education: {

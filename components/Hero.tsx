@@ -209,13 +209,13 @@ export default function Hero() {
                     {profile.name}
                   </h3>
                   
-                  {/* BAGIAN YANG DIUBAH: Menampilkan dua role */}
+                  {/* Teks Role dengan Warna yang Sama */}
                   <div className="mt-2 flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
                     <span className="text-sm font-bold text-brand-600 dark:text-brand-400">
                       {profile.roles[lang][0]}
                     </span>
                     <span className="hidden text-slate-300 sm:inline dark:text-slate-600">•</span>
-                    <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                    <span className="text-sm font-bold text-brand-600 dark:text-brand-400">
                       {profile.roles[lang][1]}
                     </span>
                   </div>

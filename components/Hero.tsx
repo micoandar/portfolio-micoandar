@@ -24,19 +24,18 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative isolate flex min-h-screen items-center overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20"
+      className="relative isolate flex min-h-screen items-center overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20 bg-noise"
     >
       {/* Background Ornaments */}
-      <div className="absolute inset-0 -z-10 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
-      <div className="absolute -left-24 top-10 -z-10 h-72 w-72 animate-float rounded-full bg-brand-300/40 blur-3xl dark:bg-brand-900/30" />
-      <div className="absolute -right-16 bottom-0 -z-10 h-80 w-80 animate-float rounded-full bg-violet-300/40 blur-3xl dark:bg-violet-900/20 [animation-delay:2s]" />
-      <div className="absolute left-1/2 top-1/3 -z-10 h-64 w-64 animate-float rounded-full bg-sky-200/50 blur-3xl dark:bg-sky-900/20 [animation-delay:4s]" />
+      <div className="absolute inset-0 -z-10 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
+      <div className="absolute -left-24 top-10 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-brand-300/30 blur-[100px] dark:bg-brand-900/20" />
+      <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
 
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 sm:gap-14 sm:px-8 lg:grid-cols-[1.25fr_0.75fr]">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         
         {/* Kolom Kiri: Teks & Tombol */}
         <div className="animate-fade-in">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-800/50 dark:bg-emerald-900/30 dark:text-emerald-400 sm:px-4 sm:text-xs">
+          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/50 px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
@@ -44,137 +43,103 @@ export default function Hero() {
             {t.status}
           </span>
 
-          <h1 className="mt-5 text-3xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white sm:mt-6 sm:text-4xl lg:text-6xl">
-            {t.greeting} <span className="text-gradient">Micoandar</span> 👋
+          <h1 className="mt-8 text-5xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
+            {t.greeting} <br />
+            <span className="text-gradient-brand">Micoandar.</span>
           </h1>
 
-          <div className="mt-4 flex h-7 items-center text-base font-semibold text-slate-700 dark:text-slate-200 sm:mt-5 sm:h-8 sm:text-lg lg:text-xl">
+          <div className="mt-6 flex h-8 items-center text-xl font-semibold text-slate-700 dark:text-slate-300 sm:text-2xl">
             <span key={roleIndex} className="animate-fade-in">
               {roles[roleIndex]}
             </span>
           </div>
 
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:mt-6 sm:text-base lg:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
             {profile.summary[lang]}
           </p>
 
           {/* Tombol */}
-          <div className="mt-7 grid grid-cols-2 gap-2.5 sm:mt-8 sm:flex sm:flex-wrap sm:items-center sm:gap-2.5">
+          <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#proyek"
-              className="group inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-brand-600 to-violet-600 px-4 py-3 text-xs font-semibold text-white shadow-lg shadow-brand-500/25 transition hover:-translate-y-0.5 hover:shadow-brand-500/35 sm:py-2.5 sm:text-[13px]"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-slate-900/30 dark:bg-white dark:text-slate-900 dark:hover:shadow-white/20"
             >
               {t.viewProjects}
-              <ArrowRight size={14} className="transition group-hover:translate-x-0.5" />
+              <ArrowRight size={16} className="transition group-hover:translate-x-1" />
             </a>
 
             <a
               href={profile.cvPath}
               download
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-4 py-3 text-xs font-semibold text-brand-700 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-100 dark:border-brand-800/50 dark:bg-brand-900/30 dark:text-brand-300 dark:hover:bg-brand-900/50 sm:py-2.5 sm:text-[13px]"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:-translate-y-1 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700"
             >
-              <Download size={14} />
+              <Download size={16} />
               {t.downloadCv}
             </a>
 
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700 sm:py-2.5 sm:text-[13px]"
-            >
-              <Github size={14} />
-              GitHub
-            </a>
-
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700 sm:py-2.5 sm:text-[13px]"
-            >
-              <Linkedin size={14} />
-              LinkedIn
-            </a>
+            <div className="flex items-center gap-3 ml-2">
+              <a href={profile.github} target="_blank" rel="noreferrer" className="text-slate-400 transition hover:text-slate-900 dark:hover:text-white">
+                <Github size={24} />
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-slate-400 transition hover:text-brand-600 dark:hover:text-brand-400">
+                <Linkedin size={24} />
+              </a>
+            </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400 sm:mt-8 sm:gap-x-6 sm:text-sm">
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-500 dark:text-slate-400">
             <span className="inline-flex items-center gap-2">
-              <MapPin size={14} className="text-brand-500 dark:text-brand-400" />
+              <MapPin size={16} className="text-brand-500" />
               {profile.location[lang]}
             </span>
-            <a
-              href={`mailto:${profile.email}`}
-              className="inline-flex items-center gap-2 transition hover:text-brand-600 dark:hover:text-brand-400"
-            >
-              <Mail size={14} className="text-brand-500 dark:text-brand-400" />
+            <a href={`mailto:${profile.email}`} className="inline-flex items-center gap-2 transition hover:text-brand-600">
+              <Mail size={16} className="text-brand-500" />
               {profile.email}
             </a>
           </div>
         </div>
 
-        {/* Kolom Kanan: Lanyard Card Premium */}
+        {/* Kolom Kanan: Lanyard Card */}
         <div className="relative flex justify-center pt-10 sm:pt-0">
-          
-          {/* WRAPPER ANIMASI GOYANG & MENGAMBANG */}
           <motion.div
-            animate={{ 
-              rotate: [-1.5, 1.5, -1.5],
-              y: [0, -4, 0]
-            }}
+            animate={{ rotate: [-2, 2, -2], y: [0, -5, 0] }}
             transition={{ 
               rotate: { duration: 5, repeat: Infinity, ease: "easeInOut" },
-              y: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
             }}
             style={{ transformOrigin: "top center" }}
             className="relative flex w-full max-w-sm flex-col items-center"
           >
-            
-            {/* 1. TALI LANYARD (Bertekstur & Lebih Lebar) */}
+            {/* TALI LANYARD */}
             <div className="absolute top-0 z-0 h-[90px] w-8 overflow-hidden rounded-b-sm border-x border-slate-900/20 bg-gradient-to-b from-slate-800 via-indigo-900 to-brand-600 shadow-xl dark:from-slate-700 dark:via-indigo-950 dark:to-brand-600">
-              {/* Motif Serat Kain */}
               <div className="absolute inset-0 opacity-20 [background-image:repeating-linear-gradient(45deg,transparent,transparent_2px,#fff_2px,#fff_4px)]" />
-              
-              {/* Teks Vertikal di Tali */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <span 
-                  className="text-[9px] font-bold tracking-widest text-white/40"
-                  style={{ writingMode: "vertical-rl" }}
-                >
+                <span className="text-[9px] font-bold tracking-widest text-white/50" style={{ writingMode: "vertical-rl" }}>
                   MICOANDAR
                 </span>
               </div>
-
-              {/* Klip Logam Ujung Bawah Tali */}
               <div className="absolute -bottom-1 left-1/2 flex h-6 w-5 -translate-x-1/2 flex-col items-center rounded-sm border border-slate-400 bg-gradient-to-b from-slate-100 to-slate-400 shadow-sm">
                 <div className="mt-1 h-1 w-3 rounded-full bg-slate-600/50" />
               </div>
             </div>
 
-            {/* 2. KLIP LOGAM ATAS (Penjepit) */}
+            {/* KLIP ATAS */}
             <div className="absolute top-0 left-1/2 z-10 -ml-3 h-7 w-6 -translate-y-1/2 rounded-sm border border-slate-500 bg-gradient-to-b from-slate-200 via-white to-slate-400 shadow-md">
               <div className="absolute bottom-1 left-1/2 h-2 w-3 -translate-x-1/2 rounded-sm bg-slate-800/20" />
             </div>
 
-            {/* 3. KARTU PROFIL */}
+            {/* KARTU PROFIL */}
             <div className="relative z-10 mt-[90px] w-full select-none">
-              
-              {/* Lubang Klip (Eyelet Logam di Kartu) */}
               <div className="absolute -top-4 left-1/2 z-20 flex h-8 w-14 -translate-x-1/2 items-center justify-center rounded-full border-[3px] border-slate-300 bg-slate-900 shadow-[inset_0_4px_8px_rgba(0,0,0,0.8)] dark:border-slate-600 dark:bg-slate-950">
-                {/* Efek Kilau Logam */}
                 <div className="h-1.5 w-8 rounded-full bg-white/20" />
               </div>
 
-              {/* Body Kartu */}
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/90 p-7 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/90 sm:p-8">
-                {/* Efek Pantulan Cahaya di Kartu */}
-                <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/80 p-7 shadow-2xl backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/80 sm:p-8">
+                <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-50" />
 
-                {/* Foto Profil & Info */}
                 <div className="relative flex flex-col items-center text-center">
                   <div className="relative mt-2">
                     <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-brand-500 via-violet-500 to-sky-400 opacity-80 blur-sm" />
-                    
                     <div className="relative h-28 w-28 overflow-hidden rounded-full bg-slate-100 ring-4 ring-white dark:bg-slate-800 dark:ring-slate-900 sm:h-32 sm:w-32">
                       {!imgError ? (
                         <Image
@@ -187,12 +152,11 @@ export default function Hero() {
                           onError={() => setImgError(true)}
                         />
                       ) : (
-                        <div className="grid h-full w-full place-items-center text-3xl font-black text-slate-300 dark:text-slate-600">
+                        <div className="grid h-full w-full place-items-center text-3xl font-black text-slate-300">
                           {profile.initials}
                         </div>
                       )}
                     </div>
-                    
                     <span className="absolute bottom-1 right-1 grid h-7 w-7 place-items-center rounded-full bg-white shadow-lg dark:bg-slate-800 sm:bottom-2 sm:right-2">
                       <span className="h-4 w-4 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-800" />
                     </span>
@@ -206,10 +170,9 @@ export default function Hero() {
                   </p>
                 </div>
 
-                <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />
+                <div className="my-6 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />
 
-                {/* Statistik */}
-                <div className="relative flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/60 py-3 shadow-sm dark:divide-slate-700/60 dark:border-slate-800 dark:bg-slate-800/50">
+                <div className="flex w-full items-center justify-between divide-x divide-slate-200/60 rounded-2xl border border-slate-100 bg-white/60 py-3 shadow-sm dark:divide-slate-700/60 dark:border-slate-800 dark:bg-slate-800/50">
                   {profile.stats.map((stat) => (
                     <div key={stat.label.id} className="flex w-full flex-col items-center px-2">
                       <p className="text-lg font-black text-slate-900 dark:text-white sm:text-xl">
@@ -224,24 +187,10 @@ export default function Hero() {
                     </div>
                   ))}
                 </div>
-
-                {/* Tag Keahlian */}
-                <div className="relative mt-7 flex flex-wrap justify-center gap-2">
-                  {["Full Stack", "AI / CV", "Android"].map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-brand-100 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-700 shadow-sm transition hover:border-brand-300 hover:bg-brand-50 dark:border-brand-800/50 dark:bg-slate-800 dark:text-brand-300 dark:hover:border-brand-700 dark:hover:bg-slate-700"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
               </div>
             </div>
-            
           </motion.div>
         </div>
-        
       </div>
     </section>
   );

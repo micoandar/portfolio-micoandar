@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles, Quote } from "lucide-react";
+import { Sparkles, Code2, Cpu, Database, Cloud } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { profile } from "@/data/profile";
@@ -13,55 +13,63 @@ export default function About() {
 
   return (
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
-      <div className="grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
+      {/* Bento Grid Layout */}
+      <div className="grid gap-4 md:grid-cols-3 lg:gap-6">
         
-        {/* KOTAK KIRI (Putih) */}
-        <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
-            <Quote className="absolute -right-4 -top-4 h-32 w-32 text-slate-100/70 dark:text-slate-800/30" />
-            
-            <div className="relative z-10">
-              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
-                {t.desc}
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
-                {t.closing}
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-1.5 sm:gap-2">
-                {profile.softSkills[lang].map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border border-brand-100 bg-brand-50 px-3 py-1.5 text-[11px] font-semibold text-brand-700 dark:border-brand-900/50 dark:bg-brand-900/30 dark:text-brand-300 sm:px-4 sm:text-xs"
-                  >
-                    {skill}
-                  </span>
-                ))}
+        {/* Kotak 1: Bio & Foto (Span 2 Kolom) */}
+        <Reveal className="md:col-span-2">
+          <div className="h-full rounded-3xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-10">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+              <div className="flex-1">
+                <p className="text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
+                  {t.desc}
+                </p>
+                <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
+                  {t.closing}
+                </p>
               </div>
+            </div>
+            
+            <div className="mt-8 flex flex-wrap gap-2">
+              {profile.softSkills[lang].map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
           </div>
         </Reveal>
 
-        {/* KOTAK KANAN (Hitam) */}
-        <Reveal delay={120}>
-          <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white shadow-xl shadow-slate-900/20 dark:border dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 sm:p-8">
-            <Sparkles className="text-brand-300" size={22} />
-            <h3 className="mt-5 text-lg font-bold">{t.interestingTitle}</h3>
-            
-            <ul className="mt-5 space-y-4 text-sm leading-relaxed text-slate-300">
-              {t.services.map((item) => (
-                <li key={item.title} className="flex gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
-                  <div className="flex flex-col gap-1">
-                    <span className="font-bold text-white">{item.title}</span>
-                    <span className="text-slate-400">{item.desc}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+        {/* Kotak 2: Highlight AI (Span 1 Kolom) */}
+        <Reveal delay={100} className="md:col-span-1">
+          <div className="h-full flex flex-col justify-between rounded-3xl border border-brand-200 bg-gradient-to-br from-brand-50 to-white p-7 shadow-sm dark:border-brand-900/50 dark:from-slate-900 dark:to-slate-800 sm:p-8">
+            <Sparkles className="text-brand-500 mb-6" size={32} />
+            <div>
+              <h3 className="text-xl font-black text-slate-900 dark:text-white">
+                {t.interestingTitle}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                {t.services[0].desc} {t.services[3].desc}
+              </p>
+            </div>
           </div>
         </Reveal>
 
+        {/* Kotak 3 & 4 & 5: Services (3 Kolom di bawah) */}
+        {t.services.slice(1, 4).map((item, i) => (
+          <Reveal key={item.title} delay={200 + i * 100}>
+            <div className="group h-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-brand-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+              <div className="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-slate-100 text-slate-600 group-hover:bg-brand-100 group-hover:text-brand-600 dark:bg-slate-800 dark:text-slate-400 transition-colors">
+                {i === 0 ? <Code2 size={20} /> : i === 1 ? <Database size={20} /> : <Cloud size={20} />}
+              </div>
+              <h4 className="text-sm font-bold text-slate-900 dark:text-white">{item.title}</h4>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{item.desc}</p>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </Section>
   );

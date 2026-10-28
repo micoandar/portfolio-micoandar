@@ -136,7 +136,8 @@ export const certifications: { title: LText; year: string; issuer: string }[] = 
       en: "Certificate of Expertise Level II — Computer & Network Engineering",
     },
     year: "2021",
-    issuer: "LSP",
+    // UBAH BAGIAN INI
+    issuer: "SMK Telekomunikasi Telesandi", 
   },
 ];
 

@@ -34,7 +34,7 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative flex min-h-screen items-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white pt-20"
+      className="relative flex min-h-screen items-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white"
     >
       {/* Background Pattern & Glow */}
       <div className="absolute inset-0 -z-10">
@@ -43,12 +43,30 @@ export default function Hero() {
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
-      {/* Grid Layout: 2 Kolom */}
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-5 sm:px-8 lg:grid-cols-2">
+      {/* 
+        LANYARD FULL SCREEN (Bebas ditarik tanpa batas)
+        Dibungkus dengan pointer-events-none agar area kosong tidak memblokir klik teks.
+      */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="w-full h-full pointer-events-auto">
+          <Lanyard 
+            frontImage="/images/id-card.png"
+            imageFit="contain"
+            size={0.55} // Ukuran diperkecil & proporsional
+            strapLength={0.6}
+            strapColor="#111111" // Warna tali hitam
+            cardColor="#f4f2ec" // Mencegah black box (menyesuaikan warna kertas ID card)
+            interactive={true}
+            anchor="center"
+          />
+        </div>
+      </div>
+
+      {/* KONTEN TEKS */}
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         
-        {/* KOLOM KIRI: Teks & Tombol */}
-        <div className="animate-fade-in z-10 flex flex-col justify-center">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+        <div className="animate-fade-in pt-32 pb-16 pointer-events-auto">
+          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
@@ -138,20 +156,9 @@ export default function Hero() {
             </a>
           </div>
         </div>
-
-        {/* KOLOM KANAN: Lanyard (Ditarik ke atas) */}
-        <div className="relative flex w-full justify-center h-[600px] lg:h-[800px] -mt-20 lg:-mt-32">
-          <Lanyard
-            frontImage="/images/id-card.png"
-            imageFit="contain"
-            size={0.8} // Kartu lebih besar
-            strapLength={0.7} // Tali lebih panjang
-            strapColor="#111111" // Tali hitam
-            interactive={true}
-            anchor="center"
-          />
-        </div>
-
+        
+        {/* Kolom Kosong Sebagai Pembagi Grid */}
+        <div className="hidden lg:block"></div>
       </div>
     </section>
   );

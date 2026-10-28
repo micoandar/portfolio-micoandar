@@ -457,7 +457,7 @@ const paintFace = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, co
 
 const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, color: number[]) => {
   const across = 192;
-  const along = image ? Math.max(64, Math.round((image.width / image.height) * across)) : across * 2;
+  const along = image ? Math.max(64, Math.round((image.width / image.height) * across)) : across * 2.5;
   canvas.width = across;
   canvas.height = along;
   const ctx = canvas.getContext('2d');
@@ -474,16 +474,16 @@ const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, c
     return along / across;
   }
 
-  // --- TEKS "MICOANDAR" PADA TALI ---
+  // --- TEKS "Micoandar JM" & LOGO PADA TALI ---
   ctx.save();
   ctx.translate(across / 2, along / 2);
-  ctx.rotate(Math.PI / 2); // Putar teks menjadi vertikal
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'; // Warna putih agak transparan
-  ctx.font = 'bold 22px sans-serif';
+  ctx.rotate(Math.PI / 2); 
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
+  ctx.font = 'bold 20px "Inter", "Helvetica Neue", Arial, sans-serif'; // Font lebih tebal & bersih
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  // Beri spasi antar huruf agar terlihat elegan
-  const text = "M I C O A N D A R";
+  
+  const text = "◆  Micoandar JM  ◆";
   ctx.fillText(text, 0, 0);
   ctx.restore();
 
@@ -753,7 +753,7 @@ const Lanyard: React.FC<LanyardProps> = ({
   anchor = 'center',
   strapLength = 0.5,
   strapImage,
-  strapColor = '#000000', // Default Hitam
+  strapColor = '#111111', // Default warna hitam
   strapWidth = 0.65,
   metal = 'silver',
   gravity = 1,
@@ -771,7 +771,7 @@ const Lanyard: React.FC<LanyardProps> = ({
 
   settingsRef.current = {
     frontImage,
-    backImage,
+    backImage: backImage || frontImage, // Gunakan gambar depan jika gambar belakang kosong
     imageFit: imageFit === 'contain' ? 'contain' : 'cover',
     cardColor,
     orientation: orientation === 'landscape' ? 'landscape' : 'portrait',

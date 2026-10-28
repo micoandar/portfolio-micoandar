@@ -12,9 +12,18 @@ export default function Hero() {
   const t = translations[lang].hero;
   const [roleIndex, setRoleIndex] = useState(0);
   const [isCvOpen, setIsCvOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const cvRef = useRef<HTMLDivElement>(null);
 
   const roles = profile.roles[lang];
+
+  // Deteksi layar HP untuk menyesuaikan ukuran Lanyard
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => setRoleIndex((i) => (i + 1) % roles.length), 2600);
@@ -49,7 +58,8 @@ export default function Hero() {
           frontImage="/images/id-card.png"
           imageFit="cover" 
           cornerRadius={0.4}
-          size={0.55} // <-- UKURAN DIPERBESAR DARI 0.45 MENJADI 0.55
+          // Ukuran mengecil di HP (0.35) dan membesar di Desktop (0.55)
+          size={isMobile ? 0.35 : 0.55} 
           strapLength={0.6}
           strapColor="#111111"
           interactive={true}
@@ -61,7 +71,11 @@ export default function Hero() {
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] pointer-events-none">
         
         {/* Kolom Kiri: Teks & Tombol */}
-        <div className="animate-fade-in pt-24 pb-12 lg:pt-20 pointer-events-auto">
+        <div className="animate-fade-in relative pt-24 pb-12 lg:pt-20 pointer-events-auto">
+          
+          {/* Gradient Overlay khusus HP agar teks tidak bertabrakan dengan lanyard */}
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-50 via-slate-50/90 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/90 md:hidden" />
+
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />

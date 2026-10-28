@@ -449,25 +449,30 @@ const drawFitted = (ctx: CanvasRenderingContext2D, image: HTMLImageElement, widt
   ctx.drawImage(image, (width - w) / 2, (height - h) / 2, w, h);
 };
 
-// Fungsi paintFace yang sudah diperbarui dengan border tebal
+// --- FUNGSI paintFace YANG SUDAH DIPERBAIKI (BORDER SERAGAM) ---
 const paintFace = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, color: number[], fit: string) => {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
+  
+  // 1. Isi seluruh kanvas dengan warna bingkai (Hitam)
   ctx.fillStyle = toCss(color);
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
   if (image) {
-    drawFitted(ctx, image, canvas.width, canvas.height, fit);
+    const borderSize = 48; // Ketebalan bingkai hitam yang seragam
+    const innerWidth = canvas.width - borderSize * 2;
+    const innerHeight = canvas.height - borderSize * 2;
     
-    // Bingkai Luar (Hitam/Abu gelap seperti plastik) - Dipertebal menjadi 48px
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.85)';
-    ctx.lineWidth = 48;
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    // 2. Gambar ID card di dalam bingkai (di-inset sebesar borderSize)
+    ctx.save();
+    ctx.translate(borderSize, borderSize);
+    drawFitted(ctx, image, innerWidth, innerHeight, fit);
+    ctx.restore();
     
-    // Bingkai Dalam (Kilau Plastik)
+    // 3. Tambahkan efek highlight tipis di sisi dalam bingkai agar realistis
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-    ctx.lineWidth = 8;
-    ctx.strokeRect(24, 24, canvas.width - 48, canvas.height - 48);
+    ctx.lineWidth = 6;
+    ctx.strokeRect(borderSize - 3, borderSize - 3, innerWidth + 6, innerHeight + 6);
   }
 };
 

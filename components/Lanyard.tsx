@@ -15,7 +15,7 @@ export default function Lanyard() {
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
-  // Menghitung posisi Y untuk ujung tali (ditambah 50px karena ada jarak ke kartu)
+  // Menghitung posisi Y untuk ujung tali
   const stringY2 = useTransform(smoothY, (val) => val + 50);
 
   const dragStart = useRef({ x: 0, y: 0, time: 0 });
@@ -76,7 +76,7 @@ export default function Lanyard() {
           x1={16}
           y1={0}
           x2={smoothX}
-          y2={stringY2} // <-- Menggunakan nilai yang sudah ditransformasi
+          y2={stringY2}
           stroke="url(#stringGradient)"
           strokeWidth="6"
           strokeLinecap="round"

@@ -5,7 +5,7 @@ import { ArrowRight, Download, Github, Linkedin, Mail, MapPin, ChevronDown } fro
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
-import Lanyard from "@/components/Lanyard"; // <-- Import komponen baru
+import Lanyard from "@/components/Lanyard";
 
 export default function Hero() {
   const { lang } = useLanguage();
@@ -21,6 +21,7 @@ export default function Hero() {
     return () => clearInterval(id);
   }, [roles.length]);
 
+  // Menutup dropdown CV jika klik di luar area
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (cvRef.current && !cvRef.current.contains(event.target as Node)) {
@@ -45,7 +46,7 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         
-        {/* Kolom Kiri: Teks (Tidak Diubah) */}
+        {/* Kolom Kiri: Teks & Tombol */}
         <div className="animate-fade-in z-10">
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
@@ -72,6 +73,7 @@ export default function Hero() {
             {profile.summary[lang]}
           </p>
 
+          {/* Tombol Aksi */}
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#proyek"
@@ -81,6 +83,7 @@ export default function Hero() {
               <ArrowRight size={16} className="transition group-hover:translate-x-1" />
             </a>
 
+            {/* Dropdown CV */}
             <div className="relative" ref={cvRef}>
               <button
                 type="button"
@@ -126,6 +129,7 @@ export default function Hero() {
             </div>
           </div>
 
+          {/* Kontak Info */}
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-500 dark:text-slate-400">
             <span className="inline-flex items-center gap-2">
               <MapPin size={16} className="text-brand-500" />
@@ -138,13 +142,20 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* 
-          Kolom Kanan: HANYA MEMANGGIL <Lanyard /> 
-          Semua animasi mouse/parallax lama yang membungkus area ini dihilangkan.
-        */}
-        <div className="relative flex justify-center pt-10 sm:pt-0">
-          <Lanyard />
+        {/* Kolom Kanan: Lanyard Component */}
+        <div className="relative flex w-full justify-center pt-10 sm:pt-0">
+          <Lanyard>
+            {/* ID Card Asli dari kamu (dimasukkan sebagai children) */}
+            <div className="relative w-[280px] h-auto bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
+              <img 
+                src="/id-card.png" 
+                alt="Micoandar ID Card" 
+                className="w-full h-auto object-contain pointer-events-none" 
+              />
+            </div>
+          </Lanyard>
         </div>
+
       </div>
     </section>
   );

@@ -33,7 +33,7 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white"
+      className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white pt-24 pb-16"
     >
       {/* Background Pattern & Glow */}
       <div className="absolute inset-0 -z-10">
@@ -53,7 +53,7 @@ export default function Hero() {
           {t.status}
         </span>
 
-        <h1 className="mt-8 text-5xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-8xl">
+        <h1 className="mt-10 text-5xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-8xl">
           {t.greeting} <br />
           <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
             Micoandar.
@@ -116,6 +116,7 @@ export default function Hero() {
             )}
           </div>
 
+          {/* Ikon Sosial Media */}
           <div className="flex items-center gap-4 ml-2">
             <a href={profile.github} target="_blank" rel="noreferrer" className="text-slate-400 transition hover:text-slate-900 dark:hover:text-white">
               <Github size={28} />

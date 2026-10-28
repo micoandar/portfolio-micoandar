@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring, animate } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, animate } from "framer-motion";
 
 export default function Lanyard() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -14,6 +14,9 @@ export default function Lanyard() {
   const springConfig = { stiffness: 200, damping: 20, mass: 1 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
+
+  // Menghitung posisi Y untuk ujung tali (ditambah 50px karena ada jarak ke kartu)
+  const stringY2 = useTransform(smoothY, (val) => val + 50);
 
   const dragStart = useRef({ x: 0, y: 0, time: 0 });
   const MAX_STRETCH = 200; // Batas maksimal tarikan
@@ -73,7 +76,7 @@ export default function Lanyard() {
           x1={16}
           y1={0}
           x2={smoothX}
-          y2={smoothY + 50}
+          y2={stringY2} // <-- Menggunakan nilai yang sudah ditransformasi
           stroke="url(#stringGradient)"
           strokeWidth="6"
           strokeLinecap="round"

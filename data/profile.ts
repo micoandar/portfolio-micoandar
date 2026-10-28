@@ -6,7 +6,6 @@ export const profile = {
   shortName: "Micoandar",
   initials: "MJ",
   role: { id: "Full Stack Developer", en: "Full Stack Developer" } as LText,
-  // Hapus Backend Engineer
   roles: {
     id: ["Full Stack Developer", "Software Engineer"],
     en: ["Full Stack Developer", "Software Engineer"],
@@ -32,10 +31,10 @@ export const profile = {
     en: "Informatics Graduate from Gunadarma University (2026) with nearly 2 years of experience in software engineering. Focused on end-to-end full-stack web application development, from database architecture design, secure REST API development, responsive interfaces, to cloud deployment.",
   } as LText,
 
-  // Update Soft Skills sesuai permintaan
+  // "System Design" telah dihapus
   softSkills: {
-    id: ["Problem Solving", "Adaptif", "Fast Learner", "Komunikatif", "Teamwork", "System Design"],
-    en: ["Problem Solving", "Adaptive", "Fast Learner", "Communicative", "Teamwork", "System Design"],
+    id: ["Problem Solving", "Adaptif", "Fast Learner", "Komunikatif", "Teamwork"],
+    en: ["Problem Solving", "Adaptive", "Fast Learner", "Communicative", "Teamwork"],
   },
   stats: [
     { label: { id: "IPK", en: "GPA" } as LText, value: "3.76", suffix: "/4.00" },

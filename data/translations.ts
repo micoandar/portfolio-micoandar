@@ -36,7 +36,7 @@ export const translations = {
         { 
           title: "Android Development", 
           desc: "Mengembangkan aplikasi Android menggunakan Kotlin, Android Studio, Firebase, dan integrasi API untuk mendukung fitur aplikasi." 
-        },
+        }, 
         { 
           title: "DevOps & Deploy", 
           desc: "Melakukan deployment aplikasi web menggunakan Vercel dan Railway, serta menggunakan Docker untuk konsistensi environment." 
@@ -47,7 +47,6 @@ export const translations = {
     projects: {
       eyebrow: "Portofolio",
       title: "Proyek Pilihan",
-      // Perubahan pada baris ini
       desc: "Kumpulan proyek yang saya kembangkan, mulai dari aplikasi web, sistem berbasis AI dan computer vision, hingga aplikasi Android.",
     },
     skills: {
@@ -66,7 +65,8 @@ export const translations = {
     contact: {
       eyebrow: "Kontak",
       title: "Mari Berkolaborasi",
-      desc: "Saya terbuka untuk peluang kerja, freelance, maupun sekadar berdiskusi tentang teknologi.",
+      // Teks "maupun sekadar berdiskusi..." telah dihapus
+      desc: "Saya terbuka untuk peluang kerja maupun freelance.",
       cardTitle: "Punya proyek atau posisi yang cocok?",
       cardDesc:
         "Kirim pesan dan saya akan merespons secepat mungkin. Saya siap berkontribusi secara maksimal untuk tim Anda.",
@@ -126,7 +126,6 @@ export const translations = {
     projects: {
       eyebrow: "Portfolio",
       title: "Selected Projects",
-      // Perubahan pada baris ini (versi inggris)
       desc: "A collection of projects I've developed, ranging from web applications, AI and computer vision-based systems, to Android applications.",
     },
     skills: {
@@ -145,7 +144,8 @@ export const translations = {
     contact: {
       eyebrow: "Contact",
       title: "Let's Collaborate",
-      desc: "I'm open to job opportunities, freelance, or just talking about technology.",
+      // Teks "or just talking about technology" telah dihapus
+      desc: "I'm open to job opportunities and freelance work.",
       cardTitle: "Have a project or a fitting role?",
       cardDesc:
         "Send a message and I'll respond as soon as possible. I'm ready to contribute fully to your team.",

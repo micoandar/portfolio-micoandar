@@ -16,37 +16,37 @@ export const translations = {
     },
     about: {
       eyebrow: "Tentang Saya",
-      title: "Membangun Produk dari Ide hingga Deployment",
-      desc: "Saya menikmati proses mengembangkan aplikasi secara menyeluruh, mulai dari merancang struktur database dan REST API, membangun antarmuka responsif, hingga mengintegrasikan fitur dan memastikan aplikasi berjalan dengan baik.",
-      interestingTitle: "Yang saya kerjakan",
+      title: "Membangun Sistem Perangkat Lunak yang Skalabel",
+      desc: "Saya menikmati proses rekayasa perangkat lunak secara menyeluruh, mulai dari merancang arsitektur database, membangun REST API yang aman, membuat antarmuka pengguna yang interaktif, hingga melakukan deployment dan containerization.",
+      interestingTitle: "Fokus Rekayasa",
       services: [
         { 
-          title: "Backend Development", 
-          desc: "Merancang database relasional dan REST API dengan struktur yang modular dan mudah dikembangkan." 
+          title: "Backend & API", 
+          desc: "Merancang arsitektur database relasional dan REST API modular menggunakan Node.js, PHP, dan Python (FastAPI)." 
         },
         { 
-          title: "Frontend Development", 
-          desc: "Membangun antarmuka web yang responsif dengan fokus pada pengalaman pengguna (UX)." 
+          title: "Frontend Dev", 
+          desc: "Membangun antarmuka web SPA (Single Page Application) yang responsif dan interaktif dengan React dan Tailwind CSS." 
         },
         { 
-          title: "Authentication & Security", 
-          desc: "Mengimplementasikan autentikasi, kontrol akses berbasis peran (RBAC), dan validasi input." 
+          title: "Software Security", 
+          desc: "Mengimplementasikan autentikasi, Role-Based Access Control (RBAC), proteksi CSRF, dan enkripsi password." 
         },
         { 
-          title: "AI & Computer Vision", 
-          desc: "Mengembangkan solusi deteksi objek menggunakan YOLO serta memanfaatkan PyTorch dan TensorFlow Lite sesuai kebutuhan proyek." 
+          title: "System Integration", 
+          desc: "Mengintegrasikan model Machine Learning (YOLO) ke dalam aplikasi web menggunakan pipeline inference backend." 
         },
         { 
-          title: "Deployment & Containerization", 
-          desc: "Melakukan deployment aplikasi menggunakan Vercel dan Railway, serta menggunakan Docker untuk kebutuhan containerization." 
+          title: "DevOps & Deploy", 
+          desc: "Melakukan deployment aplikasi web menggunakan Vercel dan Railway, serta menggunakan Docker untuk konsistensi environment." 
         },
       ],
-      closing: "Saya memiliki minat pada Full-Stack Development dan pengembangan sistem cerdas berbasis AI. Saya senang mempelajari teknologi baru, memecahkan masalah teknis, dan mengembangkan solusi yang fungsional serta mudah digunakan.",
+      closing: "Saya memiliki minat besar pada arsitektur perangkat lunak dan Full-Stack Development. Saya senang memecahkan masalah teknis yang kompleks dan mengembangkan solusi kode yang bersih (clean code) serta mudah dipelihara.",
     },
     projects: {
       eyebrow: "Portofolio",
       title: "Proyek Pilihan",
-      desc: "Kumpulan proyek yang saya bangun — dari sistem pemesanan, monitoring AI, sampai aplikasi Android.",
+      desc: "Kumpulan proyek yang saya bangun — mulai dari arsitektur backend, platform monitoring, hingga aplikasi mobile.",
     },
     skills: {
       eyebrow: "Keahlian",
@@ -93,37 +93,37 @@ export const translations = {
     },
     about: {
       eyebrow: "About Me",
-      title: "Building Products from Idea to Deployment",
-      desc: "I enjoy the comprehensive process of developing applications, from designing database structures and REST APIs, building responsive interfaces, to integrating features and ensuring the application runs smoothly.",
-      interestingTitle: "What I do",
+      title: "Building Scalable Software Systems",
+      desc: "I enjoy the comprehensive software engineering process, from designing database architecture, building secure REST APIs, creating interactive user interfaces, to deployment and containerization.",
+      interestingTitle: "Engineering Focus",
       services: [
         { 
-          title: "Backend Development", 
-          desc: "Designing relational databases and REST APIs with a modular and scalable structure." 
+          title: "Backend & API", 
+          desc: "Designing relational database architectures and modular REST APIs using Node.js, PHP, and Python (FastAPI)." 
         },
         { 
-          title: "Frontend Development", 
-          desc: "Building responsive web interfaces with a focus on user experience (UX)." 
+          title: "Frontend Dev", 
+          desc: "Building responsive and interactive Single Page Applications (SPA) with React and Tailwind CSS." 
         },
         { 
-          title: "Authentication & Security", 
-          desc: "Implementing authentication, role-based access control (RBAC), and input validation." 
+          title: "Software Security", 
+          desc: "Implementing authentication, Role-Based Access Control (RBAC), CSRF protection, and password hashing." 
         },
         { 
-          title: "AI & Computer Vision", 
-          desc: "Developing object detection solutions using YOLO and utilizing PyTorch and TensorFlow Lite as needed." 
+          title: "System Integration", 
+          desc: "Integrating Machine Learning models (YOLO) into web applications using backend inference pipelines." 
         },
         { 
-          title: "Deployment & Containerization", 
-          desc: "Deploying applications using Vercel and Railway, and utilizing Docker for containerization." 
+          title: "DevOps & Deploy", 
+          desc: "Deploying web applications using Vercel and Railway, and utilizing Docker for environment consistency." 
         },
       ],
-      closing: "I have a strong interest in Full-Stack Development and AI-based intelligent systems. I enjoy learning new technologies, solving technical problems, and developing solutions that are both functional and easy to use.",
+      closing: "I have a strong interest in software architecture and Full-Stack Development. I enjoy solving complex technical problems and developing clean, maintainable code solutions.",
     },
     projects: {
       eyebrow: "Portfolio",
       title: "Selected Projects",
-      desc: "A collection of projects I've built — from ordering systems, AI monitoring, to Android applications.",
+      desc: "A collection of projects I've built — from backend architectures, monitoring platforms, to mobile applications.",
     },
     skills: {
       eyebrow: "Skills",

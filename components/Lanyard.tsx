@@ -29,7 +29,7 @@ export interface LanyardProps {
   style?: CSSProperties;
 }
 
-// 1. UBAH RASIO KARTU AGAR SAMA PERSIS DENGAN GAMBAR (832 : 1285)
+// Rasio kartu disesuaikan dengan gambar asli (832 : 1285)
 const CARD_SIZES: Record<string, [number, number]> = {
   portrait: [1.6, 2.47], 
   landscape: [2.47, 1.6]
@@ -449,7 +449,7 @@ const drawFitted = (ctx: CanvasRenderingContext2D, image: HTMLImageElement, widt
   ctx.drawImage(image, (width - w) / 2, (height - h) / 2, w, h);
 };
 
-// 2. TAMBAHKAN KOTAK (BINGKAI) REALISTIS PADA GAMBAR
+// Fungsi paintFace yang sudah diperbarui dengan border tebal
 const paintFace = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, color: number[], fit: string) => {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
@@ -459,15 +459,15 @@ const paintFace = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, co
   if (image) {
     drawFitted(ctx, image, canvas.width, canvas.height, fit);
     
-    // Bingkai Luar (Hitam/Abu gelap seperti plastik)
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
-    ctx.lineWidth = 24;
+    // Bingkai Luar (Hitam/Abu gelap seperti plastik) - Dipertebal menjadi 48px
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.85)';
+    ctx.lineWidth = 48;
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
     
     // Bingkai Dalam (Kilau Plastik)
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-    ctx.lineWidth = 6;
-    ctx.strokeRect(12, 12, canvas.width - 24, canvas.height - 24);
+    ctx.lineWidth = 8;
+    ctx.strokeRect(24, 24, canvas.width - 48, canvas.height - 48);
   }
 };
 
@@ -490,7 +490,7 @@ const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, c
     return along / across;
   }
 
-  // --- TEKS "Micoandar JM" & LOGO PADA TALI ---
+  // Teks Tali
   ctx.save();
   ctx.translate(across / 2, along / 2);
   ctx.rotate(Math.PI / 2); 

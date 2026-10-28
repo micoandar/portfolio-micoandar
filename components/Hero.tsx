@@ -49,7 +49,7 @@ export default function Hero() {
           frontImage="/images/id-card.png"
           imageFit="cover" 
           cornerRadius={0.4}
-          size={0.45}
+          size={0.55} // <-- UKURAN DIPERBESAR DARI 0.45 MENJADI 0.55
           strapLength={0.6}
           strapColor="#111111"
           interactive={true}

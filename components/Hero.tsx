@@ -17,7 +17,7 @@ export default function Hero() {
 
   const roles = profile.roles[lang];
 
-  // Deteksi layar HP untuk menyesuaikan ukuran dan posisi Lanyard
+  // Deteksi layar HP untuk menyesuaikan ukuran Lanyard
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -43,7 +43,7 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white lg:block lg:py-0"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white lg:block"
     >
       {/* Background Pattern & Glow */}
       <div className="absolute inset-0 -z-10">
@@ -55,7 +55,7 @@ export default function Hero() {
       {/* Grid Layout: Menumpuk di HP, 2 Kolom di Laptop */}
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         
-        {/* ================= KOLOM TEKS ================= */}
+        {/* ================= KOLOM KIRI: TEKS ================= */}
         <div className="animate-fade-in relative z-10 w-full px-5 pt-28 pb-10 sm:px-8 lg:py-0">
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
@@ -65,7 +65,7 @@ export default function Hero() {
             {t.status}
           </span>
 
-          <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />
             <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
               Micoandar.
@@ -148,23 +148,23 @@ export default function Hero() {
           </div>
         </div>
         
-        {/* ================= KOLOM LANYARD ================= */}
+        {/* ================= KOLOM KANAN: LANYARD ================= */}
         {/* 
-          Di HP: Lanyard berada di bawah teks dengan tinggi 500px.
-          Di Laptop: Lanyard diletakkan secara absolute memenuhi sisi kanan layar.
+          Di HP: Berada di bawah teks dengan tinggi 500px.
+          Di Laptop: Diletakkan absolute di sebelah kanan.
         */}
-        <div className="relative w-full h-[500px] sm:h-[600px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-[50%] xl:w-[45%] z-0 pointer-events-none lg:pointer-events-auto">
+        <div className="relative w-full h-[500px] sm:h-[600px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-[50%] xl:w-[45%] z-0 pointer-events-none lg:pointer-events-auto mt-4 lg:mt-0">
           <div className="w-full h-full pointer-events-auto">
             <Lanyard 
               frontImage="/images/id-card.png"
               backImage="/images/backlanyard.jpg"
               imageFit="cover" 
               cornerRadius={0.4}
-              size={isMobile ? 0.5 : 0.55} 
-              strapLength={isMobile ? 0.4 : 0.6}
+              size={isMobile ? 0.45 : 0.55} 
+              strapLength={isMobile ? 0.5 : 0.6}
               strapColor="#111111"
               interactive={true}
-              anchor={isMobile ? "center" : "right"} // Posisi tengah di HP, kanan di Laptop
+              anchor={isMobile ? "center" : "right"}
             />
           </div>
         </div>

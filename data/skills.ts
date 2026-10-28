@@ -25,6 +25,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "TypeScript", description: { id: "JavaScript dengan tipe data — lebih aman saat coding.", en: "JavaScript with types — safer while coding." }, logo: "https://cdn.simpleicons.org/typescript" },
       { name: "Tailwind CSS", description: { id: "Utility-first CSS, styling cepat tanpa file CSS terpisah.", en: "Utility-first CSS, quick styling without separate CSS files." }, logo: "https://cdn.simpleicons.org/tailwindcss" },
       { name: "Vite", description: { id: "Build tool super cepat untuk project React.", en: "Blazing-fast build tool for React projects." }, logo: "https://cdn.simpleicons.org/vite" },
+      { name: "Bootstrap 5", description: { id: "Framework CSS praktis untuk layout responsif.", en: "Practical CSS framework for responsive layouts." }, logo: "https://cdn.simpleicons.org/bootstrap" },
     ],
   },
   // 2. BACKEND & API
@@ -37,6 +38,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Express.js", description: { id: "Framework minimalis Node.js untuk membuat REST API.", en: "Minimalist Node.js framework for building REST APIs." }, logo: "https://cdn.simpleicons.org/express" },
       { name: "FastAPI", description: { id: "Framework Python modern untuk REST API cepat.", en: "Modern Python framework for fast REST APIs." }, logo: "https://cdn.simpleicons.org/fastapi" },
       { name: "Laravel", description: { id: "Framework PHP dengan struktur MVC lengkap.", en: "PHP framework with a complete MVC structure." }, logo: "https://cdn.simpleicons.org/laravel" },
+      { name: "PHP Native", description: { id: "Backend web klasik tanpa framework, sangat ringan.", en: "Classic web backend without a framework, very lightweight." }, logo: "https://cdn.simpleicons.org/php" },
       { name: "Postman", description: { id: "Pengujian dan dokumentasi REST API.", en: "REST API testing and documentation." }, logo: "https://cdn.simpleicons.org/postman" },
     ],
   },
@@ -52,7 +54,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Firebase Firestore", description: { id: "Database cloud real-time dari Google.", en: "Real-time cloud database from Google." }, logo: "https://cdn.simpleicons.org/firebase" },
     ],
   },
-  // 4. DEVOPS
+  // 4. DEVOPS & CLOUD
   {
     title: { id: "DevOps & Cloud", en: "DevOps & Cloud" },
     icon: "cloud",
@@ -64,7 +66,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Vercel", description: { id: "Platform deploy frontend Next.js super cepat.", en: "Super-fast Next.js frontend deployment platform." }, logo: "https://cdn.simpleicons.org/vercel" },
     ],
   },
-  // 5. LAINNYA (AI & Mobile sebagai pelengkap)
+  // 5. AI & COMPUTER VISION
   {
     title: { id: "AI & Computer Vision", en: "AI & Computer Vision" },
     icon: "brain",
@@ -76,15 +78,14 @@ export const skillGroups: SkillGroup[] = [
       { name: "TensorFlow Lite", description: { id: "Versi ringan TF untuk mobile / embedded.", en: "Lightweight TF for mobile / embedded devices." }, logo: "https://cdn.simpleicons.org/tensorflow" },
     ],
   },
+  // 6. MOBILE DEVELOPMENT (Hanya Kotlin & Flutter)
   {
-    title: { id: "Mobile & Lainnya", en: "Mobile & Others" },
+    title: { id: "Mobile Development", en: "Mobile Development" },
     icon: "smartphone",
     accent: "from-amber-500 to-orange-500",
     items: [
-      { name: "Kotlin", description: { id: "Bahasa resmi untuk Android modern.", en: "Official language for modern Android." }, logo: "https://cdn.simpleicons.org/kotlin" },
-      { name: "Android", description: { id: "Pengembangan aplikasi native Android.", en: "Native Android application development." }, logo: "https://cdn.simpleicons.org/android" },
-      { name: "PHP Native", description: { id: "Backend web klasik, dipakai di sistem pemesanan & akademik.", en: "Classic web backend, used in ordering & academic systems." }, logo: "https://cdn.simpleicons.org/php" },
-      { name: "Bootstrap 5", description: { id: "Framework CSS praktis untuk layout responsif.", en: "Practical CSS framework for responsive layouts." }, logo: "https://cdn.simpleicons.org/bootstrap" },
+      { name: "Kotlin", description: { id: "Bahasa resmi untuk pengembangan Android modern.", en: "Official language for modern Android development." }, logo: "https://cdn.simpleicons.org/kotlin" },
+      { name: "Flutter", description: { id: "Framework cross-platform buatan Google untuk iOS & Android.", en: "Google's cross-platform framework for iOS & Android." }, logo: "https://cdn.simpleicons.org/flutter" },
     ],
   },
 ];

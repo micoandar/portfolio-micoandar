@@ -17,8 +17,8 @@ export default function Lanyard() {
         style={{ transformOrigin: "top center" }}
         className="flex w-64 flex-col items-center sm:w-72"
       >
-        {/* TALI LANYARD */}
-        <div className="relative z-0 h-40 w-4 rounded-b-sm bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900 shadow-lg">
+        {/* TALI LANYARD (Diperpanjang jadi h-64) */}
+        <div className="relative z-0 h-64 w-4 rounded-b-sm bg-gradient-to-b from-slate-800 via-slate-700 to-slate-900 shadow-lg">
           {/* Tekstur kain tali */}
           <div className="absolute inset-0 opacity-20 [background-image:repeating-linear-gradient(45deg,transparent,transparent_2px,#fff_2px,#fff_4px)]" />
         </div>

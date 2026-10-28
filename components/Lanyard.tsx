@@ -28,8 +28,8 @@ export default function Lanyard() {
           <div className="h-1.5 w-4 rounded-full bg-slate-700/40" />
         </div>
 
-        {/* KARTU ID */}
-        <div className="relative z-0 mt-1 w-full max-w-[280px] overflow-hidden rounded-2xl border-4 border-white bg-slate-100 shadow-2xl ring-1 ring-slate-900/10">
+        {/* KARTU ID (Diperbaiki menggunakan lebar pasti w-[280px]) */}
+        <div className="relative z-0 mt-1 w-[240px] sm:w-[280px] overflow-hidden rounded-2xl border-4 border-white bg-slate-100 shadow-2xl ring-1 ring-slate-900/10">
           {/* Rasio asli 832 : 1285 */}
           <div className="relative aspect-[832/1285] w-full">
             <Image

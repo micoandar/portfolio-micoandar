@@ -474,12 +474,12 @@ const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, c
     return along / across;
   }
 
-  // --- TEKS "Micoandar JM" & LOGO PADA TALI ---
+  // --- TEKS "Micoandar JM" & LOGO PADA TALI (FONT LEBIH BESAR) ---
   ctx.save();
   ctx.translate(across / 2, along / 2);
   ctx.rotate(Math.PI / 2); 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
-  ctx.font = 'bold 20px "Inter", "Helvetica Neue", Arial, sans-serif'; // Font lebih tebal & bersih
+  ctx.font = 'bold 28px "Inter", "Helvetica Neue", Arial, sans-serif'; // Font 28px
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
@@ -744,8 +744,8 @@ const stepSimulation = (sim: any, dt: number, physics: any, time: number) => {
 const Lanyard: React.FC<LanyardProps> = ({
   frontImage,
   backImage,
-  imageFit = 'cover',
-  cardColor = '#ffffff',
+  imageFit = 'contain', // Default contain agar tidak terpotong
+  cardColor = '#000000', // Default hitam
   orientation = 'portrait',
   finish = 'glossy',
   cornerRadius = 0.3,
@@ -753,7 +753,7 @@ const Lanyard: React.FC<LanyardProps> = ({
   anchor = 'center',
   strapLength = 0.5,
   strapImage,
-  strapColor = '#111111', // Default warna hitam
+  strapColor = '#111111', // Tali hitam
   strapWidth = 0.65,
   metal = 'silver',
   gravity = 1,
@@ -771,7 +771,7 @@ const Lanyard: React.FC<LanyardProps> = ({
 
   settingsRef.current = {
     frontImage,
-    backImage: backImage || frontImage, // Gunakan gambar depan jika gambar belakang kosong
+    backImage: backImage || frontImage, // Fallback ke depan jika belakang kosong
     imageFit: imageFit === 'contain' ? 'contain' : 'cover',
     cardColor,
     orientation: orientation === 'landscape' ? 'landscape' : 'portrait',
@@ -925,7 +925,7 @@ const Lanyard: React.FC<LanyardProps> = ({
 
     const paintFaces = () => {
       const s = settingsRef.current;
-      const color = parseColor(s.cardColor, [1, 1, 1]);
+      const color = parseColor(s.cardColor, [0, 0, 0]);
       const width = FACE_WIDTH;
       const height = Math.round((FACE_WIDTH * layout.height) / layout.width);
       if (frontCanvas.width !== width || frontCanvas.height !== height) {
@@ -1027,7 +1027,7 @@ const Lanyard: React.FC<LanyardProps> = ({
       if (s.strapColor !== applied.strapColor) repaintStrap();
 
       const finishData = (FINISHES as any)[s.finish] || FINISHES.glossy;
-      const card = parseColor(s.cardColor, [1, 1, 1]);
+      const card = parseColor(s.cardColor, [0, 0, 0]);
       [frontMaterial, backMaterial].forEach(material => {
         material.roughness = finishData.roughness;
         material.metalness = finishData.metalness;

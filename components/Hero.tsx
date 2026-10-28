@@ -45,26 +45,25 @@ export default function Hero() {
 
       {/* 
         LANYARD FULL SCREEN (Bebas ditarik tanpa batas)
-        Dibungkus dengan pointer-events-none agar area kosong tidak memblokir klik teks.
+        Diletakkan di z-0 agar berada di belakang teks, dan menutupi seluruh layar.
       */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="w-full h-full pointer-events-auto">
-          <Lanyard 
-            frontImage="/images/id-card.png"
-            imageFit="contain"
-            size={0.55} // Ukuran diperkecil & proporsional
-            strapLength={0.6}
-            strapColor="#111111" // Warna tali hitam
-            cardColor="#f4f2ec" // Mencegah black box (menyesuaikan warna kertas ID card)
-            interactive={true}
-            anchor="center"
-          />
-        </div>
+      <div className="absolute inset-0 z-0">
+        <Lanyard 
+          frontImage="/images/id-card.png"
+          imageFit="contain"
+          cardColor="#000000" // Membuat bingkai kartu menjadi hitam
+          size={0.55} // Ukuran proporsional
+          strapLength={0.6}
+          strapColor="#111111" // Tali hitam
+          interactive={true}
+          anchor="right" // Posisi awal di sebelah kanan
+        />
       </div>
 
-      {/* KONTEN TEKS */}
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
+      {/* KONTEN TEKS (Di atas Lanyard) */}
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] pointer-events-none">
         
+        {/* Kolom Kiri: Teks & Tombol (pointer-events-auto agar bisa diklik) */}
         <div className="animate-fade-in pt-32 pb-16 pointer-events-auto">
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
@@ -157,8 +156,8 @@ export default function Hero() {
           </div>
         </div>
         
-        {/* Kolom Kosong Sebagai Pembagi Grid */}
-        <div className="hidden lg:block"></div>
+        {/* Kolom Kanan Kosong (Pembagi Grid) */}
+        <div className="hidden lg:block pointer-events-none"></div>
       </div>
     </section>
   );

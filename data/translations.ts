@@ -47,7 +47,8 @@ export const translations = {
     projects: {
       eyebrow: "Portofolio",
       title: "Proyek Pilihan",
-      desc: "Kumpulan proyek yang saya bangun — mulai dari arsitektur backend, platform monitoring, hingga aplikasi mobile.",
+      // Perubahan pada baris ini
+      desc: "Kumpulan proyek yang saya kembangkan, mulai dari aplikasi web, sistem berbasis AI dan computer vision, hingga aplikasi Android.",
     },
     skills: {
       eyebrow: "Keahlian",
@@ -125,7 +126,8 @@ export const translations = {
     projects: {
       eyebrow: "Portfolio",
       title: "Selected Projects",
-      desc: "A collection of projects I've built — from backend architectures, monitoring platforms, to mobile applications.",
+      // Perubahan pada baris ini (versi inggris)
+      desc: "A collection of projects I've developed, ranging from web applications, AI and computer vision-based systems, to Android applications.",
     },
     skills: {
       eyebrow: "Skills",

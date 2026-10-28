@@ -34,7 +34,7 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative isolate flex min-h-screen items-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white pt-20 pb-16 sm:pt-24 sm:pb-20"
+      className="relative isolate flex min-h-screen overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white"
     >
       {/* Background Pattern & Glow */}
       <div className="absolute inset-0 -z-10">
@@ -43,10 +43,10 @@ export default function Hero() {
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="mx-auto grid w-full max-w-7xl items-start gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         
-        {/* Kolom Kiri: Teks & Tombol */}
-        <div className="animate-fade-in z-10">
+        {/* Kolom Kiri: Teks & Tombol (pt-32 agar sejajar dengan atas) */}
+        <div className="animate-fade-in z-10 pt-32 pb-16">
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -138,13 +138,17 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Kolom Kanan: ReactBits Lanyard 3D */}
-        <div className="relative flex h-[500px] w-full items-center justify-center sm:h-[600px] lg:h-[700px] lg:justify-end">
+        {/* Kolom Kanan: Lanyard (Tinggi Full Layar, ditarik ke atas agar menempel atap) */}
+        <div className="relative flex h-[100vh] w-full justify-center lg:justify-end -mt-20">
+          {/* 
+            Ubah /images/id-card.png menjadi /id-card.png 
+            jika gambar kamu ada di luar folder images. 
+          */}
           <Lanyard 
             frontImage="/images/id-card.png"
-            // backImage="/images/back-card.png" // Buka jika punya gambar belakang
-            imageFit="cover"
-            finish="glossy"
+            imageFit="contain" 
+            size={0.4}
+            strapLength={0.8}
             interactive={true}
             anchor="center"
           />

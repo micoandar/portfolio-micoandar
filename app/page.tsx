@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import PortfolioTabs from "@/components/PortfolioTabs"; // <-- Import komponen baru
+import PortfolioTabs from "@/components/PortfolioTabs"; // Hanya ini yang dipanggil
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -15,7 +15,7 @@ export default function Home() {
         <Hero />
         <About />
         
-        {/* Menggabungkan Projects, Skills, dan Education menjadi 1 Tab */}
+        {/* Projects, Education, & Skills sudah menyatu di dalam PortfolioTabs */}
         <PortfolioTabs /> 
         
         <Contact />

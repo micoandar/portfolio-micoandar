@@ -14,16 +14,16 @@ export default function Navbar() {
   const { lang, toggle: toggleLang } = useLanguage();
   const { theme, setTheme } = useTheme();
 
+  // Menu disesuaikan: hanya Home, About, Portfolio, Contact
   const links = [
     { label: "Home", href: "#beranda" },
     { label: "About", href: "#tentang" },
-    { label: "Projects", href: "#proyek" },
-    { label: "Skills", href: "#keahlian" },
-    { label: "Education", href: "#pendidikan" },
+    { label: "Portfolio", href: "#portfolio" },
     { label: "Contact", href: "#kontak" },
   ];
 
-  const sectionIds = ["beranda", "tentang", "proyek", "keahlian", "pendidikan", "kontak"];
+  // Hanya mendeteksi 4 section ini
+  const sectionIds = ["beranda", "tentang", "portfolio", "kontak"];
 
   useEffect(() => setMounted(true), []);
 
@@ -59,7 +59,7 @@ export default function Navbar() {
     <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
       <div className="flex pointer-events-auto items-center justify-between gap-3">
         
-        {/* GooeyNav tanpa Logo MJ */}
+        {/* GooeyNav */}
         <div className="flex items-center rounded-full bg-white/50 backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
           <GooeyNav
             items={links}

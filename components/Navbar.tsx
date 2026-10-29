@@ -12,9 +12,9 @@ export default function Navbar() {
   const [activeIndex, setActiveIndex] = useState(0);
   
   const { lang, toggle: toggleLang } = useLanguage();
-  const { theme, setTheme } = useTheme();
+  // Menggunakan resolvedTheme agar membaca tema sistem dengan benar
+  const { resolvedTheme, setTheme } = useTheme();
 
-  // Menu disesuaikan: hanya Home, About, Portfolio, Contact
   const links = [
     { label: "Home", href: "#beranda" },
     { label: "About", href: "#tentang" },
@@ -22,7 +22,6 @@ export default function Navbar() {
     { label: "Contact", href: "#kontak" },
   ];
 
-  // Hanya mendeteksi 4 section ini
   const sectionIds = ["beranda", "tentang", "portfolio", "kontak"];
 
   useEffect(() => setMounted(true), []);
@@ -65,7 +64,9 @@ export default function Navbar() {
             items={links}
             activeIndex={activeIndex}
             onChange={(index) => setActiveIndex(index)}
-            theme={theme === "dark" ? "dark" : "light"}
+            theme={resolvedTheme === "dark" ? "dark" : "light"}
+            color="#4f46e5" // <-- Warna pill biru (Brand)
+            activeTextColor="#ffffff" // <-- Teks pill putih
             size="sm"
             frame={false}
             particleCount={12}
@@ -78,10 +79,10 @@ export default function Navbar() {
           {mounted && (
             <button
               type="button"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
               className="grid h-8 w-8 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
             >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              {resolvedTheme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           )}
 

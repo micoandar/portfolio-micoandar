@@ -4,19 +4,17 @@ import { useState, useEffect } from "react";
 import { Code2, Award, Cpu } from "lucide-react";
 import { useTheme } from "next-themes";
 import Section from "@/components/ui/Section";
-import GooeyNav from "@/components/GooeyNav"; // <-- Import komponen GooeyNav
+import GooeyNav from "@/components/GooeyNav";
 
-// Import komponen konten
 import Projects from "./Projects";
 import Skills from "./Skills";
 import Education from "./Education";
 
 export default function PortfolioTabs() {
-  // Menggunakan angka (index) untuk state agar sinkron dengan GooeyNav (0, 1, 2)
   const [activeTab, setActiveTab] = useState(0);
-  const { theme } = useTheme();
+  // Menggunakan resolvedTheme
+  const { resolvedTheme } = useTheme();
 
-  // Sinkronisasi dengan Navbar utama (jika URL berubah)
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
@@ -30,7 +28,6 @@ export default function PortfolioTabs() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Item untuk GooeyNav (tanpa href agar menjadi tombol tab)
   const navItems = [
     { label: "Projects", icon: <Code2 size={16} /> },
     { label: "Education & Certs", icon: <Award size={16} /> },
@@ -39,21 +36,21 @@ export default function PortfolioTabs() {
 
   return (
     <Section id="portfolio" title="Portfolio">
-      {/* Navigasi Tab menggunakan GooeyNav */}
       <div className="mb-12 flex justify-center">
         <GooeyNav
           items={navItems}
           activeIndex={activeTab}
           onChange={(index) => setActiveTab(index)}
-          theme={theme === "dark" ? "dark" : "light"}
-          size="md" // Ukuran disesuaikan (sm, md, lg)
-          frame={true} // Menambahkan efek kaca di belakang tab
+          theme={resolvedTheme === "dark" ? "dark" : "light"}
+          color="#4f46e5" // <-- Warna pill biru (Brand)
+          activeTextColor="#ffffff" // <-- Teks pill putih
+          size="md"
+          frame={true}
           particleCount={15}
           animationTime={600}
         />
       </div>
 
-      {/* Konten Tab */}
       <div className="min-h-[500px]">
         {activeTab === 0 && <Projects />}
         {activeTab === 1 && <Education />}

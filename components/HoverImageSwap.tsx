@@ -11,6 +11,8 @@ interface HoverImageSwapProps {
   objectFit?: "cover" | "contain";
   radius?: number;
   scale?: number; // Prop untuk memperbesar gambar kedua
+  offsetX?: number; // Geser Kanan/Kiri (px)
+  offsetY?: number; // Geser Atas/Bawah (px)
 }
 
 export default function HoverImageSwap({
@@ -19,7 +21,9 @@ export default function HoverImageSwap({
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
   radius = 120,
-  scale = 1.15, // Gambar 2 diperbesar 15% secara default
+  scale = 1.15, 
+  offsetX = 20, // Default geser 20px ke kanan
+  offsetY = 0,  // Default tidak digeser ke atas/bawah
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +36,7 @@ export default function HoverImageSwap({
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // Mask 95% solid, hanya 5% pinggir terluar yang memudar (mencegah tembus pandang)
+  // Mask 95% solid agar tidak tembus pandang
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
@@ -78,7 +82,7 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Masking + Diperbesar) */}
+      {/* LAYER 2: Foto B (Masking + Scale + Geser Posisi) */}
       <motion.div
         style={{ 
           maskImage, 
@@ -87,11 +91,14 @@ export default function HoverImageSwap({
         }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-hidden"
       >
-        {/* Div ini berfungsi untuk memperbesar gambar tanpa merusak mask */}
+        {/* 
+          Div ini mengatur posisi gambar kedua (topeng).
+          Kita gabungkan efek scale dan translate (geser).
+        */}
         <div 
           className="relative w-full h-full"
           style={{ 
-            transform: `scale(${scale})`, 
+            transform: `translateX(${offsetX}px) translateY(${offsetY}px) scale(${scale})`, 
             transformOrigin: "center center" 
           }}
         >

@@ -17,6 +17,7 @@ export default function Hero() {
 
   const roles = profile.roles[lang];
 
+  // Deteksi layar HP untuk menyesuaikan ukuran Lanyard
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -54,29 +55,23 @@ export default function Hero() {
         
         <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">
           
-          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            {t.status}
-          </span>
+          {/* BADGE STATUS DIHAPUS DARI SINI */}
 
-          <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
+          <h1 className="mt-2 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />
             <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
-              {t.name}
+              Micoandar.
             </span>
           </h1>
 
-          <div className="mt-4 flex h-8 items-center text-lg font-semibold text-slate-700 dark:text-slate-300 sm:text-2xl">
+          <div className="mt-6 flex h-8 items-center text-lg font-semibold text-slate-700 dark:text-slate-300 sm:text-2xl">
             <span key={roleIndex} className="animate-fade-in">
               {roles[roleIndex]}
             </span>
           </div>
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
-            {t.summary}
+            {profile.summary[lang]}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">

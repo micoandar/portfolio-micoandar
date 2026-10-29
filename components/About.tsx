@@ -57,11 +57,11 @@ export default function About() {
               softness={0.8}
               clickBurst={true} 
               className="w-full h-full"
-              // MENYESUAIKAN POSISI AGAR DI TENGAH KOTAK
-              // scale(1.15) membuat gambar sedikit lebih besar
-              // translateY(5%) menarik gambar ke bawah
+              // MENGGESER GAMBAR KE ATAS AGAR TENGAH
+              // Menghapus 'scale' (ukuran kembali normal)
+              // Menggunakan translateY(-10%) untuk menarik gambar ke atas
               style={{ 
-                transform: "scale(1.15) translateY(5%)", 
+                transform: "translateY(-10%)", 
                 transformOrigin: "center center" 
               }}
             />

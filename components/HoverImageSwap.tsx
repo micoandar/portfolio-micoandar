@@ -47,21 +47,18 @@ export default function HoverImageSwap({
     let timeout: NodeJS.Timeout;
 
     if (isHovered) {
-      // Jika mouse menyentuh, matikan idle
       setIsIdle(false);
       return;
     }
 
     if (isIdle) {
-      // Jika gambar 2 tampil, tunggu 3 detik lalu Fade Out
       timeout = setTimeout(() => {
         setIsIdle(false);
-      }, 3000);
+      }, 3000); // 3 detik fade out
     } else {
-      // Jika gambar 1 tampil, tunggu 5 detik lalu Fade In
       timeout = setTimeout(() => {
         setIsIdle(true);
-      }, 5000);
+      }, 5000); // 5 detik fade in
     }
 
     return () => clearTimeout(timeout);
@@ -91,6 +88,12 @@ export default function HoverImageSwap({
     setIsHovered(false);
   };
 
+  // Logika Transisi
+  const imageBOpacity = (isIdle || isHovered) ? 1 : 0;
+  const opacityDuration = isHovered 
+    ? 0.2 // Jika hover, transisi cepat
+    : (isIdle ? 0.8 : 0); // Jika Idle, fade smooth 0.8s. Jika lepas hover, langsung hilang (0)
+
   return (
     <div
       ref={containerRef}
@@ -119,14 +122,12 @@ export default function HoverImageSwap({
       {/* LAYER 2: Gambar Kedua */}
       <motion.div
         style={{ 
-          // HANYA GUNAKAN MASK JIKA SEDANG DI-HOVER
           maskImage: isHovered ? maskImage : "none", 
           WebkitMaskImage: isHovered ? maskImage : "none",
           willChange: "mask-image, opacity"
         }}
-        // GUNAKAN OPACITY UNTUK ANIMASI IDLE (FADE IN & FADE OUT)
-        animate={{ opacity: isIdle ? 1 : (isHovered ? 1 : 0) }}
-        transition={{ duration: 0.8, ease: "easeInOut" }}
+        animate={{ opacity: imageBOpacity }}
+        transition={{ duration: opacityDuration, ease: "easeInOut" }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <div 

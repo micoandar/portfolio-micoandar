@@ -42,13 +42,14 @@ export default function AnimatedBorder({
           strokeWidth="2"
           vectorEffect="non-scaling-stroke"
           filter="url(#glow)"
-          strokeDasharray="200 200"
-          initial={{ strokeDashoffset: 200 }}
-          animate={{ strokeDashoffset: -200 }}
+          pathLength={1}
+          strokeDasharray="1 1"
+          initial={{ strokeDashoffset: 1 }}
+          animate={{ strokeDashoffset: -1 }}
           transition={{ 
-            duration: 3, 
+            duration: 2, 
             repeat: Infinity, 
-            ease: "easeInOut" 
+            ease: "linear" // <-- Linear membuat kecepatan konstan tanpa perlambatan
           }}
         />
 
@@ -60,13 +61,14 @@ export default function AnimatedBorder({
           strokeWidth="2"
           vectorEffect="non-scaling-stroke"
           filter="url(#glow)"
-          strokeDasharray="200 200"
-          initial={{ strokeDashoffset: 200 }}
-          animate={{ strokeDashoffset: -200 }}
+          pathLength={1}
+          strokeDasharray="1 1"
+          initial={{ strokeDashoffset: 1 }}
+          animate={{ strokeDashoffset: -1 }}
           transition={{ 
-            duration: 3, 
+            duration: 2, 
             repeat: Infinity, 
-            ease: "easeInOut" 
+            ease: "linear" 
           }}
         />
       </svg>

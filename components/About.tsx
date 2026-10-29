@@ -13,17 +13,17 @@ export default function About() {
 
   return (
     <Section id="tentang">
-      {/* JUDUL BESAR DI TENGAH ATAS */}
-      <div className="mb-16 text-center lg:mb-24">
+      {/* Judul Utama */}
+      <div className="mb-16 text-center lg:mb-20">
         <h2 className="text-5xl font-black tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
           About Me
         </h2>
       </div>
 
-      {/* GRID 3 KOLOM */}
+      {/* Grid 3 Kolom */}
       <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8">
         
-        {/* ================= KIRI: Teks Sapaan ================= */}
+        {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
           <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
             <span className="text-blue-500">Hi, I'm</span> <br />
@@ -43,7 +43,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* ================= TENGAH: Foto Interaktif ================= */}
+        {/* TENGAH: Foto Interaktif (Diperbesar & Ditinggikan) */}
         <div className="relative flex justify-center w-full mx-auto z-0">
           {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
@@ -53,12 +53,12 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            // Foto dibuat sangat tinggi agar dominan seperti di contoh
-            className="relative w-full max-w-[450px] h-[600px] lg:h-[750px]"
+            imageScale={1.15} // <-- Memperbesar gambar 15% agar lebih tinggi
+            className="relative w-full max-w-[450px] h-[600px] lg:h-[800px] rounded-3xl overflow-hidden"
           />
         </div>
 
-        {/* ================= KANAN: Deskripsi & Tombol ================= */}
+        {/* KANAN: Deskripsi & Tombol */}
         <div className="flex flex-col justify-center gap-6 z-10">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}

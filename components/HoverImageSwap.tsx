@@ -10,6 +10,7 @@ interface HoverImageSwapProps {
   className?: string;
   objectFit?: "cover" | "contain";
   radius?: number;
+  imageScale?: number; // Prop baru untuk memperbesar gambar
 }
 
 export default function HoverImageSwap({
@@ -18,6 +19,7 @@ export default function HoverImageSwap({
   className = "relative w-full h-full rounded-3xl overflow-hidden",
   objectFit = "cover",
   radius = 80, 
+  imageScale = 1, // Default scale 1
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isIdle, setIsIdle] = useState(false);
@@ -40,7 +42,6 @@ export default function HoverImageSwap({
     )
   `;
 
-  // Timer Refs
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeOutTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -48,13 +49,11 @@ export default function HoverImageSwap({
     if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
 
-    setIsIdle(false); // Kembali ke gambar 1
+    setIsIdle(false);
 
-    // Timer 5 detik untuk memunculkan gambar 2
     idleTimerRef.current = setTimeout(() => {
       setIsIdle(true);
       
-      // Timer 2 detik untuk kembali ke gambar 1
       fadeOutTimerRef.current = setTimeout(() => {
         setIsIdle(false);
       }, 2000);
@@ -96,7 +95,6 @@ export default function HoverImageSwap({
     resetIdleTimer();
   };
 
-  // Tentukan Opacity: Jika Idle, full opacity (1). Jika Hover, tergantung mask. Jika tidak, 0.
   const imageBOpacity = isIdle ? 1 : (isHovered ? 1 : 0);
 
   return (
@@ -107,33 +105,45 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      <Image
-        src={imageA}
-        alt="Photo A"
-        fill
-        priority
-        sizes="(max-width: 768px) 100vw, 50vw"
-        className={`object-${objectFit} object-center`}
-      />
-
-      <motion.div
-        style={{ 
-          maskImage: isIdle ? "none" : maskImage, // Matikan mask jika sedang idle
-          WebkitMaskImage: isIdle ? "none" : maskImage,
-          willChange: "mask-image, opacity"
-        }}
-        animate={{ opacity: imageBOpacity }}
-        transition={{ duration: 0.6, ease: "easeInOut" }} // Fade smooth
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+      {/* Gambar A (Dibungkus div agar bisa di-scale) */}
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{ transform: `scale(${imageScale})`, transformOrigin: "center center" }}
       >
         <Image
-          src={imageB}
-          alt="Photo B"
+          src={imageA}
+          alt="Photo A"
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
           className={`object-${objectFit} object-center`}
         />
+      </div>
+
+      {/* Gambar B (Masking & Idle) */}
+      <motion.div
+        style={{ 
+          maskImage: isIdle ? "none" : maskImage, 
+          WebkitMaskImage: isIdle ? "none" : maskImage,
+          willChange: "mask-image, opacity"
+        }}
+        animate={{ opacity: imageBOpacity }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-hidden"
+      >
+        <div 
+          className="relative w-full h-full"
+          style={{ transform: `scale(${imageScale})`, transformOrigin: "center center" }}
+        >
+          <Image
+            src={imageB}
+            alt="Photo B"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className={`object-${objectFit} object-center`}
+          />
+        </div>
       </motion.div>
     </div>
   );

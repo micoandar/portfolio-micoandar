@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
-import { motion } from "framer-motion"; // <-- Import Framer Motion
 import Section from "@/components/ui/Section";
 import HalftoneReveal from "@/components/HalftoneReveal";
 import { profile } from "@/data/profile";
@@ -13,25 +11,9 @@ export default function About() {
   const { lang } = useLanguage();
   const t = translations[lang].about;
 
-  // State untuk menyimpan gelombang yang sedang aktif
-  const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
-
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    // Tambahkan gelombang baru
-    setRipples((prev) => [...prev, { id: Date.now(), x, y }]);
-  };
-
-  const removeRipple = (id: number) => {
-    setRipples((prev) => prev.filter((r) => r.id !== id));
-  };
-
   return (
     <Section id="tentang" title="About Me">
-      {/* pt-8 agar tidak menabrak judul About Me */}
+      {/* Jarak pt-8 agar kotak tidak menutupi judul */}
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-8 pt-8">
         
         {/* KIRI: Teks Sapaan */}
@@ -54,14 +36,11 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Efek Halftone Reveal + Gelombang Klik */}
+        {/* TENGAH: Efek Halftone Reveal */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
-          <div 
-            className="relative w-full h-[450px] lg:h-[550px] rounded-3xl overflow-hidden shadow-2xl cursor-pointer"
-            onClick={handleClick}
-          >
+          <div className="relative w-full h-[450px] lg:h-[550px] rounded-3xl overflow-hidden shadow-2xl">
             <HalftoneReveal
               src="/images/My-photo.png"
               mode="mono"
@@ -72,36 +51,10 @@ export default function About() {
               paperColor="#0a0a0a" 
               revealRadius={150} 
               softness={0.5}
-              // Mematikan gelombang bawaan agar tidak bentrok dengan overlay
-              clickBurst={false} 
-              className="w-full h-full pointer-events-none"
+              // Menggunakan efek gelombang bawaan (WebGL)
+              clickBurst={true} 
+              className="w-full h-full"
             />
-
-            {/* OVERLAY GELOMBANG JBWKZ.PNG */}
-            {ripples.map((ripple) => (
-              <motion.div
-                key={ripple.id}
-                initial={{ scale: 0, opacity: 1 }}
-                animate={{ scale: 25, opacity: 0 }} // Memperbesar lingkaran hingga menutupi layar, lalu memudar
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                onAnimationComplete={() => removeRipple(ripple.id)}
-                style={{
-                  position: "absolute",
-                  left: ripple.x,
-                  top: ripple.y,
-                  width: 100,
-                  height: 100,
-                  marginLeft: -50,
-                  marginTop: -50,
-                  borderRadius: "50%",
-                  backgroundImage: "url(/images/jbwkz.png)", // Gambar yang diinginkan
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  pointerEvents: "none",
-                  zIndex: 30,
-                }}
-              />
-            ))}
           </div>
         </div>
 

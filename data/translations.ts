@@ -16,7 +16,8 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      summary: "Berawal dari rasa ingin tahu terhadap teknologi, kini berkembang menjadi passion di bidang software development. Saya senang bereksperimen dengan kode, mengeksplorasi teknologi baru, dan mengubah ide menjadi aplikasi yang nyata. Mulai dari membangun antarmuka web yang responsif, mengembangkan backend dan REST API, hingga merancang sistem yang fungsional, saya selalu berusaha menciptakan aplikasi yang tidak hanya menarik secara visual, tetapi juga nyaman digunakan dan memberikan solusi bagi penggunanya.",
+      // TEKS DESKRIPSI BARU (BAHASA INDONESIA)
+      summary: "Saya suka mengulik teknologi, mencoba hal baru, dan mengubah ide menjadi sesuatu yang nyata. Bagi saya, software development adalah tentang terus belajar, menemukan solusi, dan membangun aplikasi yang fungsional serta bermanfaat bagi banyak orang.",
     },
     about: {
       eyebrow: "Tentang Saya",
@@ -73,7 +74,8 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      summary: "Starting from a curiosity about technology, it has now grown into a passion for software development. I enjoy experimenting with code, exploring new technologies, and turning ideas into real applications. From building responsive web interfaces, developing backends and REST APIs, to designing functional systems, I always strive to create applications that are not only visually appealing but also comfortable to use and provide solutions for their users.",
+      // TEKS DESKRIPSI BARU (BAHASA INGGRIS)
+      summary: "I love exploring technology, trying new things, and turning ideas into something real. For me, software development is about continuous learning, finding solutions, and building functional applications that benefit many people.",
     },
     about: {
       eyebrow: "About Me",

@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import Section from "@/components/ui/Section";
-import HoloCard from "@/components/HoloCard";
+import HoverImageSwap from "@/components/HoverImageSwap";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -35,17 +35,17 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Efek HoloCard */}
+        {/* TENGAH: Foto Interaktif (HoverImageSwap) */}
         <div className="relative flex justify-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
-          <HoloCard 
-            image="/images/My-photo.png"
-            alt="Micoandar Portrait"
-            preset="cosmos" 
-            width={380}
-            // height={500} <--- BARIS INI SUDAH DIHAPUS
-            className="mx-auto"
+          <HoverImageSwap
+            imageA="/images/My-photo.png"
+            imageB="/images/jbwkz.png"
+            objectFit="contain"
+            radius={80} 
+            imageScale={1.3} 
+            className="relative w-full h-[500px] lg:h-[650px]" 
           />
         </div>
 

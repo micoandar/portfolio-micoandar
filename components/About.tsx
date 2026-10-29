@@ -57,13 +57,7 @@ export default function About() {
               softness={0.8}
               clickBurst={true} 
               className="w-full h-full"
-              // MENGGESER GAMBAR KE ATAS AGAR TENGAH
-              // Menghapus 'scale' (ukuran kembali normal)
-              // Menggunakan translateY(-10%) untuk menarik gambar ke atas
-              style={{ 
-                transform: "translateY(-10%)", 
-                transformOrigin: "center center" 
-              }}
+              // Transform dihapus agar kotak tidak terpotong
             />
           </div>
         </div>

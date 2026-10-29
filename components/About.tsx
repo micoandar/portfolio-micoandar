@@ -4,6 +4,7 @@ import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
 import Section from "@/components/ui/Section";
 import HalftoneReveal from "@/components/HalftoneReveal";
+import StarBorder from "@/components/StarBorder"; // <-- Import StarBorder
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -17,12 +18,7 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* 
-        PERBAIKAN MUTLAK: 
-        Menggunakan lg:grid-cols-3 (3 kolom sama besar).
-        Kolom tengah dipastikan akan selalu berada tepat di tengah layar.
-      */}
-      <div className="grid gap-10 lg:grid-cols-3 lg:items-center lg:gap-8 pt-8">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -35,13 +31,24 @@ export default function About() {
             </span>
           </h1>
           
-          <a
-            href={`mailto:${profile.email}`}
-            className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 hover:bg-blue-600 hover:shadow-blue-500/50"
-          >
-            <Mail size={18} />
-            Hubungi Saya
-          </a>
+          <div className="mt-8">
+            {/* Tombol Hubungi Saya dengan StarBorder */}
+            <StarBorder
+              as="a"
+              href={`mailto:${profile.email}`}
+              className="rounded-xl px-8 py-4 text-sm font-semibold"
+              backgroundColor={isDark ? "#1e1b4b" : "#eef2ff"} // bg indigo-950 / indigo-50
+              textColor={isDark ? "#a5b4fc" : "#4338ca"} // text indigo-300 / indigo-700
+              color={isDark ? "#818cf8" : "#4f46e5"} // warna bintang
+              theme={isDark ? "dark" : "light"}
+              radius={12}
+              glow={0.8}
+              sparkle={true}
+            >
+              <Mail size={18} />
+              Hubungi Saya
+            </StarBorder>
+          </div>
         </div>
 
         {/* TENGAH: Efek Halftone Reveal */}
@@ -66,20 +73,29 @@ export default function About() {
           </div>
         </div>
 
-        {/* KANAN: Deskripsi & Tombol */}
+        {/* KANAN: Deskripsi & Tombol Lihat Proyek */}
         <div className="flex flex-col justify-center gap-6 z-10">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}
           </p>
 
           <div className="mt-2">
-            <a
+            {/* Tombol Lihat Proyek dengan StarBorder */}
+            <StarBorder
+              as="a"
               href="#proyek"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-blue-500/30 bg-blue-500/5 px-8 py-4 text-sm font-semibold text-blue-600 transition-all hover:-translate-y-1 hover:bg-blue-500/10 dark:text-blue-400"
+              className="rounded-xl px-8 py-4 text-sm font-semibold"
+              backgroundColor={isDark ? "#0f172a" : "#ffffff"} // bg slate-900 / white
+              textColor={isDark ? "#cbd5e1" : "#334155"} // text slate-300 / slate-700
+              color={isDark ? "#38bdf8" : "#0ea5e9"} // warna bintang sky
+              theme={isDark ? "dark" : "light"}
+              radius={12}
+              glow={0.8}
+              sparkle={true}
             >
               <ArrowUpRight size={18} />
               Lihat Proyek
-            </a>
+            </StarBorder>
           </div>
         </div>
 

@@ -12,8 +12,8 @@ export default function About() {
   const t = translations[lang].about;
 
   return (
-    // Menggunakan title="About Me" agar judul dari Section muncul
     <Section id="tentang" title="About Me">
+      {/* Grid 3 Kolom */}
       <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8 pt-10">
         
         {/* KIRI: Teks Sapaan */}
@@ -36,9 +36,8 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Interaktif (Diperbesar & Ditinggikan Maksimal) */}
-        <div className="relative flex justify-center w-full mx-auto z-0">
-          {/* Glow di belakang foto */}
+        {/* TENGAH: Foto Raksasa (Mendominasi) */}
+        <div className="relative flex justify-center w-full mx-auto z-20 lg:-my-32">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
           <HoverImageSwap
@@ -46,9 +45,8 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.4} // Diperbesar 40% dari ukuran aslinya
-            // Kontainer dibuat sangat tinggi agar gambar terdorong ke atas dan bawah
-            className="relative w-full h-[600px] lg:h-[850px] overflow-visible"
+            imageScale={1.8} // Skala diperbesar 80% (Sangat besar)
+            className="relative w-full h-[700px] lg:h-[1100px] overflow-visible"
           />
         </div>
 

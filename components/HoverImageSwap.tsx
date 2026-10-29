@@ -16,7 +16,7 @@ interface HoverImageSwapProps {
 export default function HoverImageSwap({
   imageA,
   imageB,
-  className = "relative w-full h-full rounded-3xl",
+  className = "relative w-full h-full",
   objectFit = "cover",
   radius = 80, 
   imageScale = 1,
@@ -105,17 +105,19 @@ export default function HoverImageSwap({
     >
       {/* LAYER 1: Gambar Asli */}
       <div 
-        className="absolute inset-0 w-full h-full"
-        style={{ transform: `scale(${imageScale})`, transformOrigin: "center center" }}
+        className="absolute inset-0 w-full h-full flex items-center justify-center"
+        style={{ transform: `scale(${imageScale})` }}
       >
-        <Image
-          src={imageA}
-          alt="Photo A"
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className={`object-${objectFit} object-center`}
-        />
+        <div className="relative w-full h-full">
+          <Image
+            src={imageA}
+            alt="Photo A"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className={`object-${objectFit} object-center`}
+          />
+        </div>
       </div>
 
       {/* LAYER 2: Gambar Kedua (Masking / Fade) */}
@@ -127,20 +129,22 @@ export default function HoverImageSwap({
         }}
         animate={{ opacity: imageBOpacity }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-visible"
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <div 
-          className="relative w-full h-full"
-          style={{ transform: `scale(${imageScale})`, transformOrigin: "center center" }}
+          className="relative w-full h-full flex items-center justify-center"
+          style={{ transform: `scale(${imageScale})` }}
         >
-          <Image
-            src={imageB}
-            alt="Photo B"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className={`object-${objectFit} object-center`}
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src={imageB}
+              alt="Photo B"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className={`object-${objectFit} object-center`}
+            />
+          </div>
         </div>
       </motion.div>
     </div>

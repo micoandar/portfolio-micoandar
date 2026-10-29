@@ -14,14 +14,13 @@ export default function About() {
   return (
     <Section id="tentang" title="About Me">
       {/* 
-        PERBAIKAN: 
-        Menggunakan `lg:items-start` agar semua konten mulai dari atas (tepat di bawah judul).
+        items-center memastikan teks di kiri dan kanan sejajar di tengah dengan gambar.
+        Tidak ada lagi jarak aneh karena tingginya seimbang.
       */}
-      <div className="grid gap-12 lg:grid-cols-3 lg:items-start lg:gap-8 pt-4">
+      <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8 pt-10 lg:pt-0">
         
         {/* KIRI: Teks Sapaan */}
-        {/* Ditambahkan lg:pt-12 agar posisinya agak turun sedikit dan seimbang dengan gambar */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 lg:pt-12">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
           <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
             <span className="text-blue-500">Hi, I'm</span> <br />
             <span className="text-slate-900 dark:text-white">
@@ -40,7 +39,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Interaktif */}
+        {/* TENGAH: Foto Raksasa (Mendominasi) */}
         <div className="relative flex justify-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
@@ -49,15 +48,13 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.3} 
-            // Tinggi disesuaikan agar pas tapi tetap mendominasi
-            className="relative w-full h-[500px] lg:h-[700px]"
+            imageScale={1.3} // Skala 1.3 agar gambar terlihat besar
+            className="relative w-full h-[600px] lg:h-[800px]"
           />
         </div>
 
         {/* KANAN: Deskripsi & Tombol */}
-        {/* Ditambahkan lg:pt-12 agar teks sejajar dengan teks di kiri */}
-        <div className="flex flex-col justify-start gap-6 z-10 lg:pt-12">
+        <div className="flex flex-col justify-center gap-6 z-10">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}
           </p>

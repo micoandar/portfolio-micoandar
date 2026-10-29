@@ -10,13 +10,10 @@ import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  
   const { lang, toggle: toggleLang } = useLanguage();
   const { theme, setTheme } = useTheme();
 
-  // Menu permanen dalam Bahasa Inggris (About ditambahkan)
   const links = [
     { href: "#tentang", label: "About" },
     { href: "#proyek", label: "Projects" },
@@ -26,44 +23,30 @@ export default function Navbar() {
   ];
 
   useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled
-          ? "border-b border-slate-200/70 bg-white/80 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/80"
-          : "border-b border-transparent bg-transparent"
-      )}
-    >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8 sm:py-4">
-        <Link href="#beranda" className="group flex items-center gap-2.5 text-sm font-bold text-slate-900 dark:text-white">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-xs font-black text-white shadow-lg shadow-brand-500/25 transition group-hover:scale-105">
+    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+      {/* Navbar Kapsul (Floating Pill) */}
+      <nav className="flex pointer-events-auto items-center gap-2 rounded-full border border-slate-200/50 bg-white/80 px-4 py-2 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black/60 sm:px-6 sm:py-3">
+        
+        {/* Logo MJ */}
+        <Link href="#beranda" className="mr-2 hidden sm:flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-brand-500 text-xs font-black text-white">
             {profile.initials}
-          </span>
-          <span className="hidden sm:block">
-            Micoandar<span className="text-brand-600 dark:text-brand-400">.</span>
           </span>
         </Link>
 
+        {/* Desktop Links */}
         <ul className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
               >
                 {link.label}
               </a>
@@ -71,78 +54,67 @@ export default function Navbar() {
           ))}
         </ul>
 
+        {/* Divider */}
+        <div className="mx-2 hidden h-6 w-px bg-slate-300 dark:bg-slate-700 md:block" />
+
+        {/* Toggles & CTA */}
         <div className="flex items-center gap-2">
-          {/* Toggle Theme */}
           {mounted && (
             <button
               type="button"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle Theme"
-              className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+              className="grid h-9 w-9 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
             >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
             </button>
           )}
 
-          {/* Toggle Language */}
           <button
             type="button"
             onClick={toggleLang}
             aria-label="Toggle language"
-            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 text-xs font-bold uppercase tracking-wide text-slate-700 transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-xs font-bold uppercase tracking-wide text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
           >
-            <Languages size={14} />
+            <Languages size={16} />
             {lang === "id" ? "ID" : "EN"}
           </button>
 
           <a
             href={`mailto:${profile.email}`}
-            className="hidden rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 md:inline-block"
+            className="hidden rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 lg:inline-block"
           >
             Get in touch
           </a>
 
           <button
             type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 md:hidden"
+            onClick={() => setOpen(!open)}
+            className="grid h-9 w-9 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10 md:hidden"
           >
-            {open ? <X size={18} /> : <Menu size={18} />}
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      <div
-        className={cn(
-          "overflow-hidden border-t border-slate-200/70 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-slate-800 dark:bg-slate-950/95 md:hidden",
-          open ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0"
-        )}
-      >
-        <ul className="flex flex-col gap-1 px-5 py-4">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a
-              href={`mailto:${profile.email}`}
-              onClick={() => setOpen(false)}
-              className="mt-1 block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
-            >
-              Get in touch
-            </a>
-          </li>
-        </ul>
-      </div>
+      {/* Mobile Menu Overlay */}
+      {open && (
+        <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/95 md:hidden">
+          <ul className="flex flex-col gap-1">
+            {links.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
   );
 }

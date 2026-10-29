@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import Section from "@/components/ui/Section";
-import HoverImageSwap from "@/components/HoverImageSwap";
+import HalftoneReveal from "@/components/HalftoneReveal"; // <-- Import komponen baru
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -35,19 +35,27 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Diperbesar */}
+        {/* TENGAH: Efek Halftone Reveal */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
+          {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
-          <HoverImageSwap
-            imageA="/images/My-photo.png"
-            imageB="/images/jbwkz.png"
-            objectFit="contain"
-            radius={80} 
-            imageScale={1.5} 
-            // Class border persegi sudah dihapus
-            className="relative w-full h-[550px] lg:h-[700px]"
-          />
+          {/* Container dengan tinggi yang pasti */}
+          <div className="relative w-full h-[500px] lg:h-[650px] rounded-3xl overflow-hidden">
+            <HalftoneReveal
+              src="/images/My-photo.png"
+              mode="mono"
+              shape="dot"
+              cellSize={6}
+              angle={45}
+              // Warna disesuaikan dengan tema gelap/terang website
+              inkColor="#4f46e5" // Warna titik halftone (Indigo/Brand)
+              paperColor="transparent" // Sesuaikan dengan background (Abaikan jika WebGL)
+              revealRadius={150} // Ukuran area sorot kursor
+              softness={0.5}
+              className="w-full h-full"
+            />
+          </div>
         </div>
 
         {/* KANAN: Deskripsi & Tombol */}

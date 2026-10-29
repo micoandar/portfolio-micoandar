@@ -17,7 +17,13 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
+      {/* 
+        PERBAIKAN: 
+        Menggunakan minmax(0, Xfr) agar teks di kiri dan kanan tidak 
+        melebarkan kolomnya. Ini membuat kolom tengah (kotak hitam) 
+        berada persis di tengah layar dan sejajar dengan judul "About Me".
+      */}
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1fr)] lg:items-center lg:gap-8 pt-8">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -57,7 +63,6 @@ export default function About() {
               softness={0.8}
               clickBurst={true} 
               className="w-full h-full"
-              // Transform dihapus agar kotak tidak terpotong
             />
           </div>
         </div>

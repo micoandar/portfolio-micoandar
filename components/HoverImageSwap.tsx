@@ -21,7 +21,7 @@ export default function HoverImageSwap({
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
   radius = 130, 
-  scale = 1.08, // Hanya diperbesar 8% (sangat sedikit, proporsional)
+  scale = 1.15, // Skala 15% (pas untuk menutupi rambut tanpa merusak proporsi)
   offsetX = 0, 
   offsetY = 0,
 }: HoverImageSwapProps) {
@@ -36,12 +36,12 @@ export default function HoverImageSwap({
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // Area tengah dibuat solid (hitam) hingga 75%, sisanya memudar.
-  // Ini memastikan wajah tidak tembus pandang di tengah sorotan.
+  // PERBAIKAN: Mask 98% solid. Hanya 2% pinggir terluar yang memudar.
+  // Ini memastikan gambar 1 benar-benar tertutup total di area tengah.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 75%, 
+      black 98%, 
       transparent 100%
     )
   `;
@@ -95,7 +95,6 @@ export default function HoverImageSwap({
         <div 
           className="relative w-full h-full"
           style={{ 
-            // Hanya scale tipis dan posisi tetap di tengah
             transform: `translateX(${offsetX}px) translateY(${offsetY}px) scale(${scale})`, 
             transformOrigin: "center center" 
           }}

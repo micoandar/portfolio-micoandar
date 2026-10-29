@@ -62,8 +62,11 @@ export default function Skills() {
                 className="h-full"
                 glowColor="200 80 60"
                 colors={['#38bdf8', '#818cf8', '#c084fc']}
+                glowIntensity={2.0}
+                glowRadius={50}
+                edgeSensitivity={20}
               >
-                <div className="flex h-full flex-col p-5 sm:p-6 rounded-[24px]">
+                <div className="flex h-full flex-col p-5 sm:p-6 rounded-[24px] border border-slate-200 dark:border-slate-800">
                   <div className="flex items-center gap-3">
                     <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-md sm:h-11 sm:w-11`}>
                       <Icon size={18} />

@@ -13,7 +13,6 @@ export default function Contact() {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
 
-  // PERBAIKAN: Variabel 'contacts' didefinisikan dengan lengkap di sini
   const contacts = [
     {
       label: "WhatsApp",
@@ -83,7 +82,6 @@ export default function Contact() {
         </Reveal>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {/* Mapping contacts di sini */}
           {contacts.map((c, i) => (
             <Reveal key={c.label} delay={i * 80}>
               <a
@@ -98,8 +96,11 @@ export default function Contact() {
                   className="h-full w-full"
                   glowColor="140 80 60"
                   colors={['#34d399', '#3b82f6', '#818cf8']}
+                  glowIntensity={2.0}
+                  glowRadius={50}
+                  edgeSensitivity={20}
                 >
-                  <div className="flex h-full flex-col justify-between p-6 rounded-[24px]">
+                  <div className="flex h-full flex-col justify-between p-6 rounded-[24px] border border-slate-200 dark:border-slate-800">
                     <div className={`grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br ${c.accent} text-white shadow-md`}>
                       <c.icon size={18} />
                     </div>

@@ -61,8 +61,11 @@ export default function Education() {
                 borderRadius={24}
                 glowColor="270 80 70"
                 colors={['#a78bfa', '#c084fc', '#818cf8']}
+                glowIntensity={2.0}
+                glowRadius={50}
+                edgeSensitivity={20}
               >
-                <div className="relative p-6 sm:p-7 rounded-[24px]">
+                <div className="relative p-6 sm:p-7 rounded-[24px] border border-slate-200 dark:border-slate-800">
                   <div className="flex items-start gap-4">
                     <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/25">
                       <GraduationCap size={20} />
@@ -102,8 +105,11 @@ export default function Education() {
               borderRadius={24}
               glowColor="40 80 60"
               colors={['#fbbf24', '#f59e0b', '#f97316']}
+              glowIntensity={2.0}
+              glowRadius={50}
+              edgeSensitivity={20}
             >
-              <div className="p-6 sm:p-7 rounded-[24px]">
+              <div className="p-6 sm:p-7 rounded-[24px] border border-slate-200 dark:border-slate-800">
                 <div className="mb-5 flex items-center gap-2.5">
                   <Award size={18} className="text-amber-500" />
                   <h3 className="font-bold text-slate-900 dark:text-white">
@@ -135,8 +141,11 @@ export default function Education() {
               borderRadius={24}
               glowColor="200 80 60"
               colors={['#38bdf8', '#0ea5e9', '#6366f1']}
+              glowIntensity={2.0}
+              glowRadius={50}
+              edgeSensitivity={20}
             >
-              <div className="p-6 sm:p-7 rounded-[24px]">
+              <div className="p-6 sm:p-7 rounded-[24px] border border-slate-200 dark:border-slate-800">
                 <div className="mb-5 flex items-center gap-2.5">
                   <BookOpen size={18} className="text-sky-500" />
                   <h3 className="font-bold text-slate-900 dark:text-white">

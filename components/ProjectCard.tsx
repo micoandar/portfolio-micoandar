@@ -7,7 +7,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "next-themes";
 import BorderGlow from "@/components/BorderGlow";
 
-// Variabel yang sempat hilang sudah dikembalikan di sini
 const categoryStyle: Record<Project["category"], string> = {
   Web: "bg-sky-50 text-sky-700 border-sky-100 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-800",
   AI: "bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800",
@@ -38,8 +37,12 @@ export default function ProjectCard({
       className="h-full"
       glowColor="40 80 80"
       colors={['#818cf8', '#c084fc', '#38bdf8']}
+      glowIntensity={2.0} // Glow lebih terang
+      glowRadius={50}     // Area glow lebih lebar
+      edgeSensitivity={20} // Glow lebih mudah muncul
     >
-      <article className="group flex h-full flex-col overflow-hidden rounded-[24px]">
+      {/* Tambahan border statis agar selalu terlihat */}
+      <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 dark:border-slate-800">
         
         <div className={`relative h-44 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-5 sm:h-56 sm:p-6`}>
           <Image

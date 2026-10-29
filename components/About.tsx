@@ -13,10 +13,6 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* 
-        -mt-12 lg:-mt-24 menarik seluruh konten ke atas agar dekat dengan judul.
-        items-center memastikan ketiga kolom sejajar di tengah secara vertikal.
-      */}
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-8 -mt-12 lg:-mt-24">
         
         {/* KIRI: Teks Sapaan */}
@@ -39,9 +35,8 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Diperbesar & Di Tengah */}
+        {/* TENGAH: Foto Diperbesar & Diberi Garis Luar */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
-          {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
           <HoverImageSwap
@@ -49,8 +44,9 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.5} // <-- Skala gambar diperbesar
-            className="relative w-full h-[550px] lg:h-[700px]" // <-- Wadah ditinggikan
+            imageScale={1.5} 
+            // Menambahkan border luar (garis) dan membulatkan sudut
+            className="relative w-full h-[550px] lg:h-[700px] border-2 border-slate-200 dark:border-slate-800 rounded-[2rem]"
           />
         </div>
 

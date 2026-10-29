@@ -20,8 +20,8 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 130, 
-  scale = 1.15, // Skala 15% (pas untuk menutupi rambut tanpa merusak proporsi)
+  radius = 140, // Radius sorotan
+  scale = 1.3,  // MEMPERBESAR GAMBAR 2 SEBESAR 30% AGAR MENUTUPI RAMBUT GAMBAR 1
   offsetX = 0, 
   offsetY = 0,
 }: HoverImageSwapProps) {
@@ -36,12 +36,11 @@ export default function HoverImageSwap({
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // PERBAIKAN: Mask 98% solid. Hanya 2% pinggir terluar yang memudar.
-  // Ini memastikan gambar 1 benar-benar tertutup total di area tengah.
+  // Mask 95% solid. Hanya 5% terluar yang memudar (smooth).
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 98%, 
+      black 95%, 
       transparent 100%
     )
   `;
@@ -73,7 +72,7 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A */}
+      {/* LAYER 1: Foto A (Wajah Asli) */}
       <Image
         src={imageA}
         alt="Photo A"
@@ -83,7 +82,7 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B */}
+      {/* LAYER 2: Foto B (Topeng) */}
       <motion.div
         style={{ 
           maskImage, 
@@ -95,6 +94,7 @@ export default function HoverImageSwap({
         <div 
           className="relative w-full h-full"
           style={{ 
+            // Transformasi ditambahkan scale agar menutupi gambar 1
             transform: `translateX(${offsetX}px) translateY(${offsetY}px) scale(${scale})`, 
             transformOrigin: "center center" 
           }}

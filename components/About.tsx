@@ -35,7 +35,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Efek Halftone Reveal (Versi Lembut) */}
+        {/* TENGAH: Efek Halftone Reveal (Hitam & Putih Tulang) */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
@@ -44,14 +44,12 @@ export default function About() {
               src="/images/My-photo.png"
               mode="mono"
               shape="dot"
-              // Memperbesar ukuran titik agar tidak terlalu rapat (mengurangi pusing)
               cellSize={10} 
               dotScale={0.7} 
               angle={45}
-              // Warna Indigo lembut (brand color) dan background abu-abu sangat muda
-              inkColor="#6366f1" 
-              paperColor="#f8fafc" 
-              // Area sorot lebih lebar agar gerakan lebih tenang
+              // Putih Tulang di atas Hitam Pekat
+              inkColor="#f4f1ea" 
+              paperColor="#0a0a0a" 
               revealRadius={200} 
               softness={0.8}
               clickBurst={true} 

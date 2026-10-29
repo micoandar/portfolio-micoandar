@@ -28,18 +28,18 @@ export default function HoverImageSwap({
   // Radius sorot
   const maskRadius = useMotionValue(0);
 
-  // Spring Physics
+  // Spring Physics agar gerakan tidak kaku
   const springConfig = { stiffness: 120, damping: 25, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // Menggunakan radial-gradient dengan area solid (black) yang lebih lebar (60%)
-  // agar gambar kedua benar-benar menutupi gambar pertama dan hanya memudar di ujung.
+  // Menggunakan radial-gradient dengan area solid yang sangat lebar (85%).
+  // Hanya 15% bagian terluar yang memudar, sehingga gambar 1 benar-benar tertutup di tengah.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 60%, 
+      black 85%, 
       transparent 100%
     )
   `;
@@ -81,16 +81,13 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Masking + Efek Zoom/Pop-out) */}
+      {/* LAYER 2: Foto B (Masking Tegas) */}
       <motion.div
         style={{ 
           maskImage, 
           WebkitMaskImage: maskImage,
-          willChange: "mask-image, transform"
+          willChange: "mask-image"
         }}
-        // Sedikit diperbesar agar terasa lebih "real" ketika disentuh
-        animate={{ scale: maskRadius.get() > 0 ? 1.04 : 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 25 }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <Image
@@ -99,6 +96,7 @@ export default function HoverImageSwap({
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
+          // object-cover dan object-center memastikan posisi sejajar 100% dengan gambar A
           className={`object-${objectFit} object-center`}
         />
       </motion.div>

@@ -42,9 +42,9 @@ export default function About() {
           <HoloCard 
             image="/images/My-photo.png"
             alt="Micoandar Portrait"
-            preset="cosmos" // Pilihan: 'bursts', 'stars', 'shards', 'cosmos', 'rainbow', 'swirl', 'glitter', 'gold'
+            preset="cosmos" 
             width={380}
-            // height={500} <-- BARIS INI DIHAPUS
+            // height={500} <--- BARIS INI SUDAH DIHAPUS
             className="mx-auto"
           />
         </div>

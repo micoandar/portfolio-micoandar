@@ -10,13 +10,22 @@ export default function AnimatedBorder({
   className?: string; 
 }) {
   return (
-    <div className={`relative overflow-hidden rounded-[24px] p-[1.5px] ${className}`}>
+    <div className={`relative overflow-hidden rounded-[24px] p-[2px] ${className}`}>
       
-      {/* Animasi Garis Berputar (Conic Gradient) */}
-      <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_60%,#818cf8_75%,#c084fc_90%,#e879f9_100%)]" />
+      {/* 
+        EFEK GLOW (BLUR)
+        Warna: Oranye (#f97316), Pink (#ec4899), Cyan (#38bdf8)
+      */}
+      <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_60%,#f97316_70%,#ec4899_75%,#38bdf8_80%,transparent_90%)] opacity-80 blur-md" />
       
+      {/* 
+        GARIS BORDER TAJAM (TANPA BLUR)
+        Membuat inti cahayanya terlihat jelas
+      */}
+      <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_60%,#f97316_70%,#ec4899_75%,#38bdf8_80%,transparent_90%)]" />
+
       {/* Konten di dalamnya */}
-      <div className="relative z-10 h-full w-full rounded-[22.5px] bg-white dark:bg-[#0f172a]">
+      <div className="relative z-10 h-full w-full rounded-[22px] bg-white dark:bg-[#0f172a]">
         {children}
       </div>
       

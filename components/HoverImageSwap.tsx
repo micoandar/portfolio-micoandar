@@ -22,8 +22,11 @@ export default function HoverImageSwap({
   imageScale = 1,
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isIdle, setIsIdle] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  
+  // State Machine untuk Idle Animation
+  // 'idle' = Gambar 1 | 'fadingIn' = Transisi ke Gambar 2 | 'visible' = Gambar 2 | 'fadingOut' = Transisi ke Gambar 1
+  const [idleState, setIdleState] = useState<'idle' | 'fadingIn' | 'visible' | 'fadingOut'>('idle');
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -42,27 +45,32 @@ export default function HoverImageSwap({
     )
   `;
 
-  // --- LOGIKA IDLE LOOPING ---
+  // --- LOGIKA IDLE LOOPING (STATE MACHINE) ---
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
     if (isHovered) {
-      setIsIdle(false);
+      // Jika mouse masuk, reset state ke idle (berhenti animasi)
+      setIdleState('idle');
       return;
     }
 
-    if (isIdle) {
-      timeout = setTimeout(() => {
-        setIsIdle(false);
-      }, 3000); // 3 detik fade out
-    } else {
-      timeout = setTimeout(() => {
-        setIsIdle(true);
-      }, 5000); // 5 detik fade in
+    if (idleState === 'idle') {
+      // Gambar 1 diam selama 5 detik
+      timeout = setTimeout(() => setIdleState('fadingIn'), 5000);
+    } else if (idleState === 'fadingIn') {
+      // Durasi fade in 0.8 detik, setelah itu Visible
+      timeout = setTimeout(() => setIdleState('visible'), 800);
+    } else if (idleState === 'visible') {
+      // Gambar 2 diam selama 3 detik
+      timeout = setTimeout(() => setIdleState('fadingOut'), 3000);
+    } else if (idleState === 'fadingOut') {
+      // Durasi fade out 2 detik, setelah itu kembali ke Idle
+      timeout = setTimeout(() => setIdleState('idle'), 2000);
     }
 
     return () => clearTimeout(timeout);
-  }, [isHovered, isIdle]);
+  }, [isHovered, idleState]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -88,11 +96,22 @@ export default function HoverImageSwap({
     setIsHovered(false);
   };
 
-  // Logika Transisi
-  const imageBOpacity = (isIdle || isHovered) ? 1 : 0;
-  const opacityDuration = isHovered 
-    ? 0.2 // Jika hover, transisi cepat
-    : (isIdle ? 0.8 : 0); // Jika Idle, fade smooth 0.8s. Jika lepas hover, langsung hilang (0)
+  // Tentukan Opacity berdasarkan state
+  let opacity = 0;
+  if (isHovered || idleState === 'fadingIn' || idleState === 'visible') {
+    opacity = 1;
+  } else if (idleState === 'fadingOut') {
+    opacity = 0; // Memicu Fade Out 2 Detik
+  }
+
+  // Tentukan Durasi berdasarkan state
+  let duration = 0;
+  if (!isHovered) {
+    if (idleState === 'fadingIn') duration = 0.8;
+    if (idleState === 'fadingOut') duration = 2.0; // <--- 2 DETIK FADE OUT
+  } else {
+    duration = 0; // Saat disentuh, transisi instan
+  }
 
   return (
     <div
@@ -126,8 +145,8 @@ export default function HoverImageSwap({
           WebkitMaskImage: isHovered ? maskImage : "none",
           willChange: "mask-image, opacity"
         }}
-        animate={{ opacity: imageBOpacity }}
-        transition={{ duration: opacityDuration, ease: "easeInOut" }}
+        animate={{ opacity }}
+        transition={{ duration, ease: "easeInOut" }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <div 

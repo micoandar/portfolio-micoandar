@@ -14,13 +14,12 @@ export default function About() {
   return (
     <Section id="tentang" title="About Me">
       {/* 
-        -mt-24 lg:-mt-48 menarik seluruh konten lebih tinggi lagi mendekati judul.
-        items-start membuat teks mulai dari atas sejajar dengan gambar.
+        -mt-32 lg:-mt-64 menarik konten sangat tinggi mendekati judul.
       */}
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr_1fr] lg:items-start lg:gap-8 -mt-24 lg:-mt-48">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr_1fr] lg:items-start lg:gap-8 -mt-32 lg:-mt-64">
         
         {/* KIRI: Teks Sapaan */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 lg:pt-24">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 lg:pt-32">
           <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
             <span className="text-blue-500">Hi, I'm</span> <br />
             <span className="text-slate-900 dark:text-white">
@@ -54,7 +53,7 @@ export default function About() {
         </div>
 
         {/* KANAN: Deskripsi & Tombol */}
-        <div className="flex flex-col justify-start gap-6 z-10 lg:pt-24">
+        <div className="flex flex-col justify-start gap-6 z-10 lg:pt-32">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}
           </p>

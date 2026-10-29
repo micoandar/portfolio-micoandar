@@ -4,8 +4,7 @@ import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "next-themes";
-import BorderGlow from "@/components/BorderGlow";
+import AnimatedBorder from "@/components/AnimatedBorder"; // <-- Import
 
 const categoryStyle: Record<Project["category"], string> = {
   Web: "bg-sky-50 text-sky-700 border-sky-100 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-800",
@@ -27,22 +26,10 @@ export default function ProjectCard({
   index: number;
 }) {
   const { lang } = useLanguage();
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
 
   return (
-    <BorderGlow
-      backgroundColor={isDark ? "#0f172a" : "#ffffff"}
-      borderRadius={24}
-      className="h-full"
-      glowColor="40 80 80"
-      colors={['#818cf8', '#c084fc', '#38bdf8']}
-      glowIntensity={2.0} // Glow lebih terang
-      glowRadius={50}     // Area glow lebih lebar
-      edgeSensitivity={20} // Glow lebih mudah muncul
-    >
-      {/* Tambahan border statis agar selalu terlihat */}
-      <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 dark:border-slate-800">
+    <AnimatedBorder className="h-full">
+      <article className="group flex h-full flex-col overflow-hidden rounded-[22px]">
         
         <div className={`relative h-44 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-5 sm:h-56 sm:p-6`}>
           <Image
@@ -107,6 +94,6 @@ export default function ProjectCard({
           </div>
         </div>
       </article>
-    </BorderGlow>
+    </AnimatedBorder>
   );
 }

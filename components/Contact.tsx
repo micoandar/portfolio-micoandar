@@ -5,13 +5,10 @@ import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { profile } from "@/data/profile";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "next-themes";
-import BorderGlow from "@/components/BorderGlow";
+import AnimatedBorder from "@/components/AnimatedBorder"; // <-- Import
 
 export default function Contact() {
   const { lang } = useLanguage();
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
 
   const contacts = [
     {
@@ -90,17 +87,8 @@ export default function Contact() {
                 rel="noreferrer"
                 className="group flex h-full flex-col justify-between"
               >
-                <BorderGlow
-                  backgroundColor={isDark ? "#0f172a" : "#ffffff"}
-                  borderRadius={24}
-                  className="h-full w-full"
-                  glowColor="140 80 60"
-                  colors={['#34d399', '#3b82f6', '#818cf8']}
-                  glowIntensity={2.0}
-                  glowRadius={50}
-                  edgeSensitivity={20}
-                >
-                  <div className="flex h-full flex-col justify-between p-6 rounded-[24px] border border-slate-200 dark:border-slate-800">
+                <AnimatedBorder className="h-full w-full">
+                  <div className="flex h-full flex-col justify-between p-6 rounded-[22px]">
                     <div className={`grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br ${c.accent} text-white shadow-md`}>
                       <c.icon size={18} />
                     </div>
@@ -113,7 +101,7 @@ export default function Contact() {
                       </p>
                     </div>
                   </div>
-                </BorderGlow>
+                </AnimatedBorder>
               </a>
             </Reveal>
           ))}

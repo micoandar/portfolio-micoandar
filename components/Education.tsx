@@ -5,8 +5,7 @@ import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "next-themes";
-import BorderGlow from "@/components/BorderGlow";
+import AnimatedBorder from "@/components/AnimatedBorder"; // <-- Import
 
 const education = [
   {
@@ -47,8 +46,6 @@ const education = [
 
 export default function Education() {
   const { lang } = useLanguage();
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
 
   return (
     <Section id="pendidikan" title="Education & Certifications" className="bg-white dark:bg-slate-950">
@@ -56,16 +53,8 @@ export default function Education() {
         <div className="space-y-5">
           {education.map((item, i) => (
             <Reveal key={item.school} delay={i * 100}>
-              <BorderGlow
-                backgroundColor={isDark ? "#0f172a" : "#f8fafc"}
-                borderRadius={24}
-                glowColor="270 80 70"
-                colors={['#a78bfa', '#c084fc', '#818cf8']}
-                glowIntensity={2.0}
-                glowRadius={50}
-                edgeSensitivity={20}
-              >
-                <div className="relative p-6 sm:p-7 rounded-[24px] border border-slate-200 dark:border-slate-800">
+              <AnimatedBorder>
+                <div className="relative p-6 sm:p-7 rounded-[22px]">
                   <div className="flex items-start gap-4">
                     <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/25">
                       <GraduationCap size={20} />
@@ -93,23 +82,15 @@ export default function Education() {
                     </div>
                   </div>
                 </div>
-              </BorderGlow>
+              </AnimatedBorder>
             </Reveal>
           ))}
         </div>
 
         <div className="space-y-6">
           <Reveal delay={120}>
-            <BorderGlow
-              backgroundColor={isDark ? "#0f172a" : "#ffffff"}
-              borderRadius={24}
-              glowColor="40 80 60"
-              colors={['#fbbf24', '#f59e0b', '#f97316']}
-              glowIntensity={2.0}
-              glowRadius={50}
-              edgeSensitivity={20}
-            >
-              <div className="p-6 sm:p-7 rounded-[24px] border border-slate-200 dark:border-slate-800">
+            <AnimatedBorder>
+              <div className="p-6 sm:p-7 rounded-[22px]">
                 <div className="mb-5 flex items-center gap-2.5">
                   <Award size={18} className="text-amber-500" />
                   <h3 className="font-bold text-slate-900 dark:text-white">
@@ -132,20 +113,12 @@ export default function Education() {
                   ))}
                 </ul>
               </div>
-            </BorderGlow>
+            </AnimatedBorder>
           </Reveal>
 
           <Reveal delay={200}>
-            <BorderGlow
-              backgroundColor={isDark ? "#0f172a" : "#ffffff"}
-              borderRadius={24}
-              glowColor="200 80 60"
-              colors={['#38bdf8', '#0ea5e9', '#6366f1']}
-              glowIntensity={2.0}
-              glowRadius={50}
-              edgeSensitivity={20}
-            >
-              <div className="p-6 sm:p-7 rounded-[24px] border border-slate-200 dark:border-slate-800">
+            <AnimatedBorder>
+              <div className="p-6 sm:p-7 rounded-[22px]">
                 <div className="mb-5 flex items-center gap-2.5">
                   <BookOpen size={18} className="text-sky-500" />
                   <h3 className="font-bold text-slate-900 dark:text-white">
@@ -168,7 +141,7 @@ export default function Education() {
                   ))}
                 </ul>
               </div>
-            </BorderGlow>
+            </AnimatedBorder>
           </Reveal>
         </div>
       </div>

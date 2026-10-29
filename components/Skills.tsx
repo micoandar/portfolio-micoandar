@@ -9,8 +9,7 @@ import Reveal from "@/components/Reveal";
 import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
-import { useTheme } from "next-themes";
-import BorderGlow from "@/components/BorderGlow";
+import AnimatedBorder from "@/components/AnimatedBorder"; // <-- Import
 
 const iconMap = {
   braces: Braces, layout: LayoutTemplate, server: Server, brain: Brain,
@@ -46,8 +45,6 @@ function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
 
 export default function Skills() {
   const { lang } = useLanguage();
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
 
   return (
     <Section id="keahlian" title="Skills">
@@ -56,17 +53,8 @@ export default function Skills() {
           const Icon = iconMap[group.icon as keyof typeof iconMap];
           return (
             <Reveal key={group.title.id} delay={i * 60} className="h-full">
-              <BorderGlow
-                backgroundColor={isDark ? "#0f172a" : "#ffffff"}
-                borderRadius={24}
-                className="h-full"
-                glowColor="200 80 60"
-                colors={['#38bdf8', '#818cf8', '#c084fc']}
-                glowIntensity={2.0}
-                glowRadius={50}
-                edgeSensitivity={20}
-              >
-                <div className="flex h-full flex-col p-5 sm:p-6 rounded-[24px] border border-slate-200 dark:border-slate-800">
+              <AnimatedBorder className="h-full">
+                <div className="flex h-full flex-col p-5 sm:p-6 rounded-[22px]">
                   <div className="flex items-center gap-3">
                     <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-md sm:h-11 sm:w-11`}>
                       <Icon size={18} />
@@ -97,7 +85,7 @@ export default function Skills() {
                     ))}
                   </ul>
                 </div>
-              </BorderGlow>
+              </AnimatedBorder>
             </Reveal>
           );
         })}

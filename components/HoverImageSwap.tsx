@@ -10,6 +10,7 @@ interface HoverImageSwapProps {
   className?: string;
   objectFit?: "cover" | "contain";
   radius?: number;
+  scale?: number; // Prop untuk memperbesar gambar kedua
 }
 
 export default function HoverImageSwap({
@@ -18,28 +19,24 @@ export default function HoverImageSwap({
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
   radius = 120,
+  scale = 1.15, // Gambar 2 diperbesar 15% secara default
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Posisi kursor
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
-  // Radius sorot
   const maskRadius = useMotionValue(0);
 
-  // Spring Physics agar gerakan tidak kaku
   const springConfig = { stiffness: 120, damping: 25, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // Menggunakan radial-gradient dengan area solid yang sangat lebar (85%).
-  // Hanya 15% bagian terluar yang memudar, sehingga gambar 1 benar-benar tertutup di tengah.
+  // Mask 95% solid, hanya 5% pinggir terluar yang memudar (mencegah tembus pandang)
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 85%, 
+      black 95%, 
       transparent 100%
     )
   `;
@@ -71,7 +68,7 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A */}
+      {/* LAYER 1: Foto A (Original) */}
       <Image
         src={imageA}
         alt="Photo A"
@@ -81,24 +78,32 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Masking Tegas) */}
+      {/* LAYER 2: Foto B (Masking + Diperbesar) */}
       <motion.div
         style={{ 
           maskImage, 
           WebkitMaskImage: maskImage,
           willChange: "mask-image"
         }}
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-hidden"
       >
-        <Image
-          src={imageB}
-          alt="Photo B"
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, 50vw"
-          // object-cover dan object-center memastikan posisi sejajar 100% dengan gambar A
-          className={`object-${objectFit} object-center`}
-        />
+        {/* Div ini berfungsi untuk memperbesar gambar tanpa merusak mask */}
+        <div 
+          className="relative w-full h-full"
+          style={{ 
+            transform: `scale(${scale})`, 
+            transformOrigin: "center center" 
+          }}
+        >
+          <Image
+            src={imageB}
+            alt="Photo B"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className={`object-${objectFit} object-center`}
+          />
+        </div>
       </motion.div>
     </div>
   );

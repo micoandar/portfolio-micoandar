@@ -1,16 +1,9 @@
 "use client";
 
-import { 
-  Code2, 
-  Server, 
-  Cloud, 
-  Cpu, 
-  Layers, 
-  Smartphone 
-} from "lucide-react";
+import { useRef } from "react";
+import Image from "next/image";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
-import Reveal from "@/components/Reveal";
-import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -18,81 +11,109 @@ export default function About() {
   const { lang } = useLanguage();
   const t = translations[lang].about;
 
-  // Mapping ikon untuk 5 services
-  const serviceIcons = [
-    <Server key="server" size={20} />,      // Full-Stack
-    <Code2 key="code" size={20} />,         // Frontend
-    <Cpu key="cpu" size={20} />,            // AI
-    <Smartphone key="mobile" size={20} />,  // Android
-    <Cloud key="cloud" size={20} />         // DevOps
-  ];
+  // Setup Motion Value untuk mendeteksi posisi mouse
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Spring untuk membuat gerakan lebih halus (smooth)
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  // Rotasi 3D untuk container utama
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  // Parallax translasi untuk Background (jbwkz.png)
+  const bgX = useTransform(mouseXSpring, [-0.5, 0.5], ["-15%", "15%"]);
+  const bgY = useTransform(mouseYSpring, [-0.5, 0.5], ["-15%", "15%"]);
+
+  // Parallax translasi untuk Foreground (My-photo.png)
+  const fgX = useTransform(mouseXSpring, [-0.5, 0.5], ["15%", "-15%"]);
+  const fgY = useTransform(mouseYSpring, [-0.5, 0.5], ["15%", "-15%"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Normalisasi posisi mouse dari -0.5 sampai 0.5
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    // Kembalikan ke tengah saat mouse keluar
+    x.set(0);
+    y.set(0);
+  };
 
   return (
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
+      <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
         
-        {/* BARIS 1: Bio (Full Width dengan Gradasi) */}
-        <Reveal className="md:col-span-12">
-          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-slate-50 to-brand-50/60 p-7 shadow-sm dark:border-slate-800 dark:from-slate-900 dark:via-slate-900/80 dark:to-brand-950/30 sm:p-10">
-            
-            {/* Efek Pendaran Cahaya (Glow) di Latar Belakang */}
-            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-400/10 blur-[80px] dark:bg-brand-500/5" />
-            <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-sky-400/10 blur-[80px] dark:bg-sky-500/5" />
+        {/* KIRI: Interactive 3D Parallax Portrait */}
+        <div
+          className="relative flex justify-center perspective-[1000px]"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          <motion.div
+            style={{ 
+              rotateX, 
+              rotateY, 
+              transformStyle: "preserve-3d" 
+            }}
+            className="relative w-full max-w-[450px] aspect-[4/5] rounded-3xl"
+          >
+            {/* Layer Belakang (jbwkz.png) */}
+            <motion.div
+              style={{ 
+                x: bgX, 
+                y: bgY, 
+                transform: "translateZ(-50px) scale(1.1)" 
+              }}
+              className="absolute inset-0 overflow-hidden rounded-3xl bg-slate-200 dark:bg-slate-800 shadow-xl"
+            >
+              <Image
+                src="/images/jbwkz.png"
+                alt="Background Layer"
+                fill
+                className="object-cover opacity-90"
+              />
+            </motion.div>
 
-            {/* Konten Teks */}
-            <div className="relative z-10">
-              <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300 sm:text-xl">
-                {t.desc}
-              </p>
-              <p className="mt-5 text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
-                {t.closing}
-              </p>
-            </div>
-          </div>
-        </Reveal>
+            {/* Layer Depan (My-photo.png) */}
+            <motion.div
+              style={{ 
+                x: fgX, 
+                y: fgY, 
+                transform: "translateZ(40px)" 
+              }}
+              className="absolute inset-0 flex items-end justify-center"
+            >
+              <Image
+                src="/images/My-photo.png"
+                alt="Micoandar Portrait"
+                width={500}
+                height={600}
+                className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-3xl"
+              />
+            </motion.div>
+          </motion.div>
+        </div>
 
-        {/* BARIS 2: 5 Services + 1 Soft Skills (Grid 3x2) */}
-        
-        {/* 5 Services */}
-        {t.services.map((item, i) => (
-          <Reveal key={item.title} delay={100 + i * 50} className="md:col-span-4">
-            <div className="group h-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-slate-700">
-              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-brand-100 group-hover:text-brand-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-brand-900/50 dark:group-hover:text-brand-400">
-                {serviceIcons[i]}
-              </div>
-              <h4 className="text-base font-bold text-slate-900 dark:text-white">
-                {item.title}
-              </h4>
-              <p className="mt-2.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                {item.desc}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-
-        {/* Kotak Soft Skills */}
-        <Reveal delay={400} className="md:col-span-4">
-          <div className="group h-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-slate-700">
-            <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-brand-100 group-hover:text-brand-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-brand-900/50 dark:group-hover:text-brand-400">
-              <Layers size={20} />
-            </div>
-            <h4 className="text-base font-bold text-slate-900 dark:text-white">
-              Soft Skills
-            </h4>
-            
-            {/* Container untuk Tag */}
-            <div className="mt-4 flex flex-wrap gap-2">
-              {profile.softSkills[lang].map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-[11px] font-semibold text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+        {/* KANAN: Deskripsi About Me */}
+        <div className="flex flex-col justify-center gap-6 lg:pl-10">
+          <div className="h-1 w-20 rounded-full bg-brand-500 mb-2" />
+          <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300 sm:text-xl">
+            {t.desc}
+          </p>
+        </div>
 
       </div>
     </Section>

@@ -17,7 +17,6 @@ export default function Hero() {
 
   const roles = profile.roles[lang];
 
-  // Deteksi layar HP untuk menyesuaikan ukuran Lanyard
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -43,24 +42,18 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      // flex-col untuk mobile agar menumpuk, lg:block untuk desktop agar Lanyard bisa absolute di kanan
       className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white lg:block"
     >
-      {/* Background Pattern & Glow (TIDAK DIUBAH) */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
         <div className="absolute -left-24 top-10 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-brand-300/30 blur-[100px] dark:bg-brand-900/20" />
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
-      {/* KONTEN TEKS (TIDAK DIUBAH) */}
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 px-5 sm:px-8 lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14 pointer-events-none">
         
-        {/* Kolom Kiri: Teks & Tombol */}
         <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">
           
-          {/* Gradient Overlay dihapus karena teks dan lanyard sudah tidak bertabrakan di HP */}
-
           <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -72,7 +65,7 @@ export default function Hero() {
           <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />
             <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
-              Micoandar.
+              {t.name}
             </span>
           </h1>
 
@@ -83,7 +76,7 @@ export default function Hero() {
           </div>
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
-            {profile.summary[lang]}
+            {t.summary}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -152,15 +145,9 @@ export default function Hero() {
           </div>
         </div>
         
-        {/* Kolom Kanan Kosong (Pembagi Grid) */}
         <div className="hidden lg:block pointer-events-none"></div>
       </div>
 
-      {/* 
-        LANYARD CONTAINER 
-        - Di Mobile: relative, berada di bawah teks (h-[500px]).
-        - Di Desktop: absolute inset-0, PERSIS seperti kode aslimu (di background).
-      */}
       <div className="relative mt-8 h-[500px] w-full sm:h-[600px] lg:absolute lg:inset-0 lg:mt-0 lg:h-full lg:w-full z-0 pointer-events-none">
         <div className="w-full h-full pointer-events-auto">
           <Lanyard 

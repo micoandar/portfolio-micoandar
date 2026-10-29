@@ -10,40 +10,20 @@ export const translations = {
     },
     hero: {
       status: "Terbuka untuk peluang kerja",
-      greeting: "Hai, saya",
+      greeting: "Welcome to",
+      name: "My Portfolio.",
       viewProjects: "Lihat Proyek",
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
+      // Deskripsi Hero Baru
+      summary: "Berawal dari rasa ingin tahu terhadap teknologi, kini berkembang menjadi passion di bidang software development. Saya senang bereksperimen dengan kode, mengeksplorasi teknologi baru, dan mengubah ide menjadi aplikasi yang nyata. Mulai dari membangun antarmuka web yang responsif, mengembangkan backend dan REST API, hingga merancang sistem yang fungsional, saya selalu berusaha menciptakan aplikasi yang tidak hanya menarik secara visual, tetapi juga nyaman digunakan dan memberikan solusi bagi penggunanya.",
     },
     about: {
       eyebrow: "Tentang Saya",
-      title: "Membangun Solusi Perangkat Lunak yang Fungsional",
-      desc: "Saya menikmati proses mengembangkan aplikasi dari awal hingga siap digunakan, mulai dari merancang database, membangun REST API, mengembangkan antarmuka yang responsif, hingga mengintegrasikan berbagai fitur dan melakukan deployment.",
-      services: [
-        { 
-          title: "Full-Stack Development", 
-          desc: "Membangun aplikasi web menggunakan PHP, JavaScript, HTML, CSS, dan Node.js, termasuk pengembangan backend, REST API, serta integrasi database MySQL." 
-        },
-        { 
-          title: "Frontend Development", 
-          desc: "Mengembangkan antarmuka web yang responsif dan interaktif dengan HTML, CSS, JavaScript, serta React.js dan Tailwind CSS." 
-        },
-        { 
-          title: "AI & Computer Vision", 
-          desc: "Melatih dan mengevaluasi model YOLO untuk deteksi objek, serta mengintegrasikan TensorFlow Lite ke dalam aplikasi web dan Android berbasis Kotlin." 
-        },
-        { 
-          title: "Android Development", 
-          desc: "Mengembangkan aplikasi Android menggunakan Kotlin, Android Studio, Firebase, dan integrasi API untuk mendukung fitur aplikasi." 
-        }, 
-        { 
-          title: "DevOps & Deploy", 
-          desc: "Melakukan deployment aplikasi web menggunakan Vercel dan Railway, serta menggunakan Docker untuk konsistensi environment." 
-        },
-      ],
-      // Kalimat terakhir dihapus
-      closing: "Saya memiliki minat pada Full-Stack Development dan pengembangan sistem berbasis AI. Melalui proyek akademik dan mandiri, saya terbiasa menggunakan PHP, JavaScript, Python, dan Kotlin. Dalam siklus pengembangan perangkat lunak (SDLC), saya terbiasa menerapkan metodologi Waterfall yang menekankan pendekatan sekuensial dan terstruktur — mulai dari analisis kebutuhan, desain sistem, implementasi, pengujian, hingga pemeliharaan secara bertahap.",
+      title: "About Me",
+      // Deskripsi About Me Baru
+      desc: "Fresh Graduate S1 Informatika Universitas Gunadarma (2026) dengan pengalaman proyek hampir 2 tahun dalam rekayasa perangkat lunak. Berfokus pada pengembangan aplikasi web full-stack end-to-end, mulai dari perancangan arsitektur database, pembangunan REST API yang aman, antarmuka responsif, hingga deployment ke cloud.",
     },
     projects: {
       eyebrow: "Portofolio",
@@ -89,40 +69,18 @@ export const translations = {
     },
     hero: {
       status: "Open to work",
-      greeting: "Hi, I'm",
+      greeting: "Welcome to",
+      name: "My Portfolio.",
       viewProjects: "View Projects",
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
+      summary: "Starting from a curiosity about technology, it has now grown into a passion for software development. I enjoy experimenting with code, exploring new technologies, and turning ideas into real applications. From building responsive web interfaces, developing backends and REST APIs, to designing functional systems, I always strive to create applications that are not only visually appealing but also comfortable to use and provide solutions for their users.",
     },
     about: {
       eyebrow: "About Me",
-      title: "Building Functional Software Solutions",
-      desc: "I enjoy the process of developing applications from scratch until ready to use, from designing databases, building REST APIs, developing responsive interfaces, to integrating various features and deployment.",
-      services: [
-        { 
-          title: "Full-Stack Development", 
-          desc: "Building web applications using PHP, JavaScript, HTML, CSS, and Node.js, including backend development, REST APIs, and MySQL/MariaDB integration." 
-        },
-        { 
-          title: "Frontend Development", 
-          desc: "Developing responsive and interactive web interfaces with HTML, CSS, JavaScript, React.js, and Tailwind CSS." 
-        },
-        { 
-          title: "AI & Computer Vision", 
-          desc: "Training and evaluating YOLO models for object detection, and integrating TensorFlow Lite into Kotlin-based web and Android applications." 
-        },
-        { 
-          title: "Android Development", 
-          desc: "Developing Android applications using Kotlin, Android Studio, Firebase, and API integration to support app features." 
-        },
-        { 
-          title: "DevOps & Deploy", 
-          desc: "Deploying web applications using Vercel and Railway, and utilizing Docker for environment consistency." 
-        },
-      ],
-      // Kalimat terakhir dihapus
-      closing: "I have a strong interest in Full-Stack Development and AI-based systems. Through academic and independent projects, I am accustomed to using PHP, JavaScript, Python, and Kotlin. In the Software Development Life Cycle (SDLC), I am accustomed to applying the Waterfall methodology which emphasizes a sequential and structured approach — from requirements analysis, system design, implementation, testing, to maintenance in stages.",
+      title: "About Me",
+      desc: "Informatics Graduate from Gunadarma University (2026) with nearly 2 years of experience in software engineering. Focused on end-to-end full-stack web application development, from database architecture design, secure REST API development, responsive interfaces, to cloud deployment.",
     },
     projects: {
       eyebrow: "Portfolio",

@@ -12,55 +12,62 @@ export default function About() {
   const t = translations[lang].about;
 
   return (
-    // ID "tentang" memastikan Navbar About berfungsi
     <Section id="tentang">
+      {/* JUDUL BESAR DI TENGAH ATAS */}
+      <div className="mb-16 text-center lg:mb-24">
+        <h2 className="text-5xl font-black tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
+          About Me
+        </h2>
+      </div>
+
+      {/* GRID 3 KOLOM */}
       <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8">
         
-        {/* KIRI: Teks Sapaan */}
+        {/* ================= KIRI: Teks Sapaan ================= */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
           <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
-            <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
-              Hi, I'm
-            </span> <br />
+            <span className="text-blue-500">Hi, I'm</span> <br />
             <span className="text-slate-900 dark:text-white">
-              Micoandar <br className="hidden lg:block"/> 
-              Justinus Marbun
+              Micoandar <br /> 
+              Justinus <br />
+              Marbun
             </span>
           </h1>
           
           <a
             href={`mailto:${profile.email}`}
-            className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/30 transition-all hover:-translate-y-1 hover:bg-brand-700 hover:shadow-brand-500/50"
+            className="mt-10 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 hover:bg-blue-600 hover:shadow-blue-500/50"
           >
             <Mail size={18} />
             Hubungi Saya
           </a>
         </div>
 
-        {/* TENGAH: Foto Interaktif (Diperbesar & Lebih Tinggi) */}
+        {/* ================= TENGAH: Foto Interaktif ================= */}
         <div className="relative flex justify-center w-full mx-auto z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-brand-200/50 dark:border-brand-800/50 bg-gradient-to-br from-brand-500/10 to-transparent blur-sm -z-10" />
+          {/* Glow di belakang foto */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
           <HoverImageSwap
             imageA="/images/My-photo.png"
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            // Tinggi gambar dibuat spesifik agar lebih tinggi dari teks
-            className="relative w-full max-w-[450px] h-[500px] lg:h-[650px] rounded-3xl overflow-hidden"
+            // Foto dibuat sangat tinggi agar dominan seperti di contoh
+            className="relative w-full max-w-[450px] h-[600px] lg:h-[750px]"
           />
         </div>
 
-        {/* KANAN: Deskripsi */}
+        {/* ================= KANAN: Deskripsi & Tombol ================= */}
         <div className="flex flex-col justify-center gap-6 z-10">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}
           </p>
 
-          <div className="mt-2">
+          <div className="mt-4">
             <a
               href="#proyek"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-500/30 bg-brand-500/10 px-6 py-3 text-sm font-semibold text-brand-600 transition-all hover:-translate-y-1 hover:bg-brand-500/20 dark:text-brand-400"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-blue-500/30 bg-blue-500/5 px-8 py-4 text-sm font-semibold text-blue-600 transition-all hover:-translate-y-1 hover:bg-blue-500/10 dark:text-blue-400"
             >
               <ArrowUpRight size={18} />
               Lihat Proyek

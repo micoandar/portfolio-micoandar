@@ -1,7 +1,7 @@
 "use client";
 
 import Section from "@/components/ui/Section";
-import InteractivePhotoScene from "@/components/InteractivePhotoScene";
+import HoverImageSwap from "@/components/HoverImageSwap";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -13,14 +13,15 @@ export default function About() {
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
       <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
         
-        {/* KIRI: Interactive 3D Scene */}
-        <div className="relative w-full flex justify-center">
-          <InteractivePhotoScene 
-            intensity={25}       // Seberapa jauh pergeseran parallax
-            rotationLimit={6}    // Batas rotasi agar wajah tidak terlalu miring
-            springStiffness={120} // Kekakuan pegas
-            springDamping={25}    // Redaman agar tidak memantul berlebihan
-            scaleDepth={1.02}     // Skala gambar depan
+        {/* KIRI: Image Hover Swap */}
+        <div className="relative w-full max-w-[450px] mx-auto">
+          <HoverImageSwap
+            // Menggunakan gambar yang sudah kamu siapkan
+            imageA="/images/My-photo.png"
+            imageB="/images/jbwkz.png"
+            duration={0.45} 
+            objectFit="cover" // Menggunakan cover agar memenuhi frame
+            className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl"
           />
         </div>
 

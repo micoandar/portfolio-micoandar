@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Menu, X, Languages, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -11,6 +11,9 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   
+  // Ref untuk mencegah Scroll Spy berjalan saat user baru saja klik menu
+  const isClicking = useRef(false);
+
   const { lang, toggle: toggleLang } = useLanguage();
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -27,6 +30,9 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Jika user baru saja mengklik menu, abaikan Scroll Spy sementara
+      if (isClicking.current) return;
+
       const scrollPosition = window.scrollY + 250;
       let currentId = "beranda";
 
@@ -48,6 +54,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Fungsi khusus saat menu diklik
+  const handleNavClick = (index: number) => {
+    setActiveIndex(index);
+    isClicking.current = true; // Matikan scroll spy sementara
+    
+    // Nyalakan kembali scroll spy setelah 1 detik (saat smooth scroll selesai)
+    setTimeout(() => {
+      isClicking.current = false;
+    }, 1000);
+  };
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -62,11 +79,9 @@ export default function Navbar() {
           <GooeyNav
             items={links}
             activeIndex={activeIndex}
-            onChange={(index) => setActiveIndex(index)}
+            onChange={handleNavClick} // <-- Menggunakan fungsi handleNavClick
             theme={resolvedTheme === "dark" ? "dark" : "light"}
-            // Hitam di mode terang, Putih di mode gelap
             color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
-            // Teks otomatis menyesuaikan kontras oleh library
             size="sm"
             frame={false}
             particleCount={12}
@@ -116,7 +131,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => {
                     setOpen(false);
-                    setActiveIndex(index);
+                    handleNavClick(index); // <-- Update handle di Mobile Menu
                   }}
                   className={`block rounded-xl px-4 py-3 text-sm font-medium transition ${
                     activeIndex === index

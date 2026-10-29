@@ -1,29 +1,28 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
+// import About from "@/components/About"; <-- Dihapus
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
-import MusicPlayer from "@/components/MusicPlayer"; // <-- Tambahkan ini
+import MusicPlayer from "@/components/MusicPlayer";
 
 export default function Home() {
   return (
     <main className="relative overflow-x-hidden">
       <Navbar />
       <Hero />
-      <About />
+      {/* <About /> <-- Dihapus */}
       <Projects />
       <Skills />
       <Education />
       <Contact />
       <Footer />
       
-      {/* Tombol Mengapung */}
       <BackToTop />
-      <MusicPlayer /> {/* <-- Letakkan di sini */}
+      <MusicPlayer />
     </main>
   );
 }

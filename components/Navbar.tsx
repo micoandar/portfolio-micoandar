@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Menu, X, Languages, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { profile } from "@/data/profile";
-import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
@@ -16,14 +15,13 @@ export default function Navbar() {
   
   const { lang, toggle: toggleLang } = useLanguage();
   const { theme, setTheme } = useTheme();
-  const t = translations[lang].nav;
 
+  // Menu permanen dalam Bahasa Inggris
   const links = [
-    { href: "#tentang", label: t.about },
-    { href: "#proyek", label: t.projects },
-    { href: "#keahlian", label: t.skills },
-    { href: "#pendidikan", label: t.education },
-    { href: "#kontak", label: t.contact },
+    { href: "#proyek", label: "Projects" },
+    { href: "#keahlian", label: "Skills" },
+    { href: "#pendidikan", label: "Education" },
+    { href: "#kontak", label: "Contact" },
   ];
 
   useEffect(() => setMounted(true), []);
@@ -96,11 +94,12 @@ export default function Navbar() {
             {lang === "id" ? "ID" : "EN"}
           </button>
 
+          {/* CTA Button English */}
           <a
             href={`mailto:${profile.email}`}
             className="hidden rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 md:inline-block"
           >
-            {t.cta}
+            Get in touch
           </a>
 
           <button
@@ -114,7 +113,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <div
         className={cn(
           "overflow-hidden border-t border-slate-200/70 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-slate-800 dark:bg-slate-950/95 md:hidden",
@@ -139,7 +138,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-1 block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white dark:bg-white dark:text-slate-900"
             >
-              {t.cta}
+              Get in touch
             </a>
           </li>
         </ul>

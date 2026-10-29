@@ -103,14 +103,11 @@ export default function HoverImageSwap({
     duration = 0; 
   }
 
-  // --- PERBAIKAN OUTLINE KONTUR (WARNA GELAP) ---
+  // --- OUTLINE DIHAPUS, DIGANTI DENGAN SOFT SHADOW YANG MENYATU ---
   const outlineStyle = {
     filter: `
-      drop-shadow(1px 0 0 #1e293b) 
-      drop-shadow(-1px 0 0 #1e293b) 
-      drop-shadow(0 1px 0 #1e293b) 
-      drop-shadow(0 -1px 0 #1e293b) 
-      drop-shadow(0 15px 20px rgba(0,0,0,0.15))
+      drop-shadow(0 10px 25px rgba(0,0,0,0.15)) 
+      drop-shadow(0 4px 10px rgba(0,0,0,0.1))
     `
   };
 

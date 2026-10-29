@@ -13,7 +13,7 @@ export default function Contact() {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
 
-  // DATA CONTACTS LENGKAP
+  // PERBAIKAN: Variabel 'contacts' didefinisikan dengan lengkap di sini
   const contacts = [
     {
       label: "WhatsApp",
@@ -83,6 +83,7 @@ export default function Contact() {
         </Reveal>
 
         <div className="grid gap-4 sm:grid-cols-2">
+          {/* Mapping contacts di sini */}
           {contacts.map((c, i) => (
             <Reveal key={c.label} delay={i * 80}>
               <a

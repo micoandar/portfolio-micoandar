@@ -13,7 +13,6 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* Jarak pt-8 agar kotak tidak menutupi judul */}
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-8 pt-8">
         
         {/* KIRI: Teks Sapaan */}
@@ -36,7 +35,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Efek Halftone Reveal dengan Warna Referensi */}
+        {/* TENGAH: Efek Halftone Reveal (Versi Lembut) */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
@@ -45,13 +44,16 @@ export default function About() {
               src="/images/My-photo.png"
               mode="mono"
               shape="dot"
-              cellSize={6}
+              // Memperbesar ukuran titik agar tidak terlalu rapat (mengurangi pusing)
+              cellSize={10} 
+              dotScale={0.7} 
               angle={45}
-              // MENGIKUTI WARNA DARI FILE DOKUMENTASI
-              inkColor="#f4f1ea" 
-              paperColor="#120f17" 
-              revealRadius={150} 
-              softness={0.5}
+              // Warna Indigo lembut (brand color) dan background abu-abu sangat muda
+              inkColor="#6366f1" 
+              paperColor="#f8fafc" 
+              // Area sorot lebih lebar agar gerakan lebih tenang
+              revealRadius={200} 
+              softness={0.8}
               clickBurst={true} 
               className="w-full h-full"
             />

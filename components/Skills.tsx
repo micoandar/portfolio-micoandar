@@ -1,51 +1,23 @@
 "use client";
 
 import {
-  Brain,
-  Braces,
-  Cloud,
-  Database,
-  LayoutTemplate,
-  Server,
-  Shield,
-  Smartphone,
-  Globe,
-  Eye,
-  ScanEye,
-  Lock,
-  Key,
-  UserCheck,
-  ShieldCheck,
+  Brain, Braces, Cloud, Database, LayoutTemplate, Server, Shield, Smartphone,
+  Globe, Eye, ScanEye, Lock, Key, UserCheck, ShieldCheck,
 } from "lucide-react";
-import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 
 const iconMap = {
-  braces: Braces,
-  layout: LayoutTemplate,
-  server: Server,
-  brain: Brain,
-  smartphone: Smartphone,
-  database: Database,
-  shield: Shield,
-  cloud: Cloud,
+  braces: Braces, layout: LayoutTemplate, server: Server, brain: Brain,
+  smartphone: Smartphone, database: Database, shield: Shield, cloud: Cloud,
 } as const;
 
 const fallbackIconMap: Record<string, React.ElementType> = {
-  SQL: Database,
-  "AJAX / Fetch API": Globe,
-  "REST API": Globe,
-  Recharts: LayoutTemplate,
-  "Computer Vision": Eye,
-  "YOLO (v8/v11/26)": ScanEye,
-  Authentication: Key,
-  RBAC: UserCheck,
-  "CSRF Protection": ShieldCheck,
-  "Password Hashing": Lock,
-  "Cloud Deployment": Cloud,
+  SQL: Database, "AJAX / Fetch API": Globe, "REST API": Globe, Recharts: LayoutTemplate,
+  "Computer Vision": Eye, "YOLO (v8/v11/26)": ScanEye, Authentication: Key, RBAC: UserCheck,
+  "CSRF Protection": ShieldCheck, "Password Hashing": Lock, "Cloud Deployment": Cloud,
 };
 
 function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
@@ -73,49 +45,45 @@ export default function Skills() {
   const { lang } = useLanguage();
 
   return (
-    <Section id="keahlian" title="Skills">
-      <div className="grid gap-5 sm:grid-cols-2">
-        {skillGroups.map((group, i) => {
-          const Icon = iconMap[group.icon as keyof typeof iconMap];
-          return (
-            <Reveal key={group.title.id} delay={i * 60} className="h-full">
-              <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:shadow-lg hover:shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-md sm:h-11 sm:w-11`}
-                  >
-                    <Icon size={18} />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-900 dark:text-white sm:text-base">
-                      {group.title[lang]}
-                    </h3>
-                    <p className="text-[11px] text-slate-400 dark:text-slate-500 sm:text-xs">
-                      {group.items.length} technologies
-                    </p>
-                  </div>
+    <div id="keahlian" className="grid gap-5 sm:grid-cols-2">
+      {skillGroups.map((group, i) => {
+        const Icon = iconMap[group.icon as keyof typeof iconMap];
+        return (
+          <Reveal key={group.title.id} delay={i * 60} className="h-full">
+            <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:shadow-lg hover:shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+              <div className="flex items-center gap-3">
+                <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-md sm:h-11 sm:w-11`}>
+                  <Icon size={18} />
                 </div>
-
-                <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
-                  {group.items.map((skill) => (
-                    <li key={skill.name} className="flex items-start gap-3">
-                      <SkillIcon skill={skill} />
-                      <div>
-                        <p className="text-sm font-semibold leading-tight text-slate-800 dark:text-slate-200">
-                          {skill.name}
-                        </p>
-                        <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                          {skill.description[lang]}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white sm:text-base">
+                    {group.title[lang]}
+                  </h3>
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 sm:text-xs">
+                    {group.items.length} technologies
+                  </p>
+                </div>
               </div>
-            </Reveal>
-          );
-        })}
-      </div>
-    </Section>
+
+              <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+                {group.items.map((skill) => (
+                  <li key={skill.name} className="flex items-start gap-3">
+                    <SkillIcon skill={skill} />
+                    <div>
+                      <p className="text-sm font-semibold leading-tight text-slate-800 dark:text-slate-200">
+                        {skill.name}
+                      </p>
+                      <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                        {skill.description[lang]}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        );
+      })}
+    </div>
   );
 }

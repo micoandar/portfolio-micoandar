@@ -1,9 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
-import Education from "@/components/Education";
+import PortfolioTabs from "@/components/PortfolioTabs"; // <-- Import komponen baru
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -16,9 +14,10 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <Projects />
-        <Skills />
-        <Education />
+        
+        {/* Menggabungkan Projects, Skills, dan Education menjadi 1 Tab */}
+        <PortfolioTabs /> 
+        
         <Contact />
         <Footer />
       </main>

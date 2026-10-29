@@ -13,8 +13,8 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* Grid 3 Kolom */}
-      <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8 pt-10">
+      {/* Grid 3 Kolom dengan jarak yang wajar */}
+      <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8 pt-4">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -36,8 +36,8 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Raksasa (Mendominasi) */}
-        <div className="relative flex justify-center w-full mx-auto z-20 lg:-my-32">
+        {/* TENGAH: Foto Interaktif (Tinggi Pas, Tetap Dominan) */}
+        <div className="relative flex justify-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
           <HoverImageSwap
@@ -45,8 +45,8 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.8} // Skala diperbesar 80% (Sangat besar)
-            className="relative w-full h-[700px] lg:h-[1100px] overflow-visible"
+            imageScale={1.25} // Perbesar skala gambar agar proporsional
+            className="relative w-full h-[600px] lg:h-[800px]"
           />
         </div>
 

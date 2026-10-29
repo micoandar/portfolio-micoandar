@@ -98,7 +98,7 @@ export default function HoverImageSwap({
   return (
     <div
       ref={containerRef}
-      // MENGUBAH CURSOR-CROSSHAIR MENJADI CURSOR-DEFAULT
+      // MENGUBAH KURSOR JADI DEFAULT (PANAH BIASA)
       className={`group relative cursor-default ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

@@ -4,12 +4,10 @@ import { ArrowUpRight, Github, Linkedin, Mail, MapPin, MessageCircle } from "luc
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { profile } from "@/data/profile";
-import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Contact() {
   const { lang } = useLanguage();
-  const t = translations[lang].contact;
 
   const contacts = [
     {
@@ -43,13 +41,19 @@ export default function Contact() {
   ];
 
   return (
-    <Section id="kontak" eyebrow={t.eyebrow} title={t.title} description={t.desc}>
+    <Section id="kontak" title="Contact">
       <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
         <Reveal>
-          <div className="flex h-full flex-col justify-between rounded-3xl bg-gradient-to-br from-brand-600 via-violet-600 to-indigo-700 p-6 text-white shadow-xl shadow-brand-500/20 sm:p-8 dark:from-brand-800 dark:via-violet-900 dark:to-indigo-950">
+          <div className="flex h-full flex-col justify-between rounded-3xl bg-gradient-to-br from-brand-600 via-violet-600 to-indigo-700 p-6 text-white shadow-xl shadow-brand-500/20 dark:from-brand-800 dark:via-violet-900 dark:to-indigo-950 sm:p-8">
             <div>
-              <h3 className="text-xl font-bold leading-snug sm:text-2xl">{t.cardTitle}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-white/80">{t.cardDesc}</p>
+              <h3 className="text-xl font-bold leading-snug sm:text-2xl">
+                {lang === "id" ? "Punya proyek atau posisi yang cocok?" : "Have a project or a fitting role?"}
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-white/80">
+                {lang === "id" 
+                  ? "Kirim pesan dan saya akan merespons secepat mungkin. Saya siap berkontribusi secara maksimal untuk tim Anda."
+                  : "Send a message and I'll respond as soon as possible. I'm ready to contribute fully to your team."}
+              </p>
             </div>
 
             <div className="mt-8 space-y-3">
@@ -61,7 +65,7 @@ export default function Contact() {
               >
                 <span className="inline-flex items-center gap-3 text-sm font-semibold">
                   <MessageCircle size={17} />
-                  {t.chatWa}
+                  {lang === "id" ? "Chat via WhatsApp" : "Chat on WhatsApp"}
                 </span>
                 <ArrowUpRight
                   size={17}

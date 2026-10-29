@@ -4,20 +4,16 @@ import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import ProjectCard from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
-import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Projects() {
   const { lang } = useLanguage();
-  const t = translations[lang].projects;
 
   return (
     <Section
       id="proyek"
-      eyebrow={t.eyebrow}
-      title={t.title}
-      description={t.desc}
-      className="bg-white dark:bg-slate-950" // <-- Tambahan dark:bg-slate-950 di sini
+      title="Portfolio"
+      className="bg-white dark:bg-[#0a0a0a]"
     >
       <div className="grid gap-6 md:grid-cols-2">
         {projects.map((project, i) => (

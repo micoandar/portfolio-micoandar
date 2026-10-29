@@ -4,7 +4,6 @@ import { Award, BookOpen, GraduationCap } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
-import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const education = [
@@ -46,14 +45,11 @@ const education = [
 
 export default function Education() {
   const { lang } = useLanguage();
-  const t = translations[lang].education;
 
   return (
     <Section
       id="pendidikan"
-      eyebrow={t.eyebrow}
-      title={t.title}
-      description={t.desc}
+      title="Education & Certifications"
       className="bg-white dark:bg-slate-950"
     >
       <div className="grid gap-8 lg:grid-cols-2">
@@ -97,7 +93,9 @@ export default function Education() {
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7">
               <div className="mb-5 flex items-center gap-2.5">
                 <Award size={18} className="text-amber-500" />
-                <h3 className="font-bold text-slate-900 dark:text-white">{t.certs}</h3>
+                <h3 className="font-bold text-slate-900 dark:text-white">
+                  {lang === "id" ? "Sertifikasi" : "Certifications"}
+                </h3>
               </div>
               <ul className="space-y-4">
                 {certifications.map((c) => (
@@ -121,7 +119,9 @@ export default function Education() {
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7">
               <div className="mb-5 flex items-center gap-2.5">
                 <BookOpen size={18} className="text-sky-500" />
-                <h3 className="font-bold text-slate-900 dark:text-white">{t.trainings}</h3>
+                <h3 className="font-bold text-slate-900 dark:text-white">
+                  {lang === "id" ? "Pelatihan" : "Trainings"}
+                </h3>
               </div>
               <ul className="space-y-3.5">
                 {trainings.map((item) => (

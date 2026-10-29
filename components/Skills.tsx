@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, ElementType } from "react";
 import {
   Brain,
   Braces,
@@ -17,13 +16,12 @@ import {
   Key,
   UserCheck,
   ShieldCheck,
-  ChevronDown,
 } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
-import { skillGroups, type SkillItem } from "@/data/skills";
-import { translations } from "@/data/translations";
+import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 
 const iconMap = {
   braces: Braces,
@@ -36,7 +34,7 @@ const iconMap = {
   cloud: Cloud,
 } as const;
 
-const fallbackIconMap: Record<string, ElementType> = {
+const fallbackIconMap: Record<string, React.ElementType> = {
   SQL: Database,
   "AJAX / Fetch API": Globe,
   "REST API": Globe,
@@ -71,54 +69,11 @@ function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
   return <Fallback size={16} className="h-5 w-5 shrink-0 text-slate-500 dark:text-slate-400" />;
 }
 
-// Komponen terpisah untuk setiap baris agar bisa punya state buka/tutup sendiri
-function SkillRow({ skill, lang }: { skill: SkillItem; lang: "id" | "en" }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <li className="flex flex-col border-b border-slate-100 py-2.5 last:border-0 dark:border-slate-800/50">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="group flex w-full items-center justify-between gap-3 text-left transition hover:opacity-80"
-        aria-expanded={isOpen}
-      >
-        <div className="flex items-center gap-3">
-          <SkillIcon skill={skill} />
-          <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-            {skill.name}
-          </span>
-        </div>
-        <ChevronDown
-          size={16}
-          className={`shrink-0 text-slate-400 transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-      
-      {/* Deskripsi yang muncul/hilang dengan animasi smooth */}
-      <div
-        className={`grid transition-all duration-300 ease-in-out ${
-          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-        }`}
-      >
-        <div className="overflow-hidden">
-          <p className="pb-2 pl-8 pr-4 pt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-            {skill.description[lang]}
-          </p>
-        </div>
-      </div>
-    </li>
-  );
-}
-
 export default function Skills() {
   const { lang } = useLanguage();
-  const t = translations[lang].skills;
 
   return (
-    <Section id="keahlian" eyebrow={t.eyebrow} title={t.title} description={t.desc}>
+    <Section id="keahlian" title="Skills">
       <div className="grid gap-5 sm:grid-cols-2">
         {skillGroups.map((group, i) => {
           const Icon = iconMap[group.icon as keyof typeof iconMap];
@@ -136,14 +91,24 @@ export default function Skills() {
                       {group.title[lang]}
                     </h3>
                     <p className="text-[11px] text-slate-400 dark:text-slate-500 sm:text-xs">
-                      {group.items.length} {t.count}
+                      {group.items.length} technologies
                     </p>
                   </div>
                 </div>
 
-                <ul className="mt-4 border-t border-slate-100 pt-2 dark:border-slate-800">
+                <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
                   {group.items.map((skill) => (
-                    <SkillRow key={skill.name} skill={skill} lang={lang} />
+                    <li key={skill.name} className="flex items-start gap-3">
+                      <SkillIcon skill={skill} />
+                      <div>
+                        <p className="text-sm font-semibold leading-tight text-slate-800 dark:text-slate-200">
+                          {skill.name}
+                        </p>
+                        <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                          {skill.description[lang]}
+                        </p>
+                      </div>
+                    </li>
                   ))}
                 </ul>
               </div>

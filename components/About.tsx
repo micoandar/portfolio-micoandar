@@ -12,6 +12,7 @@ export default function About() {
   const t = translations[lang].about;
 
   return (
+    // ID "tentang" memastikan Navbar About berfungsi
     <Section id="tentang">
       <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8">
         
@@ -36,7 +37,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Interaktif (Diperbesar) */}
+        {/* TENGAH: Foto Interaktif (Diperbesar & Lebih Tinggi) */}
         <div className="relative flex justify-center w-full mx-auto z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-brand-200/50 dark:border-brand-800/50 bg-gradient-to-br from-brand-500/10 to-transparent blur-sm -z-10" />
           
@@ -44,9 +45,9 @@ export default function About() {
             imageA="/images/My-photo.png"
             imageB="/images/jbwkz.png"
             objectFit="contain"
-            radius={80} // Sorotan kecil saat disentuh
-            idleRadius={200} // Sorotan besar saat animasi otomatis
-            className="relative w-full max-w-[400px] lg:max-w-[500px] aspect-[4/5] rounded-3xl overflow-hidden"
+            radius={80} 
+            // Tinggi gambar dibuat spesifik agar lebih tinggi dari teks
+            className="relative w-full max-w-[450px] h-[500px] lg:h-[650px] rounded-3xl overflow-hidden"
           />
         </div>
 

@@ -9,19 +9,19 @@ interface HoverImageSwapProps {
   imageB: string;
   className?: string;
   objectFit?: "cover" | "contain";
-  radius?: number; // Radius saat disentuh mouse
-  idleRadius?: number; // Radius saat animasi otomatis (idle)
+  radius?: number;
 }
 
 export default function HoverImageSwap({
   imageA,
   imageB,
-  className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
+  className = "relative w-full h-full rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 80, // Diperkecil (sebelumnya 140) sesuai permintaan
-  idleRadius = 160, // Ukuran sorot saat animasi idle
+  radius = 80, 
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isIdle, setIsIdle] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -40,37 +40,27 @@ export default function HoverImageSwap({
     )
   `;
 
-  // State & Ref untuk Idle Timer
+  // Timer Refs
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeOutTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const resetIdleTimer = () => {
-    // Hapus timer yang sedang berjalan
     if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
 
-    // Sembunyikan jika sedang dalam mode idle
-    maskRadius.set(0);
+    setIsIdle(false); // Kembali ke gambar 1
 
-    // Set timer baru: 5 detik (5000ms)
+    // Timer 5 detik untuk memunculkan gambar 2
     idleTimerRef.current = setTimeout(() => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
+      setIsIdle(true);
       
-      // Posisikan sorotan di tengah gambar
-      mouseX.set(rect.width / 2);
-      mouseY.set(rect.height / 2);
-      maskRadius.set(idleRadius);
-
-      // Set timer fade out: 2 detik (2000ms) setelah muncul
+      // Timer 2 detik untuk kembali ke gambar 1
       fadeOutTimerRef.current = setTimeout(() => {
-        maskRadius.set(0);
+        setIsIdle(false);
       }, 2000);
-      
     }, 5000);
   };
 
-  // Mulai timer saat komponen di-mount
   useEffect(() => {
     resetIdleTimer();
     return () => {
@@ -84,10 +74,10 @@ export default function HoverImageSwap({
     const rect = containerRef.current.getBoundingClientRect();
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
-    
-    // Reset timer setiap kali mouse bergerak
-    resetIdleTimer();
     maskRadius.set(radius);
+    
+    if (!isHovered) setIsHovered(true);
+    resetIdleTimer();
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -96,13 +86,18 @@ export default function HoverImageSwap({
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
     maskRadius.set(radius);
+    setIsHovered(true);
     resetIdleTimer();
   };
 
   const handleMouseLeave = () => {
     maskRadius.set(0);
+    setIsHovered(false);
     resetIdleTimer();
   };
+
+  // Tentukan Opacity: Jika Idle, full opacity (1). Jika Hover, tergantung mask. Jika tidak, 0.
+  const imageBOpacity = isIdle ? 1 : (isHovered ? 1 : 0);
 
   return (
     <div
@@ -123,10 +118,12 @@ export default function HoverImageSwap({
 
       <motion.div
         style={{ 
-          maskImage, 
-          WebkitMaskImage: maskImage,
-          willChange: "mask-image"
+          maskImage: isIdle ? "none" : maskImage, // Matikan mask jika sedang idle
+          WebkitMaskImage: isIdle ? "none" : maskImage,
+          willChange: "mask-image, opacity"
         }}
+        animate={{ opacity: imageBOpacity }}
+        transition={{ duration: 0.6, ease: "easeInOut" }} // Fade smooth
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <Image

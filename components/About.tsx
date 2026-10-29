@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import Section from "@/components/ui/Section";
-import HoverImageSwap from "@/components/HoverImageSwap";
+import HoloCard from "@/components/HoloCard"; // <-- Import komponen baru
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -13,11 +13,6 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* 
-        Menghapus margin negatif yang berlebihan.
-        Menggunakan items-center agar teks sejajar di tengah gambar.
-        Memberikan pt-10 sebagai jarak wajar di bawah judul.
-      */}
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-12 pt-10 lg:pt-16">
         
         {/* KIRI: Teks Sapaan */}
@@ -40,18 +35,17 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Interaktif (Ukuran Pas) */}
+        {/* TENGAH: Efek HoloCard */}
         <div className="relative flex justify-center w-full mx-auto z-20">
-          {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
-          <HoverImageSwap
-            imageA="/images/My-photo.png"
-            imageB="/images/jbwkz.png"
-            objectFit="contain"
-            radius={80} 
-            imageScale={1.3} // Skala dikembalikan agar pas
-            className="relative w-full h-[500px] lg:h-[650px]" // Tinggi disesuaikan
+          <HoloCard 
+            image="/images/My-photo.png"
+            alt="Micoandar Portrait"
+            preset="cosmos" // Pilihan: 'bursts', 'stars', 'shards', 'cosmos', 'rainbow', 'swirl', 'glitter', 'gold'
+            width={380}
+            height={500}
+            className="mx-auto"
           />
         </div>
 

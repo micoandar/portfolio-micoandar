@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight, Mail } from "lucide-react";
+import { useTheme } from "next-themes"; // <-- Tambahan import untuk deteksi tema
 import Section from "@/components/ui/Section";
 import HalftoneReveal from "@/components/HalftoneReveal";
 import { profile } from "@/data/profile";
@@ -10,10 +11,14 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export default function About() {
   const { lang } = useLanguage();
   const t = translations[lang].about;
+  const { resolvedTheme } = useTheme(); // <-- Ambil tema aktif
+
+  const isDark = resolvedTheme === "dark";
 
   return (
     <Section id="tentang" title="About Me">
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-8 pt-8">
+      {/* Grid diubah: kolom tengah dibuat lebih lebar (1.5fr) agar gambar lebih besar */}
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -35,11 +40,12 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Efek Halftone Reveal (Hitam & Putih Tulang) */}
+        {/* TENGAH: Efek Halftone Reveal */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
-          <div className="relative w-full h-[450px] lg:h-[550px] rounded-3xl overflow-hidden shadow-2xl">
+          {/* Tinggi ditingkatkan menjadi 650px di desktop */}
+          <div className="relative w-full h-[500px] lg:h-[650px] rounded-3xl overflow-hidden shadow-2xl">
             <HalftoneReveal
               src="/images/My-photo.png"
               mode="mono"
@@ -47,9 +53,11 @@ export default function About() {
               cellSize={10} 
               dotScale={0.7} 
               angle={45}
-              // Putih Tulang di atas Hitam Pekat
-              inkColor="#f4f1ea" 
-              paperColor="#0a0a0a" 
+              // LOGIKA WARNA TEMA:
+              // Jika Gelap: Kotak Putih, Titik Hitam.
+              // Jika Terang: Kotak Hitam, Titik Putih.
+              inkColor={isDark ? "#120f17" : "#f4f1ea"} 
+              paperColor={isDark ? "#ffffff" : "#0a0a0a"} 
               revealRadius={200} 
               softness={0.8}
               clickBurst={true} 

@@ -24,7 +24,6 @@ export default function HoverImageSwap({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   
-  // State Machine untuk Idle Animation
   const [idleState, setIdleState] = useState<'idle' | 'fadingIn' | 'visible' | 'fadingOut'>('idle');
 
   const mouseX = useMotionValue(0);
@@ -44,7 +43,6 @@ export default function HoverImageSwap({
     )
   `;
 
-  // --- LOGIKA IDLE LOOPING ---
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
@@ -54,16 +52,12 @@ export default function HoverImageSwap({
     }
 
     if (idleState === 'idle') {
-      // 1. Menunggu 6 detik sebelum Fade In
       timeout = setTimeout(() => setIdleState('fadingIn'), 6000);
     } else if (idleState === 'fadingIn') {
-      // 2. Durasi animasi Fade In (0.8 detik)
       timeout = setTimeout(() => setIdleState('visible'), 800);
     } else if (idleState === 'visible') {
-      // 3. Gambar 2 diam selama 2 detik
       timeout = setTimeout(() => setIdleState('fadingOut'), 2000);
     } else if (idleState === 'fadingOut') {
-      // 4. Durasi animasi Fade Out (0.8 detik - Halus, tidak kaku, tidak terlalu lama)
       timeout = setTimeout(() => setIdleState('idle'), 800);
     }
 
@@ -94,7 +88,6 @@ export default function HoverImageSwap({
     setIsHovered(false);
   };
 
-  // Tentukan Opacity berdasarkan state
   let opacity = 0;
   if (isHovered || idleState === 'fadingIn' || idleState === 'visible') {
     opacity = 1;
@@ -102,20 +95,22 @@ export default function HoverImageSwap({
     opacity = 0; 
   }
 
-  // Tentukan Durasi berdasarkan state (Fade In dan Fade Out sama-sama halus)
   let duration = 0;
   if (!isHovered) {
     if (idleState === 'fadingIn') duration = 0.8;  
-    if (idleState === 'fadingOut') duration = 0.8; // <-- Fade out 0.8 detik (tidak terlalu cepat)
+    if (idleState === 'fadingOut') duration = 0.8; 
   } else {
-    duration = 0; // Saat disentuh mouse, transisi instan
+    duration = 0; 
   }
 
-  // Style untuk garis tepi / outline pada gambar
+  // --- PERBAIKAN OUTLINE KONTUR (STICKER EFFECT) ---
   const outlineStyle = {
     filter: `
-      drop-shadow(0 0 2px rgba(0,0,0,0.5)) 
-      drop-shadow(0 0 8px rgba(0,0,0,0.2))
+      drop-shadow(1.5px 0 0 #ffffff) 
+      drop-shadow(-1.5px 0 0 #ffffff) 
+      drop-shadow(0 1.5px 0 #ffffff) 
+      drop-shadow(0 -1.5px 0 #ffffff) 
+      drop-shadow(0 15px 20px rgba(0,0,0,0.15))
     `
   };
 

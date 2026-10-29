@@ -7,11 +7,12 @@ import { useTheme } from "next-themes";
 import { profile } from "@/data/profile";
 import { useLanguage } from "@/contexts/LanguageContext";
 import GooeyNav from "@/components/GooeyNav";
-import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0); // State untuk melacak menu aktif
+  
   const { lang, toggle: toggleLang } = useLanguage();
   const { theme, setTheme } = useTheme();
 
@@ -23,7 +24,33 @@ export default function Navbar() {
     { label: "Contact", href: "#kontak" },
   ];
 
+  const sectionIds = ["tentang", "proyek", "keahlian", "pendidikan", "kontak"];
+
   useEffect(() => setMounted(true), []);
+
+  // SCROLL SPY LOGIC: Mendeteksi section mana yang sedang terlihat di layar
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200; // Offset 200px dari atas
+
+      // Cek dari section paling bawah ke atas
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sectionIds[i]);
+        if (section) {
+          if (scrollPosition >= section.offsetTop) {
+            setActiveIndex(i);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Panggil sekali saat halaman dimuat
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -41,9 +68,11 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Komponen GooeyNav */}
+          {/* Komponen GooeyNav dengan prop activeIndex */}
           <GooeyNav
             items={links}
+            activeIndex={activeIndex}
+            onChange={(index) => setActiveIndex(index)}
             theme={theme === "dark" ? "dark" : "light"}
             size="sm"
             frame={false}
@@ -88,12 +117,19 @@ export default function Navbar() {
       {open && (
         <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/95 md:hidden">
           <ul className="flex flex-col gap-1">
-            {links.map((link) => (
+            {links.map((link, index) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                  onClick={() => {
+                    setOpen(false);
+                    setActiveIndex(index);
+                  }}
+                  className={`block rounded-xl px-4 py-3 text-sm font-medium transition ${
+                    activeIndex === index
+                      ? "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white"
+                      : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                  }`}
                 >
                   {link.label}
                 </a>

@@ -1,22 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Menu, X, Languages, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { profile } from "@/data/profile";
 import { useLanguage } from "@/contexts/LanguageContext";
 import GooeyNav from "@/components/GooeyNav";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0); // Default ke 0 (Home)
+  const [activeIndex, setActiveIndex] = useState(0);
   
   const { lang, toggle: toggleLang } = useLanguage();
   const { theme, setTheme } = useTheme();
 
-  // MENAMBAHKAN "Home" DI URUTAN PERTAMA
   const links = [
     { label: "Home", href: "#beranda" },
     { label: "About", href: "#tentang" },
@@ -30,11 +27,10 @@ export default function Navbar() {
 
   useEffect(() => setMounted(true), []);
 
-  // SCROLL SPY LOGIC
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 250; // Offset 250px
-      let currentId = "beranda"; // Default ke beranda (Home)
+      const scrollPosition = window.scrollY + 250;
+      let currentId = "beranda";
 
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
@@ -49,7 +45,7 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Panggil sekali saat halaman dimuat
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -61,16 +57,10 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <div className="flex pointer-events-auto items-center justify-between gap-4">
+      <div className="flex pointer-events-auto items-center justify-between gap-3">
         
-        {/* Logo & GooeyNav */}
-        <div className="flex items-center gap-4 rounded-full bg-white/50 backdrop-blur-md px-2 py-2 dark:bg-black/50 shadow-lg border border-white/10">
-          <Link href="#beranda" className="ml-2 hidden sm:flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-brand-500 text-xs font-black text-white">
-              {profile.initials}
-            </span>
-          </Link>
-
+        {/* GooeyNav tanpa Logo MJ */}
+        <div className="flex items-center rounded-full bg-white/50 backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
           <GooeyNav
             items={links}
             activeIndex={activeIndex}

@@ -6,6 +6,7 @@ import { Menu, X, Languages, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { profile } from "@/data/profile";
 import { useLanguage } from "@/contexts/LanguageContext";
+import GooeyNav from "@/components/GooeyNav";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
@@ -15,11 +16,11 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
 
   const links = [
-    { href: "#tentang", label: "About" },
-    { href: "#proyek", label: "Projects" },
-    { href: "#keahlian", label: "Skills" },
-    { href: "#pendidikan", label: "Education" },
-    { href: "#kontak", label: "Contact" },
+    { label: "About", href: "#tentang" },
+    { label: "Projects", href: "#proyek" },
+    { label: "Skills", href: "#keahlian" },
+    { label: "Education", href: "#pendidikan" },
+    { label: "Contact", href: "#kontak" },
   ];
 
   useEffect(() => setMounted(true), []);
@@ -30,72 +31,58 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      {/* Navbar Kapsul (Floating Pill) */}
-      <nav className="flex pointer-events-auto items-center gap-2 rounded-full border border-slate-200/50 bg-white/80 px-4 py-2 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black/60 sm:px-6 sm:py-3">
+      <div className="flex pointer-events-auto items-center justify-between gap-4">
         
-        {/* Logo MJ */}
-        <Link href="#beranda" className="mr-2 hidden sm:flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-brand-500 text-xs font-black text-white">
-            {profile.initials}
-          </span>
-        </Link>
+        {/* Logo & GooeyNav */}
+        <div className="flex items-center gap-4 rounded-full bg-white/50 backdrop-blur-md px-2 py-2 dark:bg-black/50 shadow-lg border border-white/10">
+          <Link href="#beranda" className="ml-2 hidden sm:flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-brand-500 text-xs font-black text-white">
+              {profile.initials}
+            </span>
+          </Link>
 
-        {/* Desktop Links */}
-        <ul className="hidden items-center gap-1 md:flex">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Divider */}
-        <div className="mx-2 hidden h-6 w-px bg-slate-300 dark:bg-slate-700 md:block" />
+          {/* Komponen GooeyNav */}
+          <GooeyNav
+            items={links}
+            theme={theme === "dark" ? "dark" : "light"}
+            size="sm"
+            frame={false}
+            particleCount={12}
+            animationTime={500}
+          />
+        </div>
 
         {/* Toggles & CTA */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 rounded-full bg-white/50 backdrop-blur-md px-3 py-2 dark:bg-black/50 shadow-lg border border-white/10">
           {mounted && (
             <button
               type="button"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle Theme"
-              className="grid h-9 w-9 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
+              className="grid h-8 w-8 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
             >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           )}
 
           <button
             type="button"
             onClick={toggleLang}
-            aria-label="Toggle language"
-            className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-xs font-bold uppercase tracking-wide text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
+            className="inline-flex h-8 items-center gap-1.5 rounded-full px-2 text-xs font-bold uppercase tracking-wide text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
           >
-            <Languages size={16} />
+            <Languages size={14} />
             {lang === "id" ? "ID" : "EN"}
           </button>
-
-          <a
-            href={`mailto:${profile.email}`}
-            className="hidden rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 lg:inline-block"
-          >
-            Get in touch
-          </a>
 
           <button
             type="button"
             onClick={() => setOpen(!open)}
-            className="grid h-9 w-9 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10 md:hidden"
+            className="grid h-8 w-8 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10 md:hidden"
           >
-            {open ? <X size={20} /> : <Menu size={20} />}
+            {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
-      </nav>
+
+      </div>
 
       {/* Mobile Menu Overlay */}
       {open && (

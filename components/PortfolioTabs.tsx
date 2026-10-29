@@ -12,7 +12,6 @@ import Education from "./Education";
 
 export default function PortfolioTabs() {
   const [activeTab, setActiveTab] = useState(0);
-  // Menggunakan resolvedTheme
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
@@ -42,8 +41,8 @@ export default function PortfolioTabs() {
           activeIndex={activeTab}
           onChange={(index) => setActiveTab(index)}
           theme={resolvedTheme === "dark" ? "dark" : "light"}
-          color="#4f46e5" // <-- Warna pill biru (Brand)
-          activeTextColor="#ffffff" // <-- Teks pill putih
+          // Hitam di mode terang, Putih di mode gelap
+          color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
           size="md"
           frame={true}
           particleCount={15}

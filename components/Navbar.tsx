@@ -12,7 +12,6 @@ export default function Navbar() {
   const [activeIndex, setActiveIndex] = useState(0);
   
   const { lang, toggle: toggleLang } = useLanguage();
-  // Menggunakan resolvedTheme agar membaca tema sistem dengan benar
   const { resolvedTheme, setTheme } = useTheme();
 
   const links = [
@@ -65,8 +64,9 @@ export default function Navbar() {
             activeIndex={activeIndex}
             onChange={(index) => setActiveIndex(index)}
             theme={resolvedTheme === "dark" ? "dark" : "light"}
-            color="#4f46e5" // <-- Warna pill biru (Brand)
-            activeTextColor="#ffffff" // <-- Teks pill putih
+            // Hitam di mode terang, Putih di mode gelap
+            color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
+            // Teks otomatis menyesuaikan kontras oleh library
             size="sm"
             frame={false}
             particleCount={12}

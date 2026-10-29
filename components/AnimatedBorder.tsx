@@ -47,9 +47,9 @@ export default function AnimatedBorder({
           initial={{ strokeDashoffset: 1 }}
           animate={{ strokeDashoffset: -1 }}
           transition={{ 
-            duration: 2, 
+            duration: 6, // <-- Waktu diperlambat menjadi 6 detik
             repeat: Infinity, 
-            ease: "linear" // <-- Linear membuat kecepatan konstan tanpa perlambatan
+            ease: "linear" 
           }}
         />
 
@@ -66,7 +66,7 @@ export default function AnimatedBorder({
           initial={{ strokeDashoffset: 1 }}
           animate={{ strokeDashoffset: -1 }}
           transition={{ 
-            duration: 2, 
+            duration: 6, // <-- Waktu diperlambat menjadi 6 detik
             repeat: Infinity, 
             ease: "linear" 
           }}

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 type SectionProps = {
   id: string;
   eyebrow?: string;
-  title: string;
+  title?: string; // Dibuat opsional
   description?: string;
   children: ReactNode;
   className?: string;
@@ -29,9 +29,12 @@ export default function Section({
                 {eyebrow}
               </span>
             )}
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl lg:text-4xl">
-              {title}
-            </h2>
+            {/* Hanya render H2 jika title ada isinya */}
+            {title && (
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl lg:text-4xl">
+                {title}
+              </h2>
+            )}
             {description && (
               <p className="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400 sm:mt-4 sm:text-base">
                 {description}

@@ -16,8 +16,9 @@ export default function Navbar() {
   const { lang, toggle: toggleLang } = useLanguage();
   const { theme, setTheme } = useTheme();
 
-  // Menu permanen dalam Bahasa Inggris
+  // Menu permanen dalam Bahasa Inggris (About ditambahkan)
   const links = [
+    { href: "#tentang", label: "About" },
     { href: "#proyek", label: "Projects" },
     { href: "#keahlian", label: "Skills" },
     { href: "#pendidikan", label: "Education" },
@@ -94,7 +95,6 @@ export default function Navbar() {
             {lang === "id" ? "ID" : "EN"}
           </button>
 
-          {/* CTA Button English */}
           <a
             href={`mailto:${profile.email}`}
             className="hidden rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 md:inline-block"

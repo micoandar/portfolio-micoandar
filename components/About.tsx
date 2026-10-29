@@ -10,7 +10,8 @@ export default function About() {
   const t = translations[lang].about;
 
   return (
-    <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
+    // title={t.title} dihapus agar tulisannya hilang
+    <Section id="tentang" eyebrow={t.eyebrow}>
       <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
         
         {/* KIRI: Image Spotlight Swap */}
@@ -19,7 +20,7 @@ export default function About() {
             imageA="/images/My-photo.png"
             imageB="/images/jbwkz.png"
             objectFit="cover"
-            radius={120} // Ukuran sorotan (bisa diubah ke 140 jika ingin lebih besar)
+            radius={140}
             className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl"
           />
         </div>

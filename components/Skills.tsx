@@ -1,15 +1,48 @@
 "use client";
 
-import { Brain, Braces, Cloud, Database, LayoutTemplate, Server, Shield, Smartphone, Globe, Eye, ScanEye, Lock, Key, UserCheck, ShieldCheck } from "lucide-react";
+import {
+  Brain, Braces, Cloud, Database, LayoutTemplate, Server, Shield, Smartphone,
+  Globe, Eye, ScanEye, Lock, Key, UserCheck, ShieldCheck,
+} from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
-import { useTheme } from "next-themes"; // <-- Import Theme
-import BorderGlow from "@/components/BorderGlow"; // <-- Import
+import { useTheme } from "next-themes";
+import BorderGlow from "@/components/BorderGlow";
 
-// ... (iconMap, fallbackIconMap, SkillIcon tetap sama)
+const iconMap = {
+  braces: Braces, layout: LayoutTemplate, server: Server, brain: Brain,
+  smartphone: Smartphone, database: Database, shield: Shield, cloud: Cloud,
+} as const;
+
+const fallbackIconMap: Record<string, React.ElementType> = {
+  SQL: Database, "AJAX / Fetch API": Globe, "REST API": Globe, Recharts: LayoutTemplate,
+  "Computer Vision": Eye, "YOLO (v8/v11/26)": ScanEye, Authentication: Key, RBAC: UserCheck,
+  "CSRF Protection": ShieldCheck, "Password Hashing": Lock, "Cloud Deployment": Cloud,
+};
+
+function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
+  const [error, setError] = useState(false);
+
+  if (skill.logo && !error) {
+    return (
+      <img
+        src={skill.logo}
+        alt={skill.name}
+        width={20}
+        height={20}
+        loading="lazy"
+        className="h-5 w-5 shrink-0 object-contain dark:brightness-110"
+        onError={() => setError(true)}
+      />
+    );
+  }
+
+  const Fallback = fallbackIconMap[skill.name] || Braces;
+  return <Fallback size={16} className="h-5 w-5 shrink-0 text-slate-500 dark:text-slate-400" />;
+}
 
 export default function Skills() {
   const { lang } = useLanguage();

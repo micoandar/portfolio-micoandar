@@ -5,10 +5,45 @@ import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "next-themes"; // <-- Import
-import BorderGlow from "@/components/BorderGlow"; // <-- Import
+import { useTheme } from "next-themes";
+import BorderGlow from "@/components/BorderGlow";
 
-// ... (data education tetap sama)
+const education = [
+  {
+    school: "Universitas Gunadarma",
+    degree: { id: "S1 Informatika", en: "Bachelor of Informatics" },
+    period: "2022 – 2026",
+    location: { id: "Bekasi, Jawa Barat, Indonesia", en: "Bekasi, West Java, Indonesia" },
+    score: { id: "IPK 3.76 / 4.00", en: "GPA 3.76 / 4.00" },
+    details: {
+      id: [
+        "Judul Skripsi: Penerapan YOLOv8 untuk Deteksi Bahan Makanan pada Sistem Rekomendasi Resep Diet Berbasis Android",
+        "Judul Karya Tulis Ilmiah: Sistem Otomatisasi Tempat Sampah Menggunakan Ultrasonic Berbasis Internet of Things",
+      ],
+      en: [
+        "Thesis: Implementation of YOLOv8 for Food Ingredient Detection in an Android-based Diet Recipe Recommendation System",
+        "Scientific Paper: Automated Trash Bin System Using Ultrasonic Sensors Based on the Internet of Things",
+      ],
+    },
+  },
+  {
+    school: "SMK Telekomunikasi Telesandi Bekasi",
+    degree: { id: "Teknik Komputer dan Jaringan", en: "Computer & Network Engineering" },
+    period: "2019 – 2022",
+    location: { id: "Bekasi, Jawa Barat", en: "Bekasi, West Java" },
+    score: { id: "Nilai Akhir 85,51", en: "Final Score 85.51" },
+    details: {
+      id: [
+        "Praktik Kerja Industri di PPTIK ITB",
+        "Laporan: Instalasi dan Konfigurasi DHCP Server pada Ubuntu 16.04 Menggunakan VirtualBox (Nilai 87)",
+      ],
+      en: [
+        "Internship at PPTIK ITB",
+        "Report: Installation and Configuration of DHCP Server on Ubuntu 16.04 Using VirtualBox (Score 87)",
+      ],
+    },
+  },
+];
 
 export default function Education() {
   const { lang } = useLanguage();
@@ -22,7 +57,7 @@ export default function Education() {
           {education.map((item, i) => (
             <Reveal key={item.school} delay={i * 100}>
               <BorderGlow
-                backgroundColor={isDark ? "#0f172a" : "#f8fafc"} // slate-50 / slate-900
+                backgroundColor={isDark ? "#0f172a" : "#f8fafc"}
                 borderRadius={24}
                 glowColor="270 80 70"
                 colors={['#a78bfa', '#c084fc', '#818cf8']}

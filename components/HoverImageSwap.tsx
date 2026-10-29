@@ -1,67 +1,71 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate, useSpring } from "framer-motion";
 
 interface HoverImageSwapProps {
   imageA: string;
   imageB: string;
   className?: string;
-  duration?: number;
   objectFit?: "cover" | "contain";
+  radius?: number; // Ukuran lingkaran reveal
 }
 
 export default function HoverImageSwap({
   imageA,
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
-  duration = 0.45,
   objectFit = "cover",
+  radius = 120, // Radius default 120px
 }: HoverImageSwapProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isToggled, setIsToggled] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Desktop: Mouse Enter & Leave
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
+  // Menyimpan posisi mouse (X dan Y)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  // Mobile: Tap Toggle
-  const handleClick = () => {
-    // Hanya jalankan toggle jika perangkat menggunakan sentuhan (mobile/tablet)
-    if (window.matchMedia("(pointer: coarse)").matches) {
-      setIsToggled(!isToggled);
-    }
+  // Spring agar pergerakan lingkaran mengikuti mouse dengan sangat mulus
+  const springConfig = { stiffness: 150, damping: 20, mass: 0.1 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  // Template untuk clip-path lingkaran
+  // Saat hover, radius menjadi 120px. Saat keluar, radius menjadi 0px.
+  const clipPath = useMotionTemplate`circle(${isHovered ? radius : 0}px at ${smoothX}px ${smoothY}px)`;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    // Hitung posisi relatif terhadap container
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   };
 
-  // State penentu kapan foto B harus muncul
-  const showB = isHovered || isToggled;
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    // Set posisi awal saat mouse masuk agar tidak melompat dari pojok kiri atas
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+    setIsHovered(true);
+  };
 
-  // Easing curve khusus untuk transisi yang sangat premium dan halus
-  const transitionConfig = { 
-    duration, 
-    ease: [0.22, 1, 0.36, 1] as const
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   return (
     <div
-      className={`group cursor-pointer md:cursor-default ${className}`}
-      onPointerEnter={handleMouseEnter}
-      onPointerLeave={handleMouseLeave}
-      onClick={handleClick}
+      ref={containerRef}
+      className={`group relative cursor-crosshair ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A (Awal) */}
-      <motion.div
-        initial={false}
-        animate={{ 
-          opacity: showB ? 0 : 1, 
-          scale: showB ? 1.015 : 1, // Efek zoom out/in yang sangat tipis
-          filter: showB ? "blur(4px)" : "blur(0px)" // Blur halus saat memudar
-        }}
-        transition={transitionConfig}
-        style={{ willChange: "transform, opacity, filter" }}
-        className="absolute inset-0 w-full h-full"
-      >
+      {/* LAYER 1: Foto A (Selalu Tampil di Bawah) */}
+      <div className="absolute inset-0 w-full h-full">
         <Image
           src={imageA}
           alt="Photo A"
@@ -70,19 +74,12 @@ export default function HoverImageSwap({
           sizes="(max-width: 768px) 100vw, 50vw"
           className={`object-${objectFit} object-center`}
         />
-      </motion.div>
+      </div>
 
-      {/* LAYER 2: Foto B (Hover/Tap) */}
+      {/* LAYER 2: Foto B (Hanya Tampil di Dalam Lingkaran Sorot) */}
       <motion.div
-        initial={false}
-        animate={{ 
-          opacity: showB ? 1 : 0, 
-          scale: showB ? 1 : 1.015, // Sedikit lebih kecil saat tersembunyi
-          filter: showB ? "blur(0px)" : "blur(4px)" 
-        }}
-        transition={transitionConfig}
-        style={{ willChange: "transform, opacity, filter" }}
-        className="absolute inset-0 w-full h-full"
+        style={{ clipPath }}
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <Image
           src={imageB}

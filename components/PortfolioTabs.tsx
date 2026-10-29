@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Code2, Award, Cpu } from "lucide-react";
+import { useTheme } from "next-themes";
 import Section from "@/components/ui/Section";
+import GooeyNav from "@/components/GooeyNav"; // <-- Import komponen GooeyNav
 
 // Import komponen konten
 import Projects from "./Projects";
@@ -11,71 +12,52 @@ import Skills from "./Skills";
 import Education from "./Education";
 
 export default function PortfolioTabs() {
-  const [activeTab, setActiveTab] = useState<'projects' | 'education' | 'skills'>('projects');
+  // Menggunakan angka (index) untuk state agar sinkron dengan GooeyNav (0, 1, 2)
+  const [activeTab, setActiveTab] = useState(0);
+  const { theme } = useTheme();
 
-  // Sinkronisasi dengan Navbar (jika URL berubah)
+  // Sinkronisasi dengan Navbar utama (jika URL berubah)
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash === '#proyek') setActiveTab('projects');
-      else if (hash === '#pendidikan') setActiveTab('education');
-      else if (hash === '#keahlian') setActiveTab('skills');
+      if (hash === '#proyek') setActiveTab(0);
+      else if (hash === '#pendidikan') setActiveTab(1);
+      else if (hash === '#keahlian') setActiveTab(2);
     };
 
-    // Cek hash saat pertama dimuat
     handleHashChange();
-
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const tabs = [
-    { id: 'projects', label: 'Projects', icon: Code2 },
-    { id: 'education', label: 'Education & Certs', icon: Award },
-    { id: 'skills', label: 'Tech Stack', icon: Cpu },
-  ] as const;
+  // Item untuk GooeyNav (tanpa href agar menjadi tombol tab)
+  const navItems = [
+    { label: "Projects", icon: <Code2 size={16} /> },
+    { label: "Education & Certs", icon: <Award size={16} /> },
+    { label: "Tech Stack", icon: <Cpu size={16} /> },
+  ];
 
   return (
     <Section id="portfolio" title="Portfolio">
-      {/* Tab Navigation */}
+      {/* Navigasi Tab menggunakan GooeyNav */}
       <div className="mb-12 flex justify-center">
-        <div className="flex flex-wrap items-center justify-center gap-1 rounded-full border border-slate-200 bg-white/60 p-1.5 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/60">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`relative flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
-                  isActive
-                    ? "text-white"
-                    : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                }`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="active-tab"
-                    className="absolute inset-0 rounded-full bg-blue-600 shadow-md"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-2">
-                  <Icon size={16} />
-                  {tab.label}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+        <GooeyNav
+          items={navItems}
+          activeIndex={activeTab}
+          onChange={(index) => setActiveTab(index)}
+          theme={theme === "dark" ? "dark" : "light"}
+          size="md" // Ukuran disesuaikan (sm, md, lg)
+          frame={true} // Menambahkan efek kaca di belakang tab
+          particleCount={15}
+          animationTime={600}
+        />
       </div>
 
       {/* Konten Tab */}
       <div className="min-h-[500px]">
-        {activeTab === 'projects' && <Projects />}
-        {activeTab === 'education' && <Education />}
-        {activeTab === 'skills' && <Skills />}
+        {activeTab === 0 && <Projects />}
+        {activeTab === 1 && <Education />}
+        {activeTab === 2 && <Skills />}
       </div>
     </Section>
   );

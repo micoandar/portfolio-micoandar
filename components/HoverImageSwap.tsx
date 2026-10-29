@@ -22,8 +22,10 @@ export default function HoverImageSwap({
   imageScale = 1,
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isIdle, setIsIdle] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  
+  // State Machine untuk Idle Animation
+  const [idleState, setIdleState] = useState<'idle' | 'fadingIn' | 'visible' | 'fadingOut'>('idle');
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -42,29 +44,31 @@ export default function HoverImageSwap({
     )
   `;
 
-  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const fadeOutTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const resetIdleTimer = () => {
-    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-    if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
-    setIsIdle(false);
-
-    idleTimerRef.current = setTimeout(() => {
-      setIsIdle(true);
-      fadeOutTimerRef.current = setTimeout(() => {
-        setIsIdle(false);
-      }, 2000);
-    }, 5000);
-  };
-
+  // --- LOGIKA IDLE LOOPING (STATE MACHINE) ---
   useEffect(() => {
-    resetIdleTimer();
-    return () => {
-      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-      if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
-    };
-  }, []);
+    let timeout: NodeJS.Timeout;
+
+    if (isHovered) {
+      setIdleState('idle');
+      return;
+    }
+
+    if (idleState === 'idle') {
+      // 1. Menunggu 6 detik sebelum Fade In
+      timeout = setTimeout(() => setIdleState('fadingIn'), 6000);
+    } else if (idleState === 'fadingIn') {
+      // 2. Durasi animasi Fade In (0.6 detik)
+      timeout = setTimeout(() => setIdleState('visible'), 600);
+    } else if (idleState === 'visible') {
+      // 3. Gambar 2 diam selama 2 detik
+      timeout = setTimeout(() => setIdleState('fadingOut'), 2000);
+    } else if (idleState === 'fadingOut') {
+      // 4. Durasi animasi Fade Out (0.2 detik - sangat cepat)
+      timeout = setTimeout(() => setIdleState('idle'), 200);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isHovered, idleState]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -74,7 +78,6 @@ export default function HoverImageSwap({
     maskRadius.set(radius);
     
     if (!isHovered) setIsHovered(true);
-    resetIdleTimer();
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -84,18 +87,31 @@ export default function HoverImageSwap({
     mouseY.set(e.clientY - rect.top);
     maskRadius.set(radius);
     setIsHovered(true);
-    resetIdleTimer();
   };
 
   const handleMouseLeave = () => {
     maskRadius.set(0);
     setIsHovered(false);
-    resetIdleTimer();
   };
 
-  const imageBOpacity = isIdle ? 1 : (isHovered ? 1 : 0);
+  // Tentukan Opacity berdasarkan state
+  let opacity = 0;
+  if (isHovered || idleState === 'fadingIn' || idleState === 'visible') {
+    opacity = 1;
+  } else if (idleState === 'fadingOut') {
+    opacity = 0; 
+  }
 
-  // Style untuk garis tepi / outline pada gambar (drop-shadow berlapis)
+  // Tentukan Durasi berdasarkan state (Fade out dibuat sangat cepat)
+  let duration = 0;
+  if (!isHovered) {
+    if (idleState === 'fadingIn') duration = 0.6;  // Fade in halus
+    if (idleState === 'fadingOut') duration = 0.2; // Fade out cepat (tidak lama)
+  } else {
+    duration = 0; // Saat disentuh mouse, transisi instan
+  }
+
+  // Style untuk garis tepi / outline pada gambar
   const outlineStyle = {
     filter: `
       drop-shadow(0 0 2px rgba(0,0,0,0.5)) 
@@ -124,20 +140,20 @@ export default function HoverImageSwap({
             priority
             sizes="(max-width: 768px) 100vw, 50vw"
             className={`object-${objectFit} object-center`}
-            style={outlineStyle} // <-- Garis tepi ditambahkan di sini
+            style={outlineStyle}
           />
         </div>
       </div>
 
-      {/* LAYER 2: Gambar Kedua (Masking / Fade) */}
+      {/* LAYER 2: Gambar Kedua */}
       <motion.div
         style={{ 
-          maskImage: isIdle ? "none" : maskImage, 
-          WebkitMaskImage: isIdle ? "none" : maskImage,
+          maskImage: isHovered ? maskImage : "none", 
+          WebkitMaskImage: isHovered ? maskImage : "none",
           willChange: "mask-image, opacity"
         }}
-        animate={{ opacity: imageBOpacity }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        animate={{ opacity }}
+        transition={{ duration, ease: "easeInOut" }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <div 
@@ -152,7 +168,7 @@ export default function HoverImageSwap({
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
               className={`object-${objectFit} object-center`}
-              style={outlineStyle} // <-- Garis tepi ditambahkan di sini
+              style={outlineStyle}
             />
           </div>
         </div>

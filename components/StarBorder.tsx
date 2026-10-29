@@ -22,6 +22,7 @@ export interface StarBorderProps extends React.HTMLAttributes<HTMLElement> {
   backgroundColor?: string;
   textColor?: string;
   borderColor?: string;
+  [key: string]: any; // <-- TAMBAHKAN BARIS INI AGAR MENERIMA ATRIBUT SEPERTI 'HREF'
 }
 
 const THEMES = {

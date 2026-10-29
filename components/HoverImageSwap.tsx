@@ -20,9 +20,9 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 130, // Ukuran sorot lingkaran
-  scale = 1.4, // DIPERBESAR drastis (140%) agar topeng menutupi seluruh wajah asli
-  offsetX = 0, // Posisi tepat di tengah
+  radius = 130, 
+  scale = 1.08, // Hanya diperbesar 8% (sangat sedikit, proporsional)
+  offsetX = 0, 
   offsetY = 0,
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,11 +36,12 @@ export default function HoverImageSwap({
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // Area tengah 90% solid (hitam), 10% terluar memudar
+  // Area tengah dibuat solid (hitam) hingga 75%, sisanya memudar.
+  // Ini memastikan wajah tidak tembus pandang di tengah sorotan.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 90%, 
+      black 75%, 
       transparent 100%
     )
   `;
@@ -72,7 +73,7 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A (Wajah Asli) */}
+      {/* LAYER 1: Foto A */}
       <Image
         src={imageA}
         alt="Photo A"
@@ -82,7 +83,7 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Topeng) */}
+      {/* LAYER 2: Foto B */}
       <motion.div
         style={{ 
           maskImage, 
@@ -94,6 +95,7 @@ export default function HoverImageSwap({
         <div 
           className="relative w-full h-full"
           style={{ 
+            // Hanya scale tipis dan posisi tetap di tengah
             transform: `translateX(${offsetX}px) translateY(${offsetY}px) scale(${scale})`, 
             transformOrigin: "center center" 
           }}

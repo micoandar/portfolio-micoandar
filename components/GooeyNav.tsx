@@ -655,7 +655,7 @@ export default function GooeyNav({
       
       const shared = {
         className: 'gooey-nav__link',
-        'aria-current': index === current ? ('page' as const) : undefined, // <-- FIX TS ERROR DI SINI
+        'aria-current': index === current ? ('page' as const) : undefined, 
         onClick: (event: React.MouseEvent) => {
           if (!item.href || item.href === '#') event.preventDefault();
           select(index);
@@ -676,7 +676,7 @@ export default function GooeyNav({
   return (
     <nav
       className={`gooey-nav ${SIZES[size] ?? SIZES.md}${frame ? ' gooey-nav--framed' : ''} ${className}`.trim()}
-      style={{ ...THEMES[palette], '--gn-pill': pillColor, '--gn-active-ink': textColor, ...style } as CSSProperties}
+      style={{ ...THEMES[palette], '--gn-pill': pillColor, '--gn-active-ink': textColor, ...style } as any}
     >
       {frame && <span className="gooey-nav__rim" />}
       <div ref={stageRef} className="gooey-nav__stage">

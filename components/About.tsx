@@ -18,16 +18,14 @@ export default function About() {
   return (
     <Section id="tentang" title="About Me">
       {/* 
-        PERBAIKAN: 
-        Menggunakan minmax(0, Xfr) agar teks di kiri dan kanan tidak 
-        melebarkan kolomnya. Ini membuat kolom tengah (kotak hitam) 
-        berada persis di tengah layar dan sejajar dengan judul "About Me".
+        Grid disesuaikan: Kiri (1.2fr), Tengah (1.5fr), Kanan (1.2fr) 
+        Gap diperlebar menjadi gap-12 agar ada ruang antar elemen.
       */}
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1fr)] lg:items-center lg:gap-8 pt-8">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.5fr)_minmax(0,1.2fr)] lg:items-center lg:gap-12 pt-8">
         
-        {/* KIRI: Teks Sapaan */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
-          <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
+        {/* KIRI: Teks Sapaan (Diberi pr-8 agar tidak menabrak gambar) */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 lg:pr-8">
+          <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-6xl xl:text-7xl">
             <span className="text-blue-500">Hi, I'm</span> <br />
             <span className="text-slate-900 dark:text-white">
               Micoandar <br /> 
@@ -67,8 +65,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* KANAN: Deskripsi & Tombol */}
-        <div className="flex flex-col justify-center gap-6 z-10">
+        {/* KANAN: Deskripsi & Tombol (Diberi pl-8 agar tidak menabrak gambar) */}
+        <div className="flex flex-col justify-center gap-6 z-10 lg:pl-8">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}
           </p>

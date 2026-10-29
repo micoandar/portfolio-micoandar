@@ -19,8 +19,8 @@ export default function About() {
             imageA="/images/My-photo.png"
             imageB="/images/jbwkz.png"
             objectFit="cover"
-            radius={200} // Atur seberapa besar area yang berubah
-            blurEdge={100} // Atur seberapa halus ujungnya
+            // Mengatur ukuran lingkaran sorot (jangan terlalu lebar)
+            radius={100} 
             className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl"
           />
         </div>

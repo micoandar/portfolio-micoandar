@@ -12,16 +12,9 @@ export default function About() {
   const t = translations[lang].about;
 
   return (
-    <Section id="tentang">
-      {/* Judul Utama */}
-      <div className="mb-16 text-center lg:mb-20">
-        <h2 className="text-5xl font-black tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
-          About Me
-        </h2>
-      </div>
-
-      {/* Grid 3 Kolom */}
-      <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8">
+    // Menggunakan title="About Me" agar judul dari Section muncul
+    <Section id="tentang" title="About Me">
+      <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8 pt-10">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -43,7 +36,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Interaktif (Diperbesar & Ditinggikan) */}
+        {/* TENGAH: Foto Interaktif (Diperbesar & Ditinggikan Maksimal) */}
         <div className="relative flex justify-center w-full mx-auto z-0">
           {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
@@ -53,8 +46,9 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.15} // <-- Memperbesar gambar 15% agar lebih tinggi
-            className="relative w-full max-w-[450px] h-[600px] lg:h-[800px] rounded-3xl overflow-hidden"
+            imageScale={1.4} // Diperbesar 40% dari ukuran aslinya
+            // Kontainer dibuat sangat tinggi agar gambar terdorong ke atas dan bawah
+            className="relative w-full h-[600px] lg:h-[850px] overflow-visible"
           />
         </div>
 

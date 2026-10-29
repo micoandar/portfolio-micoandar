@@ -10,16 +10,16 @@ interface HoverImageSwapProps {
   className?: string;
   objectFit?: "cover" | "contain";
   radius?: number;
-  imageScale?: number; // Prop baru untuk memperbesar gambar
+  imageScale?: number; 
 }
 
 export default function HoverImageSwap({
   imageA,
   imageB,
-  className = "relative w-full h-full rounded-3xl overflow-hidden",
+  className = "relative w-full h-full rounded-3xl",
   objectFit = "cover",
   radius = 80, 
-  imageScale = 1, // Default scale 1
+  imageScale = 1,
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isIdle, setIsIdle] = useState(false);
@@ -48,12 +48,10 @@ export default function HoverImageSwap({
   const resetIdleTimer = () => {
     if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
-
     setIsIdle(false);
 
     idleTimerRef.current = setTimeout(() => {
       setIsIdle(true);
-      
       fadeOutTimerRef.current = setTimeout(() => {
         setIsIdle(false);
       }, 2000);
@@ -105,7 +103,7 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* Gambar A (Dibungkus div agar bisa di-scale) */}
+      {/* LAYER 1: Gambar Asli */}
       <div 
         className="absolute inset-0 w-full h-full"
         style={{ transform: `scale(${imageScale})`, transformOrigin: "center center" }}
@@ -120,7 +118,7 @@ export default function HoverImageSwap({
         />
       </div>
 
-      {/* Gambar B (Masking & Idle) */}
+      {/* LAYER 2: Gambar Kedua (Masking / Fade) */}
       <motion.div
         style={{ 
           maskImage: isIdle ? "none" : maskImage, 
@@ -129,7 +127,7 @@ export default function HoverImageSwap({
         }}
         animate={{ opacity: imageBOpacity }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-hidden"
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-visible"
       >
         <div 
           className="relative w-full h-full"

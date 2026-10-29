@@ -9,7 +9,6 @@ import Reveal from "@/components/Reveal";
 import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
-import AnimatedBorder from "@/components/AnimatedBorder"; // <-- Import
 
 const iconMap = {
   braces: Braces, layout: LayoutTemplate, server: Server, brain: Brain,
@@ -53,39 +52,37 @@ export default function Skills() {
           const Icon = iconMap[group.icon as keyof typeof iconMap];
           return (
             <Reveal key={group.title.id} delay={i * 60} className="h-full">
-              <AnimatedBorder className="h-full">
-                <div className="flex h-full flex-col p-5 sm:p-6 rounded-[22px]">
-                  <div className="flex items-center gap-3">
-                    <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-md sm:h-11 sm:w-11`}>
-                      <Icon size={18} />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-slate-900 dark:text-white sm:text-base">
-                        {group.title[lang]}
-                      </h3>
-                      <p className="text-[11px] text-slate-400 dark:text-slate-500 sm:text-xs">
-                        {group.items.length} technologies
-                      </p>
-                    </div>
+              <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:shadow-lg hover:shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+                <div className="flex items-center gap-3">
+                  <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-md sm:h-11 sm:w-11`}>
+                    <Icon size={18} />
                   </div>
-
-                  <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
-                    {group.items.map((skill) => (
-                      <li key={skill.name} className="flex items-start gap-3">
-                        <SkillIcon skill={skill} />
-                        <div>
-                          <p className="text-sm font-semibold leading-tight text-slate-800 dark:text-slate-200">
-                            {skill.name}
-                          </p>
-                          <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                            {skill.description[lang]}
-                          </p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white sm:text-base">
+                      {group.title[lang]}
+                    </h3>
+                    <p className="text-[11px] text-slate-400 dark:text-slate-500 sm:text-xs">
+                      {group.items.length} technologies
+                    </p>
+                  </div>
                 </div>
-              </AnimatedBorder>
+
+                <ul className="mt-5 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+                  {group.items.map((skill) => (
+                    <li key={skill.name} className="flex items-start gap-3">
+                      <SkillIcon skill={skill} />
+                      <div>
+                        <p className="text-sm font-semibold leading-tight text-slate-800 dark:text-slate-200">
+                          {skill.name}
+                        </p>
+                        <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                          {skill.description[lang]}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Reveal>
           );
         })}

@@ -5,7 +5,6 @@ import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { profile } from "@/data/profile";
 import { useLanguage } from "@/contexts/LanguageContext";
-import AnimatedBorder from "@/components/AnimatedBorder"; // <-- Import
 
 export default function Contact() {
   const { lang } = useLanguage();
@@ -85,23 +84,19 @@ export default function Contact() {
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
-                className="group flex h-full flex-col justify-between"
+                className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700"
               >
-                <AnimatedBorder className="h-full w-full">
-                  <div className="flex h-full flex-col justify-between p-6 rounded-[22px]">
-                    <div className={`grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br ${c.accent} text-white shadow-md`}>
-                      <c.icon size={18} />
-                    </div>
-                    <div className="mt-6">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
-                        {c.label}
-                      </p>
-                      <p className="mt-1 break-all text-sm font-semibold text-slate-800 transition group-hover:text-brand-700 dark:text-slate-200 dark:group-hover:text-brand-400">
-                        {c.value}
-                      </p>
-                    </div>
-                  </div>
-                </AnimatedBorder>
+                <div className={`grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br ${c.accent} text-white shadow-md`}>
+                  <c.icon size={18} />
+                </div>
+                <div className="mt-6">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                    {c.label}
+                  </p>
+                  <p className="mt-1 break-all text-sm font-semibold text-slate-800 transition group-hover:text-brand-700 dark:text-slate-200 dark:group-hover:text-brand-400">
+                    {c.value}
+                  </p>
+                </div>
               </a>
             </Reveal>
           ))}

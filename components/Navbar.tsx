@@ -11,12 +11,14 @@ import GooeyNav from "@/components/GooeyNav";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0); // State untuk melacak menu aktif
+  const [activeIndex, setActiveIndex] = useState(0); // Default ke 0 (Home)
   
   const { lang, toggle: toggleLang } = useLanguage();
   const { theme, setTheme } = useTheme();
 
+  // MENAMBAHKAN "Home" DI URUTAN PERTAMA
   const links = [
+    { label: "Home", href: "#beranda" },
     { label: "About", href: "#tentang" },
     { label: "Projects", href: "#proyek" },
     { label: "Skills", href: "#keahlian" },
@@ -24,25 +26,26 @@ export default function Navbar() {
     { label: "Contact", href: "#kontak" },
   ];
 
-  const sectionIds = ["tentang", "proyek", "keahlian", "pendidikan", "kontak"];
+  const sectionIds = ["beranda", "tentang", "proyek", "keahlian", "pendidikan", "kontak"];
 
   useEffect(() => setMounted(true), []);
 
-  // SCROLL SPY LOGIC: Mendeteksi section mana yang sedang terlihat di layar
+  // SCROLL SPY LOGIC
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200; // Offset 200px dari atas
+      const scrollPosition = window.scrollY + 250; // Offset 250px
+      let currentId = "beranda"; // Default ke beranda (Home)
 
-      // Cek dari section paling bawah ke atas
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
-        if (section) {
-          if (scrollPosition >= section.offsetTop) {
-            setActiveIndex(i);
-            break;
-          }
+        if (section && scrollPosition >= section.offsetTop) {
+          currentId = sectionIds[i];
+          break;
         }
       }
+      
+      const index = sectionIds.indexOf(currentId);
+      setActiveIndex(index);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -68,7 +71,6 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Komponen GooeyNav dengan prop activeIndex */}
           <GooeyNav
             items={links}
             activeIndex={activeIndex}

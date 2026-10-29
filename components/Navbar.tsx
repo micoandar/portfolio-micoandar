@@ -10,8 +10,6 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  
-  // Ref untuk mencegah Scroll Spy berjalan saat user baru saja klik menu
   const isClicking = useRef(false);
 
   const { lang, toggle: toggleLang } = useLanguage();
@@ -30,12 +28,9 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Jika user baru saja mengklik menu, abaikan Scroll Spy sementara
       if (isClicking.current) return;
-
       const scrollPosition = window.scrollY + 250;
       let currentId = "beranda";
-
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
         if (section && scrollPosition >= section.offsetTop) {
@@ -43,26 +38,18 @@ export default function Navbar() {
           break;
         }
       }
-      
-      const index = sectionIds.indexOf(currentId);
-      setActiveIndex(index);
+      setActiveIndex(sectionIds.indexOf(currentId));
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Fungsi khusus saat menu diklik
   const handleNavClick = (index: number) => {
     setActiveIndex(index);
-    isClicking.current = true; // Matikan scroll spy sementara
-    
-    // Nyalakan kembali scroll spy setelah 1 detik (saat smooth scroll selesai)
-    setTimeout(() => {
-      isClicking.current = false;
-    }, 1000);
+    isClicking.current = true;
+    setTimeout(() => { isClicking.current = false; }, 1000);
   };
 
   useEffect(() => {
@@ -74,12 +61,12 @@ export default function Navbar() {
     <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
       <div className="flex pointer-events-auto items-center justify-between gap-3">
         
-        {/* GooeyNav */}
-        <div className="flex items-center rounded-full bg-white/50 backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
+        {/* GooeyNav - HANYA MUNCUL DI DESKTOP (hidden md:flex) */}
+        <div className="hidden md:flex items-center rounded-full bg-white/50 backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
           <GooeyNav
             items={links}
             activeIndex={activeIndex}
-            onChange={handleNavClick} // <-- Menggunakan fungsi handleNavClick
+            onChange={handleNavClick}
             theme={resolvedTheme === "dark" ? "dark" : "light"}
             color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
             size="sm"
@@ -89,7 +76,7 @@ export default function Navbar() {
           />
         </div>
 
-        {/* Toggles & CTA */}
+        {/* Toggles & Mobile Menu Button */}
         <div className="flex items-center gap-2 rounded-full bg-white/50 backdrop-blur-md px-3 py-2 dark:bg-black/50 shadow-lg border border-white/10">
           {mounted && (
             <button
@@ -110,6 +97,7 @@ export default function Navbar() {
             {lang === "id" ? "ID" : "EN"}
           </button>
 
+          {/* Tombol Hamburger - HANYA MUNCUL DI HP (md:hidden) */}
           <button
             type="button"
             onClick={() => setOpen(!open)}
@@ -121,7 +109,7 @@ export default function Navbar() {
 
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay (Tampilan Menu di HP) */}
       {open && (
         <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/95 md:hidden">
           <ul className="flex flex-col gap-1">
@@ -131,7 +119,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => {
                     setOpen(false);
-                    handleNavClick(index); // <-- Update handle di Mobile Menu
+                    handleNavClick(index);
                   }}
                   className={`block rounded-xl px-4 py-3 text-sm font-medium transition ${
                     activeIndex === index

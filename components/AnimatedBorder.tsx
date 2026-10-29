@@ -42,16 +42,13 @@ export default function AnimatedBorder({
           strokeWidth="2"
           vectorEffect="non-scaling-stroke"
           filter="url(#glow)"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ 
-            pathLength: [0, 1, 1], 
-            opacity: [0, 1, 0] 
-          }}
+          strokeDasharray="200 200"
+          initial={{ strokeDashoffset: 200 }}
+          animate={{ strokeDashoffset: -200 }}
           transition={{ 
-            duration: 4, 
+            duration: 3, 
             repeat: Infinity, 
-            ease: "easeInOut",
-            times: [0, 0.8, 1] 
+            ease: "easeInOut" 
           }}
         />
 
@@ -63,16 +60,13 @@ export default function AnimatedBorder({
           strokeWidth="2"
           vectorEffect="non-scaling-stroke"
           filter="url(#glow)"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ 
-            pathLength: [0, 1, 1], 
-            opacity: [0, 1, 0] 
-          }}
+          strokeDasharray="200 200"
+          initial={{ strokeDashoffset: 200 }}
+          animate={{ strokeDashoffset: -200 }}
           transition={{ 
-            duration: 4, 
+            duration: 3, 
             repeat: Infinity, 
-            ease: "easeInOut",
-            times: [0, 0.8, 1] 
+            ease: "easeInOut" 
           }}
         />
       </svg>

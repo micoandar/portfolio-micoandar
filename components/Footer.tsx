@@ -13,7 +13,7 @@ export default function Footer() {
             <span className="text-brand-600 dark:text-brand-400">.</span>
           </p>
           <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
-            © {new Date().getFullYear()}
+            © {new Date().getFullYear()} MicDev. All rights reserved.
           </p>
         </div>
 

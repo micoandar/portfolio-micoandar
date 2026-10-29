@@ -17,7 +17,7 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 120,
+  radius = 150, // Ukuran area sorotan
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -25,18 +25,20 @@ export default function HoverImageSwap({
   const mouseY = useMotionValue(0);
   const maskRadius = useMotionValue(0);
 
-  // Spring physics agar gerakan lingkarannya sangat mulus
-  const springConfig = { stiffness: 120, damping: 25, mass: 0.5 };
+  // Spring physics agar gerakan sangat halus dan tidak kaku
+  const springConfig = { stiffness: 100, damping: 25, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // 98% solid: area tengah sepenuhnya menutupi gambar 1. Hanya 2% pinggir yang memudar.
+  // KUNCI EFEK SPIDER-MAN: 
+  // Gradasi dibuat lebar (black 20% -> transparent 80%)
+  // Ini membuat pinggiran topeng membaur dengan wajah asli secara magis.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 98%, 
-      transparent 100%
+      black 20%, 
+      transparent 80%
     )
   `;
 
@@ -67,7 +69,7 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A */}
+      {/* LAYER 1: Foto A (Wajah Asli) */}
       <Image
         src={imageA}
         alt="Photo A"
@@ -77,7 +79,7 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B */}
+      {/* LAYER 2: Foto B (Topeng Spider-Man) */}
       <motion.div
         style={{ 
           maskImage, 

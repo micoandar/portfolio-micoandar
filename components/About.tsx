@@ -17,15 +17,13 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* 
-        Grid disesuaikan: Kiri (1.2fr), Tengah (1.5fr), Kanan (1.2fr) 
-        Gap diperlebar menjadi gap-12 agar ada ruang antar elemen.
-      */}
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.5fr)_minmax(0,1.2fr)] lg:items-center lg:gap-12 pt-8">
+      {/* Grid disesuaikan agar proporsi kiri, tengah, kanan lebih seimbang */}
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center pt-8">
         
-        {/* KIRI: Teks Sapaan (Diberi pr-8 agar tidak menabrak gambar) */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 lg:pr-8">
-          <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-6xl xl:text-7xl">
+        {/* KIRI: Teks Sapaan */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 lg:pr-6">
+          {/* Ukuran font dikecilkan di laptop (lg:text-5xl), baru membesar di layar sangat lebar (xl:text-6xl) */}
+          <h1 className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
             <span className="text-blue-500">Hi, I'm</span> <br />
             <span className="text-slate-900 dark:text-white">
               Micoandar <br /> 
@@ -47,7 +45,7 @@ export default function About() {
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
-          <div className="relative w-full h-[500px] lg:h-[650px] rounded-3xl overflow-hidden shadow-2xl">
+          <div className="relative w-full h-[450px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
             <HalftoneReveal
               src="/images/My-photo.png"
               mode="mono"
@@ -65,8 +63,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* KANAN: Deskripsi & Tombol (Diberi pl-8 agar tidak menabrak gambar) */}
-        <div className="flex flex-col justify-center gap-6 z-10 lg:pl-8">
+        {/* KANAN: Deskripsi & Tombol */}
+        <div className="flex flex-col justify-center gap-6 z-10 lg:pl-6">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}
           </p>

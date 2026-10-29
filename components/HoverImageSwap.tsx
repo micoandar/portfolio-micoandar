@@ -10,10 +10,6 @@ interface HoverImageSwapProps {
   className?: string;
   objectFit?: "cover" | "contain";
   radius?: number;
-  scaleA?: number; // Prop baru untuk mengecilkan gambar utama
-  scaleB?: number; // Prop untuk skala gambar kedua
-  offsetX?: number; 
-  offsetY?: number; 
 }
 
 export default function HoverImageSwap({
@@ -21,11 +17,7 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 120, 
-  scaleA = 1,    // Default 1 (tidak mengecil)
-  scaleB = 1,    // Default 1 (tidak membesar)
-  offsetX = 0, 
-  offsetY = 0,
+  radius = 120,
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -33,15 +25,17 @@ export default function HoverImageSwap({
   const mouseY = useMotionValue(0);
   const maskRadius = useMotionValue(0);
 
+  // Spring physics agar gerakan lingkarannya sangat mulus
   const springConfig = { stiffness: 120, damping: 25, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
+  // 98% solid: area tengah sepenuhnya menutupi gambar 1. Hanya 2% pinggir yang memudar.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 95%, 
+      black 98%, 
       transparent 100%
     )
   `;
@@ -73,49 +67,33 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A (Diperkecil menggunakan scaleA) */}
-      <div 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          transform: `scale(${scaleA})`, 
-          transformOrigin: "center center" 
-        }}
-      >
-        <Image
-          src={imageA}
-          alt="Photo A"
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className={`object-${objectFit} object-center`}
-        />
-      </div>
+      {/* LAYER 1: Foto A */}
+      <Image
+        src={imageA}
+        alt="Photo A"
+        fill
+        priority
+        sizes="(max-width: 768px) 100vw, 50vw"
+        className={`object-${objectFit} object-center`}
+      />
 
-      {/* LAYER 2: Foto B (Masking) */}
+      {/* LAYER 2: Foto B */}
       <motion.div
         style={{ 
           maskImage, 
           WebkitMaskImage: maskImage,
           willChange: "mask-image"
         }}
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-hidden"
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
-        <div 
-          className="relative w-full h-full"
-          style={{ 
-            transform: `translateX(${offsetX}px) translateY(${offsetY}px) scale(${scaleB})`, 
-            transformOrigin: "center center" 
-          }}
-        >
-          <Image
-            src={imageB}
-            alt="Photo B"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className={`object-${objectFit} object-center`}
-          />
-        </div>
+        <Image
+          src={imageB}
+          alt="Photo B"
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className={`object-${objectFit} object-center`}
+        />
       </motion.div>
     </div>
   );

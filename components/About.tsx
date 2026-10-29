@@ -19,11 +19,7 @@ export default function About() {
             imageA="/images/My-photo.png"
             imageB="/images/jbwkz.png"
             objectFit="cover"
-            radius={120}
-            scaleA={0.9}    // <-- Gambar 1 diperkecil jadi 90%
-            scaleB={1.0}    // <-- Gambar 2 ukuran normal
-            offsetX={0}     
-            offsetY={0}     
+            radius={120} // Ukuran sorotan (bisa diubah ke 140 jika ingin lebih besar)
             className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl"
           />
         </div>

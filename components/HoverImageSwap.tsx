@@ -10,9 +10,9 @@ interface HoverImageSwapProps {
   className?: string;
   objectFit?: "cover" | "contain";
   radius?: number;
-  scale?: number; // Prop untuk memperbesar gambar kedua
-  offsetX?: number; // Geser Kanan/Kiri (px)
-  offsetY?: number; // Geser Atas/Bawah (px)
+  scale?: number; 
+  offsetX?: number; 
+  offsetY?: number; 
 }
 
 export default function HoverImageSwap({
@@ -20,10 +20,10 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 120,
-  scale = 1.15, 
-  offsetX = 20, // Default geser 20px ke kanan
-  offsetY = 0,  // Default tidak digeser ke atas/bawah
+  radius = 130, // Ukuran sorot lingkaran
+  scale = 1.4, // DIPERBESAR drastis (140%) agar topeng menutupi seluruh wajah asli
+  offsetX = 0, // Posisi tepat di tengah
+  offsetY = 0,
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -36,11 +36,11 @@ export default function HoverImageSwap({
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // Mask 95% solid agar tidak tembus pandang
+  // Area tengah 90% solid (hitam), 10% terluar memudar
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 95%, 
+      black 90%, 
       transparent 100%
     )
   `;
@@ -72,7 +72,7 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A (Original) */}
+      {/* LAYER 1: Foto A (Wajah Asli) */}
       <Image
         src={imageA}
         alt="Photo A"
@@ -82,7 +82,7 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Masking + Scale + Geser Posisi) */}
+      {/* LAYER 2: Foto B (Topeng) */}
       <motion.div
         style={{ 
           maskImage, 
@@ -91,10 +91,6 @@ export default function HoverImageSwap({
         }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none overflow-hidden"
       >
-        {/* 
-          Div ini mengatur posisi gambar kedua (topeng).
-          Kita gabungkan efek scale dan translate (geser).
-        */}
         <div 
           className="relative w-full h-full"
           style={{ 

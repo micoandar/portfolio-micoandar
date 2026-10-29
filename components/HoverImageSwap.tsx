@@ -103,13 +103,13 @@ export default function HoverImageSwap({
     duration = 0; 
   }
 
-  // --- PERBAIKAN OUTLINE KONTUR (STICKER EFFECT) ---
+  // --- PERBAIKAN OUTLINE KONTUR (WARNA GELAP) ---
   const outlineStyle = {
     filter: `
-      drop-shadow(1.5px 0 0 #ffffff) 
-      drop-shadow(-1.5px 0 0 #ffffff) 
-      drop-shadow(0 1.5px 0 #ffffff) 
-      drop-shadow(0 -1.5px 0 #ffffff) 
+      drop-shadow(1px 0 0 #1e293b) 
+      drop-shadow(-1px 0 0 #1e293b) 
+      drop-shadow(0 1px 0 #1e293b) 
+      drop-shadow(0 -1px 0 #1e293b) 
       drop-shadow(0 15px 20px rgba(0,0,0,0.15))
     `
   };

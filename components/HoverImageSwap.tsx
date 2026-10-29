@@ -17,7 +17,7 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 150, // Ukuran area sorotan
+  radius = 160, // Ukuran area sorotan
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -31,14 +31,14 @@ export default function HoverImageSwap({
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // KUNCI EFEK SPIDER-MAN: 
-  // Gradasi dibuat lebar (black 20% -> transparent 80%)
-  // Ini membuat pinggiran topeng membaur dengan wajah asli secara magis.
+  // PERBAIKAN GRADASI:
+  // Kita buat area pekat (black) sampai 75% agar wajah asli tertutup total.
+  // Hanya 25% area paling pinggir yang memudar (transparent) agar terlihat halus.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 20%, 
-      transparent 80%
+      black 75%, 
+      transparent 100%
     )
   `;
 
@@ -79,7 +79,7 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Topeng Spider-Man) */}
+      {/* LAYER 2: Foto B (Topeng) */}
       <motion.div
         style={{ 
           maskImage, 

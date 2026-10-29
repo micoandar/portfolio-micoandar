@@ -14,12 +14,14 @@ export default function About() {
   return (
     <Section id="tentang" title="About Me">
       {/* 
-        -mt-32 lg:-mt-64 menarik konten sangat tinggi mendekati judul.
+        Menghapus margin negatif yang berlebihan.
+        Menggunakan items-center agar teks sejajar di tengah gambar.
+        Memberikan pt-10 sebagai jarak wajar di bawah judul.
       */}
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr_1fr] lg:items-start lg:gap-8 -mt-32 lg:-mt-64">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-12 pt-10 lg:pt-16">
         
         {/* KIRI: Teks Sapaan */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 lg:pt-32">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
           <h1 className="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
             <span className="text-blue-500">Hi, I'm</span> <br />
             <span className="text-slate-900 dark:text-white">
@@ -38,8 +40,9 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Raksasa */}
+        {/* TENGAH: Foto Interaktif (Ukuran Pas) */}
         <div className="relative flex justify-center w-full mx-auto z-20">
+          {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
           <HoverImageSwap
@@ -47,13 +50,13 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.7} 
-            className="relative w-full h-[700px] lg:h-[850px]" 
+            imageScale={1.3} // Skala dikembalikan agar pas
+            className="relative w-full h-[500px] lg:h-[650px]" // Tinggi disesuaikan
           />
         </div>
 
         {/* KANAN: Deskripsi & Tombol */}
-        <div className="flex flex-col justify-start gap-6 z-10 lg:pt-32">
+        <div className="flex flex-col justify-center gap-6 z-10">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}
           </p>

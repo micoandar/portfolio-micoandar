@@ -655,7 +655,7 @@ export default function GooeyNav({
       
       const shared = {
         className: 'gooey-nav__link',
-        'aria-current': index === current ? 'page' : undefined,
+        'aria-current': index === current ? ('page' as const) : undefined, // <-- FIX TS ERROR DI SINI
         onClick: (event: React.MouseEvent) => {
           if (!item.href || item.href === '#') event.preventDefault();
           select(index);

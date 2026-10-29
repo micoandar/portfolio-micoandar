@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useMotionTemplate, useSpring } from "framer-motion";
 
@@ -9,7 +9,8 @@ interface HoverImageSwapProps {
   imageB: string;
   className?: string;
   objectFit?: "cover" | "contain";
-  radius?: number;
+  radius?: number; // Radius saat disentuh mouse
+  idleRadius?: number; // Radius saat animasi otomatis (idle)
 }
 
 export default function HoverImageSwap({
@@ -17,7 +18,8 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 160, // Ukuran area sorotan
+  radius = 80, // Diperkecil (sebelumnya 140) sesuai permintaan
+  idleRadius = 160, // Ukuran sorot saat animasi idle
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -25,15 +27,11 @@ export default function HoverImageSwap({
   const mouseY = useMotionValue(0);
   const maskRadius = useMotionValue(0);
 
-  // Spring physics agar gerakan sangat halus dan tidak kaku
   const springConfig = { stiffness: 100, damping: 25, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // PERBAIKAN GRADASI:
-  // Kita buat area pekat (black) sampai 75% agar wajah asli tertutup total.
-  // Hanya 25% area paling pinggir yang memudar (transparent) agar terlihat halus.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
@@ -42,11 +40,54 @@ export default function HoverImageSwap({
     )
   `;
 
+  // State & Ref untuk Idle Timer
+  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const fadeOutTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const resetIdleTimer = () => {
+    // Hapus timer yang sedang berjalan
+    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
+
+    // Sembunyikan jika sedang dalam mode idle
+    maskRadius.set(0);
+
+    // Set timer baru: 5 detik (5000ms)
+    idleTimerRef.current = setTimeout(() => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      
+      // Posisikan sorotan di tengah gambar
+      mouseX.set(rect.width / 2);
+      mouseY.set(rect.height / 2);
+      maskRadius.set(idleRadius);
+
+      // Set timer fade out: 2 detik (2000ms) setelah muncul
+      fadeOutTimerRef.current = setTimeout(() => {
+        maskRadius.set(0);
+      }, 2000);
+      
+    }, 5000);
+  };
+
+  // Mulai timer saat komponen di-mount
+  useEffect(() => {
+    resetIdleTimer();
+    return () => {
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
+    };
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
+    
+    // Reset timer setiap kali mouse bergerak
+    resetIdleTimer();
+    maskRadius.set(radius);
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -55,10 +96,12 @@ export default function HoverImageSwap({
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
     maskRadius.set(radius);
+    resetIdleTimer();
   };
 
   const handleMouseLeave = () => {
     maskRadius.set(0);
+    resetIdleTimer();
   };
 
   return (
@@ -69,7 +112,6 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A (Wajah Asli) */}
       <Image
         src={imageA}
         alt="Photo A"
@@ -79,7 +121,6 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Topeng) */}
       <motion.div
         style={{ 
           maskImage, 

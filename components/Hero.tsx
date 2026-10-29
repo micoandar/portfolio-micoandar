@@ -55,7 +55,7 @@ export default function Hero() {
         
         <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">
           
-          {/* BADGE STATUS DIHAPUS DARI SINI */}
+          {/* BADGE DIHAPUS DARI SINI */}
 
           <h1 className="mt-2 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />

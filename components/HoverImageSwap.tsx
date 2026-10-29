@@ -9,7 +9,7 @@ interface HoverImageSwapProps {
   imageB: string;
   className?: string;
   objectFit?: "cover" | "contain";
-  radius?: number; // Ukuran lingkaran reveal
+  radius?: number;
 }
 
 export default function HoverImageSwap({
@@ -17,28 +17,23 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 120, // Radius default 120px
+  radius = 120,
 }: HoverImageSwapProps) {
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Menyimpan posisi mouse (X dan Y)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Spring agar pergerakan lingkaran mengikuti mouse dengan sangat mulus
   const springConfig = { stiffness: 150, damping: 20, mass: 0.1 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
-  // Template untuk clip-path lingkaran
-  // Saat hover, radius menjadi 120px. Saat keluar, radius menjadi 0px.
   const clipPath = useMotionTemplate`circle(${isHovered ? radius : 0}px at ${smoothX}px ${smoothY}px)`;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    // Hitung posisi relatif terhadap container
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
   };
@@ -46,7 +41,6 @@ export default function HoverImageSwap({
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    // Set posisi awal saat mouse masuk agar tidak melompat dari pojok kiri atas
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
     setIsHovered(true);

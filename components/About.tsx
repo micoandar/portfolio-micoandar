@@ -13,14 +13,12 @@ export default function About() {
     <Section id="tentang" eyebrow={t.eyebrow} title={t.title}>
       <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
         
-        {/* KIRI: Image Hover Swap */}
+        {/* KIRI: Image Spotlight Swap */}
         <div className="relative w-full max-w-[450px] mx-auto">
           <HoverImageSwap
-            // Menggunakan gambar yang sudah kamu siapkan
             imageA="/images/My-photo.png"
             imageB="/images/jbwkz.png"
-            duration={0.45} 
-            objectFit="cover" // Menggunakan cover agar memenuhi frame
+            objectFit="cover"
             className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl"
           />
         </div>

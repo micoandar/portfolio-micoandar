@@ -19,8 +19,10 @@ export default function About() {
             imageA="/images/My-photo.png"
             imageB="/images/jbwkz.png"
             objectFit="cover"
-            // Mengatur ukuran lingkaran sorot (jangan terlalu lebar)
-            radius={100} 
+            radius={140}     // Ukuran area sorotan
+            scale={1.25}     // Diperbesar 25% agar menutupi pinggiran
+            offsetX={-15}    // Digeser ke kiri 15px agar seimbang
+            offsetY={0}      // Posisi vertikal tetap
             className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl"
           />
         </div>

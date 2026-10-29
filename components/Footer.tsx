@@ -2,13 +2,8 @@
 
 import { Github, Linkedin, Mail } from "lucide-react";
 import { profile } from "@/data/profile";
-import { translations } from "@/data/translations";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Footer() {
-  const { lang } = useLanguage();
-  const t = translations[lang].footer;
-
   return (
     <footer className="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 sm:flex-row sm:px-8">
@@ -18,7 +13,7 @@ export default function Footer() {
             <span className="text-brand-600 dark:text-brand-400">.</span>
           </p>
           <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
-            © {new Date().getFullYear()} — {t.built}
+            © {new Date().getFullYear()}
           </p>
         </div>
 

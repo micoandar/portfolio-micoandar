@@ -36,3 +36,21 @@
     background-size: 40px 40px;
   }
 }
+
+@keyframes drawPath {
+  0% { 
+    stroke-dashoffset: 100; 
+    opacity: 0; 
+  }
+  10% { 
+    opacity: 1; 
+  }
+  80% { 
+    stroke-dashoffset: 0; 
+    opacity: 1; 
+  }
+  100% { 
+    stroke-dashoffset: 0; 
+    opacity: 0; 
+  }
+}

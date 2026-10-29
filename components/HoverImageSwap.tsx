@@ -42,23 +42,23 @@ export default function HoverImageSwap({
     )
   `;
 
-  // --- LOGIKA IDLE LOOPING BARU ---
+  // --- LOGIKA IDLE LOOPING ---
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
     if (isHovered) {
-      // Jika disentuh mouse, hentikan animasi idle dan kembali ke gambar 1
+      // Jika mouse menyentuh, matikan idle
       setIsIdle(false);
       return;
     }
 
     if (isIdle) {
-      // Jika gambar 2 sedang tampil, tunggu 3 detik lalu fade out (gambar 1)
+      // Jika gambar 2 tampil, tunggu 3 detik lalu Fade Out
       timeout = setTimeout(() => {
         setIsIdle(false);
       }, 3000);
     } else {
-      // Jika gambar 1 sedang tampil, tunggu 5 detik lalu fade in (gambar 2)
+      // Jika gambar 1 tampil, tunggu 5 detik lalu Fade In
       timeout = setTimeout(() => {
         setIsIdle(true);
       }, 5000);
@@ -91,9 +91,6 @@ export default function HoverImageSwap({
     setIsHovered(false);
   };
 
-  // Gambar B akan muncul jika sedang Idle (animasi) atau sedang disentuh (mask)
-  const imageBOpacity = isIdle ? 1 : (isHovered ? 1 : 0);
-
   return (
     <div
       ref={containerRef}
@@ -119,15 +116,17 @@ export default function HoverImageSwap({
         </div>
       </div>
 
-      {/* LAYER 2: Gambar Kedua (Masking / Fade) */}
+      {/* LAYER 2: Gambar Kedua */}
       <motion.div
         style={{ 
-          maskImage: isIdle ? "none" : maskImage, 
-          WebkitMaskImage: isIdle ? "none" : maskImage,
+          // HANYA GUNAKAN MASK JIKA SEDANG DI-HOVER
+          maskImage: isHovered ? maskImage : "none", 
+          WebkitMaskImage: isHovered ? maskImage : "none",
           willChange: "mask-image, opacity"
         }}
-        animate={{ opacity: imageBOpacity }}
-        transition={{ duration: 0.8, ease: "easeInOut" }} // Transisi Fade yang halus
+        // GUNAKAN OPACITY UNTUK ANIMASI IDLE (FADE IN & FADE OUT)
+        animate={{ opacity: isIdle ? 1 : (isHovered ? 1 : 0) }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <div 

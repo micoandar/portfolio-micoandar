@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import Section from "@/components/ui/Section";
-import HoloCard from "@/components/HoloCard"; // <-- Import komponen baru
+import HoloCard from "@/components/HoloCard";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -44,7 +44,7 @@ export default function About() {
             alt="Micoandar Portrait"
             preset="cosmos" // Pilihan: 'bursts', 'stars', 'shards', 'cosmos', 'rainbow', 'swirl', 'glitter', 'gold'
             width={380}
-            height={500}
+            // height={500} <-- BARIS INI DIHAPUS
             className="mx-auto"
           />
         </div>

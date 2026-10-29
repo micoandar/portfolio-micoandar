@@ -35,7 +35,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Diperbesar & Diberi Garis Luar */}
+        {/* TENGAH: Foto Diperbesar */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
@@ -45,8 +45,8 @@ export default function About() {
             objectFit="contain"
             radius={80} 
             imageScale={1.5} 
-            // Menambahkan border luar (garis) dan membulatkan sudut
-            className="relative w-full h-[550px] lg:h-[700px] border-2 border-slate-200 dark:border-slate-800 rounded-[2rem]"
+            // Class border persegi sudah dihapus
+            className="relative w-full h-[550px] lg:h-[700px]"
           />
         </div>
 

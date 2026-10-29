@@ -36,7 +36,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Efek Halftone Reveal */}
+        {/* TENGAH: Efek Halftone Reveal dengan Warna Referensi */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
@@ -47,11 +47,11 @@ export default function About() {
               shape="dot"
               cellSize={6}
               angle={45}
-              inkColor="#4f46e5" 
-              paperColor="#0a0a0a" 
+              // MENGIKUTI WARNA DARI FILE DOKUMENTASI
+              inkColor="#f4f1ea" 
+              paperColor="#120f17" 
               revealRadius={150} 
               softness={0.5}
-              // Menggunakan efek gelombang bawaan (WebGL)
               clickBurst={true} 
               className="w-full h-full"
             />

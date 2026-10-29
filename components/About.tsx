@@ -13,8 +13,8 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* Grid diubah agar kolom tengah lebih lebar (1.2fr) dibanding kolom teks (1fr) */}
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-8 -mt-8 lg:-mt-12">
+      {/* Grid diubah: kolom tengah dibuat lebih lebar (1.3fr) */}
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr_1fr] lg:items-center lg:gap-8 -mt-8 lg:-mt-12">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -36,7 +36,7 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Raksasa */}
+        {/* TENGAH: Foto Raksasa (Diperbesar Maksimal) */}
         <div className="relative flex justify-center w-full mx-auto z-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
@@ -45,8 +45,8 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.5} // <-- Diperbesar menjadi 150%
-            className="relative w-full h-[600px] lg:h-[800px]" // <-- Tinggi ditambah
+            imageScale={1.7} // <-- Skala gambar diperbesar menjadi 1.7
+            className="relative w-full h-[700px] lg:h-[850px]" // <-- Wadah ditinggikan
           />
         </div>
 

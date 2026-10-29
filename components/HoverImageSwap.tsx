@@ -42,29 +42,30 @@ export default function HoverImageSwap({
     )
   `;
 
-  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const fadeOutTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const resetIdleTimer = () => {
-    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-    if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
-    setIsIdle(false);
-
-    idleTimerRef.current = setTimeout(() => {
-      setIsIdle(true);
-      fadeOutTimerRef.current = setTimeout(() => {
-        setIsIdle(false);
-      }, 2000);
-    }, 5000);
-  };
-
+  // --- LOGIKA IDLE LOOPING BARU ---
   useEffect(() => {
-    resetIdleTimer();
-    return () => {
-      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-      if (fadeOutTimerRef.current) clearTimeout(fadeOutTimerRef.current);
-    };
-  }, []);
+    let timeout: NodeJS.Timeout;
+
+    if (isHovered) {
+      // Jika disentuh mouse, hentikan animasi idle dan kembali ke gambar 1
+      setIsIdle(false);
+      return;
+    }
+
+    if (isIdle) {
+      // Jika gambar 2 sedang tampil, tunggu 3 detik lalu fade out (gambar 1)
+      timeout = setTimeout(() => {
+        setIsIdle(false);
+      }, 3000);
+    } else {
+      // Jika gambar 1 sedang tampil, tunggu 5 detik lalu fade in (gambar 2)
+      timeout = setTimeout(() => {
+        setIsIdle(true);
+      }, 5000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isHovered, isIdle]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -74,7 +75,6 @@ export default function HoverImageSwap({
     maskRadius.set(radius);
     
     if (!isHovered) setIsHovered(true);
-    resetIdleTimer();
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -84,21 +84,19 @@ export default function HoverImageSwap({
     mouseY.set(e.clientY - rect.top);
     maskRadius.set(radius);
     setIsHovered(true);
-    resetIdleTimer();
   };
 
   const handleMouseLeave = () => {
     maskRadius.set(0);
     setIsHovered(false);
-    resetIdleTimer();
   };
 
+  // Gambar B akan muncul jika sedang Idle (animasi) atau sedang disentuh (mask)
   const imageBOpacity = isIdle ? 1 : (isHovered ? 1 : 0);
 
   return (
     <div
       ref={containerRef}
-      // MENGUBAH KURSOR JADI DEFAULT (PANAH BIASA)
       className={`group relative cursor-default ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -129,7 +127,7 @@ export default function HoverImageSwap({
           willChange: "mask-image, opacity"
         }}
         animate={{ opacity: imageBOpacity }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        transition={{ duration: 0.8, ease: "easeInOut" }} // Transisi Fade yang halus
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
         <div 

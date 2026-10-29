@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import Section from "@/components/ui/Section";
-import HalftoneReveal from "@/components/HalftoneReveal"; // <-- Import komponen baru
+import HalftoneReveal from "@/components/HalftoneReveal";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -13,7 +13,8 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-8 -mt-12 lg:-mt-24">
+      {/* Margin negatif dihapus, diganti dengan pt-8 agar turun ke bawah judul */}
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr_1fr] lg:items-center lg:gap-8 pt-8">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -37,21 +38,21 @@ export default function About() {
 
         {/* TENGAH: Efek Halftone Reveal */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20">
-          {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
-          {/* Container dengan tinggi yang pasti */}
-          <div className="relative w-full h-[500px] lg:h-[650px] rounded-3xl overflow-hidden">
+          {/* Kotak hitam dibuat pas (tidak terlalu tinggi) */}
+          <div className="relative w-full h-[450px] lg:h-[550px] rounded-3xl overflow-hidden shadow-2xl">
             <HalftoneReveal
               src="/images/My-photo.png"
               mode="mono"
               shape="dot"
               cellSize={6}
               angle={45}
-              // Warna disesuaikan dengan tema gelap/terang website
-              inkColor="#4f46e5" // Warna titik halftone (Indigo/Brand)
-              paperColor="transparent" // Sesuaikan dengan background (Abaikan jika WebGL)
-              revealRadius={150} // Ukuran area sorot kursor
+              inkColor="#4f46e5" 
+              // Warna background halftone disamakan dengan warna background website
+              // agar tidak terlihat seperti "kotak hitam" yang aneh
+              paperColor={lang === "id" ? "#0a0a0a" : "#0a0a0a"} 
+              revealRadius={150} 
               softness={0.5}
               className="w-full h-full"
             />

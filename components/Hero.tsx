@@ -17,7 +17,6 @@ export default function Hero() {
 
   const roles = profile.roles[lang];
 
-  // Deteksi layar HP untuk menyesuaikan ukuran Lanyard
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -55,12 +54,10 @@ export default function Hero() {
         
         <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">
           
-          {/* BADGE DIHAPUS DARI SINI */}
-
           <h1 className="mt-2 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">
             {t.greeting} <br />
             <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent dark:from-brand-400 dark:to-violet-400">
-              Micoandar.
+              {t.name}
             </span>
           </h1>
 
@@ -71,7 +68,7 @@ export default function Hero() {
           </div>
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
-            {profile.summary[lang]}
+            {t.summary}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">

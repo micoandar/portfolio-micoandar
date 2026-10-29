@@ -2,7 +2,7 @@ export const translations = {
   id: {
     nav: {
       about: "Tentang",
-      projects: "Proyek",
+      projects: "Portofolio",
       skills: "Keahlian",
       education: "Pendidikan",
       contact: "Kontak",
@@ -16,13 +16,11 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      // Deskripsi Hero Baru
       summary: "Berawal dari rasa ingin tahu terhadap teknologi, kini berkembang menjadi passion di bidang software development. Saya senang bereksperimen dengan kode, mengeksplorasi teknologi baru, dan mengubah ide menjadi aplikasi yang nyata. Mulai dari membangun antarmuka web yang responsif, mengembangkan backend dan REST API, hingga merancang sistem yang fungsional, saya selalu berusaha menciptakan aplikasi yang tidak hanya menarik secara visual, tetapi juga nyaman digunakan dan memberikan solusi bagi penggunanya.",
     },
     about: {
       eyebrow: "Tentang Saya",
       title: "About Me",
-      // Deskripsi About Me Baru
       desc: "Fresh Graduate S1 Informatika Universitas Gunadarma (2026) dengan pengalaman proyek hampir 2 tahun dalam rekayasa perangkat lunak. Berfokus pada pengembangan aplikasi web full-stack end-to-end, mulai dari perancangan arsitektur database, pembangunan REST API yang aman, antarmuka responsif, hingga deployment ke cloud.",
     },
     projects: {
@@ -61,7 +59,7 @@ export const translations = {
   en: {
     nav: {
       about: "About",
-      projects: "Projects",
+      projects: "Portfolio",
       skills: "Skills",
       education: "Education",
       contact: "Contact",

@@ -9,7 +9,7 @@ interface HoverImageSwapProps {
   imageB: string;
   className?: string;
   objectFit?: "cover" | "contain";
-  radius?: number; 
+  radius?: number;
 }
 
 export default function HoverImageSwap({
@@ -17,7 +17,7 @@ export default function HoverImageSwap({
   imageB,
   className = "relative w-full aspect-[4/5] rounded-3xl overflow-hidden",
   objectFit = "cover",
-  radius = 120, // Ukuran default (lebih kecil dan pas)
+  radius = 120,
 }: HoverImageSwapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -28,19 +28,18 @@ export default function HoverImageSwap({
   // Radius sorot
   const maskRadius = useMotionValue(0);
 
-  // Spring Physics untuk pergerakan yang smooth (tidak kaku)
+  // Spring Physics
   const springConfig = { stiffness: 120, damping: 25, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
-  
-  // Spring untuk radius agar saat mouse keluar, lingkarannya mengecil dengan halus
   const smoothRadius = useSpring(maskRadius, { stiffness: 150, damping: 25 });
 
-  // Kombinasi Mask Image (Lingkaran dengan tepi yang memudar)
+  // Menggunakan radial-gradient dengan area solid (black) yang lebih lebar (60%)
+  // agar gambar kedua benar-benar menutupi gambar pertama dan hanya memudar di ujung.
   const maskImage = useMotionTemplate`
     radial-gradient(
       circle ${smoothRadius}px at ${smoothX}px ${smoothY}px, 
-      black 20%, 
+      black 60%, 
       transparent 100%
     )
   `;
@@ -55,17 +54,12 @@ export default function HoverImageSwap({
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    
-    // Set posisi awal tepat di pintu masuk mouse agar tidak melompat dari pojok
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
-    
-    // Munculkan sorotan
     maskRadius.set(radius);
   };
 
   const handleMouseLeave = () => {
-    // Sembunyikan sorotan (kembali normal)
     maskRadius.set(0);
   };
 
@@ -77,7 +71,7 @@ export default function HoverImageSwap({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* LAYER 1: Foto A (Base) */}
+      {/* LAYER 1: Foto A */}
       <Image
         src={imageA}
         alt="Photo A"
@@ -87,16 +81,18 @@ export default function HoverImageSwap({
         className={`object-${objectFit} object-center`}
       />
 
-      {/* LAYER 2: Foto B (Hanya muncul di area mask) */}
+      {/* LAYER 2: Foto B (Masking + Efek Zoom/Pop-out) */}
       <motion.div
         style={{ 
           maskImage, 
-          WebkitMaskImage: maskImage, // Untuk Safari
-          willChange: "mask-image"
+          WebkitMaskImage: maskImage,
+          willChange: "mask-image, transform"
         }}
+        // Sedikit diperbesar agar terasa lebih "real" ketika disentuh
+        animate={{ scale: maskRadius.get() > 0 ? 1.04 : 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 25 }}
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       >
-        {/* object-cover dan object-center memastikan gambar sejajar sempurna */}
         <Image
           src={imageB}
           alt="Photo B"

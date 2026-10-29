@@ -16,7 +16,7 @@ interface HoverImageSwapProps {
 export default function HoverImageSwap({
   imageA,
   imageB,
-  className = "relative w-full h-full",
+  className = "relative w-full h-full rounded-3xl overflow-hidden",
   objectFit = "cover",
   radius = 80, 
   imageScale = 1,
@@ -98,7 +98,8 @@ export default function HoverImageSwap({
   return (
     <div
       ref={containerRef}
-      className={`group relative cursor-crosshair ${className}`}
+      // MENGUBAH CURSOR-CROSSHAIR MENJADI CURSOR-DEFAULT
+      className={`group relative cursor-default ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}

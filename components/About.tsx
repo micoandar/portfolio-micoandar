@@ -14,10 +14,11 @@ export default function About() {
   return (
     <Section id="tentang" title="About Me">
       {/* 
-        items-center memastikan teks di kiri dan kanan sejajar di tengah dengan gambar.
-        Tidak ada lagi jarak aneh karena tingginya seimbang.
+        PERBAIKAN: 
+        Menggunakan `lg:items-center` agar teks dan gambar sejajar di tengah.
+        Menghapus `pt-10` agar tidak ada jarak tambahan dari judul.
       */}
-      <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8 pt-10 lg:pt-0">
+      <div className="grid gap-12 lg:grid-cols-3 lg:items-center lg:gap-8 pt-4">
         
         {/* KIRI: Teks Sapaan */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
@@ -39,8 +40,9 @@ export default function About() {
           </a>
         </div>
 
-        {/* TENGAH: Foto Raksasa (Mendominasi) */}
+        {/* TENGAH: Foto Interaktif */}
         <div className="relative flex justify-center w-full mx-auto z-20">
+          {/* Glow di belakang foto */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
           
           <HoverImageSwap
@@ -48,8 +50,9 @@ export default function About() {
             imageB="/images/jbwkz.png"
             objectFit="contain"
             radius={80} 
-            imageScale={1.3} // Skala 1.3 agar gambar terlihat besar
-            className="relative w-full h-[600px] lg:h-[800px]"
+            imageScale={1.25} // Skala pas, tidak terlalu besar
+            // Tinggi gambar dikurangi agar tidak terlalu banyak ruang kosong di atasnya
+            className="relative w-full h-[500px] lg:h-[650px]"
           />
         </div>
 

@@ -11,13 +11,14 @@ export default function AnimatedBorder({
   className?: string; 
 }) {
   return (
-    <div className={`relative overflow-hidden rounded-[24px] bg-slate-200 dark:bg-slate-800 p-[1.5px] ${className}`}>
+    // Wrapper: Padding 1px di mobile, 1.5px di desktop
+    <div className={`relative overflow-hidden rounded-[24px] bg-slate-200 dark:bg-slate-800 p-[1px] md:p-[1.5px] ${className}`}>
       
-      {/* SVG Layer */}
+      {/* SVG Layer: Hanya muncul di Desktop (hidden md:block) */}
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full pointer-events-none"
+        className="absolute inset-0 h-full w-full pointer-events-none hidden md:block"
       >
         <defs>
           {/* Warna Gradient: Oranye -> Pink -> Cyan */}
@@ -47,7 +48,7 @@ export default function AnimatedBorder({
           initial={{ strokeDashoffset: 1 }}
           animate={{ strokeDashoffset: -1 }}
           transition={{ 
-            duration: 6, // <-- Waktu diperlambat menjadi 6 detik
+            duration: 6, 
             repeat: Infinity, 
             ease: "linear" 
           }}
@@ -66,7 +67,7 @@ export default function AnimatedBorder({
           initial={{ strokeDashoffset: 1 }}
           animate={{ strokeDashoffset: -1 }}
           transition={{ 
-            duration: 6, // <-- Waktu diperlambat menjadi 6 detik
+            duration: 6, 
             repeat: Infinity, 
             ease: "linear" 
           }}
@@ -74,7 +75,7 @@ export default function AnimatedBorder({
       </svg>
 
       {/* Konten di dalamnya */}
-      <div className="relative z-10 h-full w-full rounded-[23px] bg-white dark:bg-[#0f172a]">
+      <div className="relative z-10 h-full w-full rounded-[23px] md:rounded-[22.5px] bg-white dark:bg-[#0f172a]">
         {children}
       </div>
       

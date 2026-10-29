@@ -35,19 +35,21 @@ export default function PortfolioTabs() {
 
   return (
     <Section id="portfolio" title="Portfolio">
-      <div className="mb-12 flex justify-center">
-        <GooeyNav
-          items={navItems}
-          activeIndex={activeTab}
-          onChange={(index) => setActiveTab(index)}
-          theme={resolvedTheme === "dark" ? "dark" : "light"}
-          // Hitam di mode terang, Putih di mode gelap
-          color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
-          size="md"
-          frame={true}
-          particleCount={15}
-          animationTime={600}
-        />
+      {/* PERBAIKAN: Wrapper overflow-x-auto agar navbar aman & tidak merusak layout di HP */}
+      <div className="mb-10 flex w-full justify-center overflow-x-auto pb-4 sm:mb-12">
+        <div className="min-w-max px-4">
+          <GooeyNav
+            items={navItems}
+            activeIndex={activeTab}
+            onChange={(index) => setActiveTab(index)}
+            theme={resolvedTheme === "dark" ? "dark" : "light"}
+            color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
+            size="sm" // <-- Ukuran lebih kecil untuk mobile
+            frame={true}
+            particleCount={15}
+            animationTime={600}
+          />
+        </div>
       </div>
 
       <div className="min-h-[500px]">

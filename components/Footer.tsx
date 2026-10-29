@@ -6,7 +6,8 @@ import { profile } from "@/data/profile";
 export default function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 sm:flex-row sm:px-8">
+      {/* PERBAIKAN: pb-24 di HP agar tidak tertutup tombol BackToTop */}
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 pb-24 pt-10 sm:flex-row sm:px-8 sm:pb-10">
         <div className="text-center sm:text-left">
           <p className="text-sm font-bold text-slate-900 dark:text-white">
             {profile.name}

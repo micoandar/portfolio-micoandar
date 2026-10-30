@@ -33,7 +33,7 @@ const config: Config = {
         },
         breathe: {
           "0%, 100%": { transform: "translateY(0px) scale(1)" },
-          "50%": { transform: "translateY(-12px) scale(1.05)" },
+          "50%": { transform: "translateY(-32px) scale(1.12)" },
         },
         "fade-in": {
           from: { opacity: "0", transform: "translateY(10px)" },
@@ -42,7 +42,7 @@ const config: Config = {
       },
       animation: {
         float: "float 6s ease-in-out infinite",
-        breathe: "breathe 5s ease-in-out infinite",
+        breathe: "breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite",
         "fade-in": "fade-in 0.6s ease-out forwards",
       },
     },

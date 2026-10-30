@@ -20,6 +20,7 @@ export default function About() {
   const [loadVideo, setLoadVideo] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
+  // Deteksi prefers-reduced-motion
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
@@ -28,6 +29,7 @@ export default function About() {
     return () => mq.removeEventListener?.("change", onChange);
   }, []);
 
+  // Lazy-load video + pause saat tidak terlihat
   useEffect(() => {
     const el = wrapRef.current;
     const v = videoRef.current;
@@ -92,26 +94,28 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D bernafas */}
+        {/* TENGAH: video 3D bernafas + frame menyala */}
         <div
           ref={wrapRef}
           className="relative flex justify-center items-center w-full mx-auto z-20"
         >
-          {/* Glow statis */}
+          {/* Glow berdenyut di belakang frame */}
           <div
-            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none"
+            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none animate-glow-pulse motion-reduce:animate-none will-change-[opacity,transform]"
             style={{
               background: isDark
-                ? "radial-gradient(ellipse at center, rgba(79,70,229,0.28) 0%, rgba(139,92,246,0.16) 40%, rgba(14,165,233,0.08) 65%, transparent 80%)"
-                : "radial-gradient(ellipse at center, rgba(99,102,241,0.22) 0%, rgba(139,92,246,0.14) 40%, rgba(14,165,233,0.08) 65%, transparent 80%)",
+                ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
+                : "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)",
             }}
           />
 
           {/* Frame statis */}
           <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40">
+            {/* Border berdenyut */}
+            <div className="absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none animate-border-pulse motion-reduce:animate-none will-change-[opacity]" />
+
             <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
               {loadVideo ? (
-                // Wrapper animasi bernafas — video di dalamnya naik-turun + scale
                 <div className="h-full w-full animate-breathe motion-reduce:animate-none will-change-transform">
                   <video
                     ref={videoRef}
@@ -137,6 +141,12 @@ export default function About() {
                 />
               )}
 
+              {/* Scanline holografik */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent animate-scanline motion-reduce:animate-none will-change-transform" />
+              </div>
+
+              {/* Overlay gradasi bawah */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
           </div>

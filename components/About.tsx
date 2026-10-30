@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
-import { motion, useMotionValue, useSpring, useTransform, useAnimation } from "framer-motion"; // Tambah useAnimation
+import { motion, useMotionValue, useSpring, useTransform, useAnimation } from "framer-motion";
 import Section from "@/components/ui/Section";
 import StarBorder from "@/components/StarBorder";
 import { profile } from "@/data/profile";
@@ -26,7 +26,7 @@ export default function About() {
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // --- STATE UNTUK SPIN 3 DETIK ---
+  // --- STATE UNTUK SPIN 3 DETIK (HANYA VIDEO) ---
   const spinControls = useAnimation();
   const [isSpinning, setIsSpinning] = useState(false);
 
@@ -34,14 +34,14 @@ export default function About() {
     if (isSpinning) return; // Cegah klik ganda saat berputar
     setIsSpinning(true);
     
-    // Berputar 3 kali (1080 derajat) dalam 3 detik
+    // Memutar video 2 kali lipat (720 derajat) dalam 3 detik
     await spinControls.start({
-      rotateY: [0, 1080],
+      rotate: [0, 720],
       transition: { duration: 3, ease: "linear" }
     });
     
-    // Reset kembali ke 0 derajat secara instan (1080 derajat = 0 derajat secara visual)
-    spinControls.set({ rotateY: 0 });
+    // Reset kembali ke 0 derajat secara instan
+    spinControls.set({ rotate: 0 });
     setIsSpinning(false);
   };
   // --------------------------------
@@ -168,99 +168,100 @@ export default function About() {
 
           <div className="hidden sm:block absolute -bottom-8 w-[80%] h-8 bg-black/40 dark:bg-black/60 blur-xl rounded-[100%] animate-float motion-reduce:animate-none" />
 
-          {/* WRAPPER ANIMASI FLOAT (CSS) */}
           <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-float motion-reduce:animate-none">
             
-            {/* WRAPPER ANIMASI SPIN 3 DETIK (Framer Motion) */}
+            {/* KARTU 3D TILT (Parallax Mouse) */}
             <motion.div
-              animate={spinControls}
-              style={{ transformStyle: "preserve-3d" }}
-              onClick={handleSpin}
-              className="cursor-pointer"
+              ref={cardRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                rotateX: rotateX,
+                rotateY: rotateY,
+                transformStyle: "preserve-3d",
+              }}
+              className="relative w-full will-change-transform"
             >
-              {/* KARTU 3D TILT (Parallax Mouse) */}
-              <motion.div
-                ref={cardRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                  rotateX: rotateX,
-                  rotateY: rotateY,
-                  transformStyle: "preserve-3d",
-                }}
-                className="relative w-full will-change-transform"
+              
+              <div 
+                style={{ transform: "translateZ(30px)" }}
+                className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-slate-900/40 p-2 shadow-2xl backdrop-blur-sm dark:border-white/10"
               >
                 
-                <div 
-                  style={{ transform: "translateZ(30px)" }}
-                  className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-slate-900/40 p-2 shadow-2xl backdrop-blur-sm dark:border-white/10"
-                >
+                <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/40 dark:border-violet-400/40 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
+
+                <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
                   
-                  <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/40 dark:border-violet-400/40 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
+                  <LightRays 
+                    raysOrigin="top-center"
+                    raysColor={isDark ? "#818cf8" : "#4f46e5"} 
+                    raysSpeed={1.2}
+                    lightSpread={0.6}
+                    rayLength={2.5}
+                    followMouse={true}
+                    mouseInfluence={0.1}
+                    noiseAmount={0.05}
+                    distortion={0.05}
+                    className="z-0" 
+                  />
 
-                  <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
-                    
-                    <LightRays 
-                      raysOrigin="top-center"
-                      raysColor={isDark ? "#818cf8" : "#4f46e5"} 
-                      raysSpeed={1.2}
-                      lightSpread={0.6}
-                      rayLength={2.5}
-                      followMouse={true}
-                      mouseInfluence={0.1}
-                      noiseAmount={0.05}
-                      distortion={0.05}
-                      className="z-0" 
-                    />
-
-                    {loadVideo && (
-                      <div className="relative z-10 h-full w-full mix-blend-screen opacity-90">
-                        <video
-                          ref={videoRef}
-                          src="/api/video/3d"
-                          autoPlay={!reducedMotion}
-                          loop
-                          muted
-                          playsInline
-                          preload="auto" 
-                          disablePictureInPicture
-                          controlsList="nodownload noremoteplayback noplaybackrate"
-                          onContextMenu={(e) => e.preventDefault()}
-                          onDragStart={(e) => e.preventDefault()}
-                          draggable={false}
-                          onCanPlay={() => setIsVideoReady(true)}
-                          className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
-                            isVideoReady ? "opacity-100" : "opacity-0"
-                          }`}
-                        >
-                          Browser Anda tidak mendukung tag video.
-                        </video>
-                      </div>
-                    )}
-
-                    {!isVideoReady && (
-                      <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">
-                         <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
-                      </div>
-                    )}
-
+                  {/* VIDEO SPIN WRAPPER */}
+                  <div 
+                    onClick={handleSpin} 
+                    className="absolute inset-0 z-10 cursor-pointer overflow-hidden"
+                  >
                     <motion.div
-                      className="absolute inset-0 pointer-events-none z-30 opacity-0 dark:opacity-30 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
-                      style={{
-                        background: useTransform(
-                          [glareX, glareY],
-                          ([gx, gy]) => `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.4) 0%, transparent 60%)`
-                        ),
-                      }}
-                    />
-                    
-                    <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      animate={spinControls}
+                      className="h-full w-full flex items-center justify-center"
+                    >
+                      {loadVideo && (
+                        <div className="h-full w-full mix-blend-screen opacity-90">
+                          <video
+                            ref={videoRef}
+                            src="/api/video/3d"
+                            autoPlay={!reducedMotion}
+                            loop
+                            muted
+                            playsInline
+                            preload="auto" 
+                            disablePictureInPicture
+                            controlsList="nodownload noremoteplayback noplaybackrate"
+                            onContextMenu={(e) => e.preventDefault()}
+                            onDragStart={(e) => e.preventDefault()}
+                            draggable={false}
+                            onCanPlay={() => setIsVideoReady(true)}
+                            className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
+                              isVideoReady ? "opacity-100" : "opacity-0"
+                            }`}
+                          >
+                            Browser Anda tidak mendukung tag video.
+                          </video>
+                        </div>
+                      )}
+                    </motion.div>
                   </div>
+
+                  {!isVideoReady && (
+                    <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">
+                        <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
+                    </div>
+                  )}
+
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none z-30 opacity-0 dark:opacity-30 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
+                    style={{
+                      background: useTransform(
+                        [glareX, glareY],
+                        ([gx, gy]) => `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.4) 0%, transparent 60%)`
+                      ),
+                    }}
+                  />
+                  
+                  <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
+              </div>
 
-              </motion.div>
             </motion.div>
-
           </div>
         </div>
 

@@ -163,7 +163,7 @@ export default function About() {
     <Section id="tentang" title="About Me">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
 
-        {/* ================= KIRI: Teks Sapaan (Warna Solid & Anti Hilang) ================= */}
+        {/* ================= KIRI: Teks Sapaan ================= */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 relative w-full">
           
           <div className="hidden lg:block absolute -top-10 -left-10 w-48 h-48 bg-blue-500/10 dark:bg-indigo-500/10 blur-[50px] rounded-full pointer-events-none -z-10" />
@@ -176,53 +176,57 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-1 w-full">
-            {/* SplitText untuk "Hi, I'm" */}
+            {/* SplitText untuk "Hi, I'm" (Animasi Hover Aktif) */}
             <SplitText
               tag="h1"
               text="Hi, I'm"
-              className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-blue-500 dark:text-indigo-400 drop-shadow-sm"
+              className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-blue-500 dark:text-indigo-400 drop-shadow-sm cursor-default"
               effect="rise"
               splitType="chars"
               delay={30}
               duration={1}
               textAlign="left"
               trigger="view"
+              hoverEffect="lift"
             />
             
-            {/* SplitText untuk NAMA (Warna Solid & Dipecah 3 Baris) */}
+            {/* SplitText untuk NAMA (Animasi Hover Aktif) */}
             <div className="flex flex-col">
               <SplitText
                 tag="h1"
                 text="Micoandar"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white"
+                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
                 textAlign="left"
                 trigger="view"
+                hoverEffect="lift"
               />
               <SplitText
                 tag="h1"
                 text="Justinus"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white"
+                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
                 textAlign="left"
                 trigger="view"
+                hoverEffect="lift"
               />
               <SplitText
                 tag="h1"
                 text="Marbun"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white"
+                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
                 textAlign="left"
                 trigger="view"
+                hoverEffect="lift"
               />
             </div>
           </div>

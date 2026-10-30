@@ -12,6 +12,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { scrollToSection } from "@/lib/utils";
 import LightRays from "./LightRays";
 import TextType from "./TextType"; 
+import SplitText from "./SplitText"; // IMPORT SPLIT TEXT
 
 export default function About() {
   const { lang } = useLanguage();
@@ -162,7 +163,7 @@ export default function About() {
     <Section id="tentang" title="About Me">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
 
-        {/* ================= KIRI: Teks Sapaan ================= */}
+        {/* ================= KIRI: Teks Sapaan (Menggunakan SplitText) ================= */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 relative">
           
           <div className="hidden lg:block absolute -top-10 -left-10 w-48 h-48 bg-blue-500/10 dark:bg-indigo-500/10 blur-[50px] rounded-full pointer-events-none -z-10" />
@@ -174,16 +175,33 @@ export default function About() {
             </span>
           </div>
 
-          <h1 className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl flex flex-col gap-2">
-            <span className="text-blue-500 dark:text-indigo-400 drop-shadow-sm">
-              Hi, I'm
-            </span>
-            <span className="bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-              Micoandar <br />
-              Justinus <br />
-              Marbun
-            </span>
-          </h1>
+          <div className="flex flex-col gap-2">
+            {/* SplitText untuk "Hi, I'm" */}
+            <SplitText
+              tag="h1"
+              text="Hi, I'm"
+              className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-blue-500 dark:text-indigo-400 drop-shadow-sm"
+              effect="rise"
+              splitType="chars"
+              delay={30}
+              duration={1}
+              textAlign="left"
+              trigger="view"
+            />
+            
+            {/* SplitText untuk Nama */}
+            <SplitText
+              tag="h1"
+              text="Micoandar Justinus Marbun"
+              className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent"
+              effect="rise"
+              splitType="words, chars"
+              delay={40}
+              duration={1.2}
+              textAlign="left"
+              trigger="view"
+            />
+          </div>
 
           <div className="mt-10">
             <StarBorder
@@ -334,19 +352,13 @@ export default function About() {
           </div>
         </div>
 
-        {/* ================= KANAN: Deskripsi (PERBAIKAN FINAL) ================= */}
+        {/* ================= KANAN: Deskripsi ================= */}
         <div className="flex flex-col justify-center gap-6 z-10 relative w-full">
           
           <div className="relative p-6 sm:p-7 min-h-[180px] flex items-center rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
             
             <div className="absolute top-6 bottom-6 left-0 w-[3px] rounded-r-full bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent opacity-80" />
             
-            {/* 
-              PERBAIKAN TOTAL:
-              1. Menambahkan inline style fontFamily dengan "Inter, sans-serif".
-              2. Menambahkan style whiteSpace: "normal" agar teks memenuhi lebar kotak (tidak terpotong aneh).
-              3. class block memastikan elemen ini mengambil lebar penuh (bukan inline-block).
-            */}
             <TextType
               as="p"
               text={t.desc}

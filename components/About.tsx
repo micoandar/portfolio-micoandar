@@ -28,6 +28,16 @@ export default function About() {
   
   const [isHolding, setIsHolding] = useState(false);
 
+  // --- FUNGSI LIHAT PROYEK (FIX BUG TAB) ---
+  const handleViewProjects = () => {
+    // 1. Kirim sinyal ke PortfolioTabs untuk pindah ke tab 0 (Projects)
+    window.dispatchEvent(new CustomEvent("switch-portfolio-tab", { detail: 0 }));
+    
+    // 2. Scroll ke #portfolio (karena #proyek mungkin sedang tidak dirender)
+    scrollToSection("portfolio");
+  };
+  // ------------------------------------------
+
   // --- LOGIKA SIMULASI KLIK OTOMATIS PADA CAHAYA (MOBILE) ---
   useEffect(() => {
     if (window.innerWidth >= 768) return; 
@@ -67,7 +77,6 @@ export default function About() {
     e.currentTarget.setPointerCapture(e.pointerId);
     setIsHolding(true); 
     if (videoRef.current) {
-      // PERBAIKAN: Set langsung ke 2.5x (atau 3x) agar lebih ringan & smooth tanpa stutter
       videoRef.current.playbackRate = 2.5; 
       videoRef.current.play().catch(() => {}); 
     }
@@ -78,7 +87,6 @@ export default function About() {
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsHolding(false); 
     if (videoRef.current) {
-      // Kembalikan ke 1x secara instan
       videoRef.current.playbackRate = 1; 
     }
   };
@@ -312,9 +320,10 @@ export default function About() {
           </p>
 
           <div className="mt-2">
+            {/* TOMBOL DIPERBAIKI MENGGUNAKAN FUNGSI BARU */}
             <StarBorder
               as="button"
-              onClick={() => scrollToSection("proyek")}
+              onClick={handleViewProjects}
               className="rounded-xl px-8 py-4 text-sm font-semibold"
               backgroundColor={isDark ? "#0f172a" : "#ffffff"}
               textColor={isDark ? "#cbd5e1" : "#334155"}

@@ -17,7 +17,6 @@ export default function About() {
 
   return (
     <Section id="tentang" title="About Me">
-      {/* Grid disesuaikan: Kiri (1fr), Tengah (1.5fr), Kanan (1fr) */}
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
         
         {/* KIRI: Teks Sapaan */}
@@ -50,22 +49,42 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: Video 3D Looping */}
-        <div className="relative flex justify-center items-center w-full mx-auto z-20">
-          {/* Glow di belakang video */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full border border-white/10 bg-gradient-to-br from-blue-500/20 to-transparent blur-2xl -z-10" />
+        {/* TENGAH: Video 3D Premium */}
+        <div className="relative flex justify-center items-center w-full mx-auto z-20 group">
           
-          <div className="relative w-full h-[450px] lg:h-[550px] rounded-[24px] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-[#0f172a]">
-            <video
-              src="/images/3D.webm"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              Browser Anda tidak mendukung tag video.
-            </video>
+          {/* 1. Efek Pendaran (Glow) di belakang video */}
+          <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-blue-500/30 via-violet-500/30 to-sky-400/30 opacity-70 blur-3xl transition duration-700 group-hover:opacity-100 dark:from-blue-600/20 dark:via-violet-600/20 dark:to-sky-500/20" />
+          
+          {/* 2. Bingkai Kaca (Glassmorphism Frame) */}
+          <div className="relative w-full h-[450px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:-translate-y-2 dark:border-slate-700/50 dark:bg-slate-900/40">
+            
+            {/* 3. Video di dalamnya */}
+            <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
+              <video
+                src="/images/3D.webm"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              >
+                Browser Anda tidak mendukung tag video.
+              </video>
+              
+              {/* 4. Overlay Gradasi Bawah agar menyatu */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10 opacity-60 mix-blend-overlay" />
+            </div>
+
+            {/* 5. Badge "3D Model" (Opsional, agar lebih futuristik) */}
+            <div className="absolute right-4 top-4 z-30 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-sky-500" />
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white">
+                3D Model
+              </span>
+            </div>
           </div>
         </div>
 

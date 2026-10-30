@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
-import { motion, useMotionValue, useSpring, useTransform, useAnimation } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
 import StarBorder from "@/components/StarBorder";
 import { profile } from "@/data/profile";
@@ -21,30 +21,30 @@ export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const speedTimerRef = useRef<NodeJS.Timeout | null>(null); // Timer untuk reset kecepatan
   
   const [loadVideo, setLoadVideo] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // --- STATE UNTUK SPIN 3 DETIK (HANYA VIDEO) ---
-  const spinControls = useAnimation();
-  const [isSpinning, setIsSpinning] = useState(false);
+  // --- FUNGSI MEMPERCEPAT PUTARAN VIDEO ---
+  const handleSpeedUp = () => {
+    if (!videoRef.current) return;
 
-  const handleSpin = async () => {
-    if (isSpinning) return; // Cegah klik ganda saat berputar
-    setIsSpinning(true);
-    
-    // Memutar video secara horizontal (3D flip) 3 kali lipat (1080 derajat) dalam 3 detik
-    await spinControls.start({
-      rotateY: [0, 1080],
-      transition: { duration: 3, ease: "linear" }
-    });
-    
-    // Reset kembali ke 0 derajat secara instan
-    spinControls.set({ rotateY: 0 });
-    setIsSpinning(false);
+    // Hapus timer sebelumnya jika user klik lagi sebelum 3 detik habis
+    if (speedTimerRef.current) clearTimeout(speedTimerRef.current);
+
+    // Percepat video menjadi 3x lipat (bisa diubah ke 4 atau 5 jika kurang cepat)
+    videoRef.current.playbackRate = 3.5; 
+
+    // Setelah 3 detik, kembalikan ke kecepatan normal (1x)
+    speedTimerRef.current = setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.playbackRate = 1;
+      }
+    }, 3000);
   };
-  // --------------------------------
+  // -----------------------------------------
 
   // --- LOGIKA 3D TILT ---
   const x = useMotionValue(0);
@@ -114,6 +114,7 @@ export default function About() {
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
+      if (speedTimerRef.current) clearTimeout(speedTimerRef.current);
     };
   }, [reducedMotion, loadVideo]);
 
@@ -205,42 +206,35 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO SPIN WRAPPER (3D FLIP) */}
+                  {/* VIDEO WRAPPER - ONCLICK SPEEDUP */}
                   <div 
-                    onClick={handleSpin} 
+                    onClick={handleSpeedUp} 
                     className="absolute inset-0 z-10 cursor-pointer overflow-hidden"
-                    style={{ perspective: "1000px" }} // Perspektif khusus video
                   >
-                    <motion.div
-                      animate={spinControls}
-                      style={{ transformStyle: "preserve-3d" }}
-                      className="h-full w-full flex items-center justify-center"
-                    >
-                      {loadVideo && (
-                        <div className="h-full w-full mix-blend-screen opacity-90">
-                          <video
-                            ref={videoRef}
-                            src="/api/video/3d"
-                            autoPlay={!reducedMotion}
-                            loop
-                            muted
-                            playsInline
-                            preload="auto" 
-                            disablePictureInPicture
-                            controlsList="nodownload noremoteplayback noplaybackrate"
-                            onContextMenu={(e) => e.preventDefault()}
-                            onDragStart={(e) => e.preventDefault()}
-                            draggable={false}
-                            onCanPlay={() => setIsVideoReady(true)}
-                            className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
-                              isVideoReady ? "opacity-100" : "opacity-0"
-                            }`}
-                          >
-                            Browser Anda tidak mendukung tag video.
-                          </video>
-                        </div>
-                      )}
-                    </motion.div>
+                    {loadVideo && (
+                      <div className="h-full w-full mix-blend-screen opacity-90">
+                        <video
+                          ref={videoRef}
+                          src="/api/video/3d"
+                          autoPlay={!reducedMotion}
+                          loop
+                          muted
+                          playsInline
+                          preload="auto" 
+                          disablePictureInPicture
+                          controlsList="nodownload noremoteplayback noplaybackrate"
+                          onContextMenu={(e) => e.preventDefault()}
+                          onDragStart={(e) => e.preventDefault()}
+                          draggable={false}
+                          onCanPlay={() => setIsVideoReady(true)}
+                          className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
+                            isVideoReady ? "opacity-100" : "opacity-0"
+                          }`}
+                        >
+                          Browser Anda tidak mendukung tag video.
+                        </video>
+                      </div>
+                    )}
                   </div>
 
                   {!isVideoReady && (

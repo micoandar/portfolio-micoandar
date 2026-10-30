@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"; // Import Framer Motion
 import Section from "@/components/ui/Section";
 import StarBorder from "@/components/StarBorder";
 import { profile } from "@/data/profile";
@@ -17,9 +18,50 @@ export default function About() {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  
   const [loadVideo, setLoadVideo] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+
+  // --- LOGIKA 3D TILT ---
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Konfigurasi spring agar gerakan terasa halus dan premium
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  // Mengubah posisi mouse menjadi derajat rotasi (Max 12 derajat)
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
+
+  // Efek pantulan cahaya (Glare) yang mengikuti mouse
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current || window.innerWidth < 768) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Normalisasi dari -0.5 sampai 0.5
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    // Kembalikan ke posisi semula saat mouse keluar
+    x.set(0);
+    y.set(0);
+  };
+  // ------------------------
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -93,33 +135,50 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D */}
+        {/* TENGAH: Video 3D (Futuristic Interactive Glass Card) */}
         <div
           ref={wrapRef}
-          className="relative w-full mx-auto z-20 flex justify-center py-6"
+          className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
+          style={{ perspective: "1200px" }} // Memberikan efek kedalaman nyata
         >
-          {/* 
-            Container Utama: 
-            - Mobile: Pakai animate-float (ringan)
-            - Desktop: Pakai animate-levitate (lebih kompleks)
-          */}
-          <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full animate-float sm:animate-levitate motion-reduce:animate-none">
+          {/* Glow Berdenyut */}
+          <div
+            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
+            style={{
+              background: isDark
+                ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
+                : "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)",
+            }}
+          />
+
+          {/* Bayangan Melayang */}
+          <div className="hidden sm:block absolute -bottom-8 w-[80%] h-8 bg-black/40 dark:bg-black/60 blur-xl rounded-[100%] animate-float motion-reduce:animate-none" />
+
+          {/* Kartu 3D yang Bereaksi terhadap Mouse */}
+          <motion.div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              rotateX: rotateX,
+              rotateY: rotateY,
+              transformStyle: "preserve-3d", // Wajib untuk efek 3D
+            }}
+            className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-float motion-reduce:animate-none will-change-transform"
+          >
             
-            <div
-              className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
-              style={{
-                background: isDark
-                  ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
-                  : "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)",
-              }}
-            />
-
-            <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl dark:border-slate-700/50 dark:bg-slate-900/40">
+            {/* Frame Kaca Utama */}
+            <div 
+              style={{ transform: "translateZ(30px)" }} // Pop-out effect
+              className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-slate-900/40 p-2 shadow-2xl backdrop-blur-sm dark:border-white/10"
+            >
               
-              <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
+              {/* Border Denyut */}
+              <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/40 dark:border-violet-400/40 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
-              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
+              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
                 
+                {/* Video */}
                 {loadVideo && (
                   <div className="h-full w-full">
                     <video
@@ -145,25 +204,56 @@ export default function About() {
                   </div>
                 )}
 
+                {/* Placeholder */}
                 {!isVideoReady && (
                   <div className="absolute inset-0 bg-[#020617] flex items-center justify-center">
                      <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
                   </div>
                 )}
 
-                {/* 
-                  Scanline Hologram: 
-                  Dikembalikan ke hidden sm:block (Hanya Desktop).
-                  Di HP dihilangkan agar browser tidak freeze.
-                */}
+                {/* Efek Scanline Hologram */}
                 <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
-                  <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent animate-scanline motion-reduce:animate-none transform-gpu" />
+                  <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/30 to-transparent animate-scanline motion-reduce:animate-none transform-gpu" />
                 </div>
 
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                {/* HUD (Heads-Up Display) Futuristik */}
+                <div className="absolute inset-0 pointer-events-none p-4 sm:p-6 opacity-70">
+                  {/* Sudut HUD */}
+                  <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-sky-400/60" />
+                  <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-sky-400/60" />
+                  <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-sky-400/60" />
+                  <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-sky-400/60" />
+                  
+                  {/* Teks HUD */}
+                  <div className="absolute top-5 left-12 flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                    </span>
+                    <span className="text-[10px] font-mono font-bold tracking-widest text-sky-200/80">REC</span>
+                  </div>
+                  
+                  <div className="absolute bottom-5 right-12 text-right">
+                    <p className="text-[9px] font-mono tracking-widest text-sky-200/60">CAM_01 // 3D_RENDER</p>
+                  </div>
+                </div>
+
+                {/* Pantulan Cahaya Dinamis (Glare) saat Mouse Bergerak */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none z-30 opacity-0 dark:opacity-30 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
+                  style={{
+                    background: useTransform(
+                      [glareX, glareY],
+                      ([gx, gy]) => `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.4) 0%, transparent 60%)`
+                    ),
+                  }}
+                />
+                
+                {/* Overlay Gelap Bawah */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-20" />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* KANAN */}

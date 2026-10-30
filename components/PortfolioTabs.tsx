@@ -19,10 +19,11 @@ export default function PortfolioTabs() {
     setMounted(true);
   }, []);
 
-  // 1. TANGKAP SINYAL DARI HERO/ABOUT UNTUK GANTI TAB
+  // 1. TANGKAP SINYAL DARI TOMBOL LIHAT PROYEK (HERO & ABOUT)
   useEffect(() => {
     const handleSwitchTab = (e: Event) => {
       const customEvent = e as CustomEvent<number>;
+      // Jika ada yang mengirim sinyal, ubah tab sesuai permintaan
       setActiveTab(customEvent.detail);
     };
 
@@ -30,6 +31,7 @@ export default function PortfolioTabs() {
     return () => window.removeEventListener("switch-portfolio-tab", handleSwitchTab);
   }, []);
 
+  // 2. FALLBACK JIKA USER MENGAKSES URL DENGAN # (HASH)
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
@@ -53,7 +55,7 @@ export default function PortfolioTabs() {
     <Section id="portfolio" title="Portfolio">
       
       {/* ================= DESKTOP: GooeyNav ================= */}
-      <div className="mb-12 hidden w-full items-center justify-center md:flex">
+      <div className="mb-12 hidden w-full items-center justify-center md:flex min-h-[64px]">
         {mounted && (
           <GooeyNav
             key={resolvedTheme}

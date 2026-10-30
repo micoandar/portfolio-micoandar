@@ -1249,18 +1249,49 @@ const Lanyard: React.FC<LanyardProps> = ({
       body.angular.addScaledVector(up, FLIP_SPIN * direction);
     };
 
-    // --- FITUR BARU: Auto-flip setiap 18 detik saat idle ---
+    // --- FITUR AUTO-FLIP (Bolak-Balik tanpa jeda) ---
     let idleTimer: ReturnType<typeof setTimeout>;
+    let returnTimer: ReturnType<typeof setTimeout>;
 
-    const resetIdleTimer = () => {
+    const scheduleIdle = () => {
       if (idleTimer) clearTimeout(idleTimer);
+      if (returnTimer) clearTimeout(returnTimer);
+
       idleTimer = setTimeout(() => {
         if (visible && !document.hidden && !sim.grab && !press) {
-          flip(camera.position);
-          start();
+          if (sim.turn === 0) {
+            flip(camera.position); // Berputar ke belakang
+            start();
+            
+            // Tunggu sampai putaran ke belakang berhenti, lalu LANGSUNG balik ke depan
+            const checkSettle = () => {
+              if (!visible || document.hidden || sim.grab || press) return; 
+              
+              if (Math.abs(sim.twist - sim.turn) < 0.1 && sim.body.angular.length() < 0.2) {
+                flip(camera.position); // Langsung balik ke depan
+                start();
+                scheduleIdle(); // Siklus 18 detik ulang
+              } else {
+                returnTimer = setTimeout(checkSettle, 100);
+              }
+            };
+            returnTimer = setTimeout(checkSettle, 300); // Beri jeda awal animasi berputar
+
+          } else {
+            // Jika sedang di belakang, paksa kembali ke depan
+            flip(camera.position);
+            start();
+            scheduleIdle();
+          }
+        } else {
+          scheduleIdle();
         }
-        resetIdleTimer(); // loop terus selama idle
       }, 18000); // 18 detik
+    };
+
+    const stopIdle = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      if (returnTimer) clearTimeout(returnTimer);
     };
     // --------------------------------------------------------
 
@@ -1281,7 +1312,7 @@ const Lanyard: React.FC<LanyardProps> = ({
       setCursor('grabbing');
       event.preventDefault();
       start();
-      resetIdleTimer(); // Reset timer saat mulai interaksi
+      stopIdle(); // Hentikan timer saat mulai interaksi
     };
 
     const onPointerMove = (event: PointerEvent) => {
@@ -1306,7 +1337,7 @@ const Lanyard: React.FC<LanyardProps> = ({
       canvas.releasePointerCapture?.(event.pointerId);
       setCursor(hovering && event.pointerType !== 'touch' ? 'grab' : '');
       start();
-      resetIdleTimer(); // Mulai ulang hitungan 18 detik setelah dilepas
+      scheduleIdle(); // Mulai ulang hitungan 18 detik setelah dilepas
     };
 
     const onTouchStart = (event: TouchEvent) => {
@@ -1346,12 +1377,12 @@ const Lanyard: React.FC<LanyardProps> = ({
     applyRef.current = apply;
     resize();
 
-    resetIdleTimer(); // Mulai timer 18 detik pertama kali
+    scheduleIdle(); // Mulai timer 18 detik pertama kali
 
     return () => {
       alive = false;
       cancelAnimationFrame(raf);
-      if (idleTimer) clearTimeout(idleTimer); // Bersihkan timer
+      stopIdle(); // Bersihkan timer
       applyRef.current = null;
       resizeObserver.disconnect();
       intersectionObserver.disconnect();

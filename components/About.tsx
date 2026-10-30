@@ -97,9 +97,8 @@ export default function About() {
         <div
           ref={wrapRef}
           className="relative flex flex-col justify-center items-center w-full mx-auto z-20 contain-3d"
-          style={{ perspective: "1200px" }} // Kunci untuk efek melayang 3D
         >
-          {/* Glow berdenyut di belakang */}
+          {/* Glow berdenyut di belakang (dibuat absolute center) */}
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none"
             style={{
@@ -109,10 +108,10 @@ export default function About() {
             }}
           />
 
-          {/* Bayangan Dinamis di lantai (Hanya Desktop) */}
-          <div className="hidden sm:block absolute -bottom-12 w-[75%] h-10 bg-black/30 dark:bg-black/60 blur-2xl rounded-[100%] sm:animate-levitate-shadow motion-reduce:animate-none" />
+          {/* Bayangan Lantai (Hanya Desktop) */}
+          <div className="hidden sm:block absolute -bottom-10 w-[80%] h-8 bg-black/40 dark:bg-black/60 blur-xl rounded-[100%] sm:animate-levitate-shadow motion-reduce:animate-none" />
 
-          {/* Frame dengan Animasi Melayang (Desktop) / Bernafas (Mobile) */}
+          {/* Frame dengan Animasi Melayang */}
           <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl dark:border-slate-700/50 dark:bg-slate-900/40 sm:animate-levitate motion-reduce:animate-none sm:will-change-transform transform-gpu">
             
             <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />

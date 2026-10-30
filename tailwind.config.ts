@@ -28,16 +28,14 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0px) scale(1)" },
           "50%": { transform: "translateY(-10px) scale(1.15)" },
         },
-        // ANIMASI BARU UNTUK DESKTOP (Melayang + Rotasi 3D tipis)
+        // ANIMASI LEVITATE (TANPA ROTASI)
         levitate: {
-          "0%, 100%": { transform: "translateY(0px) rotateX(0deg) rotateY(0deg) scale(1)" },
-          "25%": { transform: "translateY(-12px) rotateX(2deg) rotateY(-2deg) scale(1.03)" },
-          "50%": { transform: "translateY(-20px) rotateX(0deg) rotateY(0deg) scale(1.06)" },
-          "75%": { transform: "translateY(-12px) rotateX(-2deg) rotateY(2deg) scale(1.03)" },
+          "0%, 100%": { transform: "translateY(0px) scale(1)" },
+          "50%": { transform: "translateY(-16px) scale(1.015)" },
         },
         "levitate-shadow": {
-          "0%, 100%": { transform: "scale(1) translateY(0px)", opacity: "0.5" },
-          "50%": { transform: "scale(0.85) translateY(20px)", opacity: "0.1" },
+          "0%, 100%": { transform: "scale(1) translateY(0px)", opacity: "0.3" },
+          "50%": { transform: "scale(0.85) translateY(16px)", opacity: "0.1" },
         },
         "glow-pulse": {
           "0%, 100%": { opacity: "0.45", transform: "scale(1)" },

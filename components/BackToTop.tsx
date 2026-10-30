@@ -1,21 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/data/translations";
 import { cn } from "@/lib/utils";
-import SlingButton from "./SlingButton"; // Pastikan path ini benar
+import SlingButton from "./SlingButton";
 
 export default function BackToTop() {
   const { lang } = useLanguage();
   const t = translations[lang].backToTop;
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  // Mencegah hydration mismatch pada tema
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      // Muncul saat scroll melewati 400px
       setVisible(y > 400 && y > max * 0.1); 
     };
     onScroll();
@@ -27,10 +32,14 @@ export default function BackToTop() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const isDark = resolvedTheme === "dark";
+
+  // Jangan render apapun sebelum komponen ter-mount untuk mengecek tema
+  if (!mounted) return null;
+
   return (
     <div
       className={cn(
-        // Posisi fixed di kanan bawah
         "fixed bottom-20 right-4 z-[100] flex items-center justify-center sm:bottom-10 sm:right-6",
         "transition-all duration-500 ease-out",
         visible
@@ -42,12 +51,15 @@ export default function BackToTop() {
         onSend={scrollToTop}
         ariaLabel={t}
         
-        // --- WARNA & EFEK SAMA PERSIS DENGAN CONTOH ---
-        padColor="#f5f5f5"
-        iconColor="#18181b"
-        accentColor="#f5f5f5"
-        wellColor="#27272a"
-        bandColor="#52525b"
+        // --- WARNA KONDISIONAL (LIGHT / DARK) ---
+        // Di Light Mode: Tombol Hitam, Ikon Putih, Lubang Light Gray
+        // Di Dark Mode: Kembali ke gaya asli React Bits
+        padColor={isDark ? "#f5f5f5" : "#18181b"}
+        iconColor={isDark ? "#18181b" : "#ffffff"}
+        accentColor={isDark ? "#f5f5f5" : "#18181b"}
+        wellColor={isDark ? "#27272a" : "#e4e4e7"}
+        bandColor={isDark ? "#52525b" : "#a1a1aa"}
+        
         size={56}
         strokeWidth={3}
         armAt={48}

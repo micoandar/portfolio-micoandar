@@ -9,7 +9,8 @@ import StarBorder from "@/components/StarBorder";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { scrollToSection } from "@/lib/utils"; // Import fungsi baru
+import { scrollToSection } from "@/lib/utils";
+import LightRays from "./LightRays"; // <-- 1. IMPORT LIGHT RAYS
 
 export default function About() {
   const { lang } = useLanguage();
@@ -25,7 +26,6 @@ export default function About() {
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // --- LOGIKA 3D TILT ---
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -35,7 +35,6 @@ export default function About() {
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
 
-  // Efek pantulan cahaya (Glare)
   const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
   const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
 
@@ -58,7 +57,6 @@ export default function About() {
     x.set(0);
     y.set(0);
   };
-  // ------------------------
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -132,13 +130,12 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: Video 3D (Interactive Glass Card) */}
+        {/* TENGAH: Video 3D */}
         <div
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
           style={{ perspective: "1200px" }}
         >
-          {/* Glow Berdenyut */}
           <div
             className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
             style={{
@@ -148,10 +145,8 @@ export default function About() {
             }}
           />
 
-          {/* Bayangan Melayang */}
           <div className="hidden sm:block absolute -bottom-8 w-[80%] h-8 bg-black/40 dark:bg-black/60 blur-xl rounded-[100%] animate-float motion-reduce:animate-none" />
 
-          {/* Kartu 3D yang Bereaksi terhadap Mouse */}
           <motion.div
             ref={cardRef}
             onMouseMove={handleMouseMove}
@@ -164,20 +159,32 @@ export default function About() {
             className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-float motion-reduce:animate-none will-change-transform"
           >
             
-            {/* Frame Kaca Utama */}
             <div 
               style={{ transform: "translateZ(30px)" }}
               className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-slate-900/40 p-2 shadow-2xl backdrop-blur-sm dark:border-white/10"
             >
               
-              {/* Border Denyut */}
               <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/40 dark:border-violet-400/40 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
               <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
                 
+                {/* 2. TARUH LIGHT RAYS DI SINI */}
+                <LightRays 
+                  raysOrigin="top-center"
+                  raysColor={isDark ? "#818cf8" : "#38bdf8"} // Warna ungu/biru sesuai tema
+                  raysSpeed={1.2}
+                  lightSpread={0.6}
+                  rayLength={2.5}
+                  followMouse={true}
+                  mouseInfluence={0.1}
+                  noiseAmount={0.05}
+                  distortion={0.05}
+                  className="z-0" // Di belakang video
+                />
+
                 {/* Video */}
                 {loadVideo && (
-                  <div className="h-full w-full">
+                  <div className="relative z-10 h-full w-full mix-blend-screen opacity-90">
                     <video
                       ref={videoRef}
                       src="/api/video/3d"
@@ -203,17 +210,17 @@ export default function About() {
 
                 {/* Placeholder */}
                 {!isVideoReady && (
-                  <div className="absolute inset-0 bg-[#020617] flex items-center justify-center">
+                  <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">
                      <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
                   </div>
                 )}
 
-                {/* Efek Scanline Hologram */}
-                <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
+                {/* Efek Scanline */}
+                <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden z-20">
                   <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/30 to-transparent animate-scanline motion-reduce:animate-none transform-gpu" />
                 </div>
 
-                {/* Pantulan Cahaya Dinamis (Glare) */}
+                {/* Glare */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none z-30 opacity-0 dark:opacity-30 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
                   style={{
@@ -224,8 +231,7 @@ export default function About() {
                   }}
                 />
                 
-                {/* Overlay Gelap Bawah */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-20" />
+                <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
             </div>
           </motion.div>
@@ -238,7 +244,6 @@ export default function About() {
           </p>
 
           <div className="mt-2">
-            {/* TOMBOL LIHAT PROYEK (SUDAH DIUBAH MENJADI BUTTON) */}
             <StarBorder
               as="button"
               onClick={() => scrollToSection("proyek")}

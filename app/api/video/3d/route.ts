@@ -4,7 +4,7 @@ import path from "path";
 
 export const runtime = "nodejs";
 
-// Nama file di folder assets/
+// Nama file yang sekarang ada di dalam folder ini
 const FILE = "3D.webm";
 
 function isAllowed(req: NextRequest): boolean {
@@ -27,7 +27,8 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const filePath = path.join(process.cwd(), "assets", FILE);
+  // Path diubah menunjuk ke dalam folder app/api/video/3d
+  const filePath = path.join(process.cwd(), "app", "api", "video", "3d", FILE);
 
   let data: Buffer;
   try {
@@ -38,13 +39,14 @@ export async function GET(req: NextRequest) {
 
   const size = data.byteLength;
 
-  // Support Range request (dibutuhkan Safari untuk autoplay)
+  // Support Range request (dibutuhkan Safari & Chrome untuk streaming video)
   const range = req.headers.get("range");
   if (range) {
     const match = /bytes=(\d*)-(\d*)/.exec(range);
     if (match) {
       const start = match[1] ? parseInt(match[1], 10) : 0;
       const end = match[2] ? parseInt(match[2], 10) : size - 1;
+      
       if (start >= 0 && end < size && start <= end) {
         const slice = data.subarray(start, end + 1);
         return new NextResponse(new Uint8Array(slice), {
@@ -63,6 +65,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  // Full request tanpa Range header
   return new NextResponse(new Uint8Array(data), {
     status: 200,
     headers: {

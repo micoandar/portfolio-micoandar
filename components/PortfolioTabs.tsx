@@ -42,10 +42,10 @@ export default function PortfolioTabs() {
     <Section id="portfolio" title="Portfolio">
       
       {/* ================= DESKTOP: GooeyNav ================= */}
-      <div className="mb-12 hidden justify-center md:flex min-h-[56px]">
+      <div className="mb-12 hidden w-full justify-center md:flex min-h-[64px]">
         {mounted && (
           <GooeyNav
-            key={resolvedTheme} // <-- KUNCI PERBAIKAN
+            key={resolvedTheme}
             items={navItems}
             activeIndex={activeTab}
             onChange={(index) => setActiveTab(index)}

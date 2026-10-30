@@ -41,11 +41,13 @@
   max-width: 100%;
 }
 
+/* PERBAIKAN Z-INDEX: Canvas diletakkan di atas teks abu-abu, tapi di bawah teks putih */
 .gooey-nav__canvas {
   position: absolute;
   top: 0;
   left: 0;
   pointer-events: none;
+  z-index: 10;
 }
 
 .gooey-nav__fallback {
@@ -56,6 +58,7 @@
   border-radius: 999px;
   background: var(--gn-pill);
   pointer-events: none;
+  z-index: 10;
 }
 
 .gooey-nav__list {
@@ -66,8 +69,10 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  z-index: 1;
 }
 
+/* PERBAIKAN Z-INDEX: Teks aktif (putih) diletakkan paling atas */
 .gooey-nav__list--active {
   position: absolute;
   inset: 0;
@@ -75,17 +80,20 @@
   visibility: hidden;
   clip-path: inset(100%);
   pointer-events: none;
+  z-index: 20;
 }
 
 .gooey-nav__item {
   display: flex;
 }
 
+/* PERBAIKAN PADDING: Ditambah +4px agar teks tidak menyentuh ujung pill */
 .gooey-nav__link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: var(--gn-y) var(--gn-x);
+  padding: var(--gn-y) calc(var(--gn-x) + 4px);
   border: none;
   border-radius: 999px;
   background: none;

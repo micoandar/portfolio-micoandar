@@ -22,6 +22,8 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: "Next.js", description: { id: "Framework React untuk aplikasi web production-ready (SSR/SSG).", en: "React framework for production-ready web apps (SSR/SSG)." }, logo: "https://cdn.simpleicons.org/nextdotjs" },
       { name: "React", description: { id: "Library UI berbasis komponen untuk web modern.", en: "Component-based UI library for modern web." }, logo: "https://cdn.simpleicons.org/react" },
+      { name: "JavaScript", description: { id: "Bahasa pemrograman inti untuk membuat web menjadi interaktif.", en: "Core programming language to make the web interactive." }, logo: "https://cdn.simpleicons.org/javascript" },
+      { name: "Vanilla JS", description: { id: "JavaScript murni tanpa framework, fundamental yang kuat.", en: "Pure JavaScript without frameworks, a strong fundamental." }, logo: "https://cdn.simpleicons.org/javascript" },
       { name: "TypeScript", description: { id: "JavaScript dengan tipe data — lebih aman saat coding.", en: "JavaScript with types — safer while coding." }, logo: "https://cdn.simpleicons.org/typescript" },
       { name: "Tailwind CSS", description: { id: "Utility-first CSS, styling cepat tanpa file CSS terpisah.", en: "Utility-first CSS, quick styling without separate CSS files." }, logo: "https://cdn.simpleicons.org/tailwindcss" },
       { name: "Vite", description: { id: "Build tool super cepat untuk project React.", en: "Blazing-fast build tool for React projects." }, logo: "https://cdn.simpleicons.org/vite" },
@@ -36,6 +38,7 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: "Node.js", description: { id: "Runtime JavaScript untuk backend yang cepat dan scalable.", en: "JavaScript runtime for fast and scalable backends." }, logo: "https://cdn.simpleicons.org/nodedotjs" },
       { name: "Express.js", description: { id: "Framework minimalis Node.js untuk membuat REST API.", en: "Minimalist Node.js framework for building REST APIs." }, logo: "https://cdn.simpleicons.org/express" },
+      { name: "Java", description: { id: "Bahasa pemrograman OOP yang kuat untuk aplikasi skala besar.", en: "Powerful OOP language for large-scale applications." }, logo: "https://cdn.simpleicons.org/java" },
       { name: "FastAPI", description: { id: "Framework Python modern untuk REST API cepat.", en: "Modern Python framework for fast REST APIs." }, logo: "https://cdn.simpleicons.org/fastapi" },
       { name: "Laravel", description: { id: "Framework PHP dengan struktur MVC lengkap.", en: "PHP framework with a complete MVC structure." }, logo: "https://cdn.simpleicons.org/laravel" },
       { name: "PHP Native", description: { id: "Backend web klasik tanpa framework, sangat ringan.", en: "Classic web backend without a framework, very lightweight." }, logo: "https://cdn.simpleicons.org/php" },
@@ -78,7 +81,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "TensorFlow Lite", description: { id: "Versi ringan TF untuk mobile / embedded.", en: "Lightweight TF for mobile / embedded devices." }, logo: "https://cdn.simpleicons.org/tensorflow" },
     ],
   },
-  // 6. MOBILE DEVELOPMENT (Hanya Kotlin & Flutter)
+  // 6. MOBILE DEVELOPMENT
   {
     title: { id: "Mobile Development", en: "Mobile Development" },
     icon: "smartphone",

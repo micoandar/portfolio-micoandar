@@ -10,7 +10,7 @@ import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 
-// Fallback icon jika gambar logo tidak tersedia (contoh: YOLO tidak punya link logo)
+// Fallback icon jika gambar logo tidak tersedia
 const fallbackIconMap: Record<string, React.ElementType> = {
   "YOLO (v8/v11/26)": ScanEye, 
   "SQL": Database, 

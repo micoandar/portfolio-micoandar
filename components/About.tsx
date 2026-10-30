@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail, Sparkles } from "lucide-react"; // Tambah ikon Sparkles
+import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
@@ -11,6 +11,7 @@ import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { scrollToSection } from "@/lib/utils";
 import LightRays from "./LightRays";
+import TextType from "./TextType"; // IMPORT TEXT TYPE
 
 export default function About() {
   const { lang } = useLanguage();
@@ -161,13 +162,11 @@ export default function About() {
     <Section id="tentang" title="About Me">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
 
-        {/* ================= KIRI: Teks Sapaan (Dipercantik) ================= */}
+        {/* ================= KIRI: Teks Sapaan ================= */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 relative">
           
-          {/* Efek Pendaran di belakang teks (Hanya Desktop) */}
           <div className="hidden lg:block absolute -top-10 -left-10 w-48 h-48 bg-blue-500/10 dark:bg-indigo-500/10 blur-[50px] rounded-full pointer-events-none -z-10" />
 
-          {/* Badge kecil di atas sapaan */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 mb-5">
             <Sparkles size={14} className="text-blue-500 dark:text-indigo-400" />
             <span className="text-[10px] font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">
@@ -205,7 +204,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* ================= TENGAH: Video 3D (Tidak Diubah) ================= */}
+        {/* ================= TENGAH: Video 3D ================= */}
         <div
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
@@ -335,18 +334,27 @@ export default function About() {
           </div>
         </div>
 
-        {/* ================= KANAN: Deskripsi & Tombol (Dipercantik) ================= */}
+        {/* ================= KANAN: Deskripsi (Menggunakan TextType) ================= */}
         <div className="flex flex-col justify-center gap-6 z-10 relative">
           
-          {/* Card Kaca (Glassmorphism) untuk Deskripsi */}
-          <div className="relative p-6 sm:p-7 rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
+          <div className="relative p-6 sm:p-7 min-h-[160px] flex items-center rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
             
-            {/* Garis Aksen Gradient di sebelah kiri teks */}
             <div className="absolute top-6 bottom-6 left-0 w-[3px] rounded-r-full bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent opacity-80" />
             
-            <p className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300 pl-4">
-              {t.desc}
-            </p>
+            {/* IMPLEMENTASI TEXT TYPE DI SINI */}
+            <TextType
+              as="p"
+              text={t.desc}
+              typingSpeed={20} // Kecepatan mengetik (ms per huruf)
+              initialDelay={800} // Jeda sebelum mulai mengetik saat pertama kali muncul
+              pauseDuration={9999999} // Jangan dihapus setelah selesai
+              loop={false} // Berhenti saat teks selesai (tidak mengulang)
+              showCursor={true}
+              cursorStyle="bar"
+              cursorBlinkDuration={0.6}
+              startOnVisible={true} // Mulai mengetik saat discroll ke bawah
+              className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300 pl-4 w-full"
+            />
           </div>
 
           <div className="mt-2 pl-2">

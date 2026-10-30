@@ -163,8 +163,8 @@ export default function About() {
     <Section id="tentang" title="About Me">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
 
-        {/* ================= KIRI: Teks Sapaan (Diperbaiki) ================= */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 relative">
+        {/* ================= KIRI: Teks Sapaan (Warna Solid & Anti Hilang) ================= */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 relative w-full">
           
           <div className="hidden lg:block absolute -top-10 -left-10 w-48 h-48 bg-blue-500/10 dark:bg-indigo-500/10 blur-[50px] rounded-full pointer-events-none -z-10" />
 
@@ -175,58 +175,54 @@ export default function About() {
             </span>
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 w-full">
             {/* SplitText untuk "Hi, I'm" */}
             <SplitText
               tag="h1"
               text="Hi, I'm"
-              className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-blue-500 dark:text-indigo-400 drop-shadow-sm cursor-default"
+              className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-blue-500 dark:text-indigo-400 drop-shadow-sm"
               effect="rise"
               splitType="chars"
               delay={30}
               duration={1}
               textAlign="left"
               trigger="view"
-              hoverEffect="lift"
             />
             
-            {/* SplitText untuk NAMA (Dipecah jadi 3 baris agar tidak terpotong) */}
+            {/* SplitText untuk NAMA (Warna Solid & Dipecah 3 Baris) */}
             <div className="flex flex-col">
               <SplitText
                 tag="h1"
                 text="Micoandar"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent cursor-default"
+                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
                 textAlign="left"
                 trigger="view"
-                hoverEffect="lift"
               />
               <SplitText
                 tag="h1"
                 text="Justinus"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent cursor-default"
+                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
                 textAlign="left"
                 trigger="view"
-                hoverEffect="lift"
               />
               <SplitText
                 tag="h1"
                 text="Marbun"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent cursor-default"
+                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
                 textAlign="left"
                 trigger="view"
-                hoverEffect="lift"
               />
             </div>
           </div>

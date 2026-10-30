@@ -18,6 +18,7 @@ export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [loadVideo, setLoadVideo] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false); // Untuk efek fade-in
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -92,7 +93,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D — dilindungi (tidak bisa right-click save / drag out) */}
+        {/* TENGAH: video 3D */}
         <div
           ref={wrapRef}
           className="relative flex justify-center items-center w-full mx-auto z-20 contain-3d transform-gpu"
@@ -110,37 +111,41 @@ export default function About() {
             <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
             <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
-              {loadVideo ? (
+              
+              {/* Video Wrapper */}
+              {loadVideo && (
                 <div className="h-full w-full sm:animate-breathe motion-reduce:animate-none sm:will-change-transform">
                   <video
                     ref={videoRef}
                     src="/api/video/3d"
-                    poster="/images/My-photo.png"
                     autoPlay={!reducedMotion}
                     loop
                     muted
                     playsInline
-                    preload="metadata"
+                    preload="auto"
                     disablePictureInPicture
                     controlsList="nodownload noremoteplayback noplaybackrate"
                     onContextMenu={(e) => e.preventDefault()}
                     onDragStart={(e) => e.preventDefault()}
                     draggable={false}
-                    className="h-full w-full object-cover select-none pointer-events-none"
+                    // Saat video siap diputar, jalankan fade-in
+                    onCanPlay={() => setIsVideoReady(true)}
+                    className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-700 ${
+                      isVideoReady ? "opacity-100" : "opacity-0"
+                    }`}
                     style={{ transform: "translateZ(0)" }}
                   >
                     Browser Anda tidak mendukung tag video.
                   </video>
                 </div>
-              ) : (
-                <img
-                  src="/images/My-photo.png"
-                  alt="Preview"
-                  className="h-full w-full object-cover opacity-60 select-none"
-                  onContextMenu={(e) => e.preventDefault()}
-                  onDragStart={(e) => e.preventDefault()}
-                  draggable={false}
-                />
+              )}
+
+              {/* Placeholder: Hanya warna gelap (tanpa foto) */}
+              {!isVideoReady && (
+                <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
+                  {/* Opsional: Bisa tambahkan teks loading atau spinner di sini */}
+                  <div className="w-8 h-8 rounded-full border-2 border-slate-700 border-t-indigo-500 animate-spin" />
+                </div>
               )}
 
               <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">

@@ -11,7 +11,7 @@ import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { scrollToSection } from "@/lib/utils";
 import LightRays from "./LightRays";
-import TextType from "./TextType"; // IMPORT TEXT TYPE
+import TextType from "./TextType"; 
 
 export default function About() {
   const { lang } = useLanguage();
@@ -334,26 +334,26 @@ export default function About() {
           </div>
         </div>
 
-        {/* ================= KANAN: Deskripsi (Menggunakan TextType) ================= */}
+        {/* ================= KANAN: Deskripsi (Font Disamakan) ================= */}
         <div className="flex flex-col justify-center gap-6 z-10 relative">
           
           <div className="relative p-6 sm:p-7 min-h-[160px] flex items-center rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
             
             <div className="absolute top-6 bottom-6 left-0 w-[3px] rounded-r-full bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent opacity-80" />
             
-            {/* IMPLEMENTASI TEXT TYPE DI SINI */}
+            {/* PERBAIKAN: Menambahkan 'font-sans block' pada className */}
             <TextType
               as="p"
               text={t.desc}
-              typingSpeed={20} // Kecepatan mengetik (ms per huruf)
-              initialDelay={800} // Jeda sebelum mulai mengetik saat pertama kali muncul
-              pauseDuration={9999999} // Jangan dihapus setelah selesai
-              loop={false} // Berhenti saat teks selesai (tidak mengulang)
+              typingSpeed={20} 
+              initialDelay={800} 
+              pauseDuration={9999999} 
+              loop={false} 
               showCursor={true}
               cursorStyle="bar"
               cursorBlinkDuration={0.6}
-              startOnVisible={true} // Mulai mengetik saat discroll ke bawah
-              className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300 pl-4 w-full"
+              startOnVisible={true}
+              className="font-sans block text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300 pl-4 w-full"
             />
           </div>
 

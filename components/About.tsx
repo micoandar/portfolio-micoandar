@@ -21,38 +21,12 @@ export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const speedRafRef = useRef<number | null>(null);
   
   const [loadVideo, setLoadVideo] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   
   const [isHolding, setIsHolding] = useState(false);
-
-  // --- LOGIKA TRANSISI KECEPATAN MULUS (DESKTOP) ---
-  const rampPlaybackRate = (targetRate: number) => {
-    if (!videoRef.current) return;
-    const video = videoRef.current;
-
-    if (speedRafRef.current) cancelAnimationFrame(speedRafRef.current);
-
-    const startRate = video.playbackRate;
-    const duration = 400; // Transisi 400ms
-    const startTime = performance.now();
-
-    const step = (now: number) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3); // Ease out cubic
-      
-      video.playbackRate = startRate + (targetRate - startRate) * ease;
-
-      if (progress < 1) {
-        speedRafRef.current = requestAnimationFrame(step);
-      }
-    };
-    speedRafRef.current = requestAnimationFrame(step);
-  };
-  // -------------------------------------------------
 
   // --- LOGIKA SIMULASI KLIK OTOMATIS PADA CAHAYA (MOBILE) ---
   useEffect(() => {
@@ -78,7 +52,6 @@ export default function About() {
         cancelable: true,
       });
       
-      // TANDAI EVENT INI SEBAGAI SIMULASI
       (event as any).isSimulated = true;
       
       window.dispatchEvent(event);
@@ -94,8 +67,9 @@ export default function About() {
     e.currentTarget.setPointerCapture(e.pointerId);
     setIsHolding(true); 
     if (videoRef.current) {
+      // PERBAIKAN: Set langsung ke 2.5x (atau 3x) agar lebih ringan & smooth tanpa stutter
+      videoRef.current.playbackRate = 2.5; 
       videoRef.current.play().catch(() => {}); 
-      rampPlaybackRate(4); // Transisi ke 4x
     }
   };
 
@@ -104,7 +78,8 @@ export default function About() {
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsHolding(false); 
     if (videoRef.current) {
-      rampPlaybackRate(1); // Transisi kembali ke 1x
+      // Kembalikan ke 1x secara instan
+      videoRef.current.playbackRate = 1; 
     }
   };
   // ----------------------------------------------
@@ -177,7 +152,6 @@ export default function About() {
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
-      if (speedRafRef.current) cancelAnimationFrame(speedRafRef.current);
     };
   }, [reducedMotion, loadVideo]);
 
@@ -220,7 +194,6 @@ export default function About() {
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
           style={{ perspective: "1200px" }}
-          // MENCEGAH TAP MANUAL DI MOBILE
           onPointerDown={(e) => {
             if (window.innerWidth < 768) e.stopPropagation();
           }}

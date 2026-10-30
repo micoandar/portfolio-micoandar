@@ -28,17 +28,17 @@ export default function About() {
 
   // --- LOGIKA TEKAN & TAHAN (PRESS AND HOLD) ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.setPointerCapture(e.pointerId); // Tangkap pointer agar tidak lepas
+    e.currentTarget.setPointerCapture(e.pointerId);
     if (videoRef.current) {
-      videoRef.current.playbackRate = 4; // Kecepatan putar saat ditekan (bisa diubah ke 3, 5, dll)
-      videoRef.current.play().catch(() => {}); // Play instan tanpa nunggu
+      videoRef.current.playbackRate = 4; // Mempercepat putaran video saat ditekan
+      videoRef.current.play().catch(() => {}); // Pastikan video tetap berjalan
     }
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.releasePointerCapture(e.pointerId);
     if (videoRef.current) {
-      videoRef.current.pause(); // Langsung berhenti (pause) saat dilepas
+      videoRef.current.playbackRate = 1; // KEMBALI KE KECEPATAN NORMAL (Tidak di-pause)
     }
   };
   // ----------------------------------------------
@@ -93,9 +93,9 @@ export default function About() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setLoadVideo(true);
-          // Kita hapus autoplay di sini, biarkan video diam (pause) sampai ditekan
+          if (v && !reducedMotion) v.play().catch(() => {}); // Auto-play saat terlihat
         } else {
-          v?.pause(); // Pastikan video berhenti jika keluar layar
+          v?.pause(); // Pause jika keluar layar (hemat resource)
         }
       },
       { rootMargin: "1000px 0px" }
@@ -104,6 +104,7 @@ export default function About() {
 
     const onVis = () => {
       if (document.hidden) v?.pause();
+      else if (v && !reducedMotion) v.play().catch(() => {});
     };
     document.addEventListener("visibilitychange", onVis);
 
@@ -111,7 +112,7 @@ export default function About() {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, [loadVideo]);
+  }, [reducedMotion, loadVideo]);
 
   return (
     <Section id="tentang" title="About Me">
@@ -200,7 +201,7 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER - PRESS TO SPIN */}
+                  {/* VIDEO WRAPPER - PRESS TO SPIN FASTER */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
@@ -213,6 +214,7 @@ export default function About() {
                         <video
                           ref={videoRef}
                           src="/api/video/3d"
+                          autoPlay={!reducedMotion} // <-- AUTO PLAY KEMBALI
                           loop
                           muted
                           playsInline

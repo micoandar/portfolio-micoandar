@@ -6,7 +6,7 @@ import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Lanyard from "@/components/Lanyard";
-import { scrollToSection } from "@/lib/utils"; // Import fungsi baru
+import { scrollToSection } from "@/lib/utils"; 
 
 export default function Hero() {
   const { lang } = useLanguage();
@@ -39,6 +39,12 @@ export default function Hero() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleViewProjects = () => {
+    // 2. KIRIM SINYAL UNTUK GANTI TAB KE 0 (PROJECTS), LALU SCROLL KE #PORTFOLIO
+    window.dispatchEvent(new CustomEvent("switch-portfolio-tab", { detail: 0 }));
+    scrollToSection("portfolio");
+  };
 
   return (
     <section
@@ -73,9 +79,8 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            {/* TOMBOL LIHAT PROYEK (SUDAH DIUBAH) */}
             <button
-              onClick={() => scrollToSection("proyek")}
+              onClick={handleViewProjects}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-slate-900/30 dark:bg-white dark:text-slate-900 dark:hover:shadow-white/20"
             >
               {t.viewProjects}

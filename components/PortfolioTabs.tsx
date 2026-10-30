@@ -19,6 +19,17 @@ export default function PortfolioTabs() {
     setMounted(true);
   }, []);
 
+  // 1. TANGKAP SINYAL DARI HERO/ABOUT UNTUK GANTI TAB
+  useEffect(() => {
+    const handleSwitchTab = (e: Event) => {
+      const customEvent = e as CustomEvent<number>;
+      setActiveTab(customEvent.detail);
+    };
+
+    window.addEventListener("switch-portfolio-tab", handleSwitchTab);
+    return () => window.removeEventListener("switch-portfolio-tab", handleSwitchTab);
+  }, []);
+
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;

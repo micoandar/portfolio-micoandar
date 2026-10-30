@@ -97,6 +97,12 @@ export default function About() {
     };
   }, [reducedMotion, loadVideo]);
 
+  const handleViewProjects = () => {
+    // 3. KIRIM SINYAL UNTUK GANTI TAB KE 0 (PROJECTS), LALU SCROLL KE #PORTFOLIO
+    window.dispatchEvent(new CustomEvent("switch-portfolio-tab", { detail: 0 }));
+    scrollToSection("portfolio");
+  };
+
   return (
     <Section id="tentang" title="About Me">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
@@ -137,7 +143,6 @@ export default function About() {
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
           style={{ perspective: "1200px" }}
         >
-          {/* Glow Berdenyut di belakang */}
           <div
             className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
             style={{
@@ -147,10 +152,8 @@ export default function About() {
             }}
           />
 
-          {/* Bayangan Melayang */}
           <div className="hidden sm:block absolute -bottom-8 w-[80%] h-8 bg-black/40 dark:bg-black/60 blur-xl rounded-[100%] animate-float motion-reduce:animate-none" />
 
-          {/* Kartu 3D */}
           <motion.div
             ref={cardRef}
             onMouseMove={handleMouseMove}
@@ -172,10 +175,9 @@ export default function About() {
 
               <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
                 
-                {/* Light Rays (Warna disamakan dengan tema brand) */}
                 <LightRays 
                   raysOrigin="top-center"
-                  raysColor={isDark ? "#818cf8" : "#4f46e5"} // Violet di Dark Mode, Indigo di Light Mode
+                  raysColor={isDark ? "#818cf8" : "#4f46e5"} 
                   raysSpeed={1.2}
                   lightSpread={0.6}
                   rayLength={2.5}
@@ -186,7 +188,6 @@ export default function About() {
                   className="z-0" 
                 />
 
-                {/* Video (Menggunakan mix-blend-screen agar menyatu dengan cahaya) */}
                 {loadVideo && (
                   <div className="relative z-10 h-full w-full mix-blend-screen opacity-90">
                     <video
@@ -212,14 +213,12 @@ export default function About() {
                   </div>
                 )}
 
-                {/* Placeholder */}
                 {!isVideoReady && (
                   <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">
                      <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
                   </div>
                 )}
 
-                {/* Pantulan Cahaya Dinamis (Glare) */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none z-30 opacity-0 dark:opacity-30 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
                   style={{
@@ -230,7 +229,6 @@ export default function About() {
                   }}
                 />
                 
-                {/* Overlay Gelap Bawah */}
                 <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
             </div>
@@ -246,7 +244,7 @@ export default function About() {
           <div className="mt-2">
             <StarBorder
               as="button"
-              onClick={() => scrollToSection("proyek")}
+              onClick={handleViewProjects}
               className="rounded-xl px-8 py-4 text-sm font-semibold"
               backgroundColor={isDark ? "#0f172a" : "#ffffff"}
               textColor={isDark ? "#cbd5e1" : "#334155"}

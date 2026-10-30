@@ -334,7 +334,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* ================= KANAN: Deskripsi (Font Disamakan Total) ================= */}
+        {/* ================= KANAN: Deskripsi (PERBAIKAN FINAL) ================= */}
         <div className="flex flex-col justify-center gap-6 z-10 relative w-full">
           
           <div className="relative p-6 sm:p-7 min-h-[180px] flex items-center rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
@@ -342,9 +342,10 @@ export default function About() {
             <div className="absolute top-6 bottom-6 left-0 w-[3px] rounded-r-full bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent opacity-80" />
             
             {/* 
-              PERBAIKAN: 
-              Menambahkan style inline `fontFamily` untuk memaksa font Inter masuk menembus ke dalam span-span TextType.
-              Menambahkan `tracking-normal` dan `leading-relaxed` agar spasi baris sama dengan teks lain.
+              PERBAIKAN TOTAL:
+              1. Menambahkan inline style fontFamily dengan "Inter, sans-serif".
+              2. Menambahkan style whiteSpace: "normal" agar teks memenuhi lebar kotak (tidak terpotong aneh).
+              3. class block memastikan elemen ini mengambil lebar penuh (bukan inline-block).
             */}
             <TextType
               as="p"
@@ -357,8 +358,11 @@ export default function About() {
               cursorStyle="bar"
               cursorBlinkDuration={0.6}
               startOnVisible={true}
-              className="text-sm sm:text-base leading-relaxed tracking-normal text-slate-600 dark:text-slate-300 pl-4 w-full"
-              style={{ fontFamily: "var(--font-inter), sans-serif" }}
+              className="block text-sm sm:text-base leading-relaxed tracking-normal text-slate-600 dark:text-slate-300 pl-4 w-full"
+              style={{ 
+                fontFamily: "Inter, system-ui, sans-serif", 
+                whiteSpace: "normal" 
+              }}
             />
           </div>
 

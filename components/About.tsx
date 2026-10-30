@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
 import Section from "@/components/ui/Section";
@@ -17,27 +17,40 @@ export default function About() {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const [loadVideo, setLoadVideo] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Pause video saat tidak terlihat → hemat GPU/CPU
+  // Deteksi prefers-reduced-motion sekali
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const onChange = () => setReducedMotion(mq.matches);
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
+
+  // Lazy-load video + pause saat tidak terlihat
   useEffect(() => {
     const el = wrapRef.current;
     const v = videoRef.current;
-    if (!el || !v) return;
+    if (!el) return;
 
-    let visible = false;
     const io = new IntersectionObserver(
       ([entry]) => {
-        visible = entry.isIntersecting;
-        if (visible) v.play().catch(() => {});
-        else v.pause();
+        if (entry.isIntersecting) {
+          setLoadVideo(true);
+          if (v && !reducedMotion) v.play().catch(() => {});
+        } else {
+          v?.pause();
+        }
       },
-      { rootMargin: "200px 0px" }
+      { rootMargin: "300px 0px" }
     );
     io.observe(el);
 
     const onVis = () => {
-      if (document.hidden) v.pause();
-      else if (visible) v.play().catch(() => {});
+      if (document.hidden) v?.pause();
+      else if (v && !reducedMotion) v.play().catch(() => {});
     };
     document.addEventListener("visibilitychange", onVis);
 
@@ -45,7 +58,7 @@ export default function About() {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, []);
+  }, [reducedMotion, loadVideo]);
 
   return (
     <Section id="tentang" title="About Me">
@@ -81,12 +94,12 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D */}
+        {/* TENGAH: video 3D dengan animasi melayang */}
         <div
           ref={wrapRef}
           className="relative flex justify-center items-center w-full mx-auto z-20"
         >
-          {/* Glow: gradient statis, tanpa filter blur */}
+          {/* Glow statis */}
           <div
             className="absolute -inset-4 rounded-[2.5rem] pointer-events-none"
             style={{
@@ -96,29 +109,40 @@ export default function About() {
             }}
           />
 
-          {/* Frame */}
+          {/* WRAPPER: animasi melayang naik-turun */}
           <div
-            className="relative w-full h-[450px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40 transition-transform duration-300 will-change-transform hover:-translate-y-1"
-            style={{ transform: "translateZ(0)" }}
+            className="w-full animate-float motion-reduce:animate-none"
+            style={{ willChange: "transform" }}
           >
-            <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
-              <video
-                ref={videoRef}
-                src="/images/3D.webm"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                disablePictureInPicture
-                className="h-full w-full object-cover"
-                style={{ transform: "translateZ(0)" }}
-              >
-                Browser Anda tidak mendukung tag video.
-              </video>
+            {/* Frame */}
+            <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40">
+              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
+                {loadVideo ? (
+                  <video
+                    ref={videoRef}
+                    src="/images/3D.webm"
+                    poster="/images/My-photo.png"
+                    autoPlay={!reducedMotion}
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    disablePictureInPicture
+                    className="h-full w-full object-cover"
+                    style={{ transform: "translateZ(0)" }}
+                  >
+                    Browser Anda tidak mendukung tag video.
+                  </video>
+                ) : (
+                  <img
+                    src="/images/My-photo.png"
+                    alt="Preview"
+                    className="h-full w-full object-cover opacity-60"
+                  />
+                )}
 
-              {/* Overlay gradient tanpa mix-blend-overlay */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              </div>
             </div>
           </div>
         </div>

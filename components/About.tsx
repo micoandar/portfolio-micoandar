@@ -334,26 +334,31 @@ export default function About() {
           </div>
         </div>
 
-        {/* ================= KANAN: Deskripsi (Font Disamakan) ================= */}
-        <div className="flex flex-col justify-center gap-6 z-10 relative">
+        {/* ================= KANAN: Deskripsi (Font Disamakan Total) ================= */}
+        <div className="flex flex-col justify-center gap-6 z-10 relative w-full">
           
-          <div className="relative p-6 sm:p-7 min-h-[160px] flex items-center rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
+          <div className="relative p-6 sm:p-7 min-h-[180px] flex items-center rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
             
             <div className="absolute top-6 bottom-6 left-0 w-[3px] rounded-r-full bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent opacity-80" />
             
-            {/* PERBAIKAN: Menambahkan 'font-sans block' pada className */}
+            {/* 
+              PERBAIKAN: 
+              Menambahkan style inline `fontFamily` untuk memaksa font Inter masuk menembus ke dalam span-span TextType.
+              Menambahkan `tracking-normal` dan `leading-relaxed` agar spasi baris sama dengan teks lain.
+            */}
             <TextType
               as="p"
               text={t.desc}
-              typingSpeed={20} 
-              initialDelay={800} 
+              typingSpeed={15} 
+              initialDelay={600} 
               pauseDuration={9999999} 
               loop={false} 
               showCursor={true}
               cursorStyle="bar"
               cursorBlinkDuration={0.6}
               startOnVisible={true}
-              className="font-sans block text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300 pl-4 w-full"
+              className="text-sm sm:text-base leading-relaxed tracking-normal text-slate-600 dark:text-slate-300 pl-4 w-full"
+              style={{ fontFamily: "var(--font-inter), sans-serif" }}
             />
           </div>
 

@@ -18,14 +18,20 @@ export default function BackToTop() {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setVisible(y > 400 && y > max * 0.1); 
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // Memantau section kontak
+    const contactSection = document.getElementById("kontak");
+    if (!contactSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Muncul jika area kontak mulai terlihat, atau jika kita sudah scroll melewatinya
+        setVisible(entry.isIntersecting || entry.boundingClientRect.top < 0);
+      },
+      { threshold: 0.1 } // Terpicu saat 10% area kontak terlihat
+    );
+
+    observer.observe(contactSection);
+    return () => observer.disconnect();
   }, []);
 
   const scrollToTop = () => {
@@ -34,7 +40,6 @@ export default function BackToTop() {
 
   const isDark = resolvedTheme === "dark";
 
-  // Jangan render apapun sebelum komponen ter-mount untuk mengecek tema
   if (!mounted) return null;
 
   return (
@@ -51,16 +56,9 @@ export default function BackToTop() {
         onSend={scrollToTop}
         ariaLabel={t}
         
-        // --- WARNA KONDISIONAL (LIGHT / DARK) ---
-        // Di Light Mode: Tombol Hitam, Ikon Putih, Lubang Light Gray
-        // Di Dark Mode: Kembali ke gaya asli React Bits
-        padColor={isDark ? "#f5f5f5" : "#18181b"}
-        iconColor={isDark ? "#18181b" : "#ffffff"}
-        accentColor={isDark ? "#f5f5f5" : "#18181b"}
-        wellColor={isDark ? "#27272a" : "#e4e4e7"}
-        bandColor={isDark ? "#52525b" : "#a1a1aa"}
+        // --- UKURAN DIPERKECIL ---
+        size={44} // Sebelumnya 56, sekarang diperkecil agar lebih ringkas
         
-        size={56}
         strokeWidth={3}
         armAt={48}
         maxPull={160}
@@ -71,6 +69,13 @@ export default function BackToTop() {
         spread={60}
         axis="any"
         tapSends
+
+        // --- WARNA TETAP (LIGHT/DARK MODE) ---
+        padColor={isDark ? "#f5f5f5" : "#18181b"}
+        iconColor={isDark ? "#18181b" : "#ffffff"}
+        accentColor={isDark ? "#f5f5f5" : "#18181b"}
+        wellColor={isDark ? "#27272a" : "#e4e4e7"}
+        bandColor={isDark ? "#52525b" : "#a1a1aa"}
       />
     </div>
   );

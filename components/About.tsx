@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Mail, Sparkles } from "lucide-react"; // Tambah ikon Sparkles
 import { useTheme } from "next-themes";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
@@ -161,22 +161,36 @@ export default function About() {
     <Section id="tentang" title="About Me">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
 
-        {/* KIRI */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
-          <h1 className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl">
-            <span className="text-blue-500">Hi, I'm</span> <br />
-            <span className="text-slate-900 dark:text-white">
+        {/* ================= KIRI: Teks Sapaan (Dipercantik) ================= */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10 relative">
+          
+          {/* Efek Pendaran di belakang teks (Hanya Desktop) */}
+          <div className="hidden lg:block absolute -top-10 -left-10 w-48 h-48 bg-blue-500/10 dark:bg-indigo-500/10 blur-[50px] rounded-full pointer-events-none -z-10" />
+
+          {/* Badge kecil di atas sapaan */}
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 mb-5">
+            <Sparkles size={14} className="text-blue-500 dark:text-indigo-400" />
+            <span className="text-[10px] font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">
+              Welcome
+            </span>
+          </div>
+
+          <h1 className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl flex flex-col gap-2">
+            <span className="text-blue-500 dark:text-indigo-400 drop-shadow-sm">
+              Hi, I'm
+            </span>
+            <span className="bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
               Micoandar <br />
               Justinus <br />
               Marbun
             </span>
           </h1>
 
-          <div className="mt-8">
+          <div className="mt-10">
             <StarBorder
               as="a"
               href={`mailto:${profile.email}`}
-              className="rounded-xl px-8 py-4 text-sm font-semibold"
+              className="rounded-xl px-8 py-4 text-sm font-semibold shadow-lg shadow-blue-500/10 dark:shadow-indigo-500/10"
               backgroundColor={isDark ? "#1e1b4b" : "#eef2ff"}
               textColor={isDark ? "#a5b4fc" : "#4338ca"}
               color={isDark ? "#818cf8" : "#4f46e5"}
@@ -191,7 +205,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: Video 3D */}
+        {/* ================= TENGAH: Video 3D (Tidak Diubah) ================= */}
         <div
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
@@ -200,7 +214,6 @@ export default function About() {
             if (window.innerWidth < 768) e.stopPropagation();
           }}
         >
-          {/* Glow Berdenyut di belakang */}
           <div
             className="absolute -inset-6 rounded-[3rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
             style={{
@@ -226,7 +239,6 @@ export default function About() {
               className="relative w-full will-change-transform"
             >
               
-              {/* PERBAIKAN FRAME: Deep Space Black + 3px border + Glow kuat */}
               <div 
                 style={{ transform: "translateZ(30px)" }}
                 className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] p-[3px] 
@@ -235,7 +247,6 @@ export default function About() {
                   border border-indigo-500/30 dark:border-violet-500/30"
               >
                 
-                {/* ROTATING LASER BORDER */}
                 <div className="hidden sm:block absolute inset-0 rounded-[2rem] pointer-events-none z-20 overflow-hidden">
                   <div 
                     className="absolute inset-0 rounded-[2rem] opacity-90"
@@ -250,7 +261,6 @@ export default function About() {
                   </div>
                 </div>
 
-                {/* Inner Video Container (diperkecil 3px menyesuaikan border) */}
                 <div className="relative h-full w-full overflow-hidden rounded-[calc(2rem-3px)] bg-[#020617]">
                   
                   <LightRays 
@@ -266,7 +276,6 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
@@ -326,17 +335,25 @@ export default function About() {
           </div>
         </div>
 
-        {/* KANAN */}
-        <div className="flex flex-col justify-center gap-6 z-10">
-          <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
-            {t.desc}
-          </p>
+        {/* ================= KANAN: Deskripsi & Tombol (Dipercantik) ================= */}
+        <div className="flex flex-col justify-center gap-6 z-10 relative">
+          
+          {/* Card Kaca (Glassmorphism) untuk Deskripsi */}
+          <div className="relative p-6 sm:p-7 rounded-3xl bg-white/40 dark:bg-[#121217]/60 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 shadow-xl shadow-slate-200/20 dark:shadow-black/40">
+            
+            {/* Garis Aksen Gradient di sebelah kiri teks */}
+            <div className="absolute top-6 bottom-6 left-0 w-[3px] rounded-r-full bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent opacity-80" />
+            
+            <p className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300 pl-4">
+              {t.desc}
+            </p>
+          </div>
 
-          <div className="mt-2">
+          <div className="mt-2 pl-2">
             <StarBorder
               as="button"
               onClick={handleViewProjects}
-              className="rounded-xl px-8 py-4 text-sm font-semibold"
+              className="rounded-xl px-8 py-4 text-sm font-semibold hover:scale-105 transition-transform duration-300"
               backgroundColor={isDark ? "#0f172a" : "#ffffff"}
               textColor={isDark ? "#cbd5e1" : "#334155"}
               color={isDark ? "#38bdf8" : "#0ea5e9"}

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"; // Import Framer Motion
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
 import StarBorder from "@/components/StarBorder";
 import { profile } from "@/data/profile";
@@ -28,15 +28,13 @@ export default function About() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Konfigurasi spring agar gerakan terasa halus dan premium
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
 
-  // Mengubah posisi mouse menjadi derajat rotasi (Max 12 derajat)
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
 
-  // Efek pantulan cahaya (Glare) yang mengikuti mouse
+  // Efek pantulan cahaya (Glare)
   const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
   const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
 
@@ -48,7 +46,6 @@ export default function About() {
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
     
-    // Normalisasi dari -0.5 sampai 0.5
     const xPct = mouseX / width - 0.5;
     const yPct = mouseY / height - 0.5;
 
@@ -57,7 +54,6 @@ export default function About() {
   };
 
   const handleMouseLeave = () => {
-    // Kembalikan ke posisi semula saat mouse keluar
     x.set(0);
     y.set(0);
   };
@@ -135,11 +131,11 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: Video 3D (Futuristic Interactive Glass Card) */}
+        {/* TENGAH: Video 3D (Interactive Glass Card) */}
         <div
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
-          style={{ perspective: "1200px" }} // Memberikan efek kedalaman nyata
+          style={{ perspective: "1200px" }}
         >
           {/* Glow Berdenyut */}
           <div
@@ -162,14 +158,14 @@ export default function About() {
             style={{
               rotateX: rotateX,
               rotateY: rotateY,
-              transformStyle: "preserve-3d", // Wajib untuk efek 3D
+              transformStyle: "preserve-3d",
             }}
             className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-float motion-reduce:animate-none will-change-transform"
           >
             
             {/* Frame Kaca Utama */}
             <div 
-              style={{ transform: "translateZ(30px)" }} // Pop-out effect
+              style={{ transform: "translateZ(30px)" }}
               className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-slate-900/40 p-2 shadow-2xl backdrop-blur-sm dark:border-white/10"
             >
               
@@ -216,29 +212,7 @@ export default function About() {
                   <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/30 to-transparent animate-scanline motion-reduce:animate-none transform-gpu" />
                 </div>
 
-                {/* HUD (Heads-Up Display) Futuristik */}
-                <div className="absolute inset-0 pointer-events-none p-4 sm:p-6 opacity-70">
-                  {/* Sudut HUD */}
-                  <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-sky-400/60" />
-                  <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-sky-400/60" />
-                  <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-sky-400/60" />
-                  <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-sky-400/60" />
-                  
-                  {/* Teks HUD */}
-                  <div className="absolute top-5 left-12 flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
-                    </span>
-                    <span className="text-[10px] font-mono font-bold tracking-widest text-sky-200/80">REC</span>
-                  </div>
-                  
-                  <div className="absolute bottom-5 right-12 text-right">
-                    <p className="text-[9px] font-mono tracking-widest text-sky-200/60">CAM_01 // 3D_RENDER</p>
-                  </div>
-                </div>
-
-                {/* Pantulan Cahaya Dinamis (Glare) saat Mouse Bergerak */}
+                {/* Pantulan Cahaya Dinamis (Glare) */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none z-30 opacity-0 dark:opacity-30 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
                   style={{

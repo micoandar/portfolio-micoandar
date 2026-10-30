@@ -1249,6 +1249,21 @@ const Lanyard: React.FC<LanyardProps> = ({
       body.angular.addScaledVector(up, FLIP_SPIN * direction);
     };
 
+    // --- FITUR BARU: Auto-flip setiap 18 detik saat idle ---
+    let idleTimer: ReturnType<typeof setTimeout>;
+
+    const resetIdleTimer = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        if (visible && !document.hidden && !sim.grab && !press) {
+          flip(camera.position);
+          start();
+        }
+        resetIdleTimer(); // loop terus selama idle
+      }, 18000); // 18 detik
+    };
+    // --------------------------------------------------------
+
     const onPointerDown = (event: PointerEvent) => {
       if (!settingsRef.current.interactive || event.button > 0) return;
       toPointer(event);
@@ -1266,6 +1281,7 @@ const Lanyard: React.FC<LanyardProps> = ({
       setCursor('grabbing');
       event.preventDefault();
       start();
+      resetIdleTimer(); // Reset timer saat mulai interaksi
     };
 
     const onPointerMove = (event: PointerEvent) => {
@@ -1290,6 +1306,7 @@ const Lanyard: React.FC<LanyardProps> = ({
       canvas.releasePointerCapture?.(event.pointerId);
       setCursor(hovering && event.pointerType !== 'touch' ? 'grab' : '');
       start();
+      resetIdleTimer(); // Mulai ulang hitungan 18 detik setelah dilepas
     };
 
     const onTouchStart = (event: TouchEvent) => {
@@ -1329,9 +1346,12 @@ const Lanyard: React.FC<LanyardProps> = ({
     applyRef.current = apply;
     resize();
 
+    resetIdleTimer(); // Mulai timer 18 detik pertama kali
+
     return () => {
       alive = false;
       cancelAnimationFrame(raf);
+      if (idleTimer) clearTimeout(idleTimer); // Bersihkan timer
       applyRef.current = null;
       resizeObserver.disconnect();
       intersectionObserver.disconnect();

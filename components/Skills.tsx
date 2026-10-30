@@ -11,7 +11,6 @@ import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 
-// Fallback icon jika gambar logo tidak tersedia atau sengaja dikosongkan
 const fallbackIconMap: Record<string, React.ElementType> = {
   "Vanilla JS": Code2, 
   "YOLO (v8/v11/26)": ScanEye, 
@@ -50,7 +49,6 @@ function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
   );
 }
 
-// Memisahkan Card menjadi komponen sendiri agar punya state (buka/tutup) masing-masing
 function SkillCard({ skill, index, lang }: { skill: any; index: number; lang: "id" | "en" }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -71,8 +69,8 @@ function SkillCard({ skill, index, lang }: { skill: any; index: number; lang: "i
         tabIndex={0}
         role="button"
         aria-pressed={isFlipped}
-        // cursor-pointer agar user tahu ini bisa diklik
-        className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 dark:border-slate-800 dark:bg-[#121217] dark:hover:border-slate-600 dark:focus:ring-brand-400"
+        // PERBAIKAN: Menghapus 'focus:ring-2 focus:ring-brand-500' agar border ungu tidak muncul saat diklik
+        className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-md focus:outline-none dark:border-slate-800 dark:bg-[#121217] dark:hover:border-slate-600"
       >
         
         {/* Tampilan Depan: Logo & Nama */}
@@ -108,19 +106,15 @@ function SkillCard({ skill, index, lang }: { skill: any; index: number; lang: "i
 
 export default function Skills() {
   const { lang } = useLanguage();
-
-  // Menggabungkan SEMUA skill menjadi satu list panjang
   const allSkills = skillGroups.flatMap((group) => group.items);
 
   return (
     <Section id="keahlian" title="Skills">
-      
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-5 lg:grid-cols-6">
         {allSkills.map((skill, i) => (
           <SkillCard key={skill.name} skill={skill} index={i} lang={lang} />
         ))}
       </div>
-
     </Section>
   );
 }

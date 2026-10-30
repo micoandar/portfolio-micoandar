@@ -8,14 +8,14 @@
   display: inline-flex;
   max-width: 100%;
   font-size: var(--gn-font);
-  line-height: 1.2;
+  line-height: 1; /* KUNCI PERBAIKAN: Line-height dibuat 1 agar presisi */
 }
 
 .gooey-nav--sm {
   --gn-pad: 5px;
   --gn-gap: 2px;
   --gn-font: 13px;
-  --gn-x: 13px;
+  --gn-x: 14px;
   --gn-y: 7px;
 }
 
@@ -36,12 +36,15 @@
   backdrop-filter: blur(20px) saturate(1.6);
 }
 
+/* PERBAIKAN: Stage dibuat sejajar tengah */
 .gooey-nav__stage {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 100%;
 }
 
-/* PERBAIKAN Z-INDEX: Canvas diletakkan di atas teks abu-abu, tapi di bawah teks putih */
 .gooey-nav__canvas {
   position: absolute;
   top: 0;
@@ -64,7 +67,7 @@
 .gooey-nav__list {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: var(--gn-gap);
   margin: 0;
   padding: 0;
@@ -72,7 +75,6 @@
   z-index: 1;
 }
 
-/* PERBAIKAN Z-INDEX: Teks aktif (putih) diletakkan paling atas */
 .gooey-nav__list--active {
   position: absolute;
   inset: 0;
@@ -85,9 +87,9 @@
 
 .gooey-nav__item {
   display: flex;
+  align-items: center;
 }
 
-/* PERBAIKAN PADDING: Ditambah +4px agar teks tidak menyentuh ujung pill */
 .gooey-nav__link {
   display: inline-flex;
   align-items: center;

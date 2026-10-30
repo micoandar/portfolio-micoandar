@@ -42,7 +42,7 @@ export default function PortfolioTabs() {
     <Section id="portfolio" title="Portfolio">
       
       {/* ================= DESKTOP: GooeyNav ================= */}
-      <div className="mb-12 hidden w-full justify-center md:flex min-h-[64px]">
+      <div className="mb-12 hidden w-full items-center justify-center md:flex">
         {mounted && (
           <GooeyNav
             key={resolvedTheme}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
 import Section from "@/components/ui/Section";
@@ -12,24 +13,55 @@ export default function About() {
   const { lang } = useLanguage();
   const t = translations[lang].about;
   const { resolvedTheme } = useTheme();
-
   const isDark = resolvedTheme === "dark";
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  // Pause video saat tidak terlihat → hemat GPU/CPU
+  useEffect(() => {
+    const el = wrapRef.current;
+    const v = videoRef.current;
+    if (!el || !v) return;
+
+    let visible = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) v.play().catch(() => {});
+        else v.pause();
+      },
+      { rootMargin: "200px 0px" }
+    );
+    io.observe(el);
+
+    const onVis = () => {
+      if (document.hidden) v.pause();
+      else if (visible) v.play().catch(() => {});
+    };
+    document.addEventListener("visibilitychange", onVis);
+
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
 
   return (
     <Section id="tentang" title="About Me">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center lg:gap-8 pt-8">
-        
-        {/* KIRI: Teks Sapaan */}
+
+        {/* KIRI */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left z-10">
           <h1 className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl">
             <span className="text-blue-500">Hi, I'm</span> <br />
             <span className="text-slate-900 dark:text-white">
-              Micoandar <br /> 
+              Micoandar <br />
               Justinus <br />
               Marbun
             </span>
           </h1>
-          
+
           <div className="mt-8">
             <StarBorder
               as="a"
@@ -49,34 +81,48 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: Video 3D Premium */}
-        <div className="relative flex justify-center items-center w-full mx-auto z-20 group">
-          
-          {/* 1. Efek Pendaran (Glow) di belakang video */}
-          <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-blue-500/30 via-violet-500/30 to-sky-400/30 opacity-70 blur-3xl transition duration-700 group-hover:opacity-100 dark:from-blue-600/20 dark:via-violet-600/20 dark:to-sky-500/20" />
-          
-          {/* 2. Bingkai Kaca (Glassmorphism Frame) */}
-          <div className="relative w-full h-[450px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:-translate-y-2 dark:border-slate-700/50 dark:bg-slate-900/40">
-            
-            {/* 3. Video di dalamnya */}
-            <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
+        {/* TENGAH: video 3D */}
+        <div
+          ref={wrapRef}
+          className="relative flex justify-center items-center w-full mx-auto z-20"
+        >
+          {/* Glow: pakai radial gradient statis, tanpa filter blur */}
+          <div
+            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none"
+            style={{
+              background: isDark
+                ? "radial-gradient(ellipse at center, rgba(79,70,229,0.28) 0%, rgba(139,92,246,0.16) 40%, rgba(14,165,233,0.08) 65%, transparent 80%)"
+                : "radial-gradient(ellipse at center, rgba(99,102,241,0.22) 0%, rgba(139,92,246,0.14) 40%, rgba(14,165,233,0.08) 65%, transparent 80%)",
+            }}
+          />
+
+          {/* Frame: tanpa backdrop-blur-xl, shadow lebih ringan, animasi cuma transform */}
+          <div
+            className="relative w-full h-[450px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40 transition-transform duration-300 will-change-transform hover:-translate-y-1"
+            style={{ transform: "translateZ(0)" }}
+          >
+            <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
               <video
+                ref={videoRef}
                 src="/images/3D.webm"
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="auto"
+                disablePictureInPicture
                 className="h-full w-full object-cover"
+                style={{ transform: "translateZ(0)" }}
               >
                 Browser Anda tidak mendukung tag video.
               </video>
-              
-              {/* 4. Overlay Gradasi Bawah agar menyatu */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10 opacity-60 mix-blend-overlay" />
+
+              {/* Overlay gradient tanpa mix-blend-overlay */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
 
-            {/* 5. Badge "3D Model" (Opsional, agar lebih futuristik) */}
-            <div className="absolute right-4 top-4 z-30 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 backdrop-blur-md">
+            {/* Badge */}
+            <div className="absolute right-4 top-4 z-30 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-sky-500" />
@@ -88,7 +134,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* KANAN: Deskripsi & Tombol Lihat Proyek */}
+        {/* KANAN */}
         <div className="flex flex-col justify-center gap-6 z-10">
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
             {t.desc}

@@ -200,12 +200,13 @@ export default function About() {
             if (window.innerWidth < 768) e.stopPropagation();
           }}
         >
+          {/* Glow Berdenyut di belakang */}
           <div
-            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
+            className="absolute -inset-6 rounded-[3rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
             style={{
               background: isDark
-                ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
-                : "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)",
+                ? "radial-gradient(ellipse at center, rgba(79,70,229,0.6) 0%, rgba(139,92,246,0.4) 40%, rgba(14,165,233,0.15) 65%, transparent 80%)"
+                : "radial-gradient(ellipse at center, rgba(99,102,241,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.15) 65%, transparent 80%)",
             }}
           />
 
@@ -225,24 +226,21 @@ export default function About() {
               className="relative w-full will-change-transform"
             >
               
-              {/* PERBAIKAN BORDER: Shadow premium + Rotating Laser Gradient */}
+              {/* PERBAIKAN FRAME: Deep Space Black + 3px border + Glow kuat */}
               <div 
                 style={{ transform: "translateZ(30px)" }}
-                className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] bg-slate-900/40 p-2 backdrop-blur-sm 
-                  shadow-[0_0_50px_-12px_rgba(99,102,241,0.3)] dark:shadow-[0_0_50px_-12px_rgba(139,92,246,0.3)] 
-                  border border-white/10 dark:border-white/5"
+                className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] p-[3px] 
+                  bg-gradient-to-br from-[#1a1a2e] to-[#0f0f13]
+                  shadow-[0_0_50px_-10px_rgba(99,102,241,0.6)] dark:shadow-[0_0_60px_-8px_rgba(139,92,246,0.8)]
+                  border border-indigo-500/30 dark:border-violet-500/30"
               >
                 
-                {/* ROTATING LASER BORDER (Hanya di Desktop) */}
+                {/* ROTATING LASER BORDER */}
                 <div className="hidden sm:block absolute inset-0 rounded-[2rem] pointer-events-none z-20 overflow-hidden">
-                  {/* Base border tipis */}
-                  <div className="absolute inset-0 rounded-[2rem] border border-white/10 dark:border-white/10" />
-                  
-                  {/* Efek Rotasi Cahaya */}
                   <div 
-                    className="absolute inset-0 rounded-[2rem] opacity-80"
+                    className="absolute inset-0 rounded-[2rem] opacity-90"
                     style={{
-                      padding: '1.5px',
+                      padding: '2px',
                       WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                       WebkitMaskComposite: 'xor',
                       maskComposite: 'exclude',
@@ -252,7 +250,8 @@ export default function About() {
                   </div>
                 </div>
 
-                <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
+                {/* Inner Video Container (diperkecil 3px menyesuaikan border) */}
+                <div className="relative h-full w-full overflow-hidden rounded-[calc(2rem-3px)] bg-[#020617]">
                   
                   <LightRays 
                     raysOrigin="top-center"

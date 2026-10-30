@@ -46,13 +46,14 @@ export default function Contact() {
         <Reveal>
           <div className="flex h-full flex-col justify-between rounded-3xl bg-gradient-to-br from-brand-600 via-violet-600 to-indigo-700 p-6 text-white shadow-xl shadow-brand-500/20 dark:from-brand-800 dark:via-violet-900 dark:to-indigo-950 sm:p-8">
             <div>
+              {/* TEKS BARU DI SINI */}
               <h3 className="text-xl font-bold leading-snug sm:text-2xl">
-                {lang === "id" ? "Punya proyek atau posisi yang cocok?" : "Have a project or a fitting role?"}
+                {lang === "id" ? "Mari bangun sesuatu bersama!" : "Let's build something together!"}
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-white/80">
                 {lang === "id" 
-                  ? "Kirim pesan dan saya akan merespons secepat mungkin. Saya siap berkontribusi secara maksimal untuk tim Anda."
-                  : "Send a message and I'll respond as soon as possible. I'm ready to contribute fully to your team."}
+                  ? "Terbuka untuk kesempatan kerja, magang, maupun kolaborasi proyek di bidang Software Development. Saya siap menyambut peluang dan tantangan baru."
+                  : "Open to job opportunities, internships, and project collaborations in Software Development. I'm ready to embrace new opportunities and challenges."}
               </p>
             </div>
 

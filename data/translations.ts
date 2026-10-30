@@ -16,7 +16,6 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      // TEKS DESKRIPSI BARU (BAHASA INDONESIA)
       summary: "Saya suka mengulik teknologi, mencoba hal baru, dan mengubah ide menjadi sesuatu yang nyata. Bagi saya, software development adalah tentang terus belajar, menemukan solusi, dan membangun aplikasi yang fungsional serta bermanfaat bagi banyak orang.",
     },
     about: {
@@ -46,9 +45,9 @@ export const translations = {
       eyebrow: "Kontak",
       title: "Mari Berkolaborasi",
       desc: "Saya terbuka untuk peluang kerja maupun freelance.",
-      cardTitle: "Punya proyek atau posisi yang cocok?",
-      cardDesc:
-        "Kirim pesan dan saya akan merespons secepat mungkin. Saya siap berkontribusi secara maksimal untuk tim Anda.",
+      // TEKS BARU DI SINI
+      cardTitle: "Mari bangun sesuatu bersama!",
+      cardDesc: "Terbuka untuk kesempatan kerja, magang, maupun kolaborasi proyek di bidang Software Development. Saya siap menyambut peluang dan tantangan baru.",
       chatWa: "Chat via WhatsApp",
     },
     footer: {
@@ -74,7 +73,6 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      // TEKS DESKRIPSI BARU (BAHASA INGGRIS)
       summary: "I love exploring technology, trying new things, and turning ideas into something real. For me, software development is about continuous learning, finding solutions, and building functional applications that benefit many people.",
     },
     about: {
@@ -104,9 +102,9 @@ export const translations = {
       eyebrow: "Contact",
       title: "Let's Collaborate",
       desc: "I'm open to job opportunities and freelance work.",
-      cardTitle: "Have a project or a fitting role?",
-      cardDesc:
-        "Send a message and I'll respond as soon as possible. I'm ready to contribute fully to your team.",
+      // TEKS BARU DI SINI (TERJEMAHAN INGGRIS)
+      cardTitle: "Let's build something together!",
+      cardDesc: "Open to job opportunities, internships, and project collaborations in Software Development. I'm ready to embrace new opportunities and challenges.",
       chatWa: "Chat on WhatsApp",
     },
     footer: {

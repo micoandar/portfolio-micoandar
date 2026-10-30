@@ -18,7 +18,7 @@ export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [loadVideo, setLoadVideo] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false); // Untuk efek fade-in
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,9 @@ export default function About() {
           v?.pause();
         }
       },
-      { rootMargin: "300px 0px" }
+      // KUNCI PERCEPATAN: Ubah rootMargin jadi 1000px (1 layar penuh sebelum About)
+      // Jadi saat user masih di Hero, video sudah mulai di-download di background.
+      { rootMargin: "1000px 0px" }
     );
     io.observe(el);
 
@@ -122,15 +124,15 @@ export default function About() {
                     loop
                     muted
                     playsInline
-                    preload="auto"
+                    // PRELOAD AUTO: Paksa browser mengunduh secepat mungkin
+                    preload="auto" 
                     disablePictureInPicture
                     controlsList="nodownload noremoteplayback noplaybackrate"
                     onContextMenu={(e) => e.preventDefault()}
                     onDragStart={(e) => e.preventDefault()}
                     draggable={false}
-                    // Saat video siap diputar, jalankan fade-in
                     onCanPlay={() => setIsVideoReady(true)}
-                    className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-700 ${
+                    className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
                       isVideoReady ? "opacity-100" : "opacity-0"
                     }`}
                     style={{ transform: "translateZ(0)" }}
@@ -140,11 +142,11 @@ export default function About() {
                 </div>
               )}
 
-              {/* Placeholder: Hanya warna gelap (tanpa foto) */}
+              {/* Placeholder: Gelap polos tanpa spinner yang mencolok */}
               {!isVideoReady && (
-                <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
-                  {/* Opsional: Bisa tambahkan teks loading atau spinner di sini */}
-                  <div className="w-8 h-8 rounded-full border-2 border-slate-700 border-t-indigo-500 animate-spin" />
+                <div className="absolute inset-0 bg-[#020617] flex items-center justify-center">
+                   {/* Animasi pendaran tipis di tengah agar tidak terkesan hang/blank */}
+                   <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
                 </div>
               )}
 

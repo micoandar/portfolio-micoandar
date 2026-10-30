@@ -34,14 +34,14 @@ export default function About() {
     if (isSpinning) return; // Cegah klik ganda saat berputar
     setIsSpinning(true);
     
-    // Memutar video 2 kali lipat (720 derajat) dalam 3 detik
+    // Memutar video secara horizontal (3D flip) 3 kali lipat (1080 derajat) dalam 3 detik
     await spinControls.start({
-      rotate: [0, 720],
+      rotateY: [0, 1080],
       transition: { duration: 3, ease: "linear" }
     });
     
     // Reset kembali ke 0 derajat secara instan
-    spinControls.set({ rotate: 0 });
+    spinControls.set({ rotateY: 0 });
     setIsSpinning(false);
   };
   // --------------------------------
@@ -205,13 +205,15 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO SPIN WRAPPER */}
+                  {/* VIDEO SPIN WRAPPER (3D FLIP) */}
                   <div 
                     onClick={handleSpin} 
                     className="absolute inset-0 z-10 cursor-pointer overflow-hidden"
+                    style={{ perspective: "1000px" }} // Perspektif khusus video
                   >
                     <motion.div
                       animate={spinControls}
+                      style={{ transformStyle: "preserve-3d" }}
                       className="h-full w-full flex items-center justify-center"
                     >
                       {loadVideo && (

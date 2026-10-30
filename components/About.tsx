@@ -25,20 +25,25 @@ export default function About() {
   const [loadVideo, setLoadVideo] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  
+  // State baru untuk kursor menggenggam
+  const [isHolding, setIsHolding] = useState(false);
 
   // --- LOGIKA TEKAN & TAHAN (PRESS AND HOLD) ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
+    setIsHolding(true); // Set kursor jadi menggenggam
     if (videoRef.current) {
-      videoRef.current.playbackRate = 4; // Mempercepat putaran video saat ditekan
-      videoRef.current.play().catch(() => {}); // Pastikan video tetap berjalan
+      videoRef.current.playbackRate = 4; 
+      videoRef.current.play().catch(() => {}); 
     }
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.releasePointerCapture(e.pointerId);
+    setIsHolding(false); // Kembalikan kursor
     if (videoRef.current) {
-      videoRef.current.playbackRate = 1; // KEMBALI KE KECEPATAN NORMAL (Tidak di-pause)
+      videoRef.current.playbackRate = 1; 
     }
   };
   // ----------------------------------------------
@@ -93,9 +98,9 @@ export default function About() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setLoadVideo(true);
-          if (v && !reducedMotion) v.play().catch(() => {}); // Auto-play saat terlihat
+          if (v && !reducedMotion) v.play().catch(() => {}); 
         } else {
-          v?.pause(); // Pause jika keluar layar (hemat resource)
+          v?.pause(); 
         }
       },
       { rootMargin: "1000px 0px" }
@@ -201,20 +206,23 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER - PRESS TO SPIN FASTER */}
+                  {/* VIDEO WRAPPER - KURSOR DINAMIS */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
                     onPointerLeave={handlePointerUp}
                     onPointerCancel={handlePointerUp}
-                    className="absolute inset-0 z-10 cursor-pointer overflow-hidden touch-none"
+                    // Menggunakan state isHolding untuk menentukan kelas kursor
+                    className={`absolute inset-0 z-10 overflow-hidden touch-none ${
+                      isHolding ? "cursor-grabbing" : "cursor-grab"
+                    }`}
                   >
                     {loadVideo && (
                       <div className="h-full w-full mix-blend-screen opacity-90">
                         <video
                           ref={videoRef}
                           src="/api/video/3d"
-                          autoPlay={!reducedMotion} // <-- AUTO PLAY KEMBALI
+                          autoPlay={!reducedMotion}
                           loop
                           muted
                           playsInline

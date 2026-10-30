@@ -92,12 +92,11 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D — contain-3d memaksa isolasi layer */}
+        {/* TENGAH: video 3D — dilindungi (tidak bisa right-click save / drag out) */}
         <div
           ref={wrapRef}
           className="relative flex justify-center items-center w-full mx-auto z-20 contain-3d transform-gpu"
         >
-          {/* Glow — animasi hanya aktif di desktop (sm ke atas) */}
           <div
             className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none"
             style={{
@@ -107,9 +106,7 @@ export default function About() {
             }}
           />
 
-          {/* Frame statis */}
           <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40">
-            {/* Border pulse — desktop saja */}
             <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
             <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
@@ -117,7 +114,7 @@ export default function About() {
                 <div className="h-full w-full sm:animate-breathe motion-reduce:animate-none sm:will-change-transform">
                   <video
                     ref={videoRef}
-                    src="/images/3D.webm"
+                    src="/api/video/3d"
                     poster="/images/My-photo.png"
                     autoPlay={!reducedMotion}
                     loop
@@ -125,7 +122,11 @@ export default function About() {
                     playsInline
                     preload="metadata"
                     disablePictureInPicture
-                    className="h-full w-full object-cover"
+                    controlsList="nodownload noremoteplayback noplaybackrate"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                    draggable={false}
+                    className="h-full w-full object-cover select-none pointer-events-none"
                     style={{ transform: "translateZ(0)" }}
                   >
                     Browser Anda tidak mendukung tag video.
@@ -135,11 +136,13 @@ export default function About() {
                 <img
                   src="/images/My-photo.png"
                   alt="Preview"
-                  className="h-full w-full object-cover opacity-60"
+                  className="h-full w-full object-cover opacity-60 select-none"
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                  draggable={false}
                 />
               )}
 
-              {/* Scanline — desktop saja */}
               <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent sm:animate-scanline motion-reduce:animate-none sm:will-change-transform" />
               </div>

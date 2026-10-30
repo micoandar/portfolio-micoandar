@@ -29,6 +29,16 @@ export default function About() {
   const [reducedMotion, setReducedMotion] = useState(false);
   
   const [isHolding, setIsHolding] = useState(false);
+  
+  // State untuk mendeteksi layar HP (di bawah 1024px)
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // --- FUNGSI LIHAT PROYEK ---
   const handleViewProjects = () => {
@@ -176,55 +186,55 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-1 w-full">
-            {/* SplitText untuk "Hi, I'm" (Animasi Hover Aktif) */}
+            {/* SplitText untuk "Hi, I'm" (Responsive textAlign) */}
             <SplitText
               tag="h1"
               text="Hi, I'm"
-              className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-blue-500 dark:text-indigo-400 drop-shadow-sm cursor-default"
+              className="w-full text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-blue-500 dark:text-indigo-400 drop-shadow-sm cursor-default"
               effect="rise"
               splitType="chars"
               delay={30}
               duration={1}
-              textAlign="left"
+              textAlign={isMobile ? "center" : "left"}
               trigger="view"
               hoverEffect="lift"
             />
             
-            {/* SplitText untuk NAMA (Animasi Hover Aktif) */}
-            <div className="flex flex-col">
+            {/* SplitText untuk NAMA (Responsive textAlign) */}
+            <div className="flex flex-col w-full">
               <SplitText
                 tag="h1"
                 text="Micoandar"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
+                className="w-full text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
-                textAlign="left"
+                textAlign={isMobile ? "center" : "left"}
                 trigger="view"
                 hoverEffect="lift"
               />
               <SplitText
                 tag="h1"
                 text="Justinus"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
+                className="w-full text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
-                textAlign="left"
+                textAlign={isMobile ? "center" : "left"}
                 trigger="view"
                 hoverEffect="lift"
               />
               <SplitText
                 tag="h1"
                 text="Marbun"
-                className="text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
+                className="w-full text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl text-slate-900 dark:text-white cursor-default"
                 effect="rise"
                 splitType="chars"
                 delay={30}
                 duration={1}
-                textAlign="left"
+                textAlign={isMobile ? "center" : "left"}
                 trigger="view"
                 hoverEffect="lift"
               />

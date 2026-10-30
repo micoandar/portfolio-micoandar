@@ -3,7 +3,7 @@
 import {
   Braces, Cloud, Database, LayoutTemplate, Server, Smartphone,
   Globe, Eye, ScanEye, Lock, Key, UserCheck, ShieldCheck,
-  Code2 // <-- Ikon baru ditambahkan di sini
+  Code2
 } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
@@ -13,7 +13,7 @@ import { useState } from "react";
 
 // Fallback icon jika gambar logo tidak tersedia atau sengaja dikosongkan
 const fallbackIconMap: Record<string, React.ElementType> = {
-  "Vanilla JS": Code2, // <-- Vanilla JS sekarang pakai ikon Code2
+  "Vanilla JS": Code2, 
   "YOLO (v8/v11/26)": ScanEye, 
   "SQL": Database, 
   "AJAX / Fetch API": Globe, 
@@ -30,25 +30,79 @@ const fallbackIconMap: Record<string, React.ElementType> = {
 function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
   const [error, setError] = useState(false);
 
-  // Jika ada logo dan gambarnya tidak error, tampilkan gambar
   if (skill.logo && !error) {
     return (
       <img
         src={skill.logo}
         alt={skill.name}
         loading="lazy"
-        className="h-10 w-10 object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-110 group-active:scale-110 sm:h-14 sm:w-14"
+        className="h-10 w-10 object-contain drop-shadow-sm sm:h-14 sm:w-14"
         onError={() => setError(true)}
       />
     );
   }
 
-  // Jika tidak ada logo atau error, tampilkan ikon fallback
   const Fallback = fallbackIconMap[skill.name] || Braces;
   return (
     <Fallback 
-      className="h-10 w-10 text-slate-500 transition-transform duration-300 group-hover:scale-110 group-active:scale-110 dark:text-slate-400 sm:h-14 sm:w-14" 
+      className="h-10 w-10 text-slate-500 dark:text-slate-400 sm:h-14 sm:w-14" 
     />
+  );
+}
+
+// Memisahkan Card menjadi komponen sendiri agar punya state (buka/tutup) masing-masing
+function SkillCard({ skill, index, lang }: { skill: any; index: number; lang: "id" | "en" }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleToggle = () => {
+    setIsFlipped((prev) => !prev);
+  };
+
+  return (
+    <Reveal delay={index * 30}>
+      <div
+        onClick={handleToggle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleToggle();
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-pressed={isFlipped}
+        // cursor-pointer agar user tahu ini bisa diklik
+        className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 dark:border-slate-800 dark:bg-[#121217] dark:hover:border-slate-600 dark:focus:ring-brand-400"
+      >
+        
+        {/* Tampilan Depan: Logo & Nama */}
+        <div 
+          className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-300 ${
+            isFlipped ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100"
+          }`}
+        >
+          <SkillIcon skill={skill} />
+          <span className="mt-2 text-center text-[10px] font-bold tracking-wide text-slate-700 dark:text-slate-300 sm:text-xs">
+            {skill.name}
+          </span>
+        </div>
+
+        {/* Tampilan Belakang: Deskripsi */}
+        <div 
+          className={`absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-slate-50/95 p-2 text-center transition-all duration-300 dark:bg-[#121217]/95 sm:p-3 ${
+            isFlipped ? "opacity-100 scale-100 z-10" : "opacity-0 scale-95 pointer-events-none -z-10"
+          }`}
+        >
+          <span className="mb-1 text-[10px] font-bold text-brand-600 dark:text-brand-400">
+            {skill.name}
+          </span>
+          <p className="text-[9px] leading-tight text-slate-600 dark:text-slate-400 sm:text-[11px] sm:leading-relaxed">
+            {skill.description[lang]}
+          </p>
+        </div>
+
+      </div>
+    </Reveal>
   );
 }
 
@@ -63,34 +117,10 @@ export default function Skills() {
       
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-5 lg:grid-cols-6">
         {allSkills.map((skill, i) => (
-          <Reveal key={skill.name} delay={i * 30}>
-            <div
-              tabIndex={0}
-              className="group relative flex aspect-square flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 active:scale-95 dark:border-slate-800 dark:bg-[#121217] dark:hover:border-slate-600 dark:focus:ring-brand-400"
-            >
-              
-              {/* Tampilan Depan: Logo & Nama */}
-              <div className="flex flex-col items-center gap-2 sm:gap-3 transition-all duration-300 group-hover:opacity-0 group-focus:opacity-0 group-active:opacity-0">
-                <SkillIcon skill={skill} />
-                <span className="text-center text-[10px] font-bold tracking-wide text-slate-700 dark:text-slate-300 sm:text-xs">
-                  {skill.name}
-                </span>
-              </div>
-
-              {/* Tampilan Belakang: Deskripsi (Muncul saat disentuh / hover) */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-white/95 p-2 text-center opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 dark:bg-[#121217]/95 sm:p-3">
-                <span className="mb-1 text-[10px] font-bold text-brand-600 dark:text-brand-400">
-                  {skill.name}
-                </span>
-                <p className="text-[9px] leading-tight text-slate-600 dark:text-slate-400 sm:text-[11px] sm:leading-relaxed">
-                  {skill.description[lang]}
-                </p>
-              </div>
-
-            </div>
-          </Reveal>
+          <SkillCard key={skill.name} skill={skill} index={i} lang={lang} />
         ))}
       </div>
+
     </Section>
   );
 }

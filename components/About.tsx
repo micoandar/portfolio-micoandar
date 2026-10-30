@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail, Zap } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react"; // Zap dihapus
 import { useTheme } from "next-themes";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
@@ -27,24 +27,9 @@ export default function About() {
   const [reducedMotion, setReducedMotion] = useState(false);
   
   const [isHolding, setIsHolding] = useState(false);
-  const [isFastMode, setIsFastMode] = useState(false);
-
-  // --- LOGIKA MOBILE: TOMBOL TOGGLE SPEED ---
-  const toggleSpeed = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Mencegah klik tembus ke video
-    if (videoRef.current) {
-      const nextRate = isFastMode ? 1 : 4;
-      videoRef.current.playbackRate = nextRate;
-      setIsFastMode(!isFastMode);
-    }
-  };
-  // ----------------------------------------------
 
   // --- LOGIKA DESKTOP: TEKAN & TAHAN ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    // Jika di HP (lebar < 768), abaikan logika tahan ini agar tidak lag
-    if (window.innerWidth < 768) return;
-
     e.currentTarget.setPointerCapture(e.pointerId);
     setIsHolding(true); 
     if (videoRef.current) {
@@ -54,8 +39,6 @@ export default function About() {
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 768) return;
-
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsHolding(false); 
     if (videoRef.current) {
@@ -222,7 +205,7 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER - DESKTOP (Hold) */}
+                  {/* VIDEO WRAPPER - DESKTOP (Hold to speed up) */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
@@ -258,7 +241,7 @@ export default function About() {
                     )}
                   </div>
 
-                  {/* VIDEO WRAPPER - MOBILE (Tanpa Hold, Hanya visual) */}
+                  {/* VIDEO WRAPPER - MOBILE (Normal autoplay, no interaction) */}
                   <div className="absolute inset-0 z-10 overflow-hidden md:hidden pointer-events-none">
                     {loadVideo && (
                       <div className="h-full w-full mix-blend-screen opacity-90">
@@ -278,24 +261,6 @@ export default function About() {
                       </div>
                     )}
                   </div>
-
-                  {/* TOMBOL KHUSUS MOBILE (ZAP ICON) */}
-                  <button
-                    onPointerDown={(e) => e.stopPropagation()} // Mencegah bubbling
-                    onPointerUp={(e) => e.stopPropagation()}   // Mencegah bubbling
-                    onClick={(e) => {
-                      e.stopPropagation(); // Mencegah bubbling
-                      toggleSpeed(e);
-                    }}
-                    className={`absolute top-4 right-4 z-40 md:hidden flex items-center justify-center p-3 rounded-full backdrop-blur-md border shadow-lg transition-all duration-300 ${
-                      isFastMode 
-                        ? "bg-amber-500/90 text-white border-amber-400 scale-110" 
-                        : "bg-black/40 text-white/70 border-white/20 hover:bg-black/60"
-                    }`}
-                    aria-label="Toggle Speed"
-                  >
-                    <Zap size={20} className={isFastMode ? "fill-white" : ""} />
-                  </button>
 
                   {!isVideoReady && (
                     <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">

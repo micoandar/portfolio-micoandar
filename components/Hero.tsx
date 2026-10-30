@@ -6,6 +6,7 @@ import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Lanyard from "@/components/Lanyard";
+import { scrollToSection } from "@/lib/utils"; // Import fungsi baru
 
 export default function Hero() {
   const { lang } = useLanguage();
@@ -72,13 +73,14 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href="#proyek"
+            {/* TOMBOL LIHAT PROYEK (SUDAH DIUBAH) */}
+            <button
+              onClick={() => scrollToSection("proyek")}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-slate-900/30 dark:bg-white dark:text-slate-900 dark:hover:shadow-white/20"
             >
               {t.viewProjects}
               <ArrowRight size={16} className="transition group-hover:translate-x-1" />
-            </a>
+            </button>
 
             <div className="relative" ref={cvRef}>
               <button

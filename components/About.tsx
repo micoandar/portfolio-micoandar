@@ -9,6 +9,7 @@ import StarBorder from "@/components/StarBorder";
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { scrollToSection } from "@/lib/utils"; // Import fungsi baru
 
 export default function About() {
   const { lang } = useLanguage();
@@ -237,9 +238,10 @@ export default function About() {
           </p>
 
           <div className="mt-2">
+            {/* TOMBOL LIHAT PROYEK (SUDAH DIUBAH MENJADI BUTTON) */}
             <StarBorder
-              as="a"
-              href="#proyek"
+              as="button"
+              onClick={() => scrollToSection("proyek")}
               className="rounded-xl px-8 py-4 text-sm font-semibold"
               backgroundColor={isDark ? "#0f172a" : "#ffffff"}
               textColor={isDark ? "#cbd5e1" : "#334155"}

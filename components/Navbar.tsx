@@ -5,6 +5,7 @@ import { Menu, X, Languages, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/contexts/LanguageContext";
 import GooeyNav from "@/components/GooeyNav";
+import { scrollToSection } from "@/lib/utils"; // Import fungsi baru
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -16,11 +17,12 @@ export default function Navbar() {
   const { lang, toggle: toggleLang } = useLanguage();
   const { resolvedTheme, setTheme } = useTheme();
 
+  // Ubah href menjadi id (agar GooeyNav merender tombol, bukan link #)
   const links = [
-    { label: "Home", href: "#beranda" },
-    { label: "About", href: "#tentang" },
-    { label: "Portfolio", href: "#portfolio" },
-    { label: "Contact", href: "#kontak" },
+    { label: "Home", id: "beranda" },
+    { label: "About", id: "tentang" },
+    { label: "Portfolio", id: "portfolio" },
+    { label: "Contact", id: "kontak" },
   ];
 
   const sectionIds = ["beranda", "tentang", "portfolio", "kontak"];
@@ -60,6 +62,7 @@ export default function Navbar() {
   const handleNavClick = (index: number) => {
     setActiveIndex(index);
     isClicking.current = true;
+    scrollToSection(links[index].id); // Panggil smooth scroll
     setTimeout(() => { isClicking.current = false; }, 1000);
   };
 
@@ -76,8 +79,8 @@ export default function Navbar() {
         <div className="hidden md:flex items-center rounded-full bg-white/50 backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10 min-w-[300px] justify-center">
           {mounted && (
             <GooeyNav
-              key={resolvedTheme} // <-- KUNCI PERBAIKAN: Reset canvas saat tema berubah
-              items={links}
+              key={resolvedTheme}
+              items={links} // Hanya passing label (tanpa href) agar jadi button
               activeIndex={activeIndex}
               onChange={handleNavClick}
               theme={resolvedTheme === "dark" ? "dark" : "light"}
@@ -90,7 +93,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Toggles — mobile solid, desktop glass */}
+        {/* Toggles */}
         <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 dark:bg-slate-900 md:bg-white/50 md:backdrop-blur-md md:dark:bg-black/50 shadow-lg border border-white/10">
           {mounted && (
             <button
@@ -127,21 +130,22 @@ export default function Navbar() {
         <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-slate-950 md:hidden">
           <ul className="flex flex-col gap-1">
             {links.map((link, index) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
+              <li key={link.id}>
+                {/* Ubah <a> menjadi <button> agar URL tidak berubah */}
+                <button
+                  type="button"
                   onClick={() => {
                     setOpen(false);
                     handleNavClick(index);
                   }}
-                  className={`block rounded-xl px-4 py-3 text-sm font-medium transition ${
+                  className={`w-full text-left block rounded-xl px-4 py-3 text-sm font-medium transition ${
                     activeIndex === index
                       ? "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white"
                       : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                   }`}
                 >
                   {link.label}
-                </a>
+                </button>
               </li>
             ))}
           </ul>

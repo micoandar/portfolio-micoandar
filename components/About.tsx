@@ -98,8 +98,12 @@ export default function About() {
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6"
         >
-          {/* Container Utama */}
-          <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-levitate motion-reduce:animate-none">
+          {/* 
+            Container Utama: 
+            - Mobile: Pakai animate-float (ringan)
+            - Desktop: Pakai animate-levitate (lebih kompleks)
+          */}
+          <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full animate-float sm:animate-levitate motion-reduce:animate-none">
             
             <div
               className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
@@ -147,10 +151,13 @@ export default function About() {
                   </div>
                 )}
 
-                {/* Scanline Hologram (Animasi diperbaiki) */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                  {/* Ditambahkan top-0 agar persentase translateY akurat dari atas, dan transform-gpu agar diproses GPU */}
-                  <div className="absolute top-0 inset-x-0 h-24 sm:h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent animate-scanline motion-reduce:animate-none transform-gpu" />
+                {/* 
+                  Scanline Hologram: 
+                  Dikembalikan ke hidden sm:block (Hanya Desktop).
+                  Di HP dihilangkan agar browser tidak freeze.
+                */}
+                <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent animate-scanline motion-reduce:animate-none transform-gpu" />
                 </div>
 
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />

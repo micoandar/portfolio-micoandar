@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail, Zap } from "lucide-react"; // Tambah Zap icon
+import { ArrowUpRight, Mail, Zap } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
@@ -27,7 +27,7 @@ export default function About() {
   const [reducedMotion, setReducedMotion] = useState(false);
   
   const [isHolding, setIsHolding] = useState(false);
-  const [isFastMode, setIsFastMode] = useState(false); // State untuk tombol mobile
+  const [isFastMode, setIsFastMode] = useState(false);
 
   // --- LOGIKA MOBILE: TOMBOL TOGGLE SPEED ---
   const toggleSpeed = (e: React.MouseEvent) => {
@@ -42,6 +42,9 @@ export default function About() {
 
   // --- LOGIKA DESKTOP: TEKAN & TAHAN ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Jika di HP (lebar < 768), abaikan logika tahan ini agar tidak lag
+    if (window.innerWidth < 768) return;
+
     e.currentTarget.setPointerCapture(e.pointerId);
     setIsHolding(true); 
     if (videoRef.current) {
@@ -51,11 +54,12 @@ export default function About() {
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (window.innerWidth < 768) return;
+
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsHolding(false); 
     if (videoRef.current) {
       videoRef.current.playbackRate = 1; 
-      setIsFastMode(false); // Sinkronisasi state jika desktop dipakai
     }
   };
   // ----------------------------------------------
@@ -218,13 +222,13 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER - DESKTOP (Hold) & MOBILE (Swipe) */}
+                  {/* VIDEO WRAPPER - DESKTOP (Hold) */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
                     onPointerLeave={handlePointerUp}
                     onPointerCancel={handlePointerUp}
-                    className={`absolute inset-0 z-10 overflow-hidden touch-none ${
+                    className={`absolute inset-0 z-10 overflow-hidden touch-none hidden md:block ${
                       isHolding ? "cursor-grabbing" : "cursor-grab"
                     }`}
                   >
@@ -254,9 +258,35 @@ export default function About() {
                     )}
                   </div>
 
+                  {/* VIDEO WRAPPER - MOBILE (Tanpa Hold, Hanya visual) */}
+                  <div className="absolute inset-0 z-10 overflow-hidden md:hidden pointer-events-none">
+                    {loadVideo && (
+                      <div className="h-full w-full mix-blend-screen opacity-90">
+                        <video
+                          autoPlay={!reducedMotion}
+                          loop
+                          muted
+                          playsInline
+                          preload="auto" 
+                          disablePictureInPicture
+                          className={`h-full w-full object-cover select-none transition-opacity duration-300 ${
+                            isVideoReady ? "opacity-100" : "opacity-0"
+                          }`}
+                        >
+                          <source src="/api/video/3d" type="video/webm" />
+                        </video>
+                      </div>
+                    )}
+                  </div>
+
                   {/* TOMBOL KHUSUS MOBILE (ZAP ICON) */}
                   <button
-                    onClick={toggleSpeed}
+                    onPointerDown={(e) => e.stopPropagation()} // Mencegah bubbling
+                    onPointerUp={(e) => e.stopPropagation()}   // Mencegah bubbling
+                    onClick={(e) => {
+                      e.stopPropagation(); // Mencegah bubbling
+                      toggleSpeed(e);
+                    }}
                     className={`absolute top-4 right-4 z-40 md:hidden flex items-center justify-center p-3 rounded-full backdrop-blur-md border shadow-lg transition-all duration-300 ${
                       isFastMode 
                         ? "bg-amber-500/90 text-white border-amber-400 scale-110" 

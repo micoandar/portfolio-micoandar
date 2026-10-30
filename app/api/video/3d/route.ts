@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
       const end = match[2] ? parseInt(match[2], 10) : size - 1;
       if (start >= 0 && end < size && start <= end) {
         const slice = data.subarray(start, end + 1);
-        return new NextResponse(slice, {
+        return new NextResponse(new Uint8Array(slice), {
           status: 206,
           headers: {
             "Content-Type": "video/webm",
@@ -56,7 +56,6 @@ export async function GET(req: NextRequest) {
             "Accept-Ranges": "bytes",
             "Cache-Control": "public, max-age=31536000, immutable",
             "X-Content-Type-Options": "nosniff",
-            // Batasi inline supaya tidak jadi force-download
             "Content-Disposition": "inline",
           },
         });
@@ -64,7 +63,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  return new NextResponse(data, {
+  return new NextResponse(new Uint8Array(data), {
     status: 200,
     headers: {
       "Content-Type": "video/webm",

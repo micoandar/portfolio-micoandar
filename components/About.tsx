@@ -21,30 +21,27 @@ export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const speedTimerRef = useRef<NodeJS.Timeout | null>(null); // Timer untuk reset kecepatan
   
   const [loadVideo, setLoadVideo] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // --- FUNGSI MEMPERCEPAT PUTARAN VIDEO ---
-  const handleSpeedUp = () => {
-    if (!videoRef.current) return;
-
-    // Hapus timer sebelumnya jika user klik lagi sebelum 3 detik habis
-    if (speedTimerRef.current) clearTimeout(speedTimerRef.current);
-
-    // Percepat video menjadi 3x lipat (bisa diubah ke 4 atau 5 jika kurang cepat)
-    videoRef.current.playbackRate = 3.5; 
-
-    // Setelah 3 detik, kembalikan ke kecepatan normal (1x)
-    speedTimerRef.current = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.playbackRate = 1;
-      }
-    }, 3000);
+  // --- LOGIKA TEKAN & TAHAN (PRESS AND HOLD) ---
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId); // Tangkap pointer agar tidak lepas
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 4; // Kecepatan putar saat ditekan (bisa diubah ke 3, 5, dll)
+      videoRef.current.play().catch(() => {}); // Play instan tanpa nunggu
+    }
   };
-  // -----------------------------------------
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.releasePointerCapture(e.pointerId);
+    if (videoRef.current) {
+      videoRef.current.pause(); // Langsung berhenti (pause) saat dilepas
+    }
+  };
+  // ----------------------------------------------
 
   // --- LOGIKA 3D TILT ---
   const x = useMotionValue(0);
@@ -96,9 +93,9 @@ export default function About() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setLoadVideo(true);
-          if (v && !reducedMotion) v.play().catch(() => {});
+          // Kita hapus autoplay di sini, biarkan video diam (pause) sampai ditekan
         } else {
-          v?.pause();
+          v?.pause(); // Pastikan video berhenti jika keluar layar
         }
       },
       { rootMargin: "1000px 0px" }
@@ -107,16 +104,14 @@ export default function About() {
 
     const onVis = () => {
       if (document.hidden) v?.pause();
-      else if (v && !reducedMotion) v.play().catch(() => {});
     };
     document.addEventListener("visibilitychange", onVis);
 
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
-      if (speedTimerRef.current) clearTimeout(speedTimerRef.current);
     };
-  }, [reducedMotion, loadVideo]);
+  }, [loadVideo]);
 
   return (
     <Section id="tentang" title="About Me">
@@ -171,7 +166,6 @@ export default function About() {
 
           <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-float motion-reduce:animate-none">
             
-            {/* KARTU 3D TILT (Parallax Mouse) */}
             <motion.div
               ref={cardRef}
               onMouseMove={handleMouseMove}
@@ -206,17 +200,19 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER - ONCLICK SPEEDUP */}
+                  {/* VIDEO WRAPPER - PRESS TO SPIN */}
                   <div 
-                    onClick={handleSpeedUp} 
-                    className="absolute inset-0 z-10 cursor-pointer overflow-hidden"
+                    onPointerDown={handlePointerDown}
+                    onPointerUp={handlePointerUp}
+                    onPointerLeave={handlePointerUp}
+                    onPointerCancel={handlePointerUp}
+                    className="absolute inset-0 z-10 cursor-pointer overflow-hidden touch-none"
                   >
                     {loadVideo && (
                       <div className="h-full w-full mix-blend-screen opacity-90">
                         <video
                           ref={videoRef}
                           src="/api/video/3d"
-                          autoPlay={!reducedMotion}
                           loop
                           muted
                           playsInline

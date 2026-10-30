@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Mail, Zap } from "lucide-react"; // Tambah Zap icon
 import { useTheme } from "next-themes";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
@@ -26,13 +26,24 @@ export default function About() {
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   
-  // State baru untuk kursor menggenggam
   const [isHolding, setIsHolding] = useState(false);
+  const [isFastMode, setIsFastMode] = useState(false); // State untuk tombol mobile
 
-  // --- LOGIKA TEKAN & TAHAN (PRESS AND HOLD) ---
+  // --- LOGIKA MOBILE: TOMBOL TOGGLE SPEED ---
+  const toggleSpeed = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Mencegah klik tembus ke video
+    if (videoRef.current) {
+      const nextRate = isFastMode ? 1 : 4;
+      videoRef.current.playbackRate = nextRate;
+      setIsFastMode(!isFastMode);
+    }
+  };
+  // ----------------------------------------------
+
+  // --- LOGIKA DESKTOP: TEKAN & TAHAN ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
-    setIsHolding(true); // Set kursor jadi menggenggam
+    setIsHolding(true); 
     if (videoRef.current) {
       videoRef.current.playbackRate = 4; 
       videoRef.current.play().catch(() => {}); 
@@ -41,9 +52,10 @@ export default function About() {
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.releasePointerCapture(e.pointerId);
-    setIsHolding(false); // Kembalikan kursor
+    setIsHolding(false); 
     if (videoRef.current) {
       videoRef.current.playbackRate = 1; 
+      setIsFastMode(false); // Sinkronisasi state jika desktop dipakai
     }
   };
   // ----------------------------------------------
@@ -206,13 +218,12 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER - KURSOR DINAMIS */}
+                  {/* VIDEO WRAPPER - DESKTOP (Hold) & MOBILE (Swipe) */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
                     onPointerLeave={handlePointerUp}
                     onPointerCancel={handlePointerUp}
-                    // Menggunakan state isHolding untuk menentukan kelas kursor
                     className={`absolute inset-0 z-10 overflow-hidden touch-none ${
                       isHolding ? "cursor-grabbing" : "cursor-grab"
                     }`}
@@ -242,6 +253,19 @@ export default function About() {
                       </div>
                     )}
                   </div>
+
+                  {/* TOMBOL KHUSUS MOBILE (ZAP ICON) */}
+                  <button
+                    onClick={toggleSpeed}
+                    className={`absolute top-4 right-4 z-40 md:hidden flex items-center justify-center p-3 rounded-full backdrop-blur-md border shadow-lg transition-all duration-300 ${
+                      isFastMode 
+                        ? "bg-amber-500/90 text-white border-amber-400 scale-110" 
+                        : "bg-black/40 text-white/70 border-white/20 hover:bg-black/60"
+                    }`}
+                    aria-label="Toggle Speed"
+                  >
+                    <Zap size={20} className={isFastMode ? "fill-white" : ""} />
+                  </button>
 
                   {!isVideoReady && (
                     <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">

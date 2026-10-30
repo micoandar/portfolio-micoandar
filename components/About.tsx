@@ -86,7 +86,7 @@ export default function About() {
           ref={wrapRef}
           className="relative flex justify-center items-center w-full mx-auto z-20"
         >
-          {/* Glow: pakai radial gradient statis, tanpa filter blur */}
+          {/* Glow: gradient statis, tanpa filter blur */}
           <div
             className="absolute -inset-4 rounded-[2.5rem] pointer-events-none"
             style={{
@@ -96,7 +96,7 @@ export default function About() {
             }}
           />
 
-          {/* Frame: tanpa backdrop-blur-xl, shadow lebih ringan, animasi cuma transform */}
+          {/* Frame */}
           <div
             className="relative w-full h-[450px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40 transition-transform duration-300 will-change-transform hover:-translate-y-1"
             style={{ transform: "translateZ(0)" }}
@@ -119,17 +119,6 @@ export default function About() {
 
               {/* Overlay gradient tanpa mix-blend-overlay */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-            </div>
-
-            {/* Badge */}
-            <div className="absolute right-4 top-4 z-30 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-sky-500" />
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white">
-                3D Model
-              </span>
             </div>
           </div>
         </div>

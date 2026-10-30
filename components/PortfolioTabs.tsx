@@ -12,7 +12,12 @@ import Education from "./Education";
 
 export default function PortfolioTabs() {
   const [activeTab, setActiveTab] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -37,22 +42,24 @@ export default function PortfolioTabs() {
     <Section id="portfolio" title="Portfolio">
       
       {/* ================= DESKTOP: GooeyNav ================= */}
-      <div className="mb-12 hidden justify-center md:flex">
-        <GooeyNav
-          items={navItems}
-          activeIndex={activeTab}
-          onChange={(index) => setActiveTab(index)}
-          theme={resolvedTheme === "dark" ? "dark" : "light"}
-          color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
-          size="md"
-          frame={true}
-          particleCount={15}
-          animationTime={600}
-        />
+      <div className="mb-12 hidden justify-center md:flex min-h-[56px]">
+        {mounted && (
+          <GooeyNav
+            key={resolvedTheme} // <-- KUNCI PERBAIKAN
+            items={navItems}
+            activeIndex={activeTab}
+            onChange={(index) => setActiveTab(index)}
+            theme={resolvedTheme === "dark" ? "dark" : "light"}
+            color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
+            size="md"
+            frame={true}
+            particleCount={15}
+            animationTime={600}
+          />
+        )}
       </div>
 
-      {/* ================= MOBILE: Segmented Control (Rapi & Muat) ================= */}
-      {/* Menggunakan max-w-md agar tidak melebar, dan flex-1 agar ke-3 tombol sama lebar */}
+      {/* ================= MOBILE: Segmented Control ================= */}
       <div className="mx-auto mb-8 flex w-full max-w-md items-center gap-1.5 rounded-2xl border border-slate-200 bg-slate-100/50 p-1.5 md:hidden dark:border-slate-800 dark:bg-slate-900/50">
         {navItems.map((item, index) => (
           <button
@@ -65,7 +72,6 @@ export default function PortfolioTabs() {
             }`}
           >
             {item.icon}
-            {/* Teks akan berubah sesuai layar (mobileLabel vs label) */}
             <span className="sm:hidden truncate">{item.mobileLabel}</span>
             <span className="hidden sm:inline truncate">{item.label}</span>
           </button>

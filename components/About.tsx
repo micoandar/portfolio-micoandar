@@ -93,16 +93,14 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D (Dibungkus container untuk melayang) */}
+        {/* TENGAH: video 3D */}
         <div
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6"
         >
           {/* CONTAINER UTAMA YANG MELAYANG */}
-          {/* Padding atas bawah (py-6) memberi ruang agar tidak terpotong saat naik */}
           <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-levitate motion-reduce:animate-none will-change-transform transform-gpu">
             
-            {/* Glow (Menyatu dengan container, ikut melayang) */}
             <div
               className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
               style={{
@@ -112,15 +110,12 @@ export default function About() {
               }}
             />
 
-            {/* Frame (Kotak Video) */}
             <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl dark:border-slate-700/50 dark:bg-slate-900/40">
               
-              {/* Border Pulse */}
               <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
               <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
                 
-                {/* Video */}
                 {loadVideo && (
                   <div className="h-full w-full">
                     <video
@@ -146,16 +141,15 @@ export default function About() {
                   </div>
                 )}
 
-                {/* Placeholder Gelap */}
                 {!isVideoReady && (
                   <div className="absolute inset-0 bg-[#020617] flex items-center justify-center">
                      <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
                   </div>
                 )}
 
-                {/* Scanline Hologram */}
-                <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
-                  <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent sm:animate-scanline motion-reduce:animate-none sm:will-change-transform" />
+                {/* Scanline Hologram - SEKARANG MUNCUL DI MOBILE JUGA */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="absolute inset-x-0 h-24 sm:h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent animate-scanline motion-reduce:animate-none will-change-transform" />
                 </div>
 
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />

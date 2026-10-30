@@ -11,6 +11,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const isClicking = useRef(false);
+  const rafRef = useRef<number | null>(null);
 
   const { lang, toggle: toggleLang } = useLanguage();
   const { resolvedTheme, setTheme } = useTheme();
@@ -27,7 +28,8 @@ export default function Navbar() {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const compute = () => {
+      rafRef.current = null;
       if (isClicking.current) return;
       const scrollPosition = window.scrollY + 250;
       let currentId = "beranda";
@@ -38,12 +40,21 @@ export default function Navbar() {
           break;
         }
       }
-      setActiveIndex(sectionIds.indexOf(currentId));
+      const idx = sectionIds.indexOf(currentId);
+      setActiveIndex((prev) => (prev === idx ? prev : idx));
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(compute);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    compute();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   const handleNavClick = (index: number) => {
@@ -58,11 +69,11 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none will-change-transform">
+    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none [contain:layout_style_paint]">
       <div className="flex pointer-events-auto items-center justify-between gap-3">
 
-        {/* GooeyNav desktop */}
-        <div className="hidden md:flex items-center rounded-full bg-white/50 md:backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
+        {/* GooeyNav — desktop only */}
+        <div className="hidden md:flex items-center rounded-full bg-white/50 backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
           <GooeyNav
             items={links}
             activeIndex={activeIndex}
@@ -76,8 +87,8 @@ export default function Navbar() {
           />
         </div>
 
-        {/* Toggles & mobile menu button */}
-        <div className="flex items-center gap-2 rounded-full bg-white/90 md:bg-white/50 md:backdrop-blur-md px-3 py-2 dark:bg-slate-900/90 md:dark:bg-black/50 shadow-lg border border-white/10">
+        {/* Toggles — mobile solid, desktop glass */}
+        <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 dark:bg-slate-900 md:bg-white/50 md:backdrop-blur-md md:dark:bg-black/50 shadow-lg border border-white/10">
           {mounted && (
             <button
               type="button"

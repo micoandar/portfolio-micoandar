@@ -92,14 +92,14 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D bernafas + frame menyala */}
+        {/* TENGAH: video 3D — contain-3d memaksa isolasi layer */}
         <div
           ref={wrapRef}
-          className="relative flex justify-center items-center w-full mx-auto z-20 isolate transform-gpu"
+          className="relative flex justify-center items-center w-full mx-auto z-20 contain-3d transform-gpu"
         >
-          {/* Glow berdenyut di belakang frame */}
+          {/* Glow — animasi hanya aktif di desktop (sm ke atas) */}
           <div
-            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none animate-glow-pulse motion-reduce:animate-none will-change-[opacity,transform]"
+            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none"
             style={{
               background: isDark
                 ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
@@ -109,12 +109,12 @@ export default function About() {
 
           {/* Frame statis */}
           <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40">
-            {/* Border berdenyut */}
-            <div className="absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none animate-border-pulse motion-reduce:animate-none will-change-[opacity]" />
+            {/* Border pulse — desktop saja */}
+            <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
             <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
               {loadVideo ? (
-                <div className="h-full w-full animate-breathe motion-reduce:animate-none will-change-transform">
+                <div className="h-full w-full sm:animate-breathe motion-reduce:animate-none sm:will-change-transform">
                   <video
                     ref={videoRef}
                     src="/images/3D.webm"
@@ -139,9 +139,9 @@ export default function About() {
                 />
               )}
 
-              {/* Scanline holografik — hanya desktop */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden hidden sm:block">
-                <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent animate-scanline motion-reduce:animate-none will-change-transform" />
+              {/* Scanline — desktop saja */}
+              <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent sm:animate-scanline motion-reduce:animate-none sm:will-change-transform" />
               </div>
 
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />

@@ -10,7 +10,7 @@ import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { scrollToSection } from "@/lib/utils";
-import LightRays from "./LightRays"; // <-- 1. IMPORT LIGHT RAYS
+import LightRays from "./LightRays";
 
 export default function About() {
   const { lang } = useLanguage();
@@ -26,6 +26,7 @@ export default function About() {
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
+  // --- LOGIKA 3D TILT ---
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -136,6 +137,7 @@ export default function About() {
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
           style={{ perspective: "1200px" }}
         >
+          {/* Glow Berdenyut di belakang */}
           <div
             className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
             style={{
@@ -145,8 +147,10 @@ export default function About() {
             }}
           />
 
+          {/* Bayangan Melayang */}
           <div className="hidden sm:block absolute -bottom-8 w-[80%] h-8 bg-black/40 dark:bg-black/60 blur-xl rounded-[100%] animate-float motion-reduce:animate-none" />
 
+          {/* Kartu 3D */}
           <motion.div
             ref={cardRef}
             onMouseMove={handleMouseMove}
@@ -168,10 +172,10 @@ export default function About() {
 
               <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
                 
-                {/* 2. TARUH LIGHT RAYS DI SINI */}
+                {/* Light Rays (Warna disamakan dengan tema brand) */}
                 <LightRays 
                   raysOrigin="top-center"
-                  raysColor={isDark ? "#818cf8" : "#38bdf8"} // Warna ungu/biru sesuai tema
+                  raysColor={isDark ? "#818cf8" : "#4f46e5"} // Violet di Dark Mode, Indigo di Light Mode
                   raysSpeed={1.2}
                   lightSpread={0.6}
                   rayLength={2.5}
@@ -179,10 +183,10 @@ export default function About() {
                   mouseInfluence={0.1}
                   noiseAmount={0.05}
                   distortion={0.05}
-                  className="z-0" // Di belakang video
+                  className="z-0" 
                 />
 
-                {/* Video */}
+                {/* Video (Menggunakan mix-blend-screen agar menyatu dengan cahaya) */}
                 {loadVideo && (
                   <div className="relative z-10 h-full w-full mix-blend-screen opacity-90">
                     <video
@@ -215,12 +219,7 @@ export default function About() {
                   </div>
                 )}
 
-                {/* Efek Scanline */}
-                <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden z-20">
-                  <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/30 to-transparent animate-scanline motion-reduce:animate-none transform-gpu" />
-                </div>
-
-                {/* Glare */}
+                {/* Pantulan Cahaya Dinamis (Glare) */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none z-30 opacity-0 dark:opacity-30 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
                   style={{
@@ -231,6 +230,7 @@ export default function About() {
                   }}
                 />
                 
+                {/* Overlay Gelap Bawah */}
                 <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
             </div>

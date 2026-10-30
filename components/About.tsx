@@ -2,7 +2,6 @@
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
-import { motion } from "framer-motion"; // <-- Import framer-motion
 import Section from "@/components/ui/Section";
 import StarBorder from "@/components/StarBorder";
 import { profile } from "@/data/profile";
@@ -50,26 +49,16 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: Video 3D Premium dengan Background Bergerak */}
+        {/* TENGAH: Video 3D Premium */}
         <div className="relative flex justify-center items-center w-full mx-auto z-20 group">
           
-          {/* BACKGROUND BERGERAK (Rotating & Pulsing Glow) */}
-          <motion.div
-            animate={{ 
-              rotate: [0, 360],
-              scale: [1, 1.15, 1],
-            }}
-            transition={{
-              rotate: { duration: 15, repeat: Infinity, ease: "linear" },
-              scale: { duration: 6, repeat: Infinity, ease: "easeInOut" }
-            }}
-            className="absolute -inset-8 rounded-[3rem] bg-[conic-gradient(from_0deg,rgba(59,130,246,0.5)_0deg,rgba(139,92,246,0.5)_120deg,rgba(56,189,248,0.5)_240deg,rgba(59,130,246,0.5)_360deg)] opacity-60 blur-3xl transition-opacity duration-700 group-hover:opacity-100 dark:opacity-40 dark:group-hover:opacity-70"
-          />
+          {/* 1. Efek Pendaran (Glow) di belakang video */}
+          <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-blue-500/30 via-violet-500/30 to-sky-400/30 opacity-70 blur-3xl transition duration-700 group-hover:opacity-100 dark:from-blue-600/20 dark:via-violet-600/20 dark:to-sky-500/20" />
           
-          {/* Bingkai Kaca (Glassmorphism Frame) */}
+          {/* 2. Bingkai Kaca (Glassmorphism Frame) */}
           <div className="relative w-full h-[450px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:-translate-y-2 dark:border-slate-700/50 dark:bg-slate-900/40">
             
-            {/* Video di dalamnya */}
+            {/* 3. Video di dalamnya */}
             <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
               <video
                 src="/images/3D.webm"
@@ -82,11 +71,11 @@ export default function About() {
                 Browser Anda tidak mendukung tag video.
               </video>
               
-              {/* Overlay Gradasi Bawah */}
+              {/* 4. Overlay Gradasi Bawah agar menyatu */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10 opacity-60 mix-blend-overlay" />
             </div>
 
-            {/* Badge "3D Model" */}
+            {/* 5. Badge "3D Model" (Opsional, agar lebih futuristik) */}
             <div className="absolute right-4 top-4 z-30 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 backdrop-blur-md">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />

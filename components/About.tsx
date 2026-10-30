@@ -21,6 +21,7 @@ export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const speedRafRef = useRef<number | null>(null);
   
   const [loadVideo, setLoadVideo] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
@@ -28,28 +29,48 @@ export default function About() {
   
   const [isHolding, setIsHolding] = useState(false);
 
+  // --- LOGIKA TRANSISI KECEPATAN MULUS (DESKTOP) ---
+  const rampPlaybackRate = (targetRate: number) => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+
+    if (speedRafRef.current) cancelAnimationFrame(speedRafRef.current);
+
+    const startRate = video.playbackRate;
+    const duration = 400; // Transisi 400ms
+    const startTime = performance.now();
+
+    const step = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+      
+      video.playbackRate = startRate + (targetRate - startRate) * ease;
+
+      if (progress < 1) {
+        speedRafRef.current = requestAnimationFrame(step);
+      }
+    };
+    speedRafRef.current = requestAnimationFrame(step);
+  };
+  // -------------------------------------------------
+
   // --- LOGIKA SIMULASI KLIK OTOMATIS PADA CAHAYA (MOBILE) ---
   useEffect(() => {
-    // Hanya jalankan di Mobile (layar < 768px)
-    if (window.innerWidth >= 768) return;
+    if (window.innerWidth >= 768) return; 
 
     const interval = setInterval(() => {
       const el = wrapRef.current;
       if (!el) return;
 
-      // Cari elemen pembungkus LightRays
       const lightRays = el.querySelector('.light-rays');
       if (!lightRays) return;
 
       const rect = lightRays.getBoundingClientRect();
-      // Jika elemen belum tampil di layar, lewati
       if (rect.width === 0 || rect.height === 0) return;
 
-      // Tentukan koordinat tengah dari area cahaya
       const x = rect.left + rect.width / 2;
       const y = rect.top + rect.height / 2;
 
-      // Buat event pointerdown palsu
       const event = new PointerEvent('pointerdown', {
         clientX: x,
         clientY: y,
@@ -57,9 +78,11 @@ export default function About() {
         cancelable: true,
       });
       
-      // Kirim event ke window (LightRays mendengarkan event dari window)
+      // TANDAI EVENT INI SEBAGAI SIMULASI
+      (event as any).isSimulated = true;
+      
       window.dispatchEvent(event);
-    }, 2500); // Memicu denyutan cahaya setiap 2.5 detik sekali
+    }, 2500);
 
     return () => clearInterval(interval);
   }, []);
@@ -67,21 +90,21 @@ export default function About() {
 
   // --- LOGIKA DESKTOP: TEKAN & TAHAN ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 768) return; // Kunci di Mobile
+    if (window.innerWidth < 768) return; 
     e.currentTarget.setPointerCapture(e.pointerId);
     setIsHolding(true); 
     if (videoRef.current) {
-      videoRef.current.playbackRate = 4; 
       videoRef.current.play().catch(() => {}); 
+      rampPlaybackRate(4); // Transisi ke 4x
     }
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 768) return; // Kunci di Mobile
+    if (window.innerWidth < 768) return; 
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsHolding(false); 
     if (videoRef.current) {
-      videoRef.current.playbackRate = 1; 
+      rampPlaybackRate(1); // Transisi kembali ke 1x
     }
   };
   // ----------------------------------------------
@@ -154,6 +177,7 @@ export default function About() {
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
+      if (speedRafRef.current) cancelAnimationFrame(speedRafRef.current);
     };
   }, [reducedMotion, loadVideo]);
 
@@ -196,6 +220,10 @@ export default function About() {
           ref={wrapRef}
           className="relative w-full mx-auto z-20 flex justify-center py-6 sm:py-10"
           style={{ perspective: "1200px" }}
+          // MENCEGAH TAP MANUAL DI MOBILE
+          onPointerDown={(e) => {
+            if (window.innerWidth < 768) e.stopPropagation();
+          }}
         >
           <div
             className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
@@ -250,8 +278,6 @@ export default function About() {
                     onPointerUp={handlePointerUp}
                     onPointerLeave={handlePointerUp}
                     onPointerCancel={handlePointerUp}
-                    // pointer-events-none membuat HP sama sekali tidak bisa mengklik/menyentuh video
-                    // pointer-events-auto mengembalikan interaksi untuk Desktop
                     className={`absolute inset-0 z-10 overflow-hidden touch-none pointer-events-none md:pointer-events-auto ${
                       isHolding ? "cursor-grabbing" : "md:cursor-grab"
                     }`}

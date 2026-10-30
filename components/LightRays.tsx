@@ -504,7 +504,10 @@ const LightRays = ({
       pointer.seen = true;
       wake();
     };
-    const onPointerDown = (event: PointerEvent) => {
+ const onPointerDown = (event: PointerEvent) => {
+      // BLOKIR KLIK MANUAL DI MOBILE (Tapi izinkan simulasi otomatis)
+      if (window.innerWidth < 768 && !(event as any).isSimulated) return;
+
       const s = settingsRef.current;
       const spot = locate(event);
       if (!spot.inside || !s.clickPulse || reduced) return;

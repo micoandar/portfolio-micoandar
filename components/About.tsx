@@ -43,8 +43,6 @@ export default function About() {
           v?.pause();
         }
       },
-      // KUNCI PERCEPATAN: Ubah rootMargin jadi 1000px (1 layar penuh sebelum About)
-      // Jadi saat user masih di Hero, video sudah mulai di-download di background.
       { rootMargin: "1000px 0px" }
     );
     io.observe(el);
@@ -98,10 +96,12 @@ export default function About() {
         {/* TENGAH: video 3D */}
         <div
           ref={wrapRef}
-          className="relative flex justify-center items-center w-full mx-auto z-20 contain-3d transform-gpu"
+          className="relative flex flex-col justify-center items-center w-full mx-auto z-20 contain-3d"
+          style={{ perspective: "1200px" }} // Kunci untuk efek melayang 3D
         >
+          {/* Glow berdenyut di belakang */}
           <div
-            className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none"
             style={{
               background: isDark
                 ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
@@ -109,7 +109,12 @@ export default function About() {
             }}
           />
 
-          <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40">
+          {/* Bayangan Dinamis di lantai (Hanya Desktop) */}
+          <div className="hidden sm:block absolute -bottom-12 w-[75%] h-10 bg-black/30 dark:bg-black/60 blur-2xl rounded-[100%] sm:animate-levitate-shadow motion-reduce:animate-none" />
+
+          {/* Frame dengan Animasi Melayang (Desktop) / Bernafas (Mobile) */}
+          <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl dark:border-slate-700/50 dark:bg-slate-900/40 sm:animate-levitate motion-reduce:animate-none sm:will-change-transform transform-gpu">
+            
             <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
             <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
@@ -124,7 +129,6 @@ export default function About() {
                     loop
                     muted
                     playsInline
-                    // PRELOAD AUTO: Paksa browser mengunduh secepat mungkin
                     preload="auto" 
                     disablePictureInPicture
                     controlsList="nodownload noremoteplayback noplaybackrate"
@@ -142,14 +146,14 @@ export default function About() {
                 </div>
               )}
 
-              {/* Placeholder: Gelap polos tanpa spinner yang mencolok */}
+              {/* Placeholder Gelap */}
               {!isVideoReady && (
                 <div className="absolute inset-0 bg-[#020617] flex items-center justify-center">
-                   {/* Animasi pendaran tipis di tengah agar tidak terkesan hang/blank */}
                    <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
                 </div>
               )}
 
+              {/* Scanline Hologram */}
               <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent sm:animate-scanline motion-reduce:animate-none sm:will-change-transform" />
               </div>

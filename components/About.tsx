@@ -20,7 +20,6 @@ export default function About() {
   const [loadVideo, setLoadVideo] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Deteksi prefers-reduced-motion
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
@@ -29,7 +28,6 @@ export default function About() {
     return () => mq.removeEventListener?.("change", onChange);
   }, []);
 
-  // Lazy-load video + pause saat tidak terlihat
   useEffect(() => {
     const el = wrapRef.current;
     const v = videoRef.current;
@@ -97,7 +95,7 @@ export default function About() {
         {/* TENGAH: video 3D bernafas + frame menyala */}
         <div
           ref={wrapRef}
-          className="relative flex justify-center items-center w-full mx-auto z-20"
+          className="relative flex justify-center items-center w-full mx-auto z-20 isolate transform-gpu"
         >
           {/* Glow berdenyut di belakang frame */}
           <div
@@ -141,12 +139,11 @@ export default function About() {
                 />
               )}
 
-              {/* Scanline holografik */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {/* Scanline holografik — hanya desktop */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden hidden sm:block">
                 <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent animate-scanline motion-reduce:animate-none will-change-transform" />
               </div>
 
-              {/* Overlay gradasi bawah */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
           </div>

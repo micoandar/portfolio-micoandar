@@ -58,11 +58,11 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none will-change-transform">
       <div className="flex pointer-events-auto items-center justify-between gap-3">
-        
-        {/* GooeyNav - HANYA MUNCUL DI DESKTOP (hidden md:flex) */}
-        <div className="hidden md:flex items-center rounded-full bg-white/50 backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
+
+        {/* GooeyNav desktop */}
+        <div className="hidden md:flex items-center rounded-full bg-white/50 md:backdrop-blur-md p-1.5 dark:bg-black/50 shadow-lg border border-white/10">
           <GooeyNav
             items={links}
             activeIndex={activeIndex}
@@ -76,8 +76,8 @@ export default function Navbar() {
           />
         </div>
 
-        {/* Toggles & Mobile Menu Button */}
-        <div className="flex items-center gap-2 rounded-full bg-white/50 backdrop-blur-md px-3 py-2 dark:bg-black/50 shadow-lg border border-white/10">
+        {/* Toggles & mobile menu button */}
+        <div className="flex items-center gap-2 rounded-full bg-white/90 md:bg-white/50 md:backdrop-blur-md px-3 py-2 dark:bg-slate-900/90 md:dark:bg-black/50 shadow-lg border border-white/10">
           {mounted && (
             <button
               type="button"
@@ -97,7 +97,6 @@ export default function Navbar() {
             {lang === "id" ? "ID" : "EN"}
           </button>
 
-          {/* Tombol Hamburger - HANYA MUNCUL DI HP (md:hidden) */}
           <button
             type="button"
             onClick={() => setOpen(!open)}
@@ -109,9 +108,8 @@ export default function Navbar() {
 
       </div>
 
-      {/* Mobile Menu Overlay (Tampilan Menu di HP) */}
       {open && (
-        <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/95 md:hidden">
+        <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-slate-950 md:hidden">
           <ul className="flex flex-col gap-1">
             {links.map((link, index) => (
               <li key={link.href}>

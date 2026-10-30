@@ -26,24 +26,19 @@ const config: Config = {
         },
         breathe: {
           "0%, 100%": { transform: "translateY(0px) scale(1)" },
-          "50%": { transform: "translateY(-10px) scale(1.15)" },
+          "50%": { transform: "translateY(-8px) scale(1.02)" },
         },
-        // ANIMASI LEVITATE (TANPA ROTASI)
         levitate: {
-          "0%, 100%": { transform: "translateY(0px) scale(1)" },
-          "50%": { transform: "translateY(-16px) scale(1.015)" },
-        },
-        "levitate-shadow": {
-          "0%, 100%": { transform: "scale(1) translateY(0px)", opacity: "0.3" },
-          "50%": { transform: "scale(0.85) translateY(16px)", opacity: "0.1" },
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-12px)" },
         },
         "glow-pulse": {
           "0%, 100%": { opacity: "0.45", transform: "scale(1)" },
-          "50%": { opacity: "1", transform: "scale(1.08)" },
+          "50%": { opacity: "0.8", transform: "scale(1.05)" },
         },
         "border-pulse": {
           "0%, 100%": { opacity: "0.15" },
-          "50%": { opacity: "0.9" },
+          "50%": { opacity: "0.8" },
         },
         scanline: {
           "0%": { transform: "translateY(-600px)", opacity: "0" },
@@ -58,9 +53,8 @@ const config: Config = {
       },
       animation: {
         float: "float 6s ease-in-out infinite",
-        breathe: "breathe 4s cubic-bezier(0.45, 0, 0.55, 1) infinite",
-        levitate: "levitate 6s cubic-bezier(0.4, 0, 0.2, 1) infinite",
-        "levitate-shadow": "levitate-shadow 6s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+        breathe: "breathe 4s ease-in-out infinite",
+        levitate: "levitate 6s ease-in-out infinite",
         "glow-pulse": "glow-pulse 6s ease-in-out infinite",
         "border-pulse": "border-pulse 6s ease-in-out infinite",
         scanline: "scanline 4s linear infinite",

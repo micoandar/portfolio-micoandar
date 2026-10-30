@@ -93,71 +93,73 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D */}
+        {/* TENGAH: video 3D (Dibungkus container untuk melayang) */}
         <div
           ref={wrapRef}
-          className="relative flex flex-col justify-center items-center w-full mx-auto z-20 contain-3d"
+          className="relative w-full mx-auto z-20 flex justify-center py-6"
         >
-          {/* Glow berdenyut di belakang (dibuat absolute center) */}
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none"
-            style={{
-              background: isDark
-                ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
-                : "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)",
-            }}
-          />
-
-          {/* Bayangan Lantai (Hanya Desktop) */}
-          <div className="hidden sm:block absolute -bottom-10 w-[80%] h-8 bg-black/40 dark:bg-black/60 blur-xl rounded-[100%] sm:animate-levitate-shadow motion-reduce:animate-none" />
-
-          {/* Frame dengan Animasi Melayang */}
-          <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl dark:border-slate-700/50 dark:bg-slate-900/40 sm:animate-levitate motion-reduce:animate-none sm:will-change-transform transform-gpu">
+          {/* CONTAINER UTAMA YANG MELAYANG */}
+          {/* Padding atas bawah (py-6) memberi ruang agar tidak terpotong saat naik */}
+          <div className="relative w-full max-w-[360px] sm:max-w-[420px] lg:max-w-full sm:animate-levitate motion-reduce:animate-none will-change-transform transform-gpu">
             
-            <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
+            {/* Glow (Menyatu dengan container, ikut melayang) */}
+            <div
+              className="absolute -inset-4 rounded-[2.5rem] pointer-events-none sm:animate-glow-pulse motion-reduce:animate-none -z-10"
+              style={{
+                background: isDark
+                  ? "radial-gradient(ellipse at center, rgba(79,70,229,0.5) 0%, rgba(139,92,246,0.3) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)"
+                  : "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 40%, rgba(14,165,233,0.12) 65%, transparent 80%)",
+              }}
+            />
 
-            <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
+            {/* Frame (Kotak Video) */}
+            <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-2xl dark:border-slate-700/50 dark:bg-slate-900/40">
               
-              {/* Video Wrapper */}
-              {loadVideo && (
-                <div className="h-full w-full sm:animate-breathe motion-reduce:animate-none sm:will-change-transform">
-                  <video
-                    ref={videoRef}
-                    src="/api/video/3d"
-                    autoPlay={!reducedMotion}
-                    loop
-                    muted
-                    playsInline
-                    preload="auto" 
-                    disablePictureInPicture
-                    controlsList="nodownload noremoteplayback noplaybackrate"
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                    draggable={false}
-                    onCanPlay={() => setIsVideoReady(true)}
-                    className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
-                      isVideoReady ? "opacity-100" : "opacity-0"
-                    }`}
-                    style={{ transform: "translateZ(0)" }}
-                  >
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                </div>
-              )}
+              {/* Border Pulse */}
+              <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/60 dark:border-violet-400/60 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
 
-              {/* Placeholder Gelap */}
-              {!isVideoReady && (
-                <div className="absolute inset-0 bg-[#020617] flex items-center justify-center">
-                   <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
-                </div>
-              )}
+              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
+                
+                {/* Video */}
+                {loadVideo && (
+                  <div className="h-full w-full">
+                    <video
+                      ref={videoRef}
+                      src="/api/video/3d"
+                      autoPlay={!reducedMotion}
+                      loop
+                      muted
+                      playsInline
+                      preload="auto" 
+                      disablePictureInPicture
+                      controlsList="nodownload noremoteplayback noplaybackrate"
+                      onContextMenu={(e) => e.preventDefault()}
+                      onDragStart={(e) => e.preventDefault()}
+                      draggable={false}
+                      onCanPlay={() => setIsVideoReady(true)}
+                      className={`h-full w-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
+                        isVideoReady ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      Browser Anda tidak mendukung tag video.
+                    </video>
+                  </div>
+                )}
 
-              {/* Scanline Hologram */}
-              <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent sm:animate-scanline motion-reduce:animate-none sm:will-change-transform" />
+                {/* Placeholder Gelap */}
+                {!isVideoReady && (
+                  <div className="absolute inset-0 bg-[#020617] flex items-center justify-center">
+                     <div className="w-32 h-32 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" />
+                  </div>
+                )}
+
+                {/* Scanline Hologram */}
+                <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-sky-400/50 to-transparent sm:animate-scanline motion-reduce:animate-none sm:will-change-transform" />
+                </div>
+
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
-
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
           </div>
         </div>

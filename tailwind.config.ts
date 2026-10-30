@@ -40,11 +40,12 @@ const config: Config = {
           "0%, 100%": { opacity: "0.15" },
           "50%": { opacity: "0.8" },
         },
+        // PERBAIKAN: Gunakan persentase (%), bukan pixel jauh
         scanline: {
-          "0%": { transform: "translateY(-600px)", opacity: "0" },
+          "0%": { transform: "translateY(-100%)", opacity: "0" },
           "10%": { opacity: "0.7" },
           "90%": { opacity: "0.7" },
-          "100%": { transform: "translateY(600px)", opacity: "0" },
+          "100%": { transform: "translateY(500%)", opacity: "0" },
         },
         "fade-in": {
           from: { opacity: "0", transform: "translateY(10px)" },

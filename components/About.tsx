@@ -20,7 +20,6 @@ export default function About() {
   const [loadVideo, setLoadVideo] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Deteksi prefers-reduced-motion sekali
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
@@ -29,7 +28,6 @@ export default function About() {
     return () => mq.removeEventListener?.("change", onChange);
   }, []);
 
-  // Lazy-load video + pause saat tidak terlihat
   useEffect(() => {
     const el = wrapRef.current;
     const v = videoRef.current;
@@ -94,7 +92,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* TENGAH: video 3D dengan animasi melayang */}
+        {/* TENGAH: video 3D bernafas */}
         <div
           ref={wrapRef}
           className="relative flex justify-center items-center w-full mx-auto z-20"
@@ -109,15 +107,12 @@ export default function About() {
             }}
           />
 
-          {/* WRAPPER: animasi melayang naik-turun */}
-          <div
-            className="w-full animate-float motion-reduce:animate-none"
-            style={{ willChange: "transform" }}
-          >
-            {/* Frame */}
-            <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40">
-              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
-                {loadVideo ? (
+          {/* Frame statis */}
+          <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-white/10 p-2 shadow-lg dark:border-slate-700/50 dark:bg-slate-900/40">
+            <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-slate-900">
+              {loadVideo ? (
+                // Wrapper animasi bernafas — video di dalamnya naik-turun + scale
+                <div className="h-full w-full animate-breathe motion-reduce:animate-none will-change-transform">
                   <video
                     ref={videoRef}
                     src="/images/3D.webm"
@@ -133,16 +128,16 @@ export default function About() {
                   >
                     Browser Anda tidak mendukung tag video.
                   </video>
-                ) : (
-                  <img
-                    src="/images/My-photo.png"
-                    alt="Preview"
-                    className="h-full w-full object-cover opacity-60"
-                  />
-                )}
+                </div>
+              ) : (
+                <img
+                  src="/images/My-photo.png"
+                  alt="Preview"
+                  className="h-full w-full object-cover opacity-60"
+                />
+              )}
 
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              </div>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
           </div>
         </div>

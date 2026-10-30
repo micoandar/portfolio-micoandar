@@ -31,6 +31,10 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-14px)" },
         },
+        breathe: {
+          "0%, 100%": { transform: "translateY(0px) scale(1)" },
+          "50%": { transform: "translateY(-12px) scale(1.05)" },
+        },
         "fade-in": {
           from: { opacity: "0", transform: "translateY(10px)" },
           to: { opacity: "1", transform: "translateY(0)" },
@@ -38,6 +42,7 @@ const config: Config = {
       },
       animation: {
         float: "float 6s ease-in-out infinite",
+        breathe: "breathe 5s ease-in-out infinite",
         "fade-in": "fade-in 0.6s ease-out forwards",
       },
     },

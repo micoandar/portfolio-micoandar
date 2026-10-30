@@ -33,7 +33,7 @@ const config: Config = {
         },
         breathe: {
           "0%, 100%": { transform: "translateY(0px) scale(1)" },
-          "50%": { transform: "translateY(-32px) scale(1.12)" },
+          "50%": { transform: "translateY(-10px) scale(1.15)" },
         },
         "glow-pulse": {
           "0%, 100%": { opacity: "0.45", transform: "scale(1)" },

@@ -2,7 +2,8 @@
 
 import {
   Braces, Cloud, Database, LayoutTemplate, Server, Smartphone,
-  Globe, Eye, ScanEye, Lock, Key, UserCheck, ShieldCheck
+  Globe, Eye, ScanEye, Lock, Key, UserCheck, ShieldCheck,
+  Code2 // <-- Ikon baru ditambahkan di sini
 } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
@@ -10,8 +11,9 @@ import { skillGroups } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 
-// Fallback icon jika gambar logo tidak tersedia
+// Fallback icon jika gambar logo tidak tersedia atau sengaja dikosongkan
 const fallbackIconMap: Record<string, React.ElementType> = {
+  "Vanilla JS": Code2, // <-- Vanilla JS sekarang pakai ikon Code2
   "YOLO (v8/v11/26)": ScanEye, 
   "SQL": Database, 
   "AJAX / Fetch API": Globe, 
@@ -53,19 +55,17 @@ function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
 export default function Skills() {
   const { lang } = useLanguage();
 
-  // Menggabungkan SEMUA skill (Frontend, Backend, DB, dll) menjadi satu list panjang
+  // Menggabungkan SEMUA skill menjadi satu list panjang
   const allSkills = skillGroups.flatMap((group) => group.items);
 
   return (
     <Section id="keahlian" title="Skills">
       
-      {/* Grid: 3 kolom di HP, maksimal 6 kolom di Desktop */}
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-5 lg:grid-cols-6">
         {allSkills.map((skill, i) => (
           <Reveal key={skill.name} delay={i * 30}>
             <div
               tabIndex={0}
-              // aspect-square memastikan bentuknya selalu persegi sempurna
               className="group relative flex aspect-square flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 active:scale-95 dark:border-slate-800 dark:bg-[#121217] dark:hover:border-slate-600 dark:focus:ring-brand-400"
             >
               

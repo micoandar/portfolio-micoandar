@@ -23,7 +23,8 @@ export const skillGroups: SkillGroup[] = [
       { name: "Next.js", description: { id: "Framework React untuk aplikasi web production-ready (SSR/SSG).", en: "React framework for production-ready web apps (SSR/SSG)." }, logo: "https://cdn.simpleicons.org/nextdotjs" },
       { name: "React", description: { id: "Library UI berbasis komponen untuk web modern.", en: "Component-based UI library for modern web." }, logo: "https://cdn.simpleicons.org/react" },
       { name: "JavaScript", description: { id: "Bahasa pemrograman inti untuk membuat web menjadi interaktif.", en: "Core programming language to make the web interactive." }, logo: "https://cdn.simpleicons.org/javascript" },
-      { name: "Vanilla JS", description: { id: "JavaScript murni tanpa framework, fundamental yang kuat.", en: "Pure JavaScript without frameworks, a strong fundamental." }, logo: "https://cdn.simpleicons.org/javascript" },
+      // Perhatikan: logo Vanilla JS dihapus agar menggunakan ikon fallback (Code2)
+      { name: "Vanilla JS", description: { id: "JavaScript murni tanpa framework, fundamental yang kuat.", en: "Pure JavaScript without frameworks, a strong fundamental." } },
       { name: "TypeScript", description: { id: "JavaScript dengan tipe data — lebih aman saat coding.", en: "JavaScript with types — safer while coding." }, logo: "https://cdn.simpleicons.org/typescript" },
       { name: "Tailwind CSS", description: { id: "Utility-first CSS, styling cepat tanpa file CSS terpisah.", en: "Utility-first CSS, quick styling without separate CSS files." }, logo: "https://cdn.simpleicons.org/tailwindcss" },
       { name: "Vite", description: { id: "Build tool super cepat untuk project React.", en: "Blazing-fast build tool for React projects." }, logo: "https://cdn.simpleicons.org/vite" },

@@ -28,15 +28,11 @@ export default function About() {
   
   const [isHolding, setIsHolding] = useState(false);
 
-  // --- FUNGSI LIHAT PROYEK (FIX BUG TAB) ---
+  // --- FUNGSI LIHAT PROYEK ---
   const handleViewProjects = () => {
-    // 1. Kirim sinyal ke PortfolioTabs untuk pindah ke tab 0 (Projects)
     window.dispatchEvent(new CustomEvent("switch-portfolio-tab", { detail: 0 }));
-    
-    // 2. Scroll ke #portfolio (karena #proyek mungkin sedang tidak dirender)
     scrollToSection("portfolio");
   };
-  // ------------------------------------------
 
   // --- LOGIKA SIMULASI KLIK OTOMATIS PADA CAHAYA (MOBILE) ---
   useEffect(() => {
@@ -69,7 +65,6 @@ export default function About() {
 
     return () => clearInterval(interval);
   }, []);
-  // -----------------------------------------------------------
 
   // --- LOGIKA DESKTOP: TEKAN & TAHAN ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -90,7 +85,6 @@ export default function About() {
       videoRef.current.playbackRate = 1; 
     }
   };
-  // ----------------------------------------------
 
   // --- LOGIKA 3D TILT ---
   const x = useMotionValue(0);
@@ -231,12 +225,32 @@ export default function About() {
               className="relative w-full will-change-transform"
             >
               
+              {/* PERBAIKAN BORDER: Shadow premium + Rotating Laser Gradient */}
               <div 
                 style={{ transform: "translateZ(30px)" }}
-                className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] border border-white/20 bg-slate-900/40 p-2 shadow-2xl backdrop-blur-sm dark:border-white/10"
+                className="relative w-full h-[320px] sm:h-[420px] lg:h-[550px] rounded-[2rem] bg-slate-900/40 p-2 backdrop-blur-sm 
+                  shadow-[0_0_50px_-12px_rgba(99,102,241,0.3)] dark:shadow-[0_0_50px_-12px_rgba(139,92,246,0.3)] 
+                  border border-white/10 dark:border-white/5"
               >
                 
-                <div className="hidden sm:block absolute inset-0 rounded-[2rem] border-2 border-indigo-400/40 dark:border-violet-400/40 pointer-events-none sm:animate-border-pulse motion-reduce:animate-none" />
+                {/* ROTATING LASER BORDER (Hanya di Desktop) */}
+                <div className="hidden sm:block absolute inset-0 rounded-[2rem] pointer-events-none z-20 overflow-hidden">
+                  {/* Base border tipis */}
+                  <div className="absolute inset-0 rounded-[2rem] border border-white/10 dark:border-white/10" />
+                  
+                  {/* Efek Rotasi Cahaya */}
+                  <div 
+                    className="absolute inset-0 rounded-[2rem] opacity-80"
+                    style={{
+                      padding: '1.5px',
+                      WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                      WebkitMaskComposite: 'xor',
+                      maskComposite: 'exclude',
+                    }}
+                  >
+                    <div className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_280deg,rgba(167,139,250,0.8)_340deg,rgba(255,255,255,1)_360deg)]" />
+                  </div>
+                </div>
 
                 <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#020617]">
                   
@@ -320,7 +334,6 @@ export default function About() {
           </p>
 
           <div className="mt-2">
-            {/* TOMBOL DIPERBAIKI MENGGUNAKAN FUNGSI BARU */}
             <StarBorder
               as="button"
               onClick={handleViewProjects}

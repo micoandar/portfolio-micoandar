@@ -38,6 +38,7 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: "Node.js", description: { id: "Runtime JavaScript untuk backend yang cepat dan scalable.", en: "JavaScript runtime for fast and scalable backends." }, logo: "https://cdn.simpleicons.org/nodedotjs" },
       { name: "Express.js", description: { id: "Framework minimalis Node.js untuk membuat REST API.", en: "Minimalist Node.js framework for building REST APIs." }, logo: "https://cdn.simpleicons.org/express" },
+      { name: "Golang", description: { id: "Bahasa buatan Google yang cepat, efisien, dan sangat cocok untuk backend/microservices.", en: "Google's language that is fast, efficient, and highly suited for backend/microservices." }, logo: "https://cdn.simpleicons.org/go" },
       { name: "Java", description: { id: "Bahasa pemrograman OOP yang kuat untuk aplikasi skala besar.", en: "Powerful OOP language for large-scale applications." }, logo: "https://cdn.simpleicons.org/java" },
       { name: "FastAPI", description: { id: "Framework Python modern untuk REST API cepat.", en: "Modern Python framework for fast REST APIs." }, logo: "https://cdn.simpleicons.org/fastapi" },
       { name: "Laravel", description: { id: "Framework PHP dengan struktur MVC lengkap.", en: "PHP framework with a complete MVC structure." }, logo: "https://cdn.simpleicons.org/laravel" },

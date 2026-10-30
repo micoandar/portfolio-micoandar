@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail } from "lucide-react"; // Zap dihapus
+import { ArrowUpRight, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Section from "@/components/ui/Section";
@@ -28,8 +28,10 @@ export default function About() {
   
   const [isHolding, setIsHolding] = useState(false);
 
-  // --- LOGIKA DESKTOP: TEKAN & TAHAN ---
+  // --- LOGIKA DESKTOP: TEKAN & TAHAN (Hanya jalan di Desktop) ---
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (window.innerWidth < 768) return; // Abaikan di Mobile
+
     e.currentTarget.setPointerCapture(e.pointerId);
     setIsHolding(true); 
     if (videoRef.current) {
@@ -39,6 +41,8 @@ export default function About() {
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (window.innerWidth < 768) return; // Abaikan di Mobile
+
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsHolding(false); 
     if (videoRef.current) {
@@ -205,14 +209,14 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* VIDEO WRAPPER - DESKTOP (Hold to speed up) */}
+                  {/* SINGLE VIDEO WRAPPER (Bisa Hold di Desktop, Autoplay mulus di HP) */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
                     onPointerLeave={handlePointerUp}
                     onPointerCancel={handlePointerUp}
-                    className={`absolute inset-0 z-10 overflow-hidden touch-none hidden md:block ${
-                      isHolding ? "cursor-grabbing" : "cursor-grab"
+                    className={`absolute inset-0 z-10 overflow-hidden touch-none ${
+                      isHolding ? "cursor-grabbing" : "md:cursor-grab"
                     }`}
                   >
                     {loadVideo && (
@@ -236,27 +240,6 @@ export default function About() {
                           }`}
                         >
                           Browser Anda tidak mendukung tag video.
-                        </video>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* VIDEO WRAPPER - MOBILE (Normal autoplay, no interaction) */}
-                  <div className="absolute inset-0 z-10 overflow-hidden md:hidden pointer-events-none">
-                    {loadVideo && (
-                      <div className="h-full w-full mix-blend-screen opacity-90">
-                        <video
-                          autoPlay={!reducedMotion}
-                          loop
-                          muted
-                          playsInline
-                          preload="auto" 
-                          disablePictureInPicture
-                          className={`h-full w-full object-cover select-none transition-opacity duration-300 ${
-                            isVideoReady ? "opacity-100" : "opacity-0"
-                          }`}
-                        >
-                          <source src="/api/video/3d" type="video/webm" />
                         </video>
                       </div>
                     )}

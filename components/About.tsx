@@ -28,10 +28,46 @@ export default function About() {
   
   const [isHolding, setIsHolding] = useState(false);
 
-  // --- LOGIKA DESKTOP: TEKAN & TAHAN (Hanya jalan di Desktop) ---
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 768) return; // Abaikan di Mobile
+  // --- LOGIKA SIMULASI KLIK OTOMATIS PADA CAHAYA (MOBILE) ---
+  useEffect(() => {
+    // Hanya jalankan di Mobile (layar < 768px)
+    if (window.innerWidth >= 768) return;
 
+    const interval = setInterval(() => {
+      const el = wrapRef.current;
+      if (!el) return;
+
+      // Cari elemen pembungkus LightRays
+      const lightRays = el.querySelector('.light-rays');
+      if (!lightRays) return;
+
+      const rect = lightRays.getBoundingClientRect();
+      // Jika elemen belum tampil di layar, lewati
+      if (rect.width === 0 || rect.height === 0) return;
+
+      // Tentukan koordinat tengah dari area cahaya
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      // Buat event pointerdown palsu
+      const event = new PointerEvent('pointerdown', {
+        clientX: x,
+        clientY: y,
+        bubbles: true,
+        cancelable: true,
+      });
+      
+      // Kirim event ke window (LightRays mendengarkan event dari window)
+      window.dispatchEvent(event);
+    }, 2500); // Memicu denyutan cahaya setiap 2.5 detik sekali
+
+    return () => clearInterval(interval);
+  }, []);
+  // -----------------------------------------------------------
+
+  // --- LOGIKA DESKTOP: TEKAN & TAHAN ---
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (window.innerWidth < 768) return; // Kunci di Mobile
     e.currentTarget.setPointerCapture(e.pointerId);
     setIsHolding(true); 
     if (videoRef.current) {
@@ -41,8 +77,7 @@ export default function About() {
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (window.innerWidth < 768) return; // Abaikan di Mobile
-
+    if (window.innerWidth < 768) return; // Kunci di Mobile
     e.currentTarget.releasePointerCapture(e.pointerId);
     setIsHolding(false); 
     if (videoRef.current) {
@@ -209,13 +244,15 @@ export default function About() {
                     className="z-0" 
                   />
 
-                  {/* SINGLE VIDEO WRAPPER (Bisa Hold di Desktop, Autoplay mulus di HP) */}
+                  {/* VIDEO WRAPPER */}
                   <div 
                     onPointerDown={handlePointerDown}
                     onPointerUp={handlePointerUp}
                     onPointerLeave={handlePointerUp}
                     onPointerCancel={handlePointerUp}
-                    className={`absolute inset-0 z-10 overflow-hidden touch-none ${
+                    // pointer-events-none membuat HP sama sekali tidak bisa mengklik/menyentuh video
+                    // pointer-events-auto mengembalikan interaksi untuk Desktop
+                    className={`absolute inset-0 z-10 overflow-hidden touch-none pointer-events-none md:pointer-events-auto ${
                       isHolding ? "cursor-grabbing" : "md:cursor-grab"
                     }`}
                   >

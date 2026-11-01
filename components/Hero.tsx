@@ -40,12 +40,6 @@ export default function Hero() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleViewProjects = () => {
-    // 2. KIRIM SINYAL UNTUK GANTI TAB KE 0 (PROJECTS), LALU SCROLL KE #PORTFOLIO
-    window.dispatchEvent(new CustomEvent("switch-portfolio-tab", { detail: 0 }));
-    scrollToSection("portfolio");
-  };
-
   return (
     <section
       id="beranda"
@@ -80,7 +74,7 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <button
-              onClick={handleViewProjects}
+              onClick={() => scrollToSection("proyek")}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-slate-900/30 dark:bg-white dark:text-slate-900 dark:hover:shadow-white/20"
             >
               {t.viewProjects}
@@ -100,18 +94,24 @@ export default function Hero() {
 
               {isCvOpen && (
                 <div className="absolute left-0 top-full mt-2 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-800 dark:bg-slate-900 z-50 animate-in fade-in slide-in-from-top-2">
+                  
+                  {/* PERBAIKAN: Menghapus atribut `download` dan menambahkan `target="_blank"` */}
                   <a
                     href={profile.cvFullStack}
-                    download
+                    target="_blank"
+                    rel="noreferrer"
                     onClick={() => setIsCvOpen(false)}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                   >
                     <Download size={14} className="text-slate-400" />
                     {t.cvFullStack}
                   </a>
+                  
+                  {/* PERBAIKAN: Menghapus atribut `download` dan menambahkan `target="_blank"` */}
                   <a
                     href={profile.cvSoftware}
-                    download
+                    target="_blank"
+                    rel="noreferrer"
                     onClick={() => setIsCvOpen(false)}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                   >

@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Menu, X, Languages, Sun, Moon } from "lucide-react";
+import { Menu, X, Languages, Sun, Moon, Volume2, VolumeX } from "lucide-react"; // Tambah Volume2, VolumeX
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSfx } from "@/contexts/SfxContext"; // <-- Import useSfx
 import GooeyNav from "@/components/GooeyNav";
-import { scrollToSection } from "@/lib/utils"; // Import fungsi baru
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -16,13 +16,13 @@ export default function Navbar() {
 
   const { lang, toggle: toggleLang } = useLanguage();
   const { resolvedTheme, setTheme } = useTheme();
+  const { isSfxEnabled, toggleSfx } = useSfx(); // <-- Gunakan hook SFX
 
-  // Ubah href menjadi id (agar GooeyNav merender tombol, bukan link #)
   const links = [
-    { label: "Home", id: "beranda" },
-    { label: "About", id: "tentang" },
-    { label: "Portfolio", id: "portfolio" },
-    { label: "Contact", id: "kontak" },
+    { label: "Home", href: "#beranda" },
+    { label: "About", href: "#tentang" },
+    { label: "Portfolio", href: "#portfolio" },
+    { label: "Contact", href: "#kontak" },
   ];
 
   const sectionIds = ["beranda", "tentang", "portfolio", "kontak"];
@@ -62,7 +62,6 @@ export default function Navbar() {
   const handleNavClick = (index: number) => {
     setActiveIndex(index);
     isClicking.current = true;
-    scrollToSection(links[index].id); // Panggil smooth scroll
     setTimeout(() => { isClicking.current = false; }, 1000);
   };
 
@@ -80,7 +79,7 @@ export default function Navbar() {
           {mounted && (
             <GooeyNav
               key={resolvedTheme}
-              items={links} // Hanya passing label (tanpa href) agar jadi button
+              items={links}
               activeIndex={activeIndex}
               onChange={handleNavClick}
               theme={resolvedTheme === "dark" ? "dark" : "light"}
@@ -93,8 +92,19 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Toggles */}
+        {/* Toggles & Mobile Menu Button */}
         <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 dark:bg-slate-900 md:bg-white/50 md:backdrop-blur-md md:dark:bg-black/50 shadow-lg border border-white/10">
+          
+          {/* TOMBOL TOGGLE SFX */}
+          <button
+            type="button"
+            onClick={toggleSfx}
+            className="grid h-8 w-8 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
+            aria-label={isSfxEnabled ? "Matikan SFX" : "Nyalakan SFX"}
+          >
+            {isSfxEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+          </button>
+
           {mounted && (
             <button
               type="button"
@@ -130,22 +140,21 @@ export default function Navbar() {
         <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-slate-950 md:hidden">
           <ul className="flex flex-col gap-1">
             {links.map((link, index) => (
-              <li key={link.id}>
-                {/* Ubah <a> menjadi <button> agar URL tidak berubah */}
-                <button
-                  type="button"
+              <li key={link.href}>
+                <a
+                  href={link.href}
                   onClick={() => {
                     setOpen(false);
                     handleNavClick(index);
                   }}
-                  className={`w-full text-left block rounded-xl px-4 py-3 text-sm font-medium transition ${
+                  className={`block rounded-xl px-4 py-3 text-sm font-medium transition ${
                     activeIndex === index
                       ? "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white"
                       : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                   }`}
                 >
                   {link.label}
-                </button>
+                </a>
               </li>
             ))}
           </ul>

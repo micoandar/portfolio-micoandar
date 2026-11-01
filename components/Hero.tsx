@@ -40,6 +40,15 @@ export default function Hero() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // --- FUNGSI UNTUK TOMBOL LIHAT PROYEK (PALING ATAS) ---
+  const handleViewProjects = () => {
+    // 1. Kirim sinyal untuk memaksa Tab Portfolio berpindah ke 0 (Projects)
+    window.dispatchEvent(new CustomEvent("switch-portfolio-tab", { detail: 0 }));
+    
+    // 2. Scroll ke pembungkus utama Portfolio agar tidak error saat tab sedang tidak menampilkan Projects
+    scrollToSection("portfolio");
+  };
+
   return (
     <section
       id="beranda"
@@ -73,8 +82,9 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
+            {/* PERBAIKAN: Menggunakan fungsi handleViewProjects */}
             <button
-              onClick={() => scrollToSection("proyek")}
+              onClick={handleViewProjects}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-slate-900/30 dark:bg-white dark:text-slate-900 dark:hover:shadow-white/20"
             >
               {t.viewProjects}
@@ -95,7 +105,6 @@ export default function Hero() {
               {isCvOpen && (
                 <div className="absolute left-0 top-full mt-2 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-800 dark:bg-slate-900 z-50 animate-in fade-in slide-in-from-top-2">
                   
-                  {/* PERBAIKAN: Menghapus atribut `download` dan menambahkan `target="_blank"` */}
                   <a
                     href={profile.cvFullStack}
                     target="_blank"
@@ -107,7 +116,6 @@ export default function Hero() {
                     {t.cvFullStack}
                   </a>
                   
-                  {/* PERBAIKAN: Menghapus atribut `download` dan menambahkan `target="_blank"` */}
                   <a
                     href={profile.cvSoftware}
                     target="_blank"

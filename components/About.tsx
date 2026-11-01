@@ -30,7 +30,6 @@ export default function About() {
   
   const [isHolding, setIsHolding] = useState(false);
   
-  // State untuk mendeteksi layar HP (di bawah 1024px)
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -186,7 +185,6 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-1 w-full">
-            {/* SplitText untuk "Hi, I'm" (Responsive textAlign) */}
             <SplitText
               tag="h1"
               text="Hi, I'm"
@@ -200,7 +198,6 @@ export default function About() {
               hoverEffect="lift"
             />
             
-            {/* SplitText untuk NAMA (Responsive textAlign) */}
             <div className="flex flex-col w-full">
               <SplitText
                 tag="h1"
@@ -255,7 +252,8 @@ export default function About() {
               sparkle={true}
             >
               <Mail size={18} />
-              Hubungi Saya
+              {/* PERBAIKAN: Teks menyesuaikan bahasa */}
+              {lang === "id" ? "Hubungi Saya" : "Contact Me"}
             </StarBorder>
           </div>
         </div>
@@ -430,7 +428,8 @@ export default function About() {
               sparkle={true}
             >
               <ArrowUpRight size={18} />
-              Lihat Proyek
+              {/* PERBAIKAN: Teks menyesuaikan bahasa */}
+              {lang === "id" ? "Lihat Proyek" : "View Projects"}
             </StarBorder>
           </div>
         </div>

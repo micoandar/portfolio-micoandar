@@ -9,6 +9,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const education = [
   {
     school: "Universitas Gunadarma",
+    url: "https://www.gunadarma.ac.id/", // <-- Tambah Link
     degree: { id: "S1 Informatika", en: "Bachelor of Informatics" },
     period: "2022 – 2026",
     location: { id: "Bekasi, Jawa Barat, Indonesia", en: "Bekasi, West Java, Indonesia" },
@@ -26,6 +27,7 @@ const education = [
   },
   {
     school: "SMK Telekomunikasi Telesandi Bekasi",
+    url: "https://smktelekomunikasi.sch.id/", // <-- Tambah Link
     degree: { id: "Teknik Komputer dan Jaringan", en: "Computer & Network Engineering" },
     period: "2019 – 2022",
     location: { id: "Bekasi, Jawa Barat", en: "Bekasi, West Java" },
@@ -51,7 +53,6 @@ export default function Education() {
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
         
         {/* ================= KIRI: PENDIDIKAN (Timeline Style) ================= */}
-        {/* Penyesuaian Mobile: Garis timeline disesuaikan dengan ukuran ikon yang lebih kecil di HP */}
         <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 sm:before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent dark:before:via-slate-800">
           {education.map((item, i) => (
             <Reveal key={item.school} delay={i * 100}>
@@ -65,7 +66,6 @@ export default function Education() {
                 {/* Kartu Pendidikan */}
                 <div className="flex-1 min-w-0 rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60 sm:p-7">
                   
-                  {/* Mobile: Flex-col (turun ke bawah). Desktop: Flex-row (sejajar) */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-2">
                     <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white break-words">
                       {item.degree[lang]}
@@ -75,9 +75,16 @@ export default function Education() {
                     </span>
                   </div>
                   
-                  <p className="text-sm font-semibold text-brand-600 dark:text-brand-400">
+                  {/* PERBAIKAN: Nama sekolah dibungkus <a> tag agar bisa diklik */}
+                  <a 
+                    href={item.url} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="inline-block text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 hover:underline transition-colors"
+                  >
                     {item.school}
-                  </p>
+                  </a>
+
                   <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
                     {item.period} <span className="mx-1">•</span> {item.location[lang]}
                   </p>
@@ -136,7 +143,6 @@ export default function Education() {
                         </div>
                       </div>
                       
-                      {/* Mobile: Sejajar ke kiri bawah teks. Desktop: Sejajar ke kanan atas */}
                       <div className="flex items-center sm:flex-col sm:items-end justify-between sm:justify-start gap-2 shrink-0 w-full sm:w-auto pl-10 sm:pl-0 mt-1 sm:mt-0">
                         <span className="rounded-md bg-slate-100 px-2 py-1 text-[10px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                           {c.year}

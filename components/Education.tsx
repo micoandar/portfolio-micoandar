@@ -94,18 +94,40 @@ export default function Education() {
                   {lang === "id" ? "Sertifikasi" : "Certifications"}
                 </h3>
               </div>
-              <ul className="space-y-4">
+              <ul className="space-y-3.5">
                 {certifications.map((c) => (
-                  <li key={c.title.id} className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                        {c.title[lang]}
-                      </p>
-                      <p className="text-xs text-slate-400 dark:text-slate-500">{c.issuer}</p>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                      {c.year}
-                    </span>
+                  <li key={c.title.id}>
+                    <a 
+                      href={c.fileUrl || undefined}
+                      target={c.fileUrl ? "_blank" : undefined}
+                      rel="noreferrer"
+                      className={`group flex items-start justify-between gap-4 rounded-xl p-2 -mx-2 transition-colors ${
+                        c.fileUrl ? "hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer" : "cursor-default"
+                      }`}
+                    >
+                      <div className="flex gap-3">
+                        {c.fileUrl && (
+                          <div className="mt-0.5 text-slate-400 group-hover:text-amber-500 transition-colors">
+                            <FileText size={16} />
+                          </div>
+                        )}
+                        <div>
+                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                            {c.title[lang]}
+                          </p>
+                          <p className="text-xs text-slate-400 dark:text-slate-500">{c.issuer}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 shrink-0">
+                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                          {c.year}
+                        </span>
+                        {c.fileUrl && (
+                          <ExternalLink size={14} className="text-slate-300 group-hover:text-amber-500 transition-colors opacity-0 group-hover:opacity-100" />
+                        )}
+                      </div>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -124,10 +146,9 @@ export default function Education() {
               <ul className="space-y-3.5">
                 {trainings.map((item) => (
                   <li key={item.title}>
-                    {/* JIKA ADA FILE, JADIKAN SEBUAH LINK YANG BISA DIKLIK */}
                     <a 
-                      href={item.fileUrl || "#"}
-                      target={item.fileUrl ? "_blank" : "_self"}
+                      href={item.fileUrl || undefined}
+                      target={item.fileUrl ? "_blank" : undefined}
                       rel="noreferrer"
                       className={`group flex items-start justify-between gap-4 rounded-xl p-2 -mx-2 transition-colors ${
                         item.fileUrl ? "hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer" : ""
@@ -151,7 +172,6 @@ export default function Education() {
                         <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                           {item.year}
                         </span>
-                        {/* IKON PANAH KELUAR JIKA ADA FILE */}
                         {item.fileUrl && (
                           <ExternalLink size={14} className="text-slate-300 group-hover:text-sky-500 transition-colors opacity-0 group-hover:opacity-100" />
                         )}

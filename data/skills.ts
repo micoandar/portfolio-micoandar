@@ -94,11 +94,19 @@ export const skillGroups: SkillGroup[] = [
   },
 ];
 
-export const certifications = [
+export type Certification = {
+  title: LText;
+  year: string;
+  issuer: string;
+  fileUrl?: string;
+};
+
+export const certifications: Certification[] = [
   {
     title: { id: "Programmer", en: "Programmer" },
     year: "2026",
     issuer: "Badan Nasional Sertifikasi Profesi (BNSP) / LSP",
+    // fileUrl belum ada
   },
   {
     title: {
@@ -107,6 +115,7 @@ export const certifications = [
     },
     year: "2022",
     issuer: "SMK Telekomunikasi Telesandi",
+    fileUrl: "/files/sertifikat-kompetensi-smk.pdf", 
   },
   {
     title: {
@@ -115,17 +124,23 @@ export const certifications = [
     },
     year: "2021",
     issuer: "SMK Telekomunikasi Telesandi",
+    fileUrl: "/files/sertifikat-level-2.pdf",
   },
 ];
 
-// Data Pelatihan Baru dengan File URL
-// Pastikan kamu meletakkan file PDF/Gambar di folder "public/files/"
-export const trainings = [
+export type Training = {
+  title: string;
+  year: string;
+  issuer: string;
+  fileUrl?: string;
+};
+
+export const trainings: Training[] = [
   { 
     title: "Application Implementation and Development", 
     year: "25 May 2026", 
     issuer: "Universitas Gunadarma",
-    fileUrl: "/files/application-implementation.pdf" // <-- Ganti dengan nama file asli
+    fileUrl: "/files/application-implementation.pdf"
   },
   { 
     title: "Application Development Design", 

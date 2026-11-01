@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Menu, X, Languages, Sun, Moon, Volume2, VolumeX } from "lucide-react"; // Tambah Volume2, VolumeX
+import { Menu, X, Languages, Sun, Moon, Volume2, VolumeX } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useSfx } from "@/contexts/SfxContext"; // <-- Import useSfx
+import { useSfx } from "@/contexts/SfxContext";
 import GooeyNav from "@/components/GooeyNav";
+import { scrollToSection } from "@/lib/utils"; // <-- Import fungsi scroll
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -16,13 +17,14 @@ export default function Navbar() {
 
   const { lang, toggle: toggleLang } = useLanguage();
   const { resolvedTheme, setTheme } = useTheme();
-  const { isSfxEnabled, toggleSfx } = useSfx(); // <-- Gunakan hook SFX
+  const { isSfxEnabled, toggleSfx } = useSfx();
 
+  // PERBAIKAN: Menggunakan 'id' bukan 'href' agar GooeyNav merender tombol (bukan link #)
   const links = [
-    { label: "Home", href: "#beranda" },
-    { label: "About", href: "#tentang" },
-    { label: "Portfolio", href: "#portfolio" },
-    { label: "Contact", href: "#kontak" },
+    { label: "Home", id: "beranda" },
+    { label: "About", id: "tentang" },
+    { label: "Portfolio", id: "portfolio" },
+    { label: "Contact", id: "kontak" },
   ];
 
   const sectionIds = ["beranda", "tentang", "portfolio", "kontak"];
@@ -62,6 +64,7 @@ export default function Navbar() {
   const handleNavClick = (index: number) => {
     setActiveIndex(index);
     isClicking.current = true;
+    scrollToSection(links[index].id); // <-- Panggil scroll manual (bukan via URL hash)
     setTimeout(() => { isClicking.current = false; }, 1000);
   };
 
@@ -95,7 +98,6 @@ export default function Navbar() {
         {/* Toggles & Mobile Menu Button */}
         <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 dark:bg-slate-900 md:bg-white/50 md:backdrop-blur-md md:dark:bg-black/50 shadow-lg border border-white/10">
           
-          {/* TOMBOL TOGGLE SFX */}
           <button
             type="button"
             onClick={toggleSfx}
@@ -140,21 +142,22 @@ export default function Navbar() {
         <div className="pointer-events-auto absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-slate-950 md:hidden">
           <ul className="flex flex-col gap-1">
             {links.map((link, index) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
+              <li key={link.id}>
+                {/* PERBAIKAN: Ubah <a> menjadi <button> agar URL tidak berubah */}
+                <button
+                  type="button"
                   onClick={() => {
                     setOpen(false);
                     handleNavClick(index);
                   }}
-                  className={`block rounded-xl px-4 py-3 text-sm font-medium transition ${
+                  className={`w-full text-left block rounded-xl px-4 py-3 text-sm font-medium transition ${
                     activeIndex === index
                       ? "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white"
                       : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                   }`}
                 >
                   {link.label}
-                </a>
+                </button>
               </li>
             ))}
           </ul>

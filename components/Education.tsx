@@ -48,83 +48,96 @@ export default function Education() {
 
   return (
     <Section id="pendidikan" title="Education & Certifications" className="bg-white dark:bg-slate-950">
-      <div className="grid gap-8 lg:grid-cols-2">
-        <div className="space-y-5">
+      <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
+        
+        {/* ================= KIRI: PENDIDIKAN (Timeline Style) ================= */}
+        <div className="relative space-y-6 before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent dark:before:via-slate-800">
           {education.map((item, i) => (
             <Reveal key={item.school} delay={i * 100}>
-              <div className="relative rounded-3xl border border-slate-200 bg-slate-50/60 p-6 dark:border-slate-800 dark:bg-slate-900/50 sm:p-7">
-                <div className="flex items-start gap-4">
-                  <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/25">
-                    <GraduationCap size={20} />
+              <div className="relative flex items-start gap-5 sm:gap-6">
+                {/* Ikon Timeline */}
+                <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/30 ring-4 ring-white dark:ring-slate-950">
+                  <GraduationCap size={22} />
+                </div>
+                
+                {/* Kartu Pendidikan */}
+                <div className="flex-1 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60 sm:p-7">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                      {item.degree[lang]}
+                    </h3>
+                    <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand-700 border border-brand-100 dark:bg-brand-900/30 dark:text-brand-300 dark:border-brand-800">
+                      {item.score[lang]}
+                    </span>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                      <h3 className="font-bold text-slate-900 dark:text-white">{item.degree[lang]}</h3>
-                      <span className="rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] font-bold text-brand-700 dark:bg-brand-900/50 dark:text-brand-300">
-                        {item.score[lang]}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-300">{item.school}</p>
-                    <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
-                      {item.period} · {item.location[lang]}
-                    </p>
+                  
+                  <p className="text-sm font-semibold text-brand-600 dark:text-brand-400">
+                    {item.school}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
+                    {item.period} <span className="mx-1">•</span> {item.location[lang]}
+                  </p>
 
-                    <ul className="mt-4 space-y-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                      {item.details[lang].map((d) => (
-                        <li key={d} className="flex gap-2.5">
-                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul className="mt-5 space-y-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                    {item.details[lang].map((d) => (
+                      <li key={d} className="flex gap-3">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-300 dark:bg-slate-600" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
 
+        {/* ================= KANAN: SERTIFIKASI & PELATIHAN ================= */}
         <div className="space-y-6">
+          
           {/* SERTIFIKASI */}
           <Reveal delay={120}>
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7">
-              <div className="mb-5 flex items-center gap-2.5">
-                <Award size={18} className="text-amber-500" />
-                <h3 className="font-bold text-slate-900 dark:text-white">
+            <div className="group rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:border-amber-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-amber-700/50">
+              <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 dark:border-slate-800">
+                <div className="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-500/10">
+                  <Award size={20} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   {lang === "id" ? "Sertifikasi" : "Certifications"}
                 </h3>
               </div>
-              <ul className="space-y-3.5">
+              
+              <ul className="divide-y divide-slate-100 dark:divide-slate-800 p-2">
                 {certifications.map((c) => (
                   <li key={c.title.id}>
                     <a 
                       href={c.fileUrl || undefined}
                       target={c.fileUrl ? "_blank" : undefined}
                       rel="noreferrer"
-                      className={`group flex items-start justify-between gap-4 rounded-xl p-2 -mx-2 transition-colors ${
+                      className={`group/item flex items-start justify-between gap-4 rounded-2xl p-4 transition-all duration-200 ${
                         c.fileUrl ? "hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer" : "cursor-default"
                       }`}
                     >
-                      <div className="flex gap-3">
+                      <div className="flex gap-4">
                         {c.fileUrl && (
-                          <div className="mt-0.5 text-slate-400 group-hover:text-amber-500 transition-colors">
+                          <div className="mt-0.5 grid h-8 w-8 place-items-center rounded-lg bg-slate-100 text-slate-400 group-hover/item:bg-amber-100 group-hover/item:text-amber-600 transition-colors dark:bg-slate-800 dark:group-hover/item:bg-amber-500/20 dark:group-hover/item:text-amber-400">
                             <FileText size={16} />
                           </div>
                         )}
                         <div>
-                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                          <p className={`text-sm font-semibold text-slate-800 dark:text-slate-200 transition-colors ${c.fileUrl ? "group-hover/item:text-amber-600 dark:group-hover/item:text-amber-400" : ""}`}>
                             {c.title[lang]}
                           </p>
-                          <p className="text-xs text-slate-400 dark:text-slate-500">{c.issuer}</p>
+                          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{c.issuer}</p>
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-3 shrink-0">
-                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                      <div className="flex flex-col items-end gap-2 shrink-0">
+                        <span className="rounded-md bg-slate-100 px-2 py-1 text-[10px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                           {c.year}
                         </span>
                         {c.fileUrl && (
-                          <ExternalLink size={14} className="text-slate-300 group-hover:text-amber-500 transition-colors opacity-0 group-hover:opacity-100" />
+                          <ExternalLink size={14} className="text-slate-300 group-hover/item:text-amber-500 transition-colors opacity-0 group-hover/item:opacity-100" />
                         )}
                       </div>
                     </a>
@@ -136,44 +149,47 @@ export default function Education() {
 
           {/* PELATIHAN */}
           <Reveal delay={200}>
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7">
-              <div className="mb-5 flex items-center gap-2.5">
-                <BookOpen size={18} className="text-sky-500" />
-                <h3 className="font-bold text-slate-900 dark:text-white">
+            <div className="group rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:border-sky-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-sky-700/50">
+              <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 dark:border-slate-800">
+                <div className="grid h-10 w-10 place-items-center rounded-xl bg-sky-50 text-sky-500 dark:bg-sky-500/10">
+                  <BookOpen size={20} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   {lang === "id" ? "Pelatihan" : "Trainings"}
                 </h3>
               </div>
-              <ul className="space-y-3.5">
+              
+              <ul className="divide-y divide-slate-100 dark:divide-slate-800 p-2">
                 {trainings.map((item) => (
                   <li key={item.title}>
                     <a 
                       href={item.fileUrl || undefined}
                       target={item.fileUrl ? "_blank" : undefined}
                       rel="noreferrer"
-                      className={`group flex items-start justify-between gap-4 rounded-xl p-2 -mx-2 transition-colors ${
+                      className={`group/item flex items-start justify-between gap-4 rounded-2xl p-4 transition-all duration-200 ${
                         item.fileUrl ? "hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer" : ""
                       }`}
                     >
-                      <div className="flex gap-3">
+                      <div className="flex gap-4">
                         {item.fileUrl && (
-                          <div className="mt-0.5 text-slate-400 group-hover:text-sky-500 transition-colors">
+                          <div className="mt-0.5 grid h-8 w-8 place-items-center rounded-lg bg-slate-100 text-slate-400 group-hover/item:bg-sky-100 group-hover/item:text-sky-600 transition-colors dark:bg-slate-800 dark:group-hover/item:bg-sky-500/20 dark:group-hover/item:text-sky-400">
                             <FileText size={16} />
                           </div>
                         )}
                         <div>
-                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                          <p className={`text-sm font-semibold text-slate-800 dark:text-slate-200 transition-colors ${item.fileUrl ? "group-hover/item:text-sky-600 dark:group-hover/item:text-sky-400" : ""}`}>
                             {item.title}
                           </p>
-                          <p className="text-xs text-slate-400 dark:text-slate-500">{item.issuer}</p>
+                          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{item.issuer}</p>
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-3 shrink-0">
-                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                      <div className="flex flex-col items-end gap-2 shrink-0">
+                        <span className="rounded-md bg-slate-100 px-2 py-1 text-[10px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                           {item.year}
                         </span>
                         {item.fileUrl && (
-                          <ExternalLink size={14} className="text-slate-300 group-hover:text-sky-500 transition-colors opacity-0 group-hover:opacity-100" />
+                          <ExternalLink size={14} className="text-slate-300 group-hover/item:text-sky-500 transition-colors opacity-0 group-hover/item:opacity-100" />
                         )}
                       </div>
                     </a>
@@ -183,6 +199,7 @@ export default function Education() {
             </div>
           </Reveal>
         </div>
+
       </div>
     </Section>
   );

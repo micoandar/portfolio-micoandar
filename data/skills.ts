@@ -23,7 +23,6 @@ export const skillGroups: SkillGroup[] = [
       { name: "Next.js", description: { id: "Framework React untuk aplikasi web production-ready (SSR/SSG).", en: "React framework for production-ready web apps (SSR/SSG)." }, logo: "https://cdn.simpleicons.org/nextdotjs" },
       { name: "React", description: { id: "Library UI berbasis komponen untuk web modern.", en: "Component-based UI library for modern web." }, logo: "https://cdn.simpleicons.org/react" },
       { name: "JavaScript", description: { id: "Bahasa pemrograman inti untuk membuat web menjadi interaktif.", en: "Core programming language to make the web interactive." }, logo: "https://cdn.simpleicons.org/javascript" },
-      // Perhatikan: logo Vanilla JS dihapus agar menggunakan ikon fallback (Code2)
       { name: "Vanilla JS", description: { id: "JavaScript murni tanpa framework, fundamental yang kuat.", en: "Pure JavaScript without frameworks, a strong fundamental." } },
       { name: "TypeScript", description: { id: "JavaScript dengan tipe data — lebih aman saat coding.", en: "JavaScript with types — safer while coding." }, logo: "https://cdn.simpleicons.org/typescript" },
       { name: "Tailwind CSS", description: { id: "Utility-first CSS, styling cepat tanpa file CSS terpisah.", en: "Utility-first CSS, quick styling without separate CSS files." }, logo: "https://cdn.simpleicons.org/tailwindcss" },
@@ -119,10 +118,13 @@ export const certifications = [
   },
 ];
 
+// Data Pelatihan Baru (Bahasa Inggris)
 export const trainings = [
-  { title: { id: "Kursus Programmer", en: "Programmer Course" }, year: "2025", issuer: "Universitas Gunadarma" },
-  { title: { id: "Golang Tingkat Menengah", en: "Intermediate Golang" }, year: "2025", issuer: "Universitas Gunadarma" },
-  { title: { id: "Oracle Tingkat Menengah", en: "Intermediate Oracle" }, year: "2025", issuer: "Universitas Gunadarma" },
-  { title: { id: "Perancangan Pengembangan Aplikasi", en: "Application Development Design" }, year: "2024", issuer: "Universitas Gunadarma" },
-  { title: { id: "Instalasi Wireless LAN", en: "Wireless LAN Installation" }, year: "2024", issuer: "Universitas Gunadarma" },
+  { title: "Application Implementation and Development", year: "25 May 2026", issuer: "Universitas Gunadarma" },
+  { title: "Application Development Design", year: "22 September 2025", issuer: "Universitas Gunadarma" },
+  { title: "GO-LANG FOR INTERMEDIATE", year: "18 August 2025", issuer: "Universitas Gunadarma" },
+  { title: "ORACLE FOR INTERMEDIATE", year: "24 February 2025", issuer: "Universitas Gunadarma" },
+  { title: "Introduction to wireless LAN installation", year: "04 July 2024", issuer: "Universitas Gunadarma" },
+  { title: "FUNDAMENTAL WEB PROGRAMMING", year: "21 August 2023", issuer: "Universitas Gunadarma" },
+  { title: "FUNDAMENTAL DBMS", year: "20 February 2023", issuer: "Universitas Gunadarma" },
 ];

@@ -121,10 +121,11 @@ export default function Education() {
               </div>
               <ul className="space-y-3.5">
                 {trainings.map((item) => (
-                  <li key={item.title.id} className="flex items-start justify-between gap-4">
+                  // Perubahan di sini: item.title sekarang berupa string, bukan objek LText
+                  <li key={item.title} className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                        {item.title[lang]}
+                        {item.title}
                       </p>
                       <p className="text-xs text-slate-400 dark:text-slate-500">{item.issuer}</p>
                     </div>

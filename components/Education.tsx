@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, BookOpen, GraduationCap, FileText, ExternalLink } from "lucide-react";
+import { Award, BookOpen, FileText, ExternalLink } from "lucide-react"; // GraduationCap dihapus
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
@@ -9,7 +9,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const education = [
   {
     school: "Universitas Gunadarma",
-    url: "https://www.gunadarma.ac.id/", // <-- Tambah Link
+    url: "https://www.gunadarma.ac.id/",
+    logo: "/images/universitas_gunadarma.png", // <-- Tambah properti logo
     degree: { id: "S1 Informatika", en: "Bachelor of Informatics" },
     period: "2022 – 2026",
     location: { id: "Bekasi, Jawa Barat, Indonesia", en: "Bekasi, West Java, Indonesia" },
@@ -27,7 +28,8 @@ const education = [
   },
   {
     school: "SMK Telekomunikasi Telesandi Bekasi",
-    url: "https://smktelekomunikasitelesandi.sch.id/", // <-- Tambah Link
+    url: "https://smktelekomunikasitelesandi.sch.id/",
+    logo: "/images/logotelesandi.png", // <-- Tambah properti logo
     degree: { id: "Teknik Komputer dan Jaringan", en: "Computer & Network Engineering" },
     period: "2019 – 2022",
     location: { id: "Bekasi, Jawa Barat", en: "Bekasi, West Java" },
@@ -58,9 +60,13 @@ export default function Education() {
             <Reveal key={item.school} delay={i * 100}>
               <div className="relative flex items-start gap-3 sm:gap-5 md:gap-6">
                 
-                {/* Ikon Timeline */}
-                <div className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/30 ring-4 ring-white dark:ring-slate-950">
-                  <GraduationCap size={20} className="sm:w-[22px] sm:h-[22px]" />
+                {/* PERBAIKAN: Ikon Timeline diganti menjadi gambar logo sekolah */}
+                <div className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-white p-1 shadow-lg shadow-slate-200/50 ring-4 ring-white dark:bg-slate-800 dark:shadow-black/30 dark:ring-slate-950">
+                  <img 
+                    src={item.logo} 
+                    alt={item.school} 
+                    className="h-full w-full object-contain rounded-xl" 
+                  />
                 </div>
                 
                 {/* Kartu Pendidikan */}
@@ -75,7 +81,6 @@ export default function Education() {
                     </span>
                   </div>
                   
-                  {/* PERBAIKAN: Nama sekolah dibungkus <a> tag agar bisa diklik */}
                   <a 
                     href={item.url} 
                     target="_blank" 

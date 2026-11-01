@@ -27,7 +27,7 @@ const education = [
   },
   {
     school: "SMK Telekomunikasi Telesandi Bekasi",
-    url: "https://smktelekomunikasi.sch.id/", // <-- Tambah Link
+    url: "https://smktelekomunikasitelesandi.sch.id/", // <-- Tambah Link
     degree: { id: "Teknik Komputer dan Jaringan", en: "Computer & Network Engineering" },
     period: "2019 – 2022",
     location: { id: "Bekasi, Jawa Barat", en: "Bekasi, West Java" },

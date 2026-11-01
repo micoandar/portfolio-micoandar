@@ -118,13 +118,49 @@ export const certifications = [
   },
 ];
 
-// Data Pelatihan Baru (Bahasa Inggris)
+// Data Pelatihan Baru dengan File URL
+// Pastikan kamu meletakkan file PDF/Gambar di folder "public/files/"
 export const trainings = [
-  { title: "Application Implementation and Development", year: "25 May 2026", issuer: "Universitas Gunadarma" },
-  { title: "Application Development Design", year: "22 September 2025", issuer: "Universitas Gunadarma" },
-  { title: "GO-LANG FOR INTERMEDIATE", year: "18 August 2025", issuer: "Universitas Gunadarma" },
-  { title: "ORACLE FOR INTERMEDIATE", year: "24 February 2025", issuer: "Universitas Gunadarma" },
-  { title: "Introduction to wireless LAN installation", year: "04 July 2024", issuer: "Universitas Gunadarma" },
-  { title: "FUNDAMENTAL WEB PROGRAMMING", year: "21 August 2023", issuer: "Universitas Gunadarma" },
-  { title: "FUNDAMENTAL DBMS", year: "20 February 2023", issuer: "Universitas Gunadarma" },
+  { 
+    title: "Application Implementation and Development", 
+    year: "25 May 2026", 
+    issuer: "Universitas Gunadarma",
+    fileUrl: "/files/application-implementation.pdf" // <-- Ganti dengan nama file asli
+  },
+  { 
+    title: "Application Development Design", 
+    year: "22 September 2025", 
+    issuer: "Universitas Gunadarma",
+    fileUrl: "/files/application-design.pdf" 
+  },
+  { 
+    title: "GO-LANG FOR INTERMEDIATE", 
+    year: "18 August 2025", 
+    issuer: "Universitas Gunadarma",
+    fileUrl: "/files/golang-intermediate.pdf" 
+  },
+  { 
+    title: "ORACLE FOR INTERMEDIATE", 
+    year: "24 February 2025", 
+    issuer: "Universitas Gunadarma",
+    fileUrl: "/files/oracle-intermediate.pdf" 
+  },
+  { 
+    title: "Introduction to wireless LAN installation", 
+    year: "04 July 2024", 
+    issuer: "Universitas Gunadarma",
+    fileUrl: "/files/wireless-lan.pdf" 
+  },
+  { 
+    title: "FUNDAMENTAL WEB PROGRAMMING", 
+    year: "21 August 2023", 
+    issuer: "Universitas Gunadarma",
+    fileUrl: "/files/web-programming.pdf" 
+  },
+  { 
+    title: "FUNDAMENTAL DBMS", 
+    year: "20 February 2023", 
+    issuer: "Universitas Gunadarma",
+    fileUrl: "/files/fundamental-dbms.pdf" 
+  },
 ];

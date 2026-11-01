@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, BookOpen, GraduationCap } from "lucide-react";
+import { Award, BookOpen, GraduationCap, FileText, ExternalLink } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
@@ -85,6 +85,7 @@ export default function Education() {
         </div>
 
         <div className="space-y-6">
+          {/* SERTIFIKASI */}
           <Reveal delay={120}>
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7">
               <div className="mb-5 flex items-center gap-2.5">
@@ -111,6 +112,7 @@ export default function Education() {
             </div>
           </Reveal>
 
+          {/* PELATIHAN */}
           <Reveal delay={200}>
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7">
               <div className="mb-5 flex items-center gap-2.5">
@@ -121,17 +123,40 @@ export default function Education() {
               </div>
               <ul className="space-y-3.5">
                 {trainings.map((item) => (
-                  // Perubahan di sini: item.title sekarang berupa string, bukan objek LText
-                  <li key={item.title} className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                        {item.title}
-                      </p>
-                      <p className="text-xs text-slate-400 dark:text-slate-500">{item.issuer}</p>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                      {item.year}
-                    </span>
+                  <li key={item.title}>
+                    {/* JIKA ADA FILE, JADIKAN SEBUAH LINK YANG BISA DIKLIK */}
+                    <a 
+                      href={item.fileUrl || "#"}
+                      target={item.fileUrl ? "_blank" : "_self"}
+                      rel="noreferrer"
+                      className={`group flex items-start justify-between gap-4 rounded-xl p-2 -mx-2 transition-colors ${
+                        item.fileUrl ? "hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer" : ""
+                      }`}
+                    >
+                      <div className="flex gap-3">
+                        {item.fileUrl && (
+                          <div className="mt-0.5 text-slate-400 group-hover:text-sky-500 transition-colors">
+                            <FileText size={16} />
+                          </div>
+                        )}
+                        <div>
+                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-slate-400 dark:text-slate-500">{item.issuer}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 shrink-0">
+                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                          {item.year}
+                        </span>
+                        {/* IKON PANAH KELUAR JIKA ADA FILE */}
+                        {item.fileUrl && (
+                          <ExternalLink size={14} className="text-slate-300 group-hover:text-sky-500 transition-colors opacity-0 group-hover:opacity-100" />
+                        )}
+                      </div>
+                    </a>
                   </li>
                 ))}
               </ul>

@@ -468,8 +468,6 @@ const paintFace = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, co
     ctx.translate(borderSize, borderSize);
     drawFitted(ctx, image, innerWidth, innerHeight, fit);
     ctx.restore();
-    
-    // (Baris stroke putih di sini sudah dihapus)
   }
 };
 
@@ -492,18 +490,23 @@ const paintStrap = (canvas: HTMLCanvasElement, image: HTMLImageElement | null, c
     return along / across;
   }
 
-  // Teks Tali
+  // ==========================================
+  // PERBAIKAN TEKS TALI LANYARD
+  // ==========================================
   ctx.save();
   ctx.translate(across / 2, along / 2);
   ctx.rotate(Math.PI / 2); 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
-  ctx.font = 'bold 28px "Inter", "Helvetica Neue", Arial, sans-serif'; 
+  // Font diperbesar dari 28px menjadi 46px
+  ctx.font = 'bold 46px "Inter", "Helvetica Neue", Arial, sans-serif'; 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
-  const text = "◆  Micoandar JM  ◆";
+  // Teks diganti menjadi "DEVELOPER"
+  const text = "DEVELOPER";
   ctx.fillText(text, 0, 0);
   ctx.restore();
+  // ==========================================
 
   // Garis-garis tekstur kain
   const ink = luminance(color) > 0.5 ? [0, 0, 0] : [1, 1, 1];

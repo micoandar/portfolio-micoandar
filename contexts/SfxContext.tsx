@@ -10,14 +10,15 @@ type SfxContextType = {
 const SfxContext = createContext<SfxContextType | null>(null);
 
 export function SfxProvider({ children }: { children: React.ReactNode }) {
-  // PERBAIKAN: Nilai awal diubah menjadi true agar langsung ON
   const [isSfxEnabled, setIsSfxEnabled] = useState(true); 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Pastikan file sfx.mp3 ada di folder public
     audioRef.current = new Audio("/sfx.mp3");
-    audioRef.current.volume = 0.8; 
+    
+    // PERBAIKAN: Volume dinaikkan menjadi maksimal (1.0)
+    audioRef.current.volume = 1.0; 
 
     const handleClick = (e: MouseEvent) => {
       if (!isSfxEnabled || !audioRef.current) return;

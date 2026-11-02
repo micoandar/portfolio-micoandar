@@ -106,7 +106,8 @@ export const certifications: Certification[] = [
     title: { id: "Programmer", en: "Programmer" },
     year: "2026",
     issuer: "Badan Nasional Sertifikasi Profesi (BNSP) / LSP",
-    // fileUrl belum ada
+    // PERBAIKAN: Menambahkan link file BNSP. Pastikan file ada di public/files/
+    fileUrl: "/files/sertifikat-bnsp.pdf", 
   },
   {
     title: {

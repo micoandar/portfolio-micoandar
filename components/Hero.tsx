@@ -5,14 +5,14 @@ import { ArrowRight, Download, Github, Linkedin, Mail, MapPin, ChevronDown } fro
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "next-themes"; // <-- Tambah useTheme
+import { useTheme } from "next-themes"; 
 import Lanyard from "@/components/Lanyard";
 import { scrollToSection } from "@/lib/utils"; 
-import { Starfield } from "@/components/ui/Starfield"; // <-- Import Starfield
+import { Starfield } from "@/components/ui/Starfield"; 
 
 export default function Hero() {
   const { lang } = useLanguage();
-  const { resolvedTheme } = useTheme(); // <-- Panggil tema
+  const { resolvedTheme } = useTheme(); 
   const isDark = resolvedTheme === "dark";
 
   const t = translations[lang].hero;
@@ -64,12 +64,13 @@ export default function Hero() {
 
       {/* ================= STARFIELD (HANYA DARK MODE) ================= */}
       {isDark && (
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+        <div className="absolute inset-0 z-0">
           <Starfield 
             starColor="rgba(255,255,255,0.8)" 
-            bgColor="rgba(0,0,0,0)" // Transparan agar grid & glow terlihat
-            quantity={300} 
-            speed={0.8} 
+            bgColor="transparent" // Menggunakan clearRect agar grid dan glow tetap terlihat
+            quantity={512} 
+            speed={1.5} // Sedikit dipercepat agar lebih dramatis
+            mouseAdjust={true} // Bintang merespons gerakan mouse
           />
         </div>
       )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, BookOpen, FileText, ExternalLink } from "lucide-react"; // GraduationCap dihapus
+import { Award, BookOpen, FileText, ExternalLink } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
@@ -10,7 +10,7 @@ const education = [
   {
     school: "Universitas Gunadarma",
     url: "https://www.gunadarma.ac.id/",
-    logo: "/images/universitas_gunadarma.png", // <-- Tambah properti logo
+    logo: "/images/universitas_gunadarma.png",
     degree: { id: "S1 Informatika", en: "Bachelor of Informatics" },
     period: "2022 – 2026",
     location: { id: "Bekasi, Jawa Barat, Indonesia", en: "Bekasi, West Java, Indonesia" },
@@ -29,7 +29,7 @@ const education = [
   {
     school: "SMK Telekomunikasi Telesandi Bekasi",
     url: "https://smktelekomunikasitelesandi.sch.id/",
-    logo: "/images/logotelesandi.png", // <-- Tambah properti logo
+    logo: "/images/logotelesandi.png",
     degree: { id: "Teknik Komputer dan Jaringan", en: "Computer & Network Engineering" },
     period: "2019 – 2022",
     location: { id: "Bekasi, Jawa Barat", en: "Bekasi, West Java" },
@@ -51,7 +51,8 @@ export default function Education() {
   const { lang } = useLanguage();
 
   return (
-    <Section id="pendidikan" title="Education & Certifications" className="bg-white dark:bg-slate-950">
+    // PERBAIKAN: Warna background solid dihapus agar Starfield global tembus
+    <Section id="pendidikan" title="Education & Certifications">
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
         
         {/* ================= KIRI: PENDIDIKAN (Timeline Style) ================= */}
@@ -60,7 +61,7 @@ export default function Education() {
             <Reveal key={item.school} delay={i * 100}>
               <div className="relative flex items-start gap-3 sm:gap-5 md:gap-6">
                 
-                {/* PERBAIKAN: Ikon Timeline diganti menjadi gambar logo sekolah */}
+                {/* Ikon Timeline */}
                 <div className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-white p-1 shadow-lg shadow-slate-200/50 ring-4 ring-white dark:bg-slate-800 dark:shadow-black/30 dark:ring-slate-950">
                   <img 
                     src={item.logo} 
@@ -70,7 +71,7 @@ export default function Education() {
                 </div>
                 
                 {/* Kartu Pendidikan */}
-                <div className="flex-1 min-w-0 rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60 sm:p-7">
+                <div className="flex-1 min-w-0 rounded-2xl sm:rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-sm p-4 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60 sm:p-7">
                   
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-2">
                     <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white break-words">
@@ -113,7 +114,7 @@ export default function Education() {
           
           {/* SERTIFIKASI */}
           <Reveal delay={120}>
-            <div className="group rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:border-amber-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-amber-700/50">
+            <div className="group rounded-2xl sm:rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-sm shadow-sm transition-all duration-300 hover:border-amber-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-amber-700/50">
               <div className="flex items-center gap-3 border-b border-slate-100 px-4 sm:px-6 py-4 sm:py-5 dark:border-slate-800">
                 <div className="grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-lg sm:rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-500/10">
                   <Award size={18} className="sm:w-5 sm:h-5" />
@@ -165,7 +166,7 @@ export default function Education() {
 
           {/* PELATIHAN */}
           <Reveal delay={200}>
-            <div className="group rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:border-sky-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-sky-700/50">
+            <div className="group rounded-2xl sm:rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-sm shadow-sm transition-all duration-300 hover:border-sky-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-sky-700/50">
               <div className="flex items-center gap-3 border-b border-slate-100 px-4 sm:px-6 py-4 sm:py-5 dark:border-slate-800">
                 <div className="grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-lg sm:rounded-xl bg-sky-50 text-sky-500 dark:bg-sky-500/10">
                   <BookOpen size={18} className="sm:w-5 sm:h-5" />

@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { SfxProvider } from "@/contexts/SfxContext"; // <-- Import SfxProvider
+import { SfxProvider } from "@/contexts/SfxContext";
+import GlobalStarfield from "@/components/GlobalStarfield"; // <-- Import ini
 import { profile } from "@/data/profile";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -19,8 +20,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <LanguageProvider>
-            <SfxProvider> {/* <-- Bungkus di sini */}
-              {children}
+            <SfxProvider>
+              
+              {/* Bintang Global di Background */}
+              <GlobalStarfield />
+
+              {/* Konten Website di atas bintang */}
+              <div className="relative z-10">
+                {children}
+              </div>
+
             </SfxProvider>
           </LanguageProvider>
         </ThemeProvider>

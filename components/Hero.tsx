@@ -5,16 +5,11 @@ import { ArrowRight, Download, Github, Linkedin, Mail, MapPin, ChevronDown } fro
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "next-themes"; 
 import Lanyard from "@/components/Lanyard";
 import { scrollToSection } from "@/lib/utils"; 
-import { Starfield } from "@/components/ui/Starfield"; 
 
 export default function Hero() {
   const { lang } = useLanguage();
-  const { resolvedTheme } = useTheme(); 
-  const isDark = resolvedTheme === "dark";
-
   const t = translations[lang].hero;
   const [roleIndex, setRoleIndex] = useState(0);
   const [isCvOpen, setIsCvOpen] = useState(false);
@@ -53,29 +48,17 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white lg:block"
+      // PERBAIKAN: Warna background solid dihapus agar Starfield global tembus
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden text-slate-900 dark:text-white lg:block"
     >
-      {/* ================= BACKGROUND (GRID & GLOW) ================= */}
+      {/* BACKGROUND (GRID & GLOW) */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
         <div className="absolute -left-24 top-10 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-brand-300/30 blur-[100px] dark:bg-brand-900/20" />
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
-      {/* ================= STARFIELD (HANYA DARK MODE) ================= */}
-      {isDark && (
-        <div className="absolute inset-0 z-0">
-          <Starfield 
-            starColor="rgba(255,255,255,0.8)" 
-            bgColor="transparent" // Menggunakan clearRect agar grid dan glow tetap terlihat
-            quantity={512} 
-            speed={1.5} // Sedikit dipercepat agar lebih dramatis
-            mouseAdjust={true} // Bintang merespons gerakan mouse
-          />
-        </div>
-      )}
-
-      {/* ================= KONTEN ================= */}
+      {/* KONTEN */}
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 px-5 sm:px-8 lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14 pointer-events-none">
         
         <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">

@@ -23,7 +23,9 @@ export const profile = {
   
   github: "https://github.com/micoandar",
   githubHandle: "github.com/micoandar",
-  linkedin: "https://www.linkedin.com/in/micoandar-justinus-marbun",
+  
+  // PERBAIKAN: Link LinkedIn sudah diganti
+  linkedin: "https://www.linkedin.com/in/micoandar-justinus-marbun-3a86b5438",
   linkedinHandle: "Micoandar Justinus Marbun",
   
   summary: {
@@ -31,7 +33,6 @@ export const profile = {
     en: "Informatics Graduate from Gunadarma University (2026) with nearly 2 years of experience in software engineering. Focused on end-to-end full-stack web application development, from database architecture design, secure RESTful API development, responsive interfaces, to cloud deployment.",
   } as LText,
 
-  // "System Design" telah dihapus
   softSkills: {
     id: ["Problem Solving", "Adaptif", "Fast Learner", "Komunikatif", "Teamwork"],
     en: ["Problem Solving", "Adaptive", "Fast Learner", "Communicative", "Teamwork"],

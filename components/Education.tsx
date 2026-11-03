@@ -51,17 +51,15 @@ export default function Education() {
   const { lang } = useLanguage();
 
   return (
-    // PERBAIKAN: Warna background solid dihapus agar Starfield global tembus
     <Section id="pendidikan" title="Education & Certifications">
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
         
-        {/* ================= KIRI: PENDIDIKAN (Timeline Style) ================= */}
+        {/* KIRI: PENDIDIKAN (Timeline Style) */}
         <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 sm:before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent dark:before:via-slate-800">
           {education.map((item, i) => (
             <Reveal key={item.school} delay={i * 100}>
               <div className="relative flex items-start gap-3 sm:gap-5 md:gap-6">
                 
-                {/* Ikon Timeline */}
                 <div className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-white p-1 shadow-lg shadow-slate-200/50 ring-4 ring-white dark:bg-slate-800 dark:shadow-black/30 dark:ring-slate-950">
                   <img 
                     src={item.logo} 
@@ -70,9 +68,7 @@ export default function Education() {
                   />
                 </div>
                 
-                {/* Kartu Pendidikan */}
                 <div className="flex-1 min-w-0 rounded-2xl sm:rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-sm p-4 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60 sm:p-7">
-                  
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-2">
                     <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white break-words">
                       {item.degree[lang]}
@@ -109,7 +105,7 @@ export default function Education() {
           ))}
         </div>
 
-        {/* ================= KANAN: SERTIFIKASI & PELATIHAN ================= */}
+        {/* KANAN: SERTIFIKASI & PELATIHAN */}
         <div className="space-y-6">
           
           {/* SERTIFIKASI */}

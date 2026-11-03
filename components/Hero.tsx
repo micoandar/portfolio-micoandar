@@ -48,7 +48,6 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      // PERBAIKAN: Warna background solid dihapus agar Starfield global tembus
       className="relative flex min-h-screen flex-col justify-center overflow-hidden text-slate-900 dark:text-white lg:block"
     >
       {/* BACKGROUND (GRID & GLOW) */}
@@ -58,8 +57,11 @@ export default function Hero() {
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
-      {/* KONTEN */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 px-5 sm:px-8 lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14 pointer-events-none">
+      {/* 
+        KONTEN 
+        PERBAIKAN: Menambahkan z-20 agar teks dan tombol berada di ATAS Lanyard (yang z-10)
+      */}
+      <div className="relative z-20 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 px-5 sm:px-8 lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14 pointer-events-none">
         
         <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">
           
@@ -152,6 +154,7 @@ export default function Hero() {
         <div className="hidden lg:block pointer-events-none"></div>
       </div>
 
+      {/* LANYARD (z-10) */}
       <div className="relative mt-8 h-[500px] w-full sm:h-[600px] lg:absolute lg:inset-0 lg:mt-0 lg:h-full lg:w-full z-10 pointer-events-none">
         <div className="w-full h-full pointer-events-auto">
           <Lanyard 

@@ -10,12 +10,16 @@ export default function GlobalStarfield() {
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted || resolvedTheme !== "dark") return null;
+  // Jangan render sebelum mounted untuk mencegah hydration mismatch
+  if (!mounted) return null;
+
+  const isDark = resolvedTheme === "dark";
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none">
       <Starfield 
-        starColor="rgba(255,255,255,0.7)" 
+        // PERBAIKAN: Warna bintang putih di gelap, hitam transparan di terang
+        starColor={isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.3)"} 
         bgColor="transparent" 
         quantity={400} 
         speed={1.2} 

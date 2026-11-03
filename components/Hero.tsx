@@ -5,11 +5,16 @@ import { ArrowRight, Download, Github, Linkedin, Mail, MapPin, ChevronDown } fro
 import { profile } from "@/data/profile";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "next-themes"; // <-- Tambah useTheme
 import Lanyard from "@/components/Lanyard";
 import { scrollToSection } from "@/lib/utils"; 
+import { Starfield } from "@/components/ui/Starfield"; // <-- Import Starfield
 
 export default function Hero() {
   const { lang } = useLanguage();
+  const { resolvedTheme } = useTheme(); // <-- Panggil tema
+  const isDark = resolvedTheme === "dark";
+
   const t = translations[lang].hero;
   const [roleIndex, setRoleIndex] = useState(0);
   const [isCvOpen, setIsCvOpen] = useState(false);
@@ -40,12 +45,8 @@ export default function Hero() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // --- FUNGSI UNTUK TOMBOL LIHAT PROYEK (PALING ATAS) ---
   const handleViewProjects = () => {
-    // 1. Kirim sinyal untuk memaksa Tab Portfolio berpindah ke 0 (Projects)
     window.dispatchEvent(new CustomEvent("switch-portfolio-tab", { detail: 0 }));
-    
-    // 2. Scroll ke pembungkus utama Portfolio agar tidak error saat tab sedang tidak menampilkan Projects
     scrollToSection("portfolio");
   };
 
@@ -54,12 +55,26 @@ export default function Hero() {
       id="beranda"
       className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white lg:block"
     >
+      {/* ================= BACKGROUND (GRID & GLOW) ================= */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
         <div className="absolute -left-24 top-10 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-brand-300/30 blur-[100px] dark:bg-brand-900/20" />
         <div className="absolute -right-16 bottom-0 -z-10 h-[30rem] w-[30rem] animate-float rounded-full bg-violet-300/30 blur-[100px] dark:bg-violet-900/20 [animation-delay:2s]" />
       </div>
 
+      {/* ================= STARFIELD (HANYA DARK MODE) ================= */}
+      {isDark && (
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+          <Starfield 
+            starColor="rgba(255,255,255,0.8)" 
+            bgColor="rgba(0,0,0,0)" // Transparan agar grid & glow terlihat
+            quantity={300} 
+            speed={0.8} 
+          />
+        </div>
+      )}
+
+      {/* ================= KONTEN ================= */}
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 px-5 sm:px-8 lg:grid lg:h-screen lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14 pointer-events-none">
         
         <div className="animate-fade-in relative w-full pt-24 pb-4 lg:pt-20 lg:pb-12 pointer-events-auto">
@@ -82,7 +97,6 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            {/* PERBAIKAN: Menggunakan fungsi handleViewProjects */}
             <button
               onClick={handleViewProjects}
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-slate-900/30 dark:bg-white dark:text-slate-900 dark:hover:shadow-white/20"
@@ -104,7 +118,6 @@ export default function Hero() {
 
               {isCvOpen && (
                 <div className="absolute left-0 top-full mt-2 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-slate-800 dark:bg-slate-900 z-50 animate-in fade-in slide-in-from-top-2">
-                  
                   <a
                     href={profile.cvFullStack}
                     target="_blank"
@@ -155,7 +168,7 @@ export default function Hero() {
         <div className="hidden lg:block pointer-events-none"></div>
       </div>
 
-      <div className="relative mt-8 h-[500px] w-full sm:h-[600px] lg:absolute lg:inset-0 lg:mt-0 lg:h-full lg:w-full z-0 pointer-events-none">
+      <div className="relative mt-8 h-[500px] w-full sm:h-[600px] lg:absolute lg:inset-0 lg:mt-0 lg:h-full lg:w-full z-10 pointer-events-none">
         <div className="w-full h-full pointer-events-auto">
           <Lanyard 
             frontImage="/images/id-card.png"

@@ -4,7 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SfxProvider } from "@/contexts/SfxContext";
-import GlobalStarfield from "@/components/GlobalStarfield"; // <-- Import ini
+import GlobalStarfield from "@/components/GlobalStarfield";
 import { profile } from "@/data/profile";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -18,14 +18,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" suppressHydrationWarning className={inter.variable}>
       <body className="font-sans transition-colors duration-300">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        <ThemeProvider 
+          attribute="class" 
+          defaultTheme="dark" // <-- PERBAIKAN: Diubah dari "light" menjadi "dark"
+          enableSystem={false}
+        >
           <LanguageProvider>
             <SfxProvider>
               
-              {/* Bintang Global di Background */}
               <GlobalStarfield />
 
-              {/* Konten Website di atas bintang */}
               <div className="relative z-10">
                 {children}
               </div>

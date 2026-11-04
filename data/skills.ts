@@ -64,7 +64,7 @@ export const skillGroups: SkillGroup[] = [
     icon: "cloud",
     accent: "from-cyan-500 to-blue-600",
     items: [
-      { name: "Docker", description: { id: "Kontainerisasi aplikasi agar konsisten di mana saja.", en: "Containerize applications for consistent deployment." }, logo: "https://cdn.simpleicons.org/docker" },
+      // { name: "Docker", ... } <-- DIHAPUS
       { name: "Git / GitHub", description: { id: "Version control & kolaborasi kode tim.", en: "Version control & team code collaboration." }, logo: "https://cdn.simpleicons.org/github" },
       { name: "Railway", description: { id: "Platform deploy backend + database cloud.", en: "Backend + cloud database deployment platform." }, logo: "https://cdn.simpleicons.org/railway" },
       { name: "Vercel", description: { id: "Platform deploy frontend Next.js super cepat.", en: "Super-fast Next.js frontend deployment platform." }, logo: "https://cdn.simpleicons.org/vercel" },
@@ -102,11 +102,17 @@ export type Certification = {
 };
 
 export const certifications: Certification[] = [
+  // SERTIFIKAT BARU DITAMBAHKAN DI SINI
+  {
+    title: { id: "Intro to Software Engineering", en: "Intro to Software Engineering" },
+    year: "2026",
+    issuer: "Coding Camp (RevoU)",
+    fileUrl: "/files/sertifikat-revou.pdf", 
+  },
   {
     title: { id: "Programmer", en: "Programmer" },
     year: "2026",
     issuer: "Badan Nasional Sertifikasi Profesi (BNSP) / LSP",
-    // PERBAIKAN: Menambahkan link file BNSP. Pastikan file ada di public/files/
     fileUrl: "/files/sertifikat-bnsp.pdf", 
   },
   {

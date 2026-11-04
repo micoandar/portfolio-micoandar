@@ -26,8 +26,21 @@ const fallbackIconMap: Record<string, React.ElementType> = {
   "Cloud Deployment": Cloud,
 };
 
+// Daftar logo yang berwarna gelap/hitam agar bisa di-invert di dark mode
+const DARK_LOGOS = [
+  "Next.js",
+  "Three.js",
+  "Express.js",
+  "Git / GitHub",
+  "Railway",
+  "Vercel",
+];
+
 function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
   const [error, setError] = useState(false);
+  
+  // Cek apakah logo ini membutuhkan efek invert (putih di dark mode)
+  const needsInvert = DARK_LOGOS.includes(skill.name);
 
   if (skill.logo && !error) {
     return (
@@ -35,7 +48,9 @@ function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
         src={skill.logo}
         alt={skill.name}
         loading="lazy"
-        className="h-10 w-10 object-contain drop-shadow-sm sm:h-14 sm:w-14"
+        className={`h-10 w-10 object-contain drop-shadow-sm sm:h-14 sm:w-14 ${
+          needsInvert ? "dark:invert" : ""
+        }`}
         onError={() => setError(true)}
       />
     );
@@ -69,7 +84,6 @@ function SkillCard({ skill, index, lang }: { skill: any; index: number; lang: "i
         tabIndex={0}
         role="button"
         aria-pressed={isFlipped}
-        // PERBAIKAN: Menghapus 'focus:ring-2 focus:ring-brand-500' agar border ungu tidak muncul saat diklik
         className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-md focus:outline-none dark:border-slate-800 dark:bg-[#121217] dark:hover:border-slate-600"
       >
         

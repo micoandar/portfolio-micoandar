@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans transition-colors duration-300">
         <ThemeProvider 
           attribute="class" 
-          defaultTheme="dark" // <-- PERBAIKAN: Diubah dari "light" menjadi "dark"
+          defaultTheme="light" // <-- PERBAIKAN: Diubah kembali ke "light"
           enableSystem={false}
         >
           <LanguageProvider>

@@ -22,6 +22,7 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: "Next.js", description: { id: "Framework React untuk aplikasi web production-ready (SSR/SSG).", en: "React framework for production-ready web apps (SSR/SSG)." }, logo: "https://cdn.simpleicons.org/nextdotjs" },
       { name: "React", description: { id: "Library UI berbasis komponen untuk web modern.", en: "Component-based UI library for modern web." }, logo: "https://cdn.simpleicons.org/react" },
+      { name: "Three.js", description: { id: "Library JavaScript untuk membuat dan menampilkan grafik 3D interaktif di web.", en: "JavaScript library for creating and displaying interactive 3D graphics on the web." }, logo: "https://cdn.simpleicons.org/threedotjs" },
       { name: "JavaScript", description: { id: "Bahasa pemrograman inti untuk membuat web menjadi interaktif.", en: "Core programming language to make the web interactive." }, logo: "https://cdn.simpleicons.org/javascript" },
       { name: "Vanilla JS", description: { id: "JavaScript murni tanpa framework, fundamental yang kuat.", en: "Pure JavaScript without frameworks, a strong fundamental." } },
       { name: "TypeScript", description: { id: "JavaScript dengan tipe data — lebih aman saat coding.", en: "JavaScript with types — safer while coding." }, logo: "https://cdn.simpleicons.org/typescript" },
@@ -64,7 +65,6 @@ export const skillGroups: SkillGroup[] = [
     icon: "cloud",
     accent: "from-cyan-500 to-blue-600",
     items: [
-      // { name: "Docker", ... } <-- DIHAPUS
       { name: "Git / GitHub", description: { id: "Version control & kolaborasi kode tim.", en: "Version control & team code collaboration." }, logo: "https://cdn.simpleicons.org/github" },
       { name: "Railway", description: { id: "Platform deploy backend + database cloud.", en: "Backend + cloud database deployment platform." }, logo: "https://cdn.simpleicons.org/railway" },
       { name: "Vercel", description: { id: "Platform deploy frontend Next.js super cepat.", en: "Super-fast Next.js frontend deployment platform." }, logo: "https://cdn.simpleicons.org/vercel" },
@@ -102,13 +102,6 @@ export type Certification = {
 };
 
 export const certifications: Certification[] = [
-  // SERTIFIKAT BARU DITAMBAHKAN DI SINI
-  {
-    title: { id: "Intro to Software Engineering", en: "Intro to Software Engineering" },
-    year: "2026",
-    issuer: "Coding Camp (RevoU)",
-    fileUrl: "/files/sertifikat-revou.pdf", 
-  },
   {
     title: { id: "Programmer", en: "Programmer" },
     year: "2026",
@@ -143,6 +136,12 @@ export type Training = {
 };
 
 export const trainings: Training[] = [
+  { 
+    title: "Intro to Software Engineering", 
+    year: "2026", 
+    issuer: "Coding Camp (RevoU)",
+    fileUrl: "/files/sertifikat-revou.pdf" 
+  },
   { 
     title: "Application Implementation and Development", 
     year: "25 May 2026", 

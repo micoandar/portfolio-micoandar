@@ -91,6 +91,10 @@ export default function Hero() {
               <ArrowRight size={16} className="transition group-hover:translate-x-1" />
             </button>
 
+            {/* ========================================================= */}
+            {/* TOMBOL DOWNLOAD CV DISEMBUNYIKAN SEMENTARA */}
+            {/* ========================================================= */}
+            {/* 
             <div className="relative" ref={cvRef}>
               <button
                 type="button"
@@ -128,6 +132,8 @@ export default function Hero() {
                 </div>
               )}
             </div>
+            */}
+            {/* ========================================================= */}
 
             <div className="flex items-center gap-3 ml-2">
               <a href={profile.github} target="_blank" rel="noreferrer" className="text-slate-400 transition hover:text-slate-900 dark:hover:text-white">

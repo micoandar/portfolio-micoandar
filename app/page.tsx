@@ -5,7 +5,7 @@ import PortfolioTabs from "@/components/PortfolioTabs"; // Hanya ini yang dipang
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
-import MusicPlayer from "@/components/MusicPlayer";
+// import MusicPlayer from "@/components/MusicPlayer"; // <-- DIKOMENTARI / DIHAPUS
 
 export default function Home() {
   return (
@@ -23,7 +23,8 @@ export default function Home() {
       </main>
       
       <BackToTop />
-      <MusicPlayer />
+      
+      {/* <MusicPlayer /> */} {/* <-- DIKOMENTARI / DIHAPUS */}
     </>
   );
 }

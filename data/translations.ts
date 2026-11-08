@@ -21,7 +21,7 @@ export const translations = {
     about: {
       eyebrow: "Tentang Saya",
       title: "About Me",
-      desc: "Saya adalah lulusan Ilmu Komputer dari Universitas Gunadarma dengan pengalaman dalam membangun aplikasi web full-stack.\nSaya senang mengembangkan aplikasi mulai dari desain database dan pengembangan backend hingga antarmuka frontend yang responsif dan deployment. Saya selalu bersemangat untuk mempelajari teknologi baru dan meningkatkan keterampilan saya melalui proyek-proyek dunia nyata.",
+      desc: "Saya adalah lulusan Teknik Informatika dari Universitas Gunadarma dengan minat besar di bidang Software Engineering dan Full-Stack Development. Saya memiliki pengalaman dalam membangun aplikasi web, meliputi desain database, pengembangan backend, integrasi REST API, dan antarmuka frontend yang responsif. Saya senang memecahkan masalah, mengeksplorasi teknologi baru, dan terus meningkatkan keterampilan saya melalui proyek akademik dan pribadi.",
     },
     projects: {
       eyebrow: "Portofolio",
@@ -77,7 +77,7 @@ export const translations = {
     about: {
       eyebrow: "About Me",
       title: "About Me",
-      desc: "I'm a Computer Science graduate from Gunadarma University with experience in building full-stack web applications.\nI enjoy developing applications from database design and backend development to responsive frontend interfaces and deployment. I'm always eager to learn new technologies and improve my skills through real-world projects.",
+      desc: "I'm an Informatics Engineering graduate from Gunadarma University with a strong interest in Software Engineering and Full-Stack Development. I have experience building web applications, covering database design, backend development, REST API integration, and responsive frontend interfaces. I enjoy solving problems, exploring new technologies, and continuously improving my skills through academic and personal projects.",
     },
     projects: {
       eyebrow: "Portfolio",

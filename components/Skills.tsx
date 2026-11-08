@@ -3,7 +3,7 @@
 import {
   Braces, Cloud, Database, LayoutTemplate, Server, Smartphone,
   Globe, Eye, ScanEye, Lock, Key, UserCheck, ShieldCheck,
-  Code2
+  Code2, Brain
 } from "lucide-react";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
@@ -35,6 +35,16 @@ const DARK_LOGOS = [
   "Railway",
   "Vercel",
 ];
+
+// Mapping icon kategori dari data skills.ts ke komponen Lucide
+const categoryIcons: Record<string, React.ElementType> = {
+  layout: LayoutTemplate,
+  server: Server,
+  database: Database,
+  cloud: Cloud,
+  brain: Brain,
+  smartphone: Smartphone,
+};
 
 function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
   const [error, setError] = useState(false);
@@ -123,31 +133,57 @@ export default function Skills() {
   return (
     <Section id="keahlian" title="Skills">
       {/* Container utama dengan jarak antar kategori */}
-      <div className="flex flex-col gap-12 sm:gap-16">
+      <div className="flex flex-col gap-14 sm:gap-20">
         
-        {/* Looping per kategori dari data skillGroups */}
-        {skillGroups.map((group) => (
-          <div key={group.title[lang]} className="relative">
-            
-            {/* Header Kategori */}
-            <div className="mb-6 flex items-center gap-3">
-              <div className={`h-2.5 w-2.5 rounded-full bg-gradient-to-r ${group.accent}`} />
-              <h3 className={`text-lg font-bold bg-gradient-to-r ${group.accent} bg-clip-text text-transparent sm:text-xl`}>
-                {group.title[lang]}
-              </h3>
-              {/* Garis pemisah */}
-              <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent dark:from-slate-800 dark:to-transparent" />
-            </div>
+        {skillGroups.map((group) => {
+          const CategoryIcon = categoryIcons[group.icon] || Code2;
 
-            {/* Grid Khusus Kategori Ini */}
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-5 lg:grid-cols-6">
-              {group.items.map((skill, i) => (
-                <SkillCard key={skill.name} skill={skill} index={i} lang={lang} />
-              ))}
-            </div>
+          return (
+            <div key={group.title[lang]} className="relative">
+              
+              {/* ================= HEADER KATEGORI ================= */}
+              <div className="mb-8 flex items-center gap-4 sm:gap-5">
+                
+                {/* Kotak Ikon Gradasi */}
+                <div className={`relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-lg sm:h-14 sm:w-14`}>
+                  <div className="absolute inset-0 rounded-2xl bg-black/10 opacity-0 transition-opacity hover:opacity-100 dark:bg-white/10" />
+                  <CategoryIcon size={24} strokeWidth={2.5} className="relative z-10 sm:h-7 sm:w-7" />
+                </div>
 
-          </div>
-        ))}
+                {/* Teks & Garis */}
+                <div className="flex flex-1 flex-col justify-center">
+                  <div className="flex items-center justify-between gap-4">
+                    
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">
+                        {group.title[lang]}
+                      </h3>
+                      {/* Badge Jumlah Tools */}
+                      <span className="hidden rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-semibold text-slate-500 dark:bg-slate-800 dark:text-slate-400 sm:inline-block">
+                        {group.items.length} {lang === "id" ? "Teknologi" : "Tools"}
+                      </span>
+                    </div>
+
+                    {/* Garis Pemisah Kanan */}
+                    <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent dark:from-slate-800 dark:to-transparent" />
+                  </div>
+                  
+                  {/* Garis Aksen Kecil di Bawah Judul */}
+                  <div className={`mt-1 h-1 w-10 rounded-full bg-gradient-to-r ${group.accent}`} />
+                </div>
+
+              </div>
+
+              {/* ================= GRID SKILL ================= */}
+              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-5 lg:grid-cols-6">
+                {group.items.map((skill, i) => (
+                  <SkillCard key={skill.name} skill={skill} index={i} lang={lang} />
+                ))}
+              </div>
+
+            </div>
+          );
+        })}
 
       </div>
     </Section>

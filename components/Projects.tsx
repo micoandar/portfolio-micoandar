@@ -19,23 +19,26 @@ export default function Projects() {
   ));
 
   return (
-    <div id="proyek" className="flex w-full justify-center py-4">
+    <div id="proyek" className="flex w-full justify-center py-4 px-2 sm:px-0">
       {mounted && (
-        <Carousel
-          items={carouselItems}
-          baseWidth={380}          
-          aspectRatio={0.6}        // <-- PERBAIKAN: Diubah dari 0.75 ke 0.6 agar lebih tinggi
-          effect="tilt"            
-          indicator="dots"         
-          frame={true}             
-          arrows={true}            
-          loop={true}              
-          autoplay={true}          
-          autoplayDelay={4000}     
-          pauseOnHover={true}      
-          draggable={true}         
-          theme={resolvedTheme === "dark" ? "dark" : "light"} 
-        />
+        // Tambahkan max-w-full agar tidak pernah melebihi lebar layar HP
+        <div className="w-full max-w-full flex justify-center">
+          <Carousel
+            items={carouselItems}
+            baseWidth={360}          // Sedikit dikecilkan dari 380 agar aman di HP kecil
+            aspectRatio={0.65}       // Sedikit dilonggarkan dari 0.6
+            effect="tilt"            
+            indicator="dots"         
+            frame={true}             
+            arrows={true}            
+            loop={true}              
+            autoplay={true}          
+            autoplayDelay={4000}     
+            pauseOnHover={true}      
+            draggable={true}         
+            theme={resolvedTheme === "dark" ? "dark" : "light"} 
+          />
+        </div>
       )}
     </div>
   );

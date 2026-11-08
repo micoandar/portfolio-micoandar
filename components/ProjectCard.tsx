@@ -29,8 +29,8 @@ export default function ProjectCard({
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition duration-300 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900">
       
-      {/* Gambar dibuat sedikit lebih pendek (h-40) */}
-      <div className={`relative h-40 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-5 sm:h-48 sm:p-6`}>
+      {/* Bagian Gambar (Tinggi disesuaikan agar tidak terlalu memakan ruang) */}
+      <div className={`relative h-40 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-4 sm:h-48 sm:p-6`}>
         <Image
           src={project.image}
           alt={project.title}
@@ -58,8 +58,11 @@ export default function ProjectCard({
         </div>
       </div>
 
-      {/* Area Teks dengan overflow-y-auto agar bisa di-scroll jika kepanjangan */}
-      <div className="flex flex-1 flex-col overflow-y-auto p-4 sm:p-5 custom-scrollbar">
+      {/* Bagian Teks & Konten (Bisa di-scroll ke bawah jika kepanjangan) */}
+      <div 
+        className="flex flex-1 flex-col overflow-y-auto p-4 sm:p-5 custom-scrollbar"
+        style={{ touchAction: 'pan-y' }} // Mencegah konflik swipe horizontal Carousel di HP
+      >
         <p className="text-xs font-medium text-slate-500 dark:text-slate-400 sm:text-sm">
           {project.subtitle[lang]}
         </p>

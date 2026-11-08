@@ -16,7 +16,7 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      summary: "Saya suka mengulik teknologi, mencoba hal baru, dan mengubah ide menjadi sesuatu yang nyata. Bagi saya, software development adalah tentang terus belajar, menemukan solusi, dan membangun aplikasi yang fungsional serta bermanfaat bagi banyak orang.",
+      summary: "Saya membangun aplikasi web dengan fokus pada arsitektur yang bersih, sistem backend yang andal, dan antarmuka pengguna yang responsif.",
     },
     about: {
       eyebrow: "Tentang Saya",
@@ -45,7 +45,6 @@ export const translations = {
       eyebrow: "Kontak",
       title: "Mari Berkolaborasi",
       desc: "Saya terbuka untuk peluang kerja maupun freelance.",
-      // TEKS BARU DI SINI
       cardTitle: "Mari bangun sesuatu bersama!",
       cardDesc: "Terbuka untuk kesempatan kerja, magang, maupun kolaborasi proyek di bidang Software Development. Saya siap menyambut peluang dan tantangan baru.",
       chatWa: "Chat via WhatsApp",
@@ -73,7 +72,7 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      summary: "I love exploring technology, trying new things, and turning ideas into something real. For me, software development is about continuous learning, finding solutions, and building functional applications that benefit many people.",
+      summary: "I build web applications with a focus on clean architecture, reliable backend systems, and responsive user interfaces.",
     },
     about: {
       eyebrow: "About Me",
@@ -102,7 +101,6 @@ export const translations = {
       eyebrow: "Contact",
       title: "Let's Collaborate",
       desc: "I'm open to job opportunities and freelance work.",
-      // TEKS BARU DI SINI (TERJEMAHAN INGGRIS)
       cardTitle: "Let's build something together!",
       cardDesc: "Open to job opportunities, internships, and project collaborations in Software Development. I'm ready to embrace new opportunities and challenges.",
       chatWa: "Chat on WhatsApp",

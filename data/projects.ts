@@ -16,8 +16,8 @@ export const projects: Project[] = [
     slug: "restoran-kita",
     title: 'Web App "Restoran Kita"',
     subtitle: {
-      id: "Sistem pemesanan end-to-end dengan dashboard analitik & REST API",
-      en: "End-to-end ordering system with analytics dashboard & REST API",
+      id: "Sistem manajemen restoran berbasis web yang dirancang untuk mengelola data menu, pesanan pelanggan, dan operasional restoran.",
+      en: "A web-based restaurant management system designed to manage menu data, customer orders, and restaurant operations.",
     },
     category: "Web",
     image: "/images/projects/restoran-kita.jpg",
@@ -25,20 +25,24 @@ export const projects: Project[] = [
     tech: ["PHP Native", "MySQL", "Bootstrap 5", "JavaScript", "AJAX", "Chart.js"],
     highlights: [
       {
-        id: "Merancang arsitektur database MySQL untuk keranjang, pesanan, dan inventaris menu.",
-        en: "Designed MySQL database architecture for carts, orders, and menu inventory.",
+        id: "Merancang arsitektur database relasional menggunakan MySQL.",
+        en: "Designed relational database architecture using MySQL.",
       },
       {
-        id: "Membangun REST API modular untuk melayani request frontend via AJAX tanpa reload halaman (SPA-feel).",
-        en: "Built a modular REST API to serve frontend requests via AJAX without page reloads (SPA-feel).",
+        id: "Mengembangkan REST API untuk komunikasi data aplikasi.",
+        en: "Developed REST API for application data communication.",
       },
       {
-        id: "Mengimplementasikan keamanan backend: prepared statements (anti SQL Injection), CSRF token, dan enkripsi password (bcrypt).",
-        en: "Implemented backend security: prepared statements (anti SQL Injection), CSRF tokens, and password hashing (bcrypt).",
+        id: "Menerapkan autentikasi dan otorisasi yang aman.",
+        en: "Implemented secure authentication and authorization.",
       },
       {
-        id: "Mengembangkan logika chatbot rule-based yang melakukan query dinamis langsung ke database.",
-        en: "Developed rule-based chatbot logic performing dynamic queries directly to the database.",
+        id: "Menerapkan perlindungan CSRF dan pencegahan SQL injection.",
+        en: "Applied CSRF protection and SQL injection prevention.",
+      },
+      {
+        id: "Membangun antarmuka responsif menggunakan Bootstrap dan AJAX.",
+        en: "Built responsive interfaces using Bootstrap and AJAX.",
       },
     ],
   },

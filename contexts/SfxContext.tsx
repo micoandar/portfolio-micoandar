@@ -18,7 +18,7 @@ export function SfxProvider({ children }: { children: React.ReactNode }) {
     audioRef.current = new Audio("/sfx.mp3");
     
     // PERBAIKAN: Volume dikecilkan dari 1.0 menjadi 0.35 agar tidak terlalu keras
-    audioRef.current.volume = 0.7; 
+    audioRef.current.volume = 0.5; 
 
     const handleClick = (e: MouseEvent) => {
       if (!isSfxEnabled || !audioRef.current) return;

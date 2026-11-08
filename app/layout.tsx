@@ -16,11 +16,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" suppressHydrationWarning className={inter.variable}>
+    // 3. UBAH LANG MENJADI "en"
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <body className="font-sans transition-colors duration-300">
         <ThemeProvider 
           attribute="class" 
-          defaultTheme="dark" // <-- PERBAIKAN: Diubah dari "light" menjadi "dark"
+          defaultTheme="dark" 
           enableSystem={false}
         >
           <LanguageProvider>

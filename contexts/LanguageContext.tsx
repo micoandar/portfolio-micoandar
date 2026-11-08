@@ -9,13 +9,17 @@ type Ctx = { lang: Lang; setLang: (l: Lang) => void; toggle: () => void };
 const LanguageContext = createContext<Ctx | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("id");
+  // 1. UBAH DEFAULT STATE MENJADI "en"
+  const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
     const saved = localStorage.getItem("lang") as Lang | null;
     if (saved === "id" || saved === "en") {
       setLangState(saved);
       document.documentElement.lang = saved;
+    } else {
+      // 2. JIKA BELUM ADA DI LOCALSTORAGE, PASTIKAN HTML LANG = "en"
+      document.documentElement.lang = "en";
     }
   }, []);
 

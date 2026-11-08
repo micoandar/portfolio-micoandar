@@ -12,7 +12,6 @@ export default function Projects() {
 
   useEffect(() => setMounted(true), []);
 
-  // Membungkus ProjectCard menjadi elemen ReactNode untuk Carousel
   const carouselItems = projects.map((project, i) => (
     <div key={project.slug} className="w-full h-full">
       <ProjectCard project={project} index={i} />
@@ -24,18 +23,18 @@ export default function Projects() {
       {mounted && (
         <Carousel
           items={carouselItems}
-          baseWidth={380}          // Lebar kartu (responsif, akan mengecil di HP)
-          aspectRatio={0.75}       // Tinggi kartu (karena ProjectCard memanjang ke bawah)
-          effect="tilt"            // Efek 3D miring yang keren
-          indicator="dots"         // Navigasi titik di bawah
-          frame={true}             // Panel kaca di latar belakang
-          arrows={true}            // Tombol panah kiri/kanan
-          loop={true}              // Bisa diputar tanpa henti
-          autoplay={true}          // Berputar otomatis
-          autoplayDelay={4000}     // Jeda 4 detik
-          pauseOnHover={true}      // Berhenti saat kursor diarahkan
-          draggable={true}         // Bisa di-swipe (mobile) atau di-drag (desktop)
-          theme={resolvedTheme === "dark" ? "dark" : "light"} // Sinkronisasi tema
+          baseWidth={380}          
+          aspectRatio={0.6}        // <-- PERBAIKAN: Diubah dari 0.75 ke 0.6 agar lebih tinggi
+          effect="tilt"            
+          indicator="dots"         
+          frame={true}             
+          arrows={true}            
+          loop={true}              
+          autoplay={true}          
+          autoplayDelay={4000}     
+          pauseOnHover={true}      
+          draggable={true}         
+          theme={resolvedTheme === "dark" ? "dark" : "light"} 
         />
       )}
     </div>

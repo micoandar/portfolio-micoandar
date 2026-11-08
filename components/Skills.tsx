@@ -39,7 +39,6 @@ const DARK_LOGOS = [
 function SkillIcon({ skill }: { skill: { name: string; logo?: string } }) {
   const [error, setError] = useState(false);
   
-  // Cek apakah logo ini membutuhkan efek invert (putih di dark mode)
   const needsInvert = DARK_LOGOS.includes(skill.name);
 
   if (skill.logo && !error) {
@@ -120,14 +119,36 @@ function SkillCard({ skill, index, lang }: { skill: any; index: number; lang: "i
 
 export default function Skills() {
   const { lang } = useLanguage();
-  const allSkills = skillGroups.flatMap((group) => group.items);
 
   return (
     <Section id="keahlian" title="Skills">
-      <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-5 lg:grid-cols-6">
-        {allSkills.map((skill, i) => (
-          <SkillCard key={skill.name} skill={skill} index={i} lang={lang} />
+      {/* Container utama dengan jarak antar kategori */}
+      <div className="flex flex-col gap-12 sm:gap-16">
+        
+        {/* Looping per kategori dari data skillGroups */}
+        {skillGroups.map((group) => (
+          <div key={group.title[lang]} className="relative">
+            
+            {/* Header Kategori */}
+            <div className="mb-6 flex items-center gap-3">
+              <div className={`h-2.5 w-2.5 rounded-full bg-gradient-to-r ${group.accent}`} />
+              <h3 className={`text-lg font-bold bg-gradient-to-r ${group.accent} bg-clip-text text-transparent sm:text-xl`}>
+                {group.title[lang]}
+              </h3>
+              {/* Garis pemisah */}
+              <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent dark:from-slate-800 dark:to-transparent" />
+            </div>
+
+            {/* Grid Khusus Kategori Ini */}
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-5 lg:grid-cols-6">
+              {group.items.map((skill, i) => (
+                <SkillCard key={skill.name} skill={skill} index={i} lang={lang} />
+              ))}
+            </div>
+
+          </div>
         ))}
+
       </div>
     </Section>
   );

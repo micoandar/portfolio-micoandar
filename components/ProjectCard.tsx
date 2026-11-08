@@ -29,8 +29,8 @@ export default function ProjectCard({
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition duration-300 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900">
       
-      {/* Bagian Gambar (Tinggi disesuaikan agar tidak terlalu memakan ruang) */}
-      <div className={`relative h-40 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-4 sm:h-48 sm:p-6`}>
+      {/* Bagian Gambar (Diperbesar di desktop menjadi h-56) */}
+      <div className={`relative h-40 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-4 sm:h-56 sm:p-6`}>
         <Image
           src={project.image}
           alt={project.title}
@@ -41,7 +41,7 @@ export default function ProjectCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
         
-        <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-5 z-10">
+        <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-6 z-10">
           <div className="flex items-start justify-between gap-3">
             <span className="rounded bg-black/50 px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-white/90 backdrop-blur-md sm:text-xs">
               {String(index + 1).padStart(2, "0")} /
@@ -51,31 +51,32 @@ export default function ProjectCard({
             </span>
           </div>
           <div>
-            <h3 className="line-clamp-2 max-w-[95%] text-base font-bold leading-snug text-white drop-shadow-md sm:text-lg">
+            <h3 className="line-clamp-2 max-w-[95%] text-base font-bold leading-snug text-white drop-shadow-md sm:text-xl">
               {project.title}
             </h3>
           </div>
         </div>
       </div>
 
-      {/* Bagian Teks & Konten (Bisa di-scroll ke bawah jika kepanjangan) */}
+      {/* Bagian Teks & Konten */}
+      {/* md:overflow-hidden menghilangkan scrollbar di desktop */}
       <div 
-        className="flex flex-1 flex-col overflow-y-auto p-4 sm:p-5 custom-scrollbar"
-        style={{ touchAction: 'pan-y' }} // Mencegah konflik swipe horizontal Carousel di HP
+        className="flex flex-1 flex-col overflow-y-auto p-4 sm:p-6 custom-scrollbar md:overflow-hidden"
+        style={{ touchAction: 'pan-y' }}
       >
         <p className="text-xs font-medium text-slate-500 dark:text-slate-400 sm:text-sm">
           {project.subtitle[lang]}
         </p>
 
-        <ul className="mt-3 space-y-2 sm:mt-4">
+        <ul className="mt-3 space-y-2.5 sm:mt-5">
           {project.highlights.map((point, i) => (
             <li
               key={i}
               className="flex gap-2.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm"
             >
               <CheckCircle2
-                size={15}
-                className="mt-0.5 shrink-0 text-brand-500 sm:h-4 sm:w-4"
+                size={16}
+                className="mt-0.5 shrink-0 text-brand-500 sm:h-5 sm:w-5"
                 aria-hidden="true"
               />
               <span>{point[lang]}</span>
@@ -83,7 +84,7 @@ export default function ProjectCard({
           ))}
         </ul>
 
-        <div className="mt-auto flex flex-wrap gap-1.5 border-t border-slate-100 pt-4 dark:border-slate-800 sm:pt-5">
+        <div className="mt-auto flex flex-wrap gap-1.5 border-t border-slate-100 pt-4 dark:border-slate-800 sm:pt-5 sm:mt-6">
           {project.tech.map((tech) => (
             <span
               key={tech}

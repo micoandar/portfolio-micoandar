@@ -31,9 +31,9 @@ export default function Projects() {
         <div className="w-full max-w-full flex justify-center">
           <Carousel
             items={carouselItems}
-            // PERBAIKAN: Kartu dibuat lebih besar di desktop (540px) & rasio mendekati kotak (0.95)
             baseWidth={isMobile ? 340 : 540}
-            aspectRatio={isMobile ? 0.65 : 0.95} 
+            // PERBAIKAN: aspectRatio dikecilkan agar kartu memanjang ke bawah
+            aspectRatio={isMobile ? 0.58 : 0.82} 
             effect="tilt"            
             indicator="dots"         
             frame={true}             

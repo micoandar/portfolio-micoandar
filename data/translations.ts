@@ -16,7 +16,7 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      summary: "Saya membangun aplikasi web dengan fokus pada arsitektur yang bersih, sistem backend yang andal, dan antarmuka pengguna yang responsif.",
+      summary: "Saya membangun aplikasi web dengan menggabungkan pengembangan frontend dan backend, dengan penekanan pada desain responsif, API yang terstruktur dengan baik, dan pengalaman pengguna yang fungsional.",
     },
     about: {
       eyebrow: "Tentang Saya",
@@ -72,7 +72,7 @@ export const translations = {
       downloadCv: "Download CV",
       cvFullStack: "Full Stack Developer",
       cvSoftware: "Software Engineer",
-      summary: "I build web applications with a focus on clean architecture, reliable backend systems, and responsive user interfaces.",
+      summary: "I build web applications by combining frontend and backend development, with an emphasis on responsive design, well-structured APIs, and functional user experiences.",
     },
     about: {
       eyebrow: "About Me",

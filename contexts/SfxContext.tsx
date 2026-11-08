@@ -17,8 +17,8 @@ export function SfxProvider({ children }: { children: React.ReactNode }) {
     // Pastikan file sfx.mp3 ada di folder public
     audioRef.current = new Audio("/sfx.mp3");
     
-    // PERBAIKAN: Volume dinaikkan menjadi maksimal (1.0)
-    audioRef.current.volume = 1.0; 
+    // PERBAIKAN: Volume dikecilkan dari 1.0 menjadi 0.35 agar tidak terlalu keras
+    audioRef.current.volume = 0.7; 
 
     const handleClick = (e: MouseEvent) => {
       if (!isSfxEnabled || !audioRef.current) return;

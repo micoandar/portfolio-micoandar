@@ -10,19 +10,18 @@ interface PdfViewerModalProps {
 
 export default function PdfViewerModal({ url, onClose }: PdfViewerModalProps) {
   useEffect(() => {
-    // Menutup modal dengan tombol ESC
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
     if (url) {
       document.addEventListener("keydown", handleEsc);
-      document.body.style.overflow = "hidden"; // Mencegah scroll di belakang modal
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
       document.removeEventListener("keydown", handleEsc);
-      document.body.style.overflow = ""; // Kembalikan scroll
+      document.body.style.overflow = "";
     };
   }, [url, onClose]);
 

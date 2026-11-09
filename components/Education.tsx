@@ -5,8 +5,8 @@ import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useState } from "react"; // <-- Tambahkan import useState
-import PdfViewerModal from "./PdfViewerModal"; // <-- Import komponen modal
+import { useState } from "react";
+import PdfViewerModal from "./PdfViewerModal";
 
 const education = [
   {
@@ -62,7 +62,6 @@ const education = [
 
 export default function Education() {
   const { lang } = useLanguage();
-  // State untuk menyimpan URL PDF yang sedang dibuka
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
   return (
@@ -114,8 +113,8 @@ export default function Education() {
                           <a 
                             href={d.fileUrl} 
                             onClick={(e) => {
-                              e.preventDefault(); // Mencegah browser membuka tab baru
-                              setSelectedPdf(d.fileUrl); // Buka modal
+                              e.preventDefault();
+                              setSelectedPdf(d.fileUrl);
                             }}
                             className="inline-flex items-start gap-1.5 hover:text-brand-600 dark:hover:text-brand-400 hover:underline transition-colors group"
                           >
@@ -154,8 +153,12 @@ export default function Education() {
                   <li key={c.title.id}>
                     <a 
                       href={c.fileUrl || undefined}
-                      target={c.fileUrl ? "_blank" : undefined}
-                      rel="noreferrer"
+                      onClick={(e) => {
+                        if (c.fileUrl) {
+                          e.preventDefault();
+                          setSelectedPdf(c.fileUrl);
+                        }
+                      }}
                       className={`group/item flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 rounded-xl sm:rounded-2xl p-3 sm:p-4 transition-all duration-200 ${
                         c.fileUrl ? "hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer" : "cursor-default"
                       }`}
@@ -206,8 +209,12 @@ export default function Education() {
                   <li key={item.title}>
                     <a 
                       href={item.fileUrl || undefined}
-                      target={item.fileUrl ? "_blank" : undefined}
-                      rel="noreferrer"
+                      onClick={(e) => {
+                        if (item.fileUrl) {
+                          e.preventDefault();
+                          setSelectedPdf(item.fileUrl);
+                        }
+                      }}
                       className={`group/item flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 rounded-xl sm:rounded-2xl p-3 sm:p-4 transition-all duration-200 ${
                         item.fileUrl ? "hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer" : ""
                       }`}
@@ -244,7 +251,7 @@ export default function Education() {
 
       </div>
       
-      {/* PANGGIL MODAL DI SINI */}
+      {/* Modal PDF dipanggil di sini agar bisa digunakan oleh semua bagian */}
       <PdfViewerModal url={selectedPdf} onClose={() => setSelectedPdf(null)} />
 
     </Section>

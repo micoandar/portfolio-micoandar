@@ -15,16 +15,22 @@ const education = [
     period: "2022 – 2026",
     location: { id: "Bekasi, Jawa Barat, Indonesia", en: "Bekasi, West Java, Indonesia" },
     score: { id: "IPK 3.76 / 4.00", en: "GPA 3.76 / 4.00" },
-    details: {
-      id: [
-        "Judul Skripsi: Penerapan YOLOv8 untuk Deteksi Bahan Makanan pada Sistem Rekomendasi Resep Diet Berbasis Android",
-        "Judul Karya Tulis Ilmiah: Sistem Otomatisasi Tempat Sampah Menggunakan Ultrasonic Berbasis Internet of Things",
-      ],
-      en: [
-        "Thesis: Implementation of YOLOv8 for Food Ingredient Detection in an Android-based Diet Recipe Recommendation System",
-        "Scientific Paper: Automated Trash Bin System Using Ultrasonic Sensors Based on the Internet of Things",
-      ],
-    },
+    details: [
+      {
+        text: {
+          id: "Judul Skripsi (2026): Penerapan YOLOv8 untuk Deteksi Bahan Makanan pada Sistem Rekomendasi Resep Diet Berbasis Android",
+          en: "Undergraduate Thesis (2026): Implementation of YOLOv8 for Food Ingredient Detection in an Android-based Diet Recipe Recommendation System",
+        },
+        fileUrl: "/files/skripsi-2026.pdf", // Sesuaikan nama file ini
+      },
+      {
+        text: {
+          id: "Judul Karya Tulis Ilmiah (2025): Sistem Otomatisasi Tempat Sampah Menggunakan Ultrasonic Berbasis Internet of Things",
+          en: "Scientific Paper (2025): Automated Trash Bin System Using Ultrasonic Sensors Based on the Internet of Things",
+        },
+        fileUrl: "/files/karya-ilmiah-2025.pdf", // Sesuaikan nama file ini
+      },
+    ],
   },
   {
     school: "SMK Telekomunikasi Telesandi Bekasi",
@@ -34,16 +40,21 @@ const education = [
     period: "2019 – 2022",
     location: { id: "Bekasi, Jawa Barat", en: "Bekasi, West Java" },
     score: { id: "Nilai Akhir 85,51", en: "Final Score 85.51" },
-    details: {
-      id: [
-        "Praktik Kerja Industri di PPTIK ITB",
-        "Laporan: Instalasi dan Konfigurasi DHCP Server pada Ubuntu 16.04 Menggunakan VirtualBox (Nilai 87)",
-      ],
-      en: [
-        "Internship at PPTIK ITB",
-        "Report: Installation and Configuration of DHCP Server on Ubuntu 16.04 Using VirtualBox (Score 87)",
-      ],
-    },
+    details: [
+      {
+        text: {
+          id: "Praktik Kerja Industri di PPTIK ITB (2021)",
+          en: "Internship at PPTIK ITB (2021)",
+        },
+        fileUrl: "/files/laporan-pkl-2021.pdf", // Sesuaikan nama file ini
+      },
+      {
+        text: {
+          id: "Laporan: Instalasi dan Konfigurasi DHCP Server pada Ubuntu 16.04 Menggunakan VirtualBox (Nilai 87)",
+          en: "Report: Installation and Configuration of DHCP Server on Ubuntu 16.04 Using VirtualBox (Score 87)",
+        },
+      },
+    ],
   },
 ];
 
@@ -92,10 +103,22 @@ export default function Education() {
                   </p>
 
                   <ul className="mt-4 sm:mt-5 space-y-2.5 sm:space-y-3 text-[13px] sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                    {item.details[lang].map((d) => (
-                      <li key={d} className="flex gap-2.5 sm:gap-3 break-words">
+                    {item.details.map((d, idx) => (
+                      <li key={idx} className="flex gap-2.5 sm:gap-3 break-words">
                         <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-300 dark:bg-slate-600" />
-                        <span>{d}</span>
+                        {d.fileUrl ? (
+                          <a 
+                            href={d.fileUrl} 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            className="inline-flex items-start gap-1.5 hover:text-brand-600 dark:hover:text-brand-400 hover:underline transition-colors group"
+                          >
+                            <span>{d.text[lang]}</span>
+                            <FileText size={14} className="mt-0.5 shrink-0 opacity-60 group-hover:opacity-100" />
+                          </a>
+                        ) : (
+                          <span>{d.text[lang]}</span>
+                        )}
                       </li>
                     ))}
                   </ul>

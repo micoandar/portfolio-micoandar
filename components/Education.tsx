@@ -5,6 +5,8 @@ import Section from "@/components/ui/Section";
 import Reveal from "@/components/Reveal";
 import { certifications, trainings } from "@/data/skills";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react"; // <-- Tambahkan import useState
+import PdfViewerModal from "./PdfViewerModal"; // <-- Import komponen modal
 
 const education = [
   {
@@ -21,14 +23,14 @@ const education = [
           id: "Judul Skripsi (2026): Penerapan YOLOv8 untuk Deteksi Bahan Makanan pada Sistem Rekomendasi Resep Diet Berbasis Android",
           en: "Undergraduate Thesis (2026): Implementation of YOLOv8 for Food Ingredient Detection in an Android-based Diet Recipe Recommendation System",
         },
-        fileUrl: "/files/skripsi-2026.pdf", // Sesuaikan nama file ini
+        fileUrl: "/files/skripsi-2026.pdf",
       },
       {
         text: {
           id: "Judul Karya Tulis Ilmiah (2025): Sistem Otomatisasi Tempat Sampah Menggunakan Ultrasonic Berbasis Internet of Things",
           en: "Scientific Paper (2025): Automated Trash Bin System Using Ultrasonic Sensors Based on the Internet of Things",
         },
-        fileUrl: "/files/karya-ilmiah-2025.pdf", // Sesuaikan nama file ini
+        fileUrl: "/files/karya-ilmiah-2025.pdf",
       },
     ],
   },
@@ -46,7 +48,7 @@ const education = [
           id: "Praktik Kerja Industri di PPTIK ITB (2021)",
           en: "Internship at PPTIK ITB (2021)",
         },
-        fileUrl: "/files/laporan-pkl-2021.pdf", // Sesuaikan nama file ini
+        fileUrl: "/files/laporan-pkl-2021.pdf",
       },
       {
         text: {
@@ -60,12 +62,14 @@ const education = [
 
 export default function Education() {
   const { lang } = useLanguage();
+  // State untuk menyimpan URL PDF yang sedang dibuka
+  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
   return (
     <Section id="pendidikan" title="Education & Certifications">
       <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
         
-        {/* KIRI: PENDIDIKAN (Timeline Style) */}
+        {/* KIRI: PENDIDIKAN */}
         <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 sm:before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent dark:before:via-slate-800">
           {education.map((item, i) => (
             <Reveal key={item.school} delay={i * 100}>
@@ -109,8 +113,10 @@ export default function Education() {
                         {d.fileUrl ? (
                           <a 
                             href={d.fileUrl} 
-                            target="_blank" 
-                            rel="noreferrer" 
+                            onClick={(e) => {
+                              e.preventDefault(); // Mencegah browser membuka tab baru
+                              setSelectedPdf(d.fileUrl); // Buka modal
+                            }}
                             className="inline-flex items-start gap-1.5 hover:text-brand-600 dark:hover:text-brand-400 hover:underline transition-colors group"
                           >
                             <span>{d.text[lang]}</span>
@@ -237,6 +243,10 @@ export default function Education() {
         </div>
 
       </div>
+      
+      {/* PANGGIL MODAL DI SINI */}
+      <PdfViewerModal url={selectedPdf} onClose={() => setSelectedPdf(null)} />
+
     </Section>
   );
 }

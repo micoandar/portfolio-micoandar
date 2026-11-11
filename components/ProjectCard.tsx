@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ArrowUpRight } from "lucide-react"; // <-- Tambah ArrowUpRight
 import type { Project } from "@/data/projects";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -29,7 +29,6 @@ export default function ProjectCard({
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition duration-300 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900">
       
-      {/* Bagian Gambar (Diperbesar di desktop menjadi h-56) */}
       <div className={`relative h-40 shrink-0 overflow-hidden bg-gradient-to-br ${project.gradient} p-4 sm:h-56 sm:p-6`}>
         <Image
           src={project.image}
@@ -58,8 +57,6 @@ export default function ProjectCard({
         </div>
       </div>
 
-      {/* Bagian Teks & Konten */}
-      {/* md:overflow-hidden menghilangkan scrollbar di desktop */}
       <div 
         className="flex flex-1 flex-col overflow-y-auto p-4 sm:p-6 custom-scrollbar md:overflow-hidden"
         style={{ touchAction: 'pan-y' }}
@@ -84,15 +81,33 @@ export default function ProjectCard({
           ))}
         </ul>
 
-        <div className="mt-auto flex flex-wrap gap-1.5 border-t border-slate-100 pt-4 dark:border-slate-800 sm:pt-5 sm:mt-6">
-          {project.tech.map((tech) => (
-            <span
-              key={tech}
-              className={`rounded-md border px-2 py-0.5 text-[10px] font-semibold sm:px-2.5 sm:py-1 sm:text-[11px] ${categoryStyle[project.category]}`}
+        {/* Bagian Bawah: Tech Stack & Tombol Live Demo */}
+        <div className="mt-auto flex flex-col gap-4 border-t border-slate-100 pt-4 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between sm:pt-5 sm:mt-6">
+          
+          <div className="flex flex-wrap gap-1.5">
+            {project.tech.map((tech) => (
+              <span
+                key={tech}
+                className={`rounded-md border px-2 py-0.5 text-[10px] font-semibold sm:px-2.5 sm:py-1 sm:text-[11px] ${categoryStyle[project.category]}`}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* Tombol Live Demo (Hanya muncul jika project.url ada) */}
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-3.5 py-2 text-[11px] font-bold text-white transition-all hover:bg-slate-800 hover:scale-105 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 sm:text-xs"
             >
-              {tech}
-            </span>
-          ))}
+              Live Demo
+              <ArrowUpRight size={14} />
+            </a>
+          )}
+
         </div>
       </div>
     </article>

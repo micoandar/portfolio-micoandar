@@ -9,7 +9,8 @@ export type Project = {
   gradient: string;
   tech: string[];
   highlights: LText[];
-  url?: string; // <-- Tambahan untuk link demo
+  url?: string;
+  githubUrl?: string; // <-- Tambahan untuk link GitHub
 };
 
 export const projects: Project[] = [
@@ -24,7 +25,8 @@ export const projects: Project[] = [
     image: "/images/projects/restoran-kita.jpg",
     gradient: "from-amber-400 to-orange-500",
     tech: ["PHP Native", "MySQL", "Bootstrap 5", "JavaScript", "AJAX", "Chart.js"],
-    url: "http://restoran-kita.wuaze.com/", // <-- Link demo ditambahkan di sini
+    url: "http://restoran-kita.wuaze.com/",
+    githubUrl: "https://github.com/micoandar/restoran-kita", // <-- Link GitHub ditambahkan
     highlights: [
       {
         id: "Merancang arsitektur database relasional menggunakan MySQL.",
@@ -48,9 +50,9 @@ export const projects: Project[] = [
       },
     ],
   },
+  // ... (proyek lainnya tetap sama persis)
   {
     slug: "ai-workplace-safety",
-    // ... (proyek lainnya tetap sama persis) ...
     title: "Full-Stack Monitoring System",
     subtitle: { id: "Platform monitoring real-time berbasis React dan FastAPI", en: "Real-time monitoring platform powered by React and FastAPI" },
     category: "Web",

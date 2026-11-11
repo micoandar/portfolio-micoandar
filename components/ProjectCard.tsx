@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { CheckCircle2, ArrowUpRight } from "lucide-react"; // <-- Tambah ArrowUpRight
+import { CheckCircle2, ArrowUpRight, Github } from "lucide-react"; // <-- Tambah Github
 import type { Project } from "@/data/projects";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -81,7 +81,7 @@ export default function ProjectCard({
           ))}
         </ul>
 
-        {/* Bagian Bawah: Tech Stack & Tombol Live Demo */}
+        {/* Bagian Bawah: Tech Stack & Tombol Link */}
         <div className="mt-auto flex flex-col gap-4 border-t border-slate-100 pt-4 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between sm:pt-5 sm:mt-6">
           
           <div className="flex flex-wrap gap-1.5">
@@ -95,18 +95,32 @@ export default function ProjectCard({
             ))}
           </div>
 
-          {/* Tombol Live Demo (Hanya muncul jika project.url ada) */}
-          {project.url && (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-3.5 py-2 text-[11px] font-bold text-white transition-all hover:bg-slate-800 hover:scale-105 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 sm:text-xs"
-            >
-              Live Demo
-              <ArrowUpRight size={14} />
-            </a>
-          )}
+          {/* Tombol Link Demo & GitHub */}
+          <div className="flex items-center gap-2 shrink-0">
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-[11px] font-bold text-slate-700 transition-all hover:bg-slate-50 hover:scale-105 active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 sm:text-xs"
+              >
+                <Github size={14} />
+                <span className="hidden sm:inline">Source</span>
+              </a>
+            )}
+
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-3.5 py-2 text-[11px] font-bold text-white transition-all hover:bg-slate-800 hover:scale-105 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 sm:text-xs"
+              >
+                Live Demo
+                <ArrowUpRight size={14} />
+              </a>
+            )}
+          </div>
 
         </div>
       </div>

@@ -134,3 +134,42 @@
 .dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.4);
 }
+
+/* ============================================================
+   OPTIMASI PERFORMA KHUSUS DESKTOP (Layar > 768px)
+   ============================================================ */
+@media (min-width: 769px) {
+  
+  /* 1. Content Visibility (Sangat Ampuh untuk Skor Performa)
+     Ini memberitahu browser untuk TIDAK merender bagian (section) 
+     yang sedang tidak terlihat di layar. Sangat menghemat RAM & GPU. */
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 800px; /* Estimasi tinggi section agar scrollbar tidak lompat */
+  }
+
+  /* 2. Optimasi Backdrop Blur
+     Backdrop-blur sangat membebani GPU di resolusi tinggi. 
+     Kita kecilkan intensitasnya sedikit agar tetap terlihat seperti kaca, tapi ringan. */
+  .backdrop-blur-xl, .backdrop-blur-2xl {
+    backdrop-filter: blur(10px) !important; 
+    -webkit-backdrop-filter: blur(10px) !important;
+  }
+  .backdrop-blur-md {
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+  }
+
+  /* 3. Kurangi Pendaran Blur Raksasa di Background
+     Di desktop, blur 100px/120px sangat berat. Kita turunkan jadi 60px. */
+  .blur-\[120px\], .blur-\[100px\] {
+    filter: blur(60px) !important;
+  }
+
+  /* 4. Hardware Acceleration
+     Paksa browser menggunakan GPU untuk merender canvas (WebGL) dan elemen 3D */
+  canvas, .will-change-transform, .motion-div {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+}

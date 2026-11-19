@@ -1,11 +1,13 @@
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import PortfolioTabs from "@/components/PortfolioTabs"; // Hanya ini yang dipanggil
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import BackToTop from "@/components/BackToTop";
-// import MusicPlayer from "@/components/MusicPlayer"; // <-- DIKOMENTARI / DIHAPUS
+
+// 1. Tunda loading komponen berat
+const About = dynamic(() => import("@/components/About"), { ssr: false });
+const PortfolioTabs = dynamic(() => import("@/components/PortfolioTabs"), { ssr: false });
+const BackToTop = dynamic(() => import("@/components/BackToTop"), { ssr: false });
 
 export default function Home() {
   return (
@@ -14,17 +16,11 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        
-        {/* Projects, Education, & Skills sudah menyatu di dalam PortfolioTabs */}
         <PortfolioTabs /> 
-        
         <Contact />
         <Footer />
       </main>
-      
       <BackToTop />
-      
-      {/* <MusicPlayer /> */} {/* <-- DIKOMENTARI / DIHAPUS */}
     </>
   );
 }

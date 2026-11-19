@@ -35,62 +35,6 @@
       linear-gradient(to bottom, rgb(148 163 184 / 0.08) 1px, transparent 1px);
     background-size: 40px 40px;
   }
-}
-
-@keyframes drawPath {
-  0% { 
-    stroke-dashoffset: 100; 
-    opacity: 0; 
-  }
-  10% { 
-    opacity: 1; 
-  }
-  80% { 
-    stroke-dashoffset: 0; 
-    opacity: 1; 
-  }
-  100% { 
-    stroke-dashoffset: 0; 
-    opacity: 0; 
-  }
-}
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
-  }
-  body {
-    @apply bg-slate-50 text-slate-700 antialiased dark:bg-[#0a0a0a] dark:text-slate-300;
-  }
-  ::selection {
-    @apply bg-brand-500/30 text-brand-900 dark:text-brand-100;
-  }
-}
-
-@layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-transparent dark:from-white dark:via-slate-200 dark:to-slate-400;
-  }
-  
-  .text-gradient-brand {
-    @apply bg-gradient-to-r from-brand-600 via-violet-600 to-sky-500 bg-clip-text text-transparent dark:from-brand-400 dark:via-violet-400 dark:to-sky-400;
-  }
-
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-  }
-
-  .grid-pattern {
-    background-image:
-      linear-gradient(to right, rgb(148 163 184 / 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(148 163 184 / 0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
 
   /* Isolasi 3D section dari layer lain */
   .contain-3d {
@@ -119,8 +63,6 @@
 
 /* ============================================================
    MOBILE PERFORMANCE: matikan animasi dekoratif di layar kecil
-   supaya compositor mobile tidak overload.
-   Animasi tetap jalan di tablet/desktop.
    ============================================================ */
 @media (max-width: 639px) {
   .animate-breathe,
@@ -131,14 +73,48 @@
     animation: none !important;
   }
 
-  /* Reset will-change di mobile, GPU layer budget terbatas */
   .will-change-transform,
   .will-change-\[opacity\] {
     will-change: auto !important;
   }
 }
 
-/* Custom scrollbar untuk kartu proyek di dalam Carousel */
+/* ============================================================
+   OPTIMASI PERFORMA TAMBAHAN
+   ============================================================ */
+/* Mengurangi blur raksasa di mobile agar GPU tidak bekerja terlalu keras */
+@media (max-width: 768px) {
+  .blur-\[100px\] {
+    filter: blur(40px) !important;
+  }
+}
+
+/* ============================================================
+   OPTIMASI AKSESIBILITAS (LIGHTHOUSE SCORE)
+   ============================================================ */
+/* 1. Memastikan outline fokus selalu muncul untuk pengguna keyboard */
+:focus-visible {
+  outline: 2px solid #6366f1 !important; /* Warna brand-500 */
+  outline-offset: 2px !important;
+}
+
+/* 2. Memperbaiki kontras warna teks abu-abu agar lolos uji WCAG */
+.text-slate-400 {
+  color: #64748b !important; /* Menggelapkan sedikit slate-400 */
+}
+.text-slate-500 {
+  color: #475569 !important; /* Menggelapkan sedikit slate-500 */
+}
+
+/* Mode Gelap */
+.dark .text-slate-400 {
+  color: #94a3b8 !important; /* Menerangkan sedikit slate-400 */
+}
+.dark .text-slate-500 {
+  color: #cbd5e1 !important; /* Menerangkan sedikit slate-500 */
+}
+
+/* 3. Custom scrollbar untuk kartu proyek di dalam Carousel */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }

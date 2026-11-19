@@ -16,19 +16,24 @@ export default function PdfViewerModal({ url, onClose }: PdfViewerModalProps) {
 
     if (url) {
       document.addEventListener("keydown", handleEsc);
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden"; // Mencegah scroll di belakang modal
     }
 
     return () => {
       document.removeEventListener("keydown", handleEsc);
-      document.body.style.overflow = "";
+      document.body.style.overflow = ""; // Kembalikan scroll
     };
   }, [url, onClose]);
 
   if (!url) return null;
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in duration-200"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Pratinjau Dokumen PDF"
+    >
       <div className="relative flex h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900 animate-in zoom-in-95 duration-200">
         
         {/* Header Modal */}
@@ -38,8 +43,8 @@ export default function PdfViewerModal({ url, onClose }: PdfViewerModalProps) {
           </h3>
           <button
             onClick={onClose}
-            className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 dark:hover:bg-slate-800"
-            aria-label="Close"
+            className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+            aria-label="Tutup pratinjau"
           >
             <X size={20} />
           </button>
@@ -50,7 +55,7 @@ export default function PdfViewerModal({ url, onClose }: PdfViewerModalProps) {
           <iframe
             src={url}
             className="h-full w-full border-none"
-            title="PDF Preview"
+            title="Pratinjau Dokumen PDF" // <-- WAJIB UNTUK AKSESIBILITAS
           />
         </div>
         
